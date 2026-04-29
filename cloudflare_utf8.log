@@ -1,0 +1,171 @@
+﻿node.exe : npm warn 
+Unknown project config 
+"auto-install-peers". 
+This will stop working 
+in the next major 
+version of npm.
+En línea: 1 Carácter: 1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (npm warn Unkn   
+ ow...version of np    
+m.:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+2026-04-13T16:27:46Z 
+INF Thank you for 
+trying Cloudflare 
+Tunnel. Doing so, 
+without a Cloudflare 
+account, is a quick 
+way to experiment and 
+try it out. However, 
+be aware that these 
+account-less Tunnels 
+have no uptime 
+guarantee, are subject 
+to the Cloudflare 
+Online Services Terms 
+of Use (https://www.clo
+udflare.com/website-ter
+ms/), and Cloudflare 
+reserves the right to 
+investigate your use 
+of Tunnels for 
+violations of such 
+terms. If you intend 
+to use Tunnels in 
+production you should 
+use a pre-created 
+named tunnel by 
+following: https://deve
+lopers.cloudflare.com/c
+loudflare-one/connectio
+ns/connect-apps
+2026-04-13T16:27:46Z 
+INF Requesting new 
+quick Tunnel on 
+trycloudflare.com...
+2026-04-13T16:27:49Z 
+INF +------------------
+-----------------------
+-----------------------
+-----------------------
+-----+
+2026-04-13T16:27:49Z 
+INF |  Your quick 
+Tunnel has been 
+created! Visit it at 
+(it may take some time 
+to be reachable):  |
+2026-04-13T16:27:49Z 
+INF |  https://computed
+-valve-battery-starsmer
+chant.trycloudflare.com
+                       
+     |
+2026-04-13T16:27:49Z 
+INF +------------------
+-----------------------
+-----------------------
+-----------------------
+-----+
+2026-04-13T16:27:49Z 
+INF Cannot determine 
+default configuration 
+path. No file 
+[config.yml 
+config.yaml] in 
+[~/.cloudflared 
+~/.cloudflare-warp 
+~/cloudflare-warp]
+2026-04-13T16:27:49Z 
+INF Version 2026.3.0 
+(Checksum 59b12880b24af
+581cf5b1013db601c7d843b
+9b097e9c78aa5957c7f39f7
+41885)
+2026-04-13T16:27:49Z 
+INF GOOS: windows, 
+GOVersion: go1.24.13, 
+GoArch: amd64
+2026-04-13T16:27:49Z 
+INF Settings: 
+map[ha-connections:1 
+protocol:quic url:http:
+//localhost:3001]
+2026-04-13T16:27:49Z 
+INF cloudflared will 
+not automatically 
+update on Windows 
+systems.
+2026-04-13T16:27:49Z 
+INF Generated 
+Connector ID: ffd8e52d-
+784e-4004-bca0-228f7750
+b3df
+2026-04-13T16:27:49Z 
+INF Initial protocol 
+quic
+2026-04-13T16:27:49Z 
+INF ICMP proxy will 
+use 192.168.80.214 as 
+source for IPv4
+2026-04-13T16:27:49Z 
+INF ICMP proxy will 
+use fe80::ead9:3818:271
+d:b243 in zone 
+Ethernet as source for 
+IPv6
+2026-04-13T16:27:49Z 
+INF cloudflared does 
+not support loading 
+the system root 
+certificate pool on 
+Windows. Please use 
+--origin-ca-pool 
+<PATH> to specify the 
+path to the 
+certificate pool
+2026-04-13T16:27:49Z 
+INF ICMP proxy will 
+use 192.168.80.214 as 
+source for IPv4
+2026-04-13T16:27:49Z 
+INF Tunnel connection 
+curve preferences: 
+[X25519MLKEM768 
+CurveP256] connIndex=0 
+event=0 
+ip=198.41.192.27
+2026-04-13T16:27:49Z 
+INF ICMP proxy will 
+use fe80::ead9:3818:271
+d:b243 in zone 
+Ethernet as source for 
+IPv6
+2026-04-13T16:27:49Z 
+INF Starting metrics 
+server on 
+127.0.0.1:20241/metrics
+2026-04-13T16:27:50Z 
+INF Registered tunnel 
+connection connIndex=0 
+connection=e1e3faa7-e16
+7-4075-8f17-e363b959eab
+7 event=0 
+ip=198.41.192.27 
+location=gru07 
+protocol=quic

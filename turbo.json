@@ -1,6 +1,8 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
+  "globalEnv": ["DATABASE_URL", "NODE_ENV", "AUTH_SECRET", "AUTH_URL"],
+  "globalDependencies": [".env"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],

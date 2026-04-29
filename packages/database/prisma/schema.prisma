@@ -1,0 +1,193 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// ─────────────────────────────────────────────
+// ENUMS — Contratos de Instalación
+// ─────────────────────────────────────────────
+
+// En SQLite, Prisma maneja los Enums como Strings con validación en el cliente.
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  role      String   @default("TECH") // TECH, ADMIN
+  password  String?  // Hashed password
+  
+  // Relación con contratos de instalación realizados
+  contracts InstallationContract[]
+  // Relación con mensajes de tickets (como autor técnico)
+  ticketMessages TicketMessage[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// MODELO — Contrato de Instalación
+// ─────────────────────────────────────────────
+
+model InstallationContract {
+  id             String        @id @default(uuid())
+
+  // Número de referencia visible para el cliente (ej: MR-2026-0001)
+  contractNumber String        @unique
+
+  status         String        @default("PENDING")
+
+  // Datos del cliente
+  clientName     String        // Nombre completo o Razón Social
+  clientEmail    String
+  clientPhone    String
+  clientDni      String        // DNI o CUIT
+  companyName    String?       // Nombre de empresa (opcional)
+
+  // Datos de instalación
+  address        String
+  city           String        @default("Mendoza")
+  province       String        @default("Mendoza")
+  country        String        @default("Argentina")
+
+  // Producto y plan contratado
+  equipmentType  String
+  planType       String
+  monthlyFee     Float?
+
+  // Datos Técnicos de la Instalación (Punto 1)
+  kitSerialNumber String?
+  hardwareVersion String?
+  antennaLocation String?
+  obstructions    String?
+  downloadSpeed   Float?
+  uploadSpeed     Float?
+  latency         Int?
+  networkMode     String?
+
+  // Firmas Digitales (Base64)
+  techSignature   String?
+  clientSignature String?
+
+  // Registro de Evidencia (Fotos)
+  photoCasa       String?      // URL o ID de la foto de la fachada
+  photoAntena     String?      // URL o ID de la foto de la ubicación de la antena
+  photoRouter     String?      // URL o ID de la foto del router instalado
+  photoCable      String?      // URL o ID de la foto del cableado/pasamuros
+  photoTest       String?      // URL o ID de la captura del speedtest
+
+  // Vinculación con el técnico
+  technicianId   String?
+  technician     User?         @relation(fields: [technicianId], references: [id])
+
+  // Relación con Tickets de Soporte
+  tickets        SupportTicket[]
+
+  // Notas
+  installationNotes String?    // Observaciones del cliente al enviar el formulario
+  techNotes         String?    // Notas internas del técnico / admin
+
+  // Fechas de instalación
+  scheduledDate  DateTime?     // Fecha acordada para la instalación
+  installedAt    DateTime?     // Fecha real de finalización
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@map("installation_contracts")
+}
+
+// ─────────────────────────────────────────────
+// MODELOS — Sistema de Tickets
+// ─────────────────────────────────────────────
+
+model SupportTicket {
+  id              String         @id @default(uuid())
+  
+  // Número de ticket visible (ej: TK-0001)
+  ticketNumber    String         @unique
+  
+  title           String
+  description     String
+  category        String         // Conectividad, Hardware, Facturación, Otros
+  
+  status          String         @default("OPEN")
+  priority        String         @default("MEDIUM")
+
+  // Vinculación con el contrato original
+  contractId      String
+  contract        InstallationContract @relation(fields: [contractId], references: [id])
+
+  // Hilo de mensajes
+  messages        TicketMessage[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@map("support_tickets")
+}
+
+model TicketMessage {
+  id              String         @id @default(uuid())
+  
+  content         String
+  attachments     String?        // Guardaremos como String JSONizado para SQLite
+  
+  // Si null, el mensaje es del cliente (validado por DNI/Contrato)
+  authorId        String?
+  author          User?          @relation(fields: [authorId], references: [id])
+  
+  ticketId        String
+  ticket          SupportTicket  @relation(fields: [ticketId], references: [id])
+
+  createdAt       DateTime       @default(now())
+
+  @@map("ticket_messages")
+}
+
+// ─────────────────────────────────────────────
+// MODELOS — Activos y Locaciones (existentes)
+// ─────────────────────────────────────────────
+
+model Asset {
+  id              String   @id @default(uuid())
+  name            String   // Ejemplo: "Antena Base Los Andes"
+  technologyType  String   // Ejemplo: "STARLINK_V2", "FIBER_BACKHAUL", "RADIO_LINK"
+  
+  // Campo JSON simplificado para SQLite
+  attributes      String     
+  
+  status          String   @default("ACTIVE")
+  
+  locationId      String
+  location        Location @relation(fields: [locationId], references: [id])
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Location {
+  id          String   @id @default(uuid())
+  
+  latitude    Float    
+  longitude   Float    
+  
+  address     String?
+  city        String   @default("Mendoza")
+  province    String   @default("Mendoza")
+  country     String   @default("Argentina")
+  
+  assets      Asset[]  
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
