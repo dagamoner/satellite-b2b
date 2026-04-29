@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { useRealtimeMessages } from "../../hooks/useRealtimeMessages";
+import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
 
 
 interface Message {

@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@repo/ui/button";
-import { useRealtimeContracts } from "../../hooks/useRealtimeContracts";
+import { useRealtimeContracts } from "../../../hooks/useRealtimeContracts";
 
 
 interface Ticket {
