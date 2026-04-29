@@ -72,7 +72,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         setSuccess(true);
         // Pequeña pausa para que vean el éxito y luego redirección con auto-login
         setTimeout(() => {
-          window.location.href = `https://satellite-b2b-client-portal.vercel.app?p_dni=${data.clientDni}&p_contract=${data.contractNumber}&p_ticket=${data.ticketId}`;
+          window.location.href = `https://satellite-b2b-client-portal.vercel.app/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_plan=${encodeURIComponent(planInfo.title)}`;
         }, 1500);
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { contractSchema } from "../../lib/validation";
 import { z } from "zod";
@@ -60,6 +61,15 @@ const PLAN_LABELS: Record<string, string> = {
 const EQUIPMENT_LABELS: Record<string, string> = {
   MINI_X: "Starlink Mini X (Hogar & Viajes)",
   STANDARD_V4: "Estándar V4 (PyMEs & Bodegas)",
+};
+
+// Mapeo de nombres comerciales de la landing a IDs internos
+const PLAN_MAPPING: Record<string, { plan: string, equipment: string }> = {
+  "Starlink Mini": { plan: "BASICO_MINI", equipment: "MINI_X" },
+  "Standard Estándar": { plan: "BASICO_V4", equipment: "STANDARD_V4" },
+  "Standard Full": { plan: "FULL_V4", equipment: "STANDARD_V4" },
+  "Enterprise Itinerante": { plan: "ITINERANTE", equipment: "STANDARD_V4" },
+  "Enterprise Pro": { plan: "EMPRESARIAL", equipment: "STANDARD_V4" },
 };
 
 // ── Componentes auxiliares ─────────────────────────────────────────────────
@@ -142,6 +152,32 @@ export default function ContratosPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<{ contractNumber: string } | null>(null);
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+
+  // Auto-fill effect from URL params
+  useEffect(() => {
+    const pName = searchParams.get("p_name");
+    const pEmail = searchParams.get("p_email");
+    const pDni = searchParams.get("p_dni");
+    const pPlan = searchParams.get("p_plan");
+
+    if (pName || pEmail || pDni || pPlan) {
+      setForm(prev => {
+        const next = { ...prev };
+        if (pName) next.clientName = pName;
+        if (pEmail) next.clientEmail = pEmail;
+        if (pDni) next.clientDni = pDni;
+        
+        if (pPlan && PLAN_MAPPING[pPlan]) {
+          next.planType = PLAN_MAPPING[pPlan].plan;
+          next.equipmentType = PLAN_MAPPING[pPlan].equipment;
+          next.monthlyFee = PLAN_FEES[next.planType] || "";
+        }
+        return next;
+      });
+    }
+  }, [searchParams]);
 
 
   const update = (field: keyof FormData) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
