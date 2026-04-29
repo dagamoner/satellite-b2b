@@ -27,7 +27,12 @@ function EntryPortalContent() {
   // Lógica de sesión existente y Auto-login desde Marketing
   useEffect(() => {
     if (status === "authenticated") {
-      router.push("/soporte/dashboard");
+      const pTicket = searchParams.get("p_ticket");
+      if (pTicket) {
+        router.push(`/soporte/${pTicket}`);
+      } else {
+        router.push("/soporte/dashboard");
+      }
       return;
     }
 
@@ -42,10 +47,11 @@ function EntryPortalContent() {
       // Auto-trigger login
       autoLogin(pDni, pContract, pTicket);
     }
-  }, [searchParams, router]);
+  }, [searchParams, status, router]);
 
   const autoLogin = async (dniVal: string, contractVal: string, ticketId?: string | null) => {
     setLoading(true);
+    setError("");
     try {
       const result = await signIn("client-credentials", {
         dni: dniVal,
@@ -59,9 +65,12 @@ function EntryPortalContent() {
         } else {
           router.push("/soporte/dashboard");
         }
+      } else {
+        setError("Error en la conexión automática. Por favor, ingrese manualmente.");
       }
     } catch (err) {
       console.error("Auto-login failed:", err);
+      setError("Error de red durante el acceso automático.");
     } finally {
       setLoading(false);
     }
@@ -94,7 +103,6 @@ function EntryPortalContent() {
         setError(err.message);
       }
     } finally {
-
       setLoading(false);
     }
   };
@@ -109,7 +117,7 @@ function EntryPortalContent() {
 
       <div className="w-full max-w-md relative z-10">
         <a 
-          href="http://localhost:3001" 
+          href="https://satellite-b2b-marketing.vercel.app" 
           className="mb-6 flex items-center gap-2 text-xs font-black uppercase text-slate-500 hover:text-cyan-400 transition-colors tracking-widest"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
