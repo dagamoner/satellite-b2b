@@ -39,6 +39,7 @@ export default function NOCDashboard() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
 
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
 
