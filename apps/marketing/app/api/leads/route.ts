@@ -69,8 +69,11 @@ export async function POST(request: NextRequest) {
       ticketId: ticket.id
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error("[LEAD_API_ERROR]", error);
-    return NextResponse.json({ error: "Error al procesar la solicitud" }, { status: 500 });
+    return NextResponse.json({ 
+      error: "Error interno del servidor", 
+      details: error.message 
+    }, { status: 500 });
   }
 }
