@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { contractSchema } from "@repo/validation";
+import { contractSchema } from "../../lib/validation";
 import { z } from "zod";
 
 

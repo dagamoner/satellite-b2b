@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-import { loginSchema } from "@repo/validation";
+import { loginSchema } from "../lib/validation";
 import { z } from "zod";
 
 
