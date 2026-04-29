@@ -217,12 +217,12 @@ export default function MarketingPage() {
             <a href="#consultoria" className="hover:text-blue-400 transition-colors">Servicios IT</a>
           </div>
           <div className="flex gap-4">
-             <Link href="http://localhost:3000">
+             <Link href="https://satellite-b2b-client-portal.vercel.app">
                 <Button variant="outline" className="text-white border-slate-700 hover:bg-slate-800 shadow-md rounded-full px-5 transition-all hover:scale-105 active:scale-95 bg-slate-900/50 backdrop-blur-md text-sm">
                   Portal de Clientes
                 </Button>
              </Link>
-             <Link href="http://localhost:3002">
+             <Link href="https://satellite-b2b-admin-dashboard.vercel.app">
                 <Button variant="default" className="hidden sm:flex text-white bg-blue-600 hover:bg-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.4)] rounded-full px-5 transition-all hover:scale-105 active:scale-95 border border-blue-500 text-sm">
                   NOC / Admin
                 </Button>
@@ -258,24 +258,26 @@ export default function MarketingPage() {
         </p>
 
         <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-5 w-full max-w-5xl mx-auto">
-           <Link href="http://localhost:3000">
-             <Button size="lg" className="w-full sm:w-auto px-8 lg:px-10 py-7 text-lg rounded-full bg-blue-600 hover:bg-blue-500 shadow-[0_0_40px_rgba(37,99,235,0.4)] font-bold transition-transform hover:-translate-y-1 text-white border-b-4 border-blue-800 active:border-b-0 active:translate-y-1 flex items-center justify-center gap-3">
-               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-               Portal B2B Clientes
-             </Button>
-           </Link>
-           <a href="#planes">
-             <Button size="lg" className="w-full sm:w-auto px-8 lg:px-10 py-7 text-lg rounded-full bg-cyan-600 hover:bg-cyan-500 shadow-[0_0_40px_rgba(6,182,212,0.4)] font-bold transition-transform hover:-translate-y-1 text-white border-b-4 border-cyan-800 active:border-b-0 active:translate-y-1 flex items-center justify-center gap-3">
-               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-               Comprar Hardware
-             </Button>
-           </a>
-           <Link href="http://localhost:3002">
-             <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 lg:px-10 py-7 text-lg rounded-full text-indigo-300 border-indigo-600/50 hover:bg-indigo-900/30 hover:border-indigo-400 font-bold transition-transform hover:-translate-y-1 backdrop-blur-md flex items-center justify-center gap-3 bg-indigo-950/20">
-               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-               Soporte / Hub NOC
-             </Button>
-           </Link>
+          <Link href="https://satellite-b2b-client-portal.vercel.app">
+            <Button size="lg" className="h-14 px-8 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95 border border-blue-500 flex gap-3 group">
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              Portal B2B Clientes
+            </Button>
+          </Link>
+
+          <a href="#antenas">
+            <Button size="lg" className="h-14 px-8 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(8,145,178,0.3)] transition-all hover:scale-105 active:scale-95 border border-cyan-500 flex gap-3 group">
+              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              Comprar Hardware
+            </Button>
+          </a>
+
+          <Link href="https://satellite-b2b-admin-dashboard.vercel.app">
+            <Button size="lg" className="h-14 px-8 rounded-2xl bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold text-lg shadow-xl transition-all hover:scale-105 active:scale-95 border border-slate-700 flex gap-3 group">
+              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              Soporte / Hub NOC
+            </Button>
+          </Link>
         </div>
 
         <div className="mt-28 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center w-full max-w-6xl relative z-10 border-t border-slate-800/50 pt-16">
