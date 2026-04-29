@@ -75,7 +75,8 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
           window.location.href = `https://satellite-b2b-client-portal.vercel.app?p_dni=${data.clientDni}&p_contract=${data.contractNumber}&p_ticket=${data.ticketId}`;
         }, 1500);
       } else {
-        alert(data.error || "Error al procesar la solicitud");
+        const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");
+        alert(errorMsg);
       }
     } catch (error) {
       alert("Error de conexión");

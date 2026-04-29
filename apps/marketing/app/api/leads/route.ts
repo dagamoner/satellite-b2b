@@ -71,9 +71,11 @@ export async function POST(request: NextRequest) {
 
   } catch (error: any) {
     console.error("[LEAD_API_ERROR]", error);
+    // Devolvemos el mensaje de error real para diagnosticar en Vercel
     return NextResponse.json({ 
-      error: "Error interno del servidor", 
-      details: error.message 
+      error: "Error en la base de datos", 
+      message: error.message,
+      code: error.code // Código de error de Prisma (P2002, etc)
     }, { status: 500 });
   }
 }
