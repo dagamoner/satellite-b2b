@@ -21,8 +21,9 @@ export const contractSchema = z.object({
 
 export const loginSchema = z.object({
   dni: z.string().min(1, "DNI requerido"),
-  contractNumber: z.string().regex(/^MR-\d{4}-\d{4}$/, "El formato debe ser MR-YYYY-XXXX (Ej: MR-2026-0001)"),
+  contractNumber: z.string().regex(/^MR[ -]\d{4}-\d{4}$/, "El formato debe ser MR-2026-0001 (puedes usar espacio o guion)"),
 });
+
 
 export type ContractInput = z.infer<typeof contractSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;

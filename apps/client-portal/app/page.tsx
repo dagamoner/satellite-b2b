@@ -82,22 +82,25 @@ function EntryPortalContent() {
     setLoading(true);
 
     try {
+      // Normalizar: Reemplazar espacios por guiones para ser más flexible
+      const normalizedContract = contractNumber.trim().replace(/\s+/g, "-");
+      
       // Validar con Zod
-      loginSchema.parse({ dni, contractNumber });
+      loginSchema.parse({ dni, contractNumber: normalizedContract });
 
       const result = await signIn("client-credentials", {
         dni,
-        contractNumber,
+        contractNumber: normalizedContract,
         redirect: false,
       });
 
       if (result?.error) {
-        throw new Error("Credenciales inválidas o contrato inexistente");
+        throw new Error("Credenciales inválidas o número de solicitud inexistente");
       }
 
       router.push("/soporte/dashboard");
     } catch (err: any) {
-      if (err instanceof z.ZodError) {
+      if (err.name === "ZodError" || err instanceof z.ZodError) {
         setError(err.errors[0].message);
       } else {
         setError(err.message);
