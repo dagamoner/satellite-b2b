@@ -218,7 +218,7 @@ export default function NOCDashboard() {
           </form>
           
           <div className="mt-8 flex flex-col items-center gap-4">
-            <Link href="http://localhost:3001" className="text-xs font-bold text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+            <Link href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "#"} className="text-xs font-bold text-slate-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
               Regresar a la Página Principal
             </Link>

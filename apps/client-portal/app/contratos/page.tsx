@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { contractSchema } from "@repo/validation";
@@ -258,12 +258,12 @@ export default function ContratosPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <DownloadContractPDF form={form} contractNumber={success.contractNumber} />
-            <Link 
-              href={`/?p_dni=${form.clientDni}&p_contract=${success.contractNumber}`} 
+            <button 
+              onClick={() => window.location.href = `/?p_dni=${form.clientDni}&p_contract=${success.contractNumber}`} 
               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 transition-colors text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center"
             >
               Volver al Portal
-            </Link>
+            </button>
           </div>
         </div>
       </div>

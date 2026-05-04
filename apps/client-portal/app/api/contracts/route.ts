@@ -4,13 +4,15 @@ import { contractSchema } from "@repo/validation";
 import { z } from "zod";
 import type { PrismaClient } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+
 
 // Genera un número de contrato único: MR-2026-XXXX
 async function generateContractNumber(p: PrismaClient): Promise<string> {
   const year = new Date().getFullYear();
   const count = await p.installationContract.count();
   const seq = String(count + 1).padStart(4, "0");
-  return `MR-${year}-${seq}`;
+  return `SOL-${year}-${seq}`;
 }
 
 // POST /api/contracts — Crear nuevo contrato desde el formulario del cliente

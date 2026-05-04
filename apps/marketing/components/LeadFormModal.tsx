@@ -72,8 +72,19 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         setSuccess(true);
         // Pequeña pausa para que vean el éxito y luego redirección con auto-login
         setTimeout(() => {
-          const portalUrl = process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "http://localhost:3000";
-          window.location.href = `${portalUrl}/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_phone=${encodeURIComponent(formData.phone)}&p_plan=${encodeURIComponent(planInfo.title)}`;
+          const portalUrl = process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL;
+          
+          if (!portalUrl) {
+            console.warn("NEXT_PUBLIC_CLIENT_PORTAL_URL no está configurada.");
+            // Si no hay URL configurada, no podemos redirigir al portal externo.
+            // Avisamos al usuario y cerramos el modal.
+            alert("¡Solicitud enviada con éxito! Un asesor se contactará con usted a la brevedad.");
+            onClose();
+            return;
+          }
+
+          const targetBase = portalUrl.endsWith('/') ? portalUrl.slice(0, -1) : portalUrl;
+          window.location.href = `${targetBase}/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_phone=${encodeURIComponent(formData.phone)}&p_plan=${encodeURIComponent(planInfo.title)}`;
         }, 1500);
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");

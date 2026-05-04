@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db as prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 /**
  * POST /api/support/auth
  * Valida la identidad del cliente mediante DNI y Número de Contrato.

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "@repo/database";
 
+export const dynamic = "force-dynamic";
+
 // Función para generar número de ticket TK-2026-0001
 async function generateTicketNumber() {
   const year = new Date().getFullYear();

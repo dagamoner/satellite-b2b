@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 
+export const dynamic = "force-dynamic";
+
 /**
  * GET /api/support/tickets/[id]/messages
  * Obtiene todos los mensajes de un ticket específico.

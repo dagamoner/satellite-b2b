@@ -125,7 +125,7 @@ function EntryPortalContent() {
 
       <div className="w-full max-w-md relative z-10">
         <a 
-          href="https://satellite-b2b-marketing.vercel.app" 
+          href="/" 
           className="mb-6 flex items-center gap-2 text-xs font-black uppercase text-slate-500 hover:text-cyan-400 transition-colors tracking-widest"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
