@@ -4,8 +4,11 @@
   "globalEnv": ["DATABASE_URL", "NODE_ENV", "AUTH_SECRET", "AUTH_URL"],
   "globalDependencies": [".env"],
   "tasks": {
+    "generate": {
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "^generate", "generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },

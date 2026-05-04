@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/prisma";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 // Generador de número de contrato para Leads
 async function generateLeadNumber() {
@@ -18,6 +21,7 @@ async function generateTicketNumber() {
 }
 
 export async function POST(request: NextRequest) {
+  cookies(); // Force dynamic runtime
   try {
     const { name, email, phone, dni, type, message, planName } = await request.json();
 
