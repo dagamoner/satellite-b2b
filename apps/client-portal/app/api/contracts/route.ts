@@ -3,6 +3,7 @@ import { prisma } from "@repo/database";
 import { contractSchema } from "@repo/validation";
 import { z } from "zod";
 import type { PrismaClient } from "@prisma/client";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,10 @@ async function generateContractNumber(p: PrismaClient): Promise<string> {
 
 // POST /api/contracts — Crear nuevo contrato desde el formulario del cliente
 export async function POST(request: NextRequest) {
+  // Force dynamic runtime to prevent build errors
+  cookies();
+  console.log("[API_CONTRACTS] VERSION_STABILIZED_V3");
+
   try {
     const body = await request.json();
 
