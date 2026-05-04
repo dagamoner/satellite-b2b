@@ -1,8 +1,8 @@
 "use client";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import { contractSchema } from "../../lib/validation";
+import { contractSchema } from "@repo/validation";
 import { z } from "zod";
 
 
@@ -43,20 +43,21 @@ const INITIAL_DATA: FormData = {
 };
 
 const PLAN_FEES: Record<string, string> = {
-  BASICO_MINI: "38000",
-  BASICO_V4: "56100",
-  FULL_V4: "",
-  ITINERANTE: "",
-  EMPRESARIAL: "",
+  BASICO_MINI: "90000",
+  BASICO_V4: "120000",
+  FULL_V4: "200000",
+  ENTERPRISE_ROAM: "400000",
+  ENTERPRISE_PRO: "800000",
 };
 
 const PLAN_LABELS: Record<string, string> = {
-  BASICO_MINI: "Básico Mini X — $38.000/mes",
-  BASICO_V4: "Básico Estándar V4 — $56.100/mes",
-  FULL_V4: "Full Estándar V4 — Consultar",
-  ITINERANTE: "Itinerante Ilimitado — Consultar",
-  EMPRESARIAL: "Plan Empresarial — Relevamiento custom",
+  BASICO_MINI: "Básico Mini X — $90.000/mes",
+  BASICO_V4: "Básico Estándar V4 — $120.000/mes",
+  FULL_V4: "Full Estándar V4 — $200.000/mes",
+  ENTERPRISE_ROAM: "Enterprise Itinerante — $400.000/mes",
+  ENTERPRISE_PRO: "Enterprise Pro — $800.000/mes",
 };
+
 
 const EQUIPMENT_LABELS: Record<string, string> = {
   MINI_X: "Starlink Mini X (Hogar & Viajes)",
@@ -64,12 +65,13 @@ const EQUIPMENT_LABELS: Record<string, string> = {
 };
 
 // Mapeo de nombres comerciales de la landing a IDs internos
-const PLAN_MAPPING: Record<string, { plan: string, equipment: string }> = {
-  "Starlink Mini": { plan: "BASICO_MINI", equipment: "MINI_X" },
-  "Standard Estándar": { plan: "BASICO_V4", equipment: "STANDARD_V4" },
-  "Standard Full": { plan: "FULL_V4", equipment: "STANDARD_V4" },
-  "Enterprise Itinerante": { plan: "ITINERANTE", equipment: "STANDARD_V4" },
-  "Enterprise Pro": { plan: "EMPRESARIAL", equipment: "STANDARD_V4" },
+const PLAN_MAPPING: Record<string, { equipment: "MINI_X" | "STANDARD_V4"; plan: string }> = {
+  "Plan Básico Mini": { equipment: "MINI_X", plan: "BASICO_MINI" },
+  "Plan Básico Estándar V4": { equipment: "STANDARD_V4", plan: "BASICO_V4" },
+  "Plan Full Estándar V4": { equipment: "STANDARD_V4", plan: "FULL_V4" },
+  "Starlink Mini": { equipment: "MINI_X", plan: "BASICO_MINI" },
+  "Standard Estándar": { equipment: "STANDARD_V4", plan: "BASICO_V4" },
+  "Standard Full": { equipment: "STANDARD_V4", plan: "FULL_V4" },
 };
 
 // ── Componentes auxiliares ─────────────────────────────────────────────────
@@ -161,13 +163,15 @@ export default function ContratosPage() {
     const pEmail = searchParams.get("p_email");
     const pDni = searchParams.get("p_dni");
     const pPlan = searchParams.get("p_plan");
+    const pPhone = searchParams.get("p_phone");
 
-    if (pName || pEmail || pDni || pPlan) {
+    if (pName || pEmail || pDni || pPlan || pPhone) {
       setForm(prev => {
         const next = { ...prev };
         if (pName) next.clientName = pName;
         if (pEmail) next.clientEmail = pEmail;
         if (pDni) next.clientDni = pDni;
+        if (pPhone) next.clientPhone = pPhone;
         
         if (pPlan && PLAN_MAPPING[pPlan]) {
           next.planType = PLAN_MAPPING[pPlan].plan;
@@ -239,13 +243,18 @@ export default function ContratosPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-3">¡Contrato Enviado!</h1>
-          <p className="text-slate-400 mb-6 text-lg">Tu solicitud fue registrada exitosamente. El equipo de MR Technology se contactará a la brevedad.</p>
+          <h1 className="text-3xl font-bold text-white mb-3">¡Solicitud Enviada!</h1>
+          <p className="text-slate-400 mb-6 text-lg">
+            Tu solicitud de instalación ha sido registrada. El equipo de <strong>MR Technology</strong> se contactará a la brevedad.
+          </p>
           <div className="bg-slate-900 border border-blue-500/30 rounded-2xl p-6 mb-8">
-            <p className="text-slate-500 text-sm mb-2 uppercase tracking-widest font-semibold">Número de Referencia</p>
+            <p className="text-slate-500 text-sm mb-2 uppercase tracking-widest font-semibold">Número de Solicitud</p>
             <p className="text-3xl font-extrabold text-blue-400 tracking-wider">{success.contractNumber}</p>
-            <p className="text-slate-500 text-sm mt-2">Guardá este número para hacer seguimiento de tu instalación.</p>
+            <p className="text-slate-500 text-[10px] mt-4 uppercase tracking-tighter">
+              Guardá este número. Lo necesitarás junto a tu DNI para ingresar al portal y chatear con soporte.
+            </p>
           </div>
+
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <DownloadContractPDF form={form} contractNumber={success.contractNumber} />
             <a href="/" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 transition-colors text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center">
@@ -336,13 +345,10 @@ export default function ContratosPage() {
             </Field>
             <Field label="Plan / Abono" id="planType" required error={formErrors.planType}>
               <select id="planType" className={`${inputClass} ${formErrors.planType ? 'border-red-500/50 bg-red-500/5' : ''}`} value={form.planType} onChange={update("planType")}>
-
                 <option value="">Seleccioná un plan...</option>
-                <option value="BASICO_MINI">Básico Mini X — $38.000/mes</option>
-                <option value="BASICO_V4">Básico Estándar V4 — $56.100/mes</option>
-                <option value="FULL_V4">Full Estándar V4 — Consultar</option>
-                <option value="ITINERANTE">Itinerante Ilimitado — Consultar</option>
-                <option value="EMPRESARIAL">Plan Empresarial — Relevamiento requerido</option>
+                {Object.entries(PLAN_LABELS).map(([id, label]) => (
+                  <option key={id} value={id}>{label}</option>
+                ))}
               </select>
             </Field>
             <Field label="Observaciones / Notas (opcional)" id="installationNotes">

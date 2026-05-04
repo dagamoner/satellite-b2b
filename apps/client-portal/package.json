@@ -15,6 +15,7 @@
     "@prisma/client": "^6.2.1",
     "@repo/database": "*",
     "@repo/ui": "*",
+    "@repo/validation": "*",
     "@supabase/supabase-js": "^2.103.0",
     "bcryptjs": "^3.0.3",
     "browser-image-compression": "^2.0.2",

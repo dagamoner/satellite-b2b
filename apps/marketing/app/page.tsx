@@ -173,59 +173,78 @@ export default function MarketingPage() {
       {/* Nuestro interactivo fondo del espacio */}
       <SpaceBackground />
 
+      {/* Sello de Agua - Logo MR Technology */}
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center"
+      >
+        <img
+          src="/Logo_new.png"
+          alt=""
+          className="w-[520px] max-w-[60vw] select-none"
+          style={{
+            opacity: 0.07,
+            filter: 'grayscale(100%) brightness(3)',
+            mixBlendMode: 'screen',
+            WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
+            maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
+          }}
+        />
+      </div>
+
       {/* Halo de luz adicional sobre el fondo, no invasivo */}
       <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#020617]/70 backdrop-blur-xl border-b border-white/10 shadow-xl shadow-black/50 py-2" : "bg-transparent py-4"}`}>
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4 group cursor-pointer mt-2 md:mt-0">
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-[#020617]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-1" : "bg-transparent py-6"}`}>
+        <div className={`max-w-7xl mx-auto px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-20 md:h-24" : "h-32 md:h-44"}`}>
+          <div className="flex items-center gap-6 group cursor-pointer mt-2 md:mt-0">
              <div className="relative shrink-0">
-               <div className="absolute inset-0 bg-blue-500 rounded-full blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
-               <img src="/logo.jpg" alt="MR Technology" className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-slate-700 relative z-10 shadow-lg" />
+               <div className="absolute inset-0 bg-blue-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
+               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg transition-all duration-500 ${scrolled ? "w-12 h-12 md:w-16 md:h-16" : "w-16 h-16 md:w-32 md:h-32"}`} />
              </div>
-             <div className="flex flex-col">
-               <span className="font-bold text-lg md:text-xl tracking-wider text-white leading-tight">MR Technology</span>
-               <div className="flex gap-3 mt-1.5 text-slate-500">
-                 {/* Website Icon */}
-                 <a href="http://www.mrestudioinformatico.com/" target="_blank" rel="noreferrer" title="Website de MR Technology" className="hover:text-blue-400 transition-colors">
-                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.152c-1.129.566-2.38.971-3.693 1.155v-3.238c1.385.034 2.709.288 3.693 2.083zm-4.957 1.155c-1.313-.184-2.564-.589-3.693-1.155.984-1.795 2.308-2.049 3.693-2.083v3.238zm-1-5.185c-.864.034-1.715.102-2.538.222-.244-1.039-.397-2.136-.456-3.279h2.994v3.057zm-3.042-4.057h-3.05c.088-1.042.273-2.039.544-2.973 1.077.298 2.3.518 3.674.654v2.319zm1.042-4.228c-1.161-.264-2.383-.699-3.535-1.286 1.139-1.424 2.656-2.53 4.417-3.111.455 1.579.803 3.328.984 5.215-.658-.33-1.281-.611-1.866-.818zm1 1.909v-2.146c1.23-.274 2.502-.505 3.864-.67.433 1.116.786 2.327 1.05 3.606h-4.914zm3.042 2.319v3.057h3.051c-.059-1.143-.212-2.24-.456-3.279-.824-.12-1.674-.188-2.539-.222l-.056.444zm-5.042 1.738h-2.994c.059-1.143.212-2.24.456-3.279.824.12 1.674.188 2.538.222v3.057zm4.944-1.738h2.994c-.059-1.143-.212-2.24-.456-3.279-.824.12-1.674.188-2.538.222v3.057zm-1.888-2.147h-4.914c.264-1.279.617-2.49 1.05-3.606 1.362.165 2.634.396 3.864.67v2.936z"/></svg>
+             <div className="flex flex-col gap-2">
+               <div className={`flex gap-4 text-slate-400 transition-opacity duration-500 ${scrolled ? "opacity-0 h-0 overflow-hidden" : "opacity-100"}`}>
+                 {/* Social Icons */}
+                 <a href="http://www.mrestudioinformatico.com/" target="_blank" rel="noreferrer" title="Website" className="hover:text-blue-400 transition-colors">
+                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.152c-1.129.566-2.38.971-3.693 1.155v-3.238c1.385.034 2.709.288 3.693 2.083zm-4.957 1.155c-1.313-.184-2.564-.589-3.693-1.155.984-1.795 2.308-2.049 3.693-2.083v3.238zm-1-5.185c-.864.034-1.715.102-2.538.222-.244-1.039-.397-2.136-.456-3.279h2.994v3.057zm-3.042-4.057h-3.05c.088-1.042.273-2.039.544-2.973 1.077.298 2.3.518 3.674.654v2.319zm1.042-4.228c-1.161-.264-2.383-.699-3.535-1.286 1.139-1.424 2.656-2.53 4.417-3.111.455 1.579.803 3.328.984 5.215-.658-.33-1.281-.611-1.866-.818zm1 1.909v-2.146c1.23-.274 2.502-.505 3.864-.67.433 1.116.786 2.327 1.05 3.606h-4.914zm3.042 2.319v3.057h3.051c-.059-1.143-.212-2.24-.456-3.279-.824-.12-1.674-.188-2.539-.222l-.056.444zm-5.042 1.738h-2.994c.059-1.143.212-2.24-.456-3.279.824.12 1.674.188 2.538.222v3.057zm4.944-1.738h2.994c-.059-1.143-.212-2.24-.456-3.279-.824.12-1.674.188-2.538.222v3.057zm-1.888-2.147h-4.914c.264-1.279.617-2.49 1.05-3.606 1.362.165 2.634.396 3.864.67v2.936z"/></svg>
                  </a>
-                 {/* LinkedIn Icon */}
-                 <a href="https://www.linkedin.com/in/mrtech2026/" target="_blank" rel="noreferrer" title="LinkedIn" className="hover:text-blue-500 transition-colors">
-                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                 <a href="https://www.linkedin.com/in/mrtech2026/" target="_blank" rel="noreferrer" className="hover:text-blue-500 transition-colors">
+                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                  </a>
-                 {/* Instagram Icon */}
-                 <a href="https://www.instagram.com/mrtechnologymza?igsh=MTJ1MmNucWk2dTVrbQ%3D%3D&utm_source=qr" target="_blank" rel="noreferrer" title="Instagram" className="hover:text-pink-500 transition-colors">
-                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                 </a>
-                 {/* Email Icon */}
-                 <a href="mailto:mr@mrestudioinformatico.com" target="_blank" rel="noreferrer" title="mr@mrestudioinformatico.com" className="hover:text-red-500 transition-colors">
-                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.866l5.6-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg>
-                 </a>
-                 {/* WhatsApp Icon */}
-                 <a href="https://wa.me/5492616518318" target="_blank" rel="noreferrer" title="WhatsApp" className="hover:text-green-500 transition-colors">
-                   <svg className="w-4 h-4 md:w-5 md:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                 <a href="https://wa.me/5492616518318" target="_blank" rel="noreferrer" className="hover:text-green-500 transition-colors">
+                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                  </a>
                </div>
              </div>
           </div>
-          <div className="hidden md:flex gap-8 text-sm font-semibold text-slate-300 tracking-wide">
-            <a href="#antenas" className="hover:text-blue-400 transition-colors">Equipos Starlink</a>
-            <a href="#planes" className="hover:text-blue-400 transition-colors">Planes & Abonos</a>
-            <a href="#consultoria" className="hover:text-blue-400 transition-colors">Servicios IT</a>
+          
+          <div className="hidden lg:flex items-center gap-4 xl:gap-8">
+            <a href="#antenas" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+              <img src="/nav_equipos.png" alt="Equipos" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
+              <span className={`text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Equipos</span>
+            </a>
+            <a href="#planes" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+              <img src="/nav_planes.png" alt="Planes" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
+              <span className={`text-[9px] font-bold uppercase tracking-widest text-teal-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Planes</span>
+            </a>
+            <a href="#consultoria" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+              <img src="/nav_servicios.png" alt="Servicios" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
+              <span className={`text-[9px] font-bold uppercase tracking-widest text-purple-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Servicios IT</span>
+            </a>
           </div>
-          <div className="flex gap-4">
-             <Link href="https://satellite-b2b-client-portal.vercel.app">
-                <Button variant="outline" className="text-white border-slate-700 hover:bg-slate-800 shadow-md rounded-full px-5 transition-all hover:scale-105 active:scale-95 bg-slate-900/50 backdrop-blur-md text-sm">
-                  Portal de Clientes
-                </Button>
+
+          <div className="flex gap-4 items-center">
+             <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "http://localhost:3000"} className="group">
+                <div className="relative overflow-hidden transition-all duration-500 hover:scale-110">
+                   <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
+                </div>
              </Link>
-             <Link href="https://satellite-b2b-admin-dashboard.vercel.app">
-                <Button variant="default" className="hidden sm:flex text-white bg-blue-600 hover:bg-blue-500 shadow-[0_0_15px_rgba(37,99,235,0.4)] rounded-full px-5 transition-all hover:scale-105 active:scale-95 border border-blue-500 text-sm">
-                  NOC / Admin
-                </Button>
+             <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "http://localhost:3002"} className="group">
+                <div className="relative overflow-hidden transition-all duration-500 hover:scale-110 hidden sm:block">
+                   <img src="/card_noc.png" alt="NOC" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
+                </div>
              </Link>
           </div>
         </div>
@@ -238,19 +257,13 @@ export default function MarketingPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-40 pb-24 md:pt-48 md:pb-32 px-6 flex flex-col items-center text-center">
-        <div className="inline-flex gap-3 items-center px-5 py-2.5 rounded-full bg-slate-900/60 border border-slate-700/80 mb-10 shadow-2xl backdrop-blur-xl hover:border-cyan-500/50 transition-colors cursor-default">
-          <span className="flex h-2.5 w-2.5 relative">
-             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
-          </span>
-          <span className="text-sm font-medium text-slate-200">Terminales online globales · Nodo Mendoza</span>
-        </div>
+      <section className="relative z-10 pt-56 pb-24 md:pt-64 md:pb-32 px-6 flex flex-col items-center text-center">
 
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 max-w-5xl leading-[1.1] text-white">
-          Internet Rápido y Estable<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl">
-            donde sea que su empresa opere.
+
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 max-w-6xl leading-[1.1] text-white">
+          Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-3xl md:text-5xl lg:text-6xl">
+            y en el lugar que tu empresa se encuentre, sin limites geográficos.
           </span>
         </h1>
         <p className="text-xl text-slate-300 max-w-3xl mb-12 leading-relaxed font-light">
@@ -258,7 +271,7 @@ export default function MarketingPage() {
         </p>
 
         <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-5 w-full max-w-5xl mx-auto">
-          <Link href="https://satellite-b2b-client-portal.vercel.app">
+          <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "http://localhost:3000"}>
             <Button size="lg" className="h-14 px-8 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95 border border-blue-500 flex gap-3 group">
               <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
               Portal B2B Clientes
@@ -272,7 +285,7 @@ export default function MarketingPage() {
             </Button>
           </a>
 
-          <Link href="https://satellite-b2b-admin-dashboard.vercel.app">
+          <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "http://localhost:3002"}>
             <Button size="lg" className="h-14 px-8 rounded-2xl bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold text-lg shadow-xl transition-all hover:scale-105 active:scale-95 border border-slate-700 flex gap-3 group">
               <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
               Soporte / Hub NOC
@@ -280,35 +293,35 @@ export default function MarketingPage() {
           </Link>
         </div>
 
-        <div className="mt-28 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center w-full max-w-6xl relative z-10 border-t border-slate-800/50 pt-16">
-           <div className="flex flex-col items-center">
-             <div className="w-14 h-14 rounded-2xl bg-slate-900/50 backdrop-blur-md flex items-center justify-center mb-4 border border-blue-500/20 shadow-lg shadow-blue-500/10">
-                <svg className="w-7 h-7 text-blue-400 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-             </div>
-             <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">+99.9%</h4>
-             <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Tiempo de Actividad</p>
-           </div>
-           <div className="flex flex-col items-center">
-             <div className="w-14 h-14 rounded-2xl bg-slate-900/50 backdrop-blur-md flex items-center justify-center mb-4 border border-cyan-500/20 shadow-lg shadow-cyan-500/10">
-                <svg className="w-7 h-7 text-cyan-400 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-             </div>
-             <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Plug & Play</h4>
-             <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Instalación Sencilla</p>
-           </div>
-           <div className="flex flex-col items-center">
-             <div className="w-14 h-14 rounded-2xl bg-slate-900/50 backdrop-blur-md flex items-center justify-center mb-4 border border-indigo-500/20 shadow-lg shadow-indigo-500/10">
-                <svg className="w-7 h-7 text-indigo-400 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9zM12 2.252A8.014 8.014 0 0117.748 8H12V2.252zM12 21.748V16h5.748A8.014 8.014 0 0112 21.748zM3.512 15H9v5.488A9.025 9.025 0 013.512 15z" /></svg>
-             </div>
-             <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Extremo</h4>
-             <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Resiste Incidencias</p>
-           </div>
-           <div className="flex flex-col items-center">
-             <div className="w-14 h-14 rounded-2xl bg-slate-900/50 backdrop-blur-md flex items-center justify-center mb-4 border border-emerald-500/20 shadow-lg shadow-emerald-500/10">
-                <svg className="w-7 h-7 text-emerald-400 drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-             </div>
-             <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Ilimitados</h4>
-             <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Datos Alta Velocidad</p>
-           </div>
+                <div className="mt-28 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center w-full max-w-6xl relative z-10 border-t border-slate-800/50 pt-16">
+            <div className="flex flex-col items-center group">
+              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                 <img src="/icon_uptime.png" alt="Uptime" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
+              </div>
+              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">+99.9%</h4>
+              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Tiempo de Actividad</p>
+            </div>
+            <div className="flex flex-col items-center group">
+              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                 <img src="/icon_plugplay.png" alt="Plug & Play" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]" />
+              </div>
+              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Plug & Play</h4>
+              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Instalación Sencilla</p>
+            </div>
+            <div className="flex flex-col items-center group">
+              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                 <img src="/icon_extreme.png" alt="Extremo" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
+              </div>
+              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Extremo</h4>
+              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Resiste Incidencias</p>
+            </div>
+            <div className="flex flex-col items-center group">
+              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                 <img src="/icon_unlimited.png" alt="Ilimitados" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(20,184,166,0.4)]" />
+              </div>
+              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Ilimitados</h4>
+              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Datos Alta Velocidad</p>
+            </div>
         </div>
       </section>
 
@@ -628,8 +641,8 @@ export default function MarketingPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                {/* Column 1 */}
                <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-blue-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-16 w-16 rounded-2xl bg-blue-500/20 flex items-center justify-center text-blue-400 mb-8 border border-blue-500/40 group-hover:scale-110 group-hover:bg-blue-500/30 transition-all duration-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                     <svg className="w-8 h-8 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                     <img src="/icon_architecture.png" alt="Arquitectura" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
                   </div>
                   <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Arquitectura & Relevamiento</h4>
                   <ul className="text-slate-300 text-sm space-y-4 font-medium">
@@ -640,10 +653,9 @@ export default function MarketingPage() {
                   </ul>
                </div>
                
-               {/* Column 2 */}
                <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-indigo-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-16 w-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mb-8 border border-indigo-500/40 group-hover:scale-110 group-hover:bg-indigo-500/30 transition-all duration-500 shadow-[0_0_15px_rgba(99,102,241,0.3)]">
-                     <svg className="w-8 h-8 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                     <img src="/icon_noc_center.png" alt="NOC" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
                   </div>
                   <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Centro Operativo (NOC)</h4>
                   <ul className="text-slate-300 text-sm space-y-4 font-medium">
@@ -654,10 +666,9 @@ export default function MarketingPage() {
                   </ul>
                </div>
                
-               {/* Column 3 */}
                <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-emerald-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-16 w-16 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 mb-8 border border-emerald-500/40 group-hover:scale-110 group-hover:bg-emerald-500/30 transition-all duration-500 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                     <svg className="w-8 h-8 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                     <img src="/icon_engineering.png" alt="Ingeniería" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.4)]" />
                   </div>
                   <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Ingeniería & Soporte</h4>
                   <ul className="text-slate-300 text-sm space-y-4 font-medium">

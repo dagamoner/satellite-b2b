@@ -4,7 +4,7 @@ export const contractSchema = z.object({
   clientName: z.string().min(3, "El nombre debe tener al menos 3 caracteres"),
   clientEmail: z.string().email("Formato de correo electrónico inválido"),
   clientPhone: z.string().min(8, "El teléfono debe tener al menos 8 dígitos"),
-  clientDni: z.string().regex(/^[0-9]{7,11}$/, "El DNI/CUIT debe tener entre 7 y 11 números, sin puntos ni guiones"),
+  clientDni: z.string().min(2, "El DNI/CUIT es demasiado corto").max(20, "El DNI/CUIT es demasiado largo"),
   companyName: z.string().optional(),
   address: z.string().min(5, "La dirección es demasiado corta"),
   city: z.string().min(3, "Ciudad requerida"),
@@ -13,8 +13,11 @@ export const contractSchema = z.object({
     errorMap: () => ({ message: "Seleccione un equipo válido" }),
   }),
   planType: z.string().min(1, "Seleccione un plan"),
+  monthlyFee: z.string().optional(),
   installationNotes: z.string().optional(),
 });
+
+
 
 export const loginSchema = z.object({
   dni: z.string().min(1, "DNI requerido"),

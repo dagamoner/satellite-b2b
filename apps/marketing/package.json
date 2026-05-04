@@ -13,6 +13,7 @@
   "dependencies": {
     "@repo/database": "*",
     "@repo/ui": "*",
+    "@repo/validation": "*",
     "@prisma/client": "^6.2.1",
     "browser-image-compression": "^2.0.2",
     "jspdf": "^4.2.1",

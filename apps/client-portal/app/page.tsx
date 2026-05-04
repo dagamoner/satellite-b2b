@@ -2,7 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
-import { loginSchema } from "../lib/validation";
+import { loginSchema } from "@repo/validation";
 import { z } from "zod";
 
 
@@ -168,7 +168,7 @@ function EntryPortalContent() {
 
             <div className="space-y-2">
               <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                Número de Contrato
+                Número de Solicitud
               </label>
               <div className="relative group">
                 <input
