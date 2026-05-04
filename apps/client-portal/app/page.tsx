@@ -53,9 +53,13 @@ function EntryPortalContent() {
     setLoading(true);
     setError("");
     try {
+      const normalizedDni = dniVal.trim();
       const normalizedContract = contractVal.trim().replace(/\s+/g, "-");
+      
+      console.log("Auto-login attempt:", { normalizedDni, normalizedContract });
+
       const result = await signIn("client-credentials", {
-        dni: dniVal,
+        dni: normalizedDni,
         contractNumber: normalizedContract,
         redirect: false,
       });

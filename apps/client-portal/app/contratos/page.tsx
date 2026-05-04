@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { contractSchema } from "@repo/validation";
 import { z } from "zod";
 
@@ -257,12 +258,12 @@ export default function ContratosPage() {
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <DownloadContractPDF form={form} contractNumber={success.contractNumber} />
-            <a 
+            <Link 
               href={`/?p_dni=${form.clientDni}&p_contract=${success.contractNumber}`} 
               className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 transition-colors text-white font-bold px-8 py-4 rounded-xl flex items-center justify-center"
             >
               Volver al Portal
-            </a>
+            </Link>
           </div>
         </div>
       </div>
