@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
@@ -150,6 +150,14 @@ const inputClass =
 
 // ── Página principal ───────────────────────────────────────────────────────
 export default function ContratosPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#020617] flex items-center justify-center text-blue-500 font-black animate-pulse">CARGANDO FORMULARIO...</div>}>
+      <ContratosPageContent />
+    </Suspense>
+  );
+}
+
+function ContratosPageContent() {
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormData>(INITIAL_DATA);
   const [loading, setLoading] = useState(false);

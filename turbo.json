@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
-  "globalEnv": ["DATABASE_URL", "NODE_ENV", "AUTH_SECRET", "AUTH_URL"],
+  "globalEnv": ["DATABASE_URL", "NODE_ENV", "AUTH_SECRET", "AUTH_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL"],
   "globalDependencies": [".env"],
   "tasks": {
     "generate": {
