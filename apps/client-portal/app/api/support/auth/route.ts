@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db as prisma } from "@/lib/prisma";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
+    cookies();
     const { dni, contractNumber } = await request.json();
 
     if (!dni || !contractNumber) {

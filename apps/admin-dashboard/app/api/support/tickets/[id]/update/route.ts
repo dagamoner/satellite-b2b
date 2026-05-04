@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@repo/database";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 /**
  * PATCH /api/support/tickets/[id]/update
@@ -12,6 +15,7 @@ export async function PATCH(
   const { id } = params;
 
   try {
+    cookies();
     const body = await request.json();
     const { status, priority, operatorId } = body;
 

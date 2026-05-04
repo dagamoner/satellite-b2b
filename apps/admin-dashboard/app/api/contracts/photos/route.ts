@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 // Usamos las variables de entorno para conectar con Supabase Storage
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -9,6 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(request: NextRequest) {
   try {
+    cookies();
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
 

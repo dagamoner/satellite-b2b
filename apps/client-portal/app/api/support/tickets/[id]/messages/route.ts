@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@repo/database";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,7 @@ export async function GET(
   const { id } = params;
 
   try {
+    cookies();
     const messages = await prisma.ticketMessage.findMany({
       where: { ticketId: id },
       orderBy: { createdAt: "asc" },
@@ -41,6 +43,7 @@ export async function POST(
   const { id } = params;
 
   try {
+    cookies();
     const { content, attachments, authorId } = await request.json();
 
     if (!content) {

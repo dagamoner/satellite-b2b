@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/prisma";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
+    cookies();
     console.log("Iniciando Emergency Seed...");
 
     // 1. Crear Técnico de prueba si no existe

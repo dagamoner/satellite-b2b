@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "@repo/database";
+import { cookies } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    cookies();
     const tickets = await db.supportTicket.findMany({
       where: { contractId },
       include: {
@@ -47,6 +49,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    cookies();
     const { contractId, title, description, category } = await request.json();
 
     if (!contractId || !title || !description || !category) {

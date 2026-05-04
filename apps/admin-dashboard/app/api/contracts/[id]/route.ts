@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "@repo/database";
+import { cookies } from "next/headers";
+
+export const dynamic = "force-dynamic";
 
 // PATCH /api/contracts/[id] — Actualizar estado, notas o fecha de un contrato (admin)
 export async function PATCH(
@@ -7,6 +10,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
+    cookies();
     const { id } = params;
     const body = await request.json();
 
@@ -38,6 +42,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    cookies();
     const contract = await db.installationContract.findUnique({
       where: { id: params.id },
     });
