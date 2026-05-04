@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@repo/database";
+import { authConfig } from "../auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       id: "client-credentials",
@@ -29,34 +30,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return {
           id: contract.id,
           name: contract.clientName,
-          email: contract.clientEmail, // Opcional
+          email: contract.clientEmail,
           dni: contract.clientDni,
           contractNumber: contract.contractNumber,
         };
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.dni = (user as any).dni;
-        token.contractNumber = (user as any).contractNumber;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).dni = token.dni;
-        (session.user as any).contractNumber = token.contractNumber;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.AUTH_SECRET,
 });

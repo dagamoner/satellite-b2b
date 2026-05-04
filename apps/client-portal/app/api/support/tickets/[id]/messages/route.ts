@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@repo/database";
-import { cookies } from "next/headers";
+import { auth } from "../../../../../auth";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,11 @@ export async function GET(
   const { id } = params;
 
   try {
-    await cookies();
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    }
+
     const messages = await prisma.ticketMessage.findMany({
       where: { ticketId: id },
       orderBy: { createdAt: "asc" },
@@ -43,7 +47,11 @@ export async function POST(
   const { id } = params;
 
   try {
-    await cookies();
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    }
+
     const { content, attachments, authorId } = await request.json();
 
     if (!content) {

@@ -24,30 +24,21 @@ function EntryPortalContent() {
 
   const { status } = useSession();
 
-  // Lógica de sesión existente y Auto-login desde Marketing
+  // El middleware ahora maneja la redirección si el usuario ya está autenticado.
   useEffect(() => {
-    if (status === "authenticated") {
+    // Solo manejamos el auto-login si no estamos autenticados aún
+    if (status === "unauthenticated") {
+      const pDni = searchParams.get("p_dni");
+      const pContract = searchParams.get("p_contract");
       const pTicket = searchParams.get("p_ticket");
-      if (pTicket) {
-        router.push(`/soporte/${pTicket}`);
-      } else {
-        router.push("/soporte/dashboard");
+
+      if (pDni && pContract) {
+        setDni(pDni);
+        setContractNumber(pContract);
+        autoLogin(pDni, pContract, pTicket);
       }
-      return;
     }
-
-    // Capture params for auto-login
-    const pDni = searchParams.get("p_dni");
-    const pContract = searchParams.get("p_contract");
-    const pTicket = searchParams.get("p_ticket");
-
-    if (pDni && pContract) {
-      setDni(pDni);
-      setContractNumber(pContract);
-      // Auto-trigger login
-      autoLogin(pDni, pContract, pTicket);
-    }
-  }, [searchParams, status, router]);
+  }, [status, searchParams]);
 
   const autoLogin = async (dniVal: string, contractVal: string, ticketId?: string | null) => {
     setLoading(true);
@@ -58,21 +49,11 @@ function EntryPortalContent() {
       
       console.log("Auto-login attempt:", { normalizedDni, normalizedContract });
 
-      const result = await signIn("client-credentials", {
+      await signIn("client-credentials", {
         dni: normalizedDni,
         contractNumber: normalizedContract,
-        redirect: false,
+        callbackUrl: ticketId ? `/soporte/${ticketId}` : "/soporte/dashboard",
       });
-
-      if (!result?.error) {
-        if (ticketId) {
-          router.push(`/soporte/${ticketId}`);
-        } else {
-          router.push("/soporte/dashboard");
-        }
-      } else {
-        setError("Error en la conexión automática. Por favor, ingrese manualmente.");
-      }
     } catch (err) {
       console.error("Auto-login failed:", err);
       setError("Error de red durante el acceso automático.");
@@ -93,17 +74,13 @@ function EntryPortalContent() {
       // Validar con Zod
       loginSchema.parse({ dni, contractNumber: normalizedContract });
 
-      const result = await signIn("client-credentials", {
+      // Usamos el comportamiento por defecto de NextAuth para redireccionar
+      // Esto asegura que las cookies se procesen correctamente antes del cambio de página
+      await signIn("client-credentials", {
         dni,
         contractNumber: normalizedContract,
-        redirect: false,
+        callbackUrl: "/soporte/dashboard",
       });
-
-      if (result?.error) {
-        throw new Error("Credenciales inválidas o número de solicitud inexistente");
-      }
-
-      router.push("/soporte/dashboard");
     } catch (err: any) {
       if (err.name === "ZodError" || err instanceof z.ZodError) {
         setError(err.errors[0].message);
@@ -125,7 +102,7 @@ function EntryPortalContent() {
 
       <div className="w-full max-w-md relative z-10">
         <a 
-          href="/" 
+          href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "/"} 
           className="mb-6 flex items-center gap-2 text-xs font-black uppercase text-slate-500 hover:text-cyan-400 transition-colors tracking-widest"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

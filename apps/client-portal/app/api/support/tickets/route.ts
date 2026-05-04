@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "@repo/database";
-import { cookies } from "next/headers";
+import { auth } from "../../../auth";
 
 export const dynamic = "force-dynamic";
 
@@ -13,19 +13,18 @@ async function generateTicketNumber() {
 }
 
 /**
- * GET /api/support/tickets?contractId=...
- * Obtiene los tickets vinculados a un contrato.
+ * GET /api/support/tickets
+ * Obtiene los tickets vinculados a un contrato desde la sesión.
  */
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const contractId = searchParams.get("contractId");
+export async function GET() {
+  const session = await auth();
+  const contractId = session?.user?.contractId;
 
   if (!contractId) {
-    return NextResponse.json({ error: "contractId es requerido" }, { status: 400 });
+    return NextResponse.json({ error: "Sesión no válida" }, { status: 401 });
   }
 
   try {
-    await await cookies();
     const tickets = await db.supportTicket.findMany({
       where: { contractId },
       include: {
@@ -49,11 +48,12 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    await await cookies();
-    const { contractId, title, description, category } = await request.json();
+    const session = await auth();
+    const { title, description, category } = await request.json();
+    const contractId = session?.user?.contractId;
 
     if (!contractId || !title || !description || !category) {
-      return NextResponse.json({ error: "Faltan campos obligatorios" }, { status: 400 });
+      return NextResponse.json({ error: "Faltan campos obligatorios o sesión no válida" }, { status: 400 });
     }
 
     const ticketNumber = await generateTicketNumber();
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
         description,
         category,
         status: "OPEN",
-        priority: "MEDIUM", // Prioridad inicial, el NOC la ajustará
+        priority: "MEDIUM",
         messages: {
           create: {
             content: `Ticket creado: ${description}`,

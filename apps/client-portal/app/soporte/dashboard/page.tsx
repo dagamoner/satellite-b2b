@@ -1,9 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import { Button } from "@repo/ui/button";
 import { useRealtimeContracts } from "../../../hooks/useRealtimeContracts";
-
 
 interface Ticket {
   id: string;
@@ -16,8 +16,10 @@ interface Ticket {
 }
 
 export default function SupportDashboard() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [session, setSession] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   
@@ -29,26 +31,19 @@ export default function SupportDashboard() {
   const [currentContract, setCurrentContract] = useState<any>(null);
 
   useEffect(() => {
-    if (session?.contractId && contracts.length > 0) {
-      const found = contracts.find(c => c.id === session.contractId);
+    if (session?.user?.contractId && contracts.length > 0) {
+      const found = contracts.find(c => c.id === (session.user as any).contractId);
       if (found) setCurrentContract(found);
     }
   }, [contracts, session]);
   // -------------------------------
 
-
-  const router = useRouter();
-
   useEffect(() => {
-    const saved = localStorage.getItem("mr_support_session");
-    if (!saved) {
-      router.push("/");
-      return;
+    if (status === "authenticated" && session?.user) {
+      const contractId = (session.user as any).contractId;
+      fetchTickets(contractId);
     }
-    const sessionData = JSON.parse(saved);
-    setSession(sessionData);
-    fetchTickets(sessionData.contractId);
-  }, [router]);
+  }, [status, session]);
 
   const fetchTickets = async (contractId: string) => {
     try {
@@ -73,13 +68,13 @@ export default function SupportDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...newTicket,
-          contractId: session.contractId
+          contractId: (session?.user as any).contractId
         }),
       });
       if (res.ok) {
         setShowModal(false);
         setNewTicket({ title: "", description: "", category: "Conectividad" });
-        fetchTickets(session.contractId);
+        fetchTickets((session?.user as any).contractId);
       }
     } catch (err) {
       alert("Error al crear el incidente");
@@ -89,8 +84,7 @@ export default function SupportDashboard() {
   };
 
   const logout = () => {
-    localStorage.removeItem("mr_support_session");
-    router.push("/");
+    signOut({ callbackUrl: "/" });
   };
 
   if (loading || !session) {
@@ -106,7 +100,6 @@ export default function SupportDashboard() {
 
   return (
     <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-cyan-500/30">
-      {/* Header Premium */}
       <header className="border-b border-white/5 bg-slate-900/20 backdrop-blur-2xl sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -122,7 +115,7 @@ export default function SupportDashboard() {
               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Identidad Validada</p>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-                <p className="text-sm font-black text-white uppercase">{session.name}</p>
+                <p className="text-sm font-black text-white uppercase">{session?.user?.name}</p>
               </div>
             </div>
             <button 
@@ -137,8 +130,6 @@ export default function SupportDashboard() {
 
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          
-          {/* Sidebar / Info */}
           <aside className="lg:col-span-1 space-y-8">
             <div className="bg-gradient-to-b from-slate-900/80 to-slate-950 border border-white/10 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
@@ -148,7 +139,7 @@ export default function SupportDashboard() {
               <div className="space-y-6">
                 <div>
                   <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-widest mb-1">Número Maestro</p>
-                  <p className="text-xl font-mono font-black text-white">{session.contractNumber}</p>
+                  <p className="text-xl font-mono font-black text-white">{(session?.user as any)?.contractNumber}</p>
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Estado del Servicio</p>
@@ -160,7 +151,6 @@ export default function SupportDashboard() {
                     {currentContract?.status || "Activo / Alta Velocidad"}
                   </span>
                 </div>
-
               </div>
               <div className="mt-8 pt-8 border-t border-white/5">
                 <button className="w-full py-4 bg-slate-950/50 hover:bg-slate-900 border border-slate-800 text-slate-300 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-3">
@@ -171,7 +161,6 @@ export default function SupportDashboard() {
             </div>
           </aside>
 
-          {/* Tickets Area */}
           <section className="lg:col-span-2">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
               <div>
@@ -242,12 +231,10 @@ export default function SupportDashboard() {
         </div>
       </main>
 
-      {/* Modal Premium */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-slate-950/90 backdrop-blur-xl animate-in fade-in duration-300">
           <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 to-blue-500" />
-            
             <div className="flex justify-between items-start mb-10">
               <div>
                 <h2 className="text-3xl font-black text-white uppercase tracking-tighter">Nuevo Reporte</h2>
@@ -273,7 +260,6 @@ export default function SupportDashboard() {
                   required
                 />
               </div>
-              
               <div className="space-y-2">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Categoría técnica</label>
                 <select 
@@ -288,7 +274,6 @@ export default function SupportDashboard() {
                   <option>Otro</option>
                 </select>
               </div>
-
               <div className="space-y-2">
                 <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Descripción detallada</label>
                 <textarea 
@@ -300,7 +285,6 @@ export default function SupportDashboard() {
                   required
                 />
               </div>
-
               <div className="pt-6 flex gap-4">
                 <button 
                   type="button"

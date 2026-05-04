@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
 
 
@@ -25,6 +26,8 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState("");
+  const { data: session, status } = useSession();
   
   // --- Realtime Hook ---
   const { messages, setMessages } = useRealtimeMessages(params.ticketId);
@@ -42,14 +45,10 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
   }, []);
 
   useEffect(() => {
-    const saved = localStorage.getItem("mr_support_session");
-    if (!saved) {
-      router.push("/soporte");
-      return;
+    if (status === "authenticated" && session?.user) {
+      fetchInitialData();
     }
-    setSession(JSON.parse(saved));
-    fetchInitialData();
-  }, [params.ticketId]);
+  }, [status, session, router, params.ticketId]);
 
 
   const fetchInitialData = async () => {
