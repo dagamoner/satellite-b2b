@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    cookies();
+    await await cookies();
     console.log("Iniciando Emergency Seed...");
 
     // 1. Crear Técnico de prueba si no existe

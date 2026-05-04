@@ -19,7 +19,7 @@ async function generateContractNumber(p: PrismaClient): Promise<string> {
 // POST /api/contracts — Crear nuevo contrato desde el formulario del cliente
 export async function POST(request: NextRequest) {
   // Force dynamic runtime to prevent build errors
-  cookies();
+  await await cookies();
   console.log("[API_CONTRACTS] VERSION_STABILIZED_V3");
 
   try {

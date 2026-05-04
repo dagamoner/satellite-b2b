@@ -21,7 +21,7 @@ async function generateTicketNumber() {
 }
 
 export async function POST(request: NextRequest) {
-  cookies(); // Force dynamic runtime
+  await await await cookies(); // Force dynamic runtime
   try {
     const { name, email, phone, dni, type, message, planName } = await request.json();
 

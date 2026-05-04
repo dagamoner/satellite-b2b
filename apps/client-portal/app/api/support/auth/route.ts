@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
-    cookies();
+    await await cookies();
     const { dni, contractNumber } = await request.json();
 
     if (!dni || !contractNumber) {

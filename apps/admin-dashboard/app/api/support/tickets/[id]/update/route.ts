@@ -15,7 +15,7 @@ export async function PATCH(
   const { id } = params;
 
   try {
-    cookies();
+    await cookies();
     const body = await request.json();
     const { status, priority, operatorId } = body;
 

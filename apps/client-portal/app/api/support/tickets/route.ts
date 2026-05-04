@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    cookies();
+    await await cookies();
     const tickets = await db.supportTicket.findMany({
       where: { contractId },
       include: {
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    cookies();
+    await await cookies();
     const { contractId, title, description, category } = await request.json();
 
     if (!contractId || !title || !description || !category) {

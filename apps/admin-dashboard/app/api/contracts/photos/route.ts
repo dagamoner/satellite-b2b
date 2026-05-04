@@ -12,7 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(request: NextRequest) {
   try {
-    cookies();
+    await await cookies();
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
 

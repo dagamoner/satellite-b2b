@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 // GET /api/contracts — Listar todos los contratos (admin)
 export async function GET(request: NextRequest) {
-  cookies(); // Force dynamic runtime
+  await await await cookies(); // Force dynamic runtime
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");

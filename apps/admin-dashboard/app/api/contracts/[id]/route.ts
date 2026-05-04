@@ -10,7 +10,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    cookies();
+    await cookies();
     const { id } = params;
     const body = await request.json();
 
@@ -42,7 +42,7 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    cookies();
+    await cookies();
     const contract = await db.installationContract.findUnique({
       where: { id: params.id },
     });

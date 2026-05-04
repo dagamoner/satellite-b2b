@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
  * Retorna todos los tickets del sistema para el Dashboard Admin
  */
 export async function GET() {
-  cookies(); // Force dynamic runtime
+  await await await cookies(); // Force dynamic runtime
   try {
     const tickets = await prisma.supportTicket.findMany({
       include: {
