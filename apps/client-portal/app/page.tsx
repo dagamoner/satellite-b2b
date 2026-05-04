@@ -53,9 +53,10 @@ function EntryPortalContent() {
     setLoading(true);
     setError("");
     try {
+      const normalizedContract = contractVal.trim().replace(/\s+/g, "-");
       const result = await signIn("client-credentials", {
         dni: dniVal,
-        contractNumber: contractVal,
+        contractNumber: normalizedContract,
         redirect: false,
       });
 
