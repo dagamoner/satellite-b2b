@@ -9,7 +9,7 @@ async function generateLeadNumber() {
   const year = new Date().getFullYear();
   const count = await db.installationContract.count();
   const seq = String(count + 1).padStart(4, "0");
-  return `LEAD-${year}-${seq}`;
+  return `SOL-${year}-${seq}`;
 }
 
 // Generador de número de ticket

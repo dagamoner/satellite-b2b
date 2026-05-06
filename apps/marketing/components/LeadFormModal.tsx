@@ -22,6 +22,9 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [generatedNumber, setGeneratedNumber] = useState("");
+
+  const isSpecialPlan = planInfo?.title === "Plan Full Estándar V4" || planInfo?.title === "Relevamiento IT - Planes Empresariales";
 
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -70,22 +73,30 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
       if (res.ok) {
         setSuccess(true);
-        // Pequeña pausa para que vean el éxito y luego redirección con auto-login
+        setGeneratedNumber(data.contractNumber);
+        
+        // Pequeña pausa para que vean el éxito y luego redirección
         setTimeout(() => {
-          const portalUrl = process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL;
+          let portalUrl = process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL;
           
           if (!portalUrl) {
             console.warn("NEXT_PUBLIC_CLIENT_PORTAL_URL no está configurada.");
-            // Si no hay URL configurada, no podemos redirigir al portal externo.
-            // Avisamos al usuario y cerramos el modal.
             alert("¡Solicitud enviada con éxito! Un asesor se contactará con usted a la brevedad.");
             onClose();
             return;
           }
 
+          // Asegurar que la URL sea absoluta
+          if (!portalUrl.startsWith("http")) {
+            portalUrl = `https://${portalUrl}`;
+          }
+
           const targetBase = portalUrl.endsWith('/') ? portalUrl.slice(0, -1) : portalUrl;
-          window.location.href = `${targetBase}/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_phone=${encodeURIComponent(formData.phone)}&p_plan=${encodeURIComponent(planInfo.title)}`;
-        }, 1500);
+          
+          // LÓGICA DE REDIRECCIÓN UNIFICADA:
+          // Ambos van a /contratos. El portal se encarga de mostrar la vista correcta según el plan.
+          window.location.href = `${targetBase}/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_phone=${encodeURIComponent(formData.phone)}&p_plan=${encodeURIComponent(planInfo.title)}&p_contract=${data.contractNumber}`;
+        }, 3000); // Un poco más de tiempo para que anoten el número si quieren
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");
         alert(errorMsg);
@@ -105,14 +116,25 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[80px] rounded-full" />
         
         {success ? (
-          <div className="py-12 text-center animate-in zoom-in duration-500">
-            <div className="w-24 h-24 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-emerald-500/30">
-               <svg className="w-12 h-12 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="py-8 text-center animate-in zoom-in duration-500">
+            <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+               <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                </svg>
             </div>
-            <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-4">¡Solicitud Registrada!</h2>
-            <p className="text-slate-400 font-medium">Estamos conectándote con el NOC para iniciar tu chat técnico...</p>
+            <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-2">¡Solicitud Registrada!</h2>
+            
+            <div className="bg-slate-950/80 border border-emerald-500/20 rounded-2xl p-6 my-6">
+              <p className="text-slate-500 text-[10px] uppercase tracking-widest mb-2">Tu Número de Seguimiento</p>
+              <p className="text-2xl font-black text-emerald-400 font-mono tracking-wider">{generatedNumber}</p>
+            </div>
+
+            <p className="text-slate-400 text-sm font-medium px-4">
+              {isSpecialPlan 
+                ? "Tu solicitud de relevamiento está siendo procesada. Te estamos redirigiendo al portal..."
+                : "Estamos conectándote con el portal para completar los datos de tu antena..."}
+            </p>
+            
             <div className="mt-8 flex justify-center">
                <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
             </div>

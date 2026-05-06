@@ -160,7 +160,7 @@ function EntryPortalContent() {
                   type="text"
                   value={contractNumber}
                   onChange={(e) => setContractNumber(e.target.value)}
-                  placeholder="MR-202X-XXXX"
+                  placeholder="SOL-2026-XXXX o MR-..."
                   className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500/50 transition-all placeholder:text-slate-700 font-mono"
                   required
                 />
