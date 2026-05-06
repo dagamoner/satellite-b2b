@@ -52,11 +52,13 @@ function ContratosPageContent() {
       const special = pPlan === "Plan Full Estándar V4" || pPlan === "Relevamiento IT - Planes Empresariales";
       setIsSpecialPlan(special);
 
+      const normalizedDni = pDni ? pDni.replace(/\D/g, "") : "";
+
       setForm(prev => {
         const next = { ...prev };
         if (pName) next.clientName = pName;
         if (pEmail) next.clientEmail = pEmail;
-        if (pDni) next.clientDni = pDni;
+        if (pDni) next.clientDni = normalizedDni;
         if (pPhone) next.clientPhone = pPhone;
         return next;
       });

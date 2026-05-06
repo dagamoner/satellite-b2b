@@ -44,7 +44,7 @@ function EntryPortalContent() {
     setLoading(true);
     setError("");
     try {
-      const normalizedDni = dniVal.trim();
+      const normalizedDni = dniVal.replace(/\D/g, "");
       const normalizedContract = contractVal.trim().replace(/\s+/g, "-");
       
       console.log("Auto-login attempt:", { normalizedDni, normalizedContract });
@@ -68,16 +68,17 @@ function EntryPortalContent() {
     setLoading(true);
 
     try {
-      // Normalizar: Reemplazar espacios por guiones para ser más flexible
+      // Normalizar DNI: solo números
+      const normalizedDni = dni.replace(/\D/g, "");
+      // Normalizar Contrato: Reemplazar espacios por guiones
       const normalizedContract = contractNumber.trim().replace(/\s+/g, "-");
       
       // Validar con Zod
-      loginSchema.parse({ dni, contractNumber: normalizedContract });
+      loginSchema.parse({ dni: normalizedDni, contractNumber: normalizedContract });
 
       // Usamos el comportamiento por defecto de NextAuth para redireccionar
-      // Esto asegura que las cookies se procesen correctamente antes del cambio de página
       await signIn("client-credentials", {
-        dni,
+        dni: normalizedDni,
         contractNumber: normalizedContract,
         callbackUrl: "/soporte/dashboard",
       });

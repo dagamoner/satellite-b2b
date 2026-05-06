@@ -59,11 +59,14 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     setLoading(true);
 
     try {
+      const normalizedDni = formData.dni.replace(/\D/g, "");
+
       const res = await fetch("/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          dni: normalizedDni,
           type: planInfo.type,
           planName: planInfo.title,
         }),
@@ -86,17 +89,28 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
             return;
           }
 
-          // Asegurar que la URL sea absoluta
-          if (!portalUrl.startsWith("http")) {
-            portalUrl = `https://${portalUrl}`;
+          // Asegurar que la URL sea absoluta y tenga protocolo
+          let targetBase = portalUrl.trim();
+          if (!targetBase.startsWith("http")) {
+            targetBase = `https://${targetBase}`;
           }
-
-          const targetBase = portalUrl.endsWith('/') ? portalUrl.slice(0, -1) : portalUrl;
           
-          // LÓGICA DE REDIRECCIÓN UNIFICADA:
-          // Ambos van a /contratos. El portal se encarga de mostrar la vista correcta según el plan.
-          window.location.href = `${targetBase}/contratos?p_name=${encodeURIComponent(formData.name)}&p_email=${encodeURIComponent(formData.email)}&p_dni=${formData.dni}&p_phone=${encodeURIComponent(formData.phone)}&p_plan=${encodeURIComponent(planInfo.title)}&p_contract=${data.contractNumber}`;
-        }, 3000); // Un poco más de tiempo para que anoten el número si quieren
+          // Eliminar barra final si existe para evitar dobles barras
+          if (targetBase.endsWith("/")) {
+            targetBase = targetBase.slice(0, -1);
+          }
+          
+          const params = new URLSearchParams({
+            p_name: formData.name,
+            p_email: formData.email,
+            p_dni: normalizedDni,
+            p_phone: formData.phone,
+            p_plan: planInfo.title,
+            p_contract: data.contractNumber
+          });
+
+          window.location.href = `${targetBase}/contratos?${params.toString()}`;
+        }, 3000);
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");
         alert(errorMsg);
