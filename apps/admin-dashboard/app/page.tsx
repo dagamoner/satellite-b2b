@@ -253,7 +253,6 @@ export default function NOCDashboard() {
             <span className="text-xs font-black uppercase tracking-wider bg-slate-800 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700">Abiertos: {tickets.filter(t => t.status === 'OPEN').length}</span>
             <span className="text-xs font-black uppercase tracking-wider bg-red-950/30 text-red-400 px-3 py-1.5 rounded-full border border-red-900/30 animate-pulse">Críticos: {tickets.filter(t => t.priority === 'CRITICAL').length}</span>
           </div>
-          <div className="mt-4 text-[10px] font-black text-cyan-500/50 uppercase tracking-[0.3em]">DEBUG: NAV ENABLED</div>
         </div>
 
         {/* Navegación Principal */}
