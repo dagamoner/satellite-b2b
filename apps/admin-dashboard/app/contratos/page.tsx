@@ -327,9 +327,19 @@ export default function ContratosAdminPage() {
       {/* Header */}
       <div className="bg-slate-900/60 border-b border-slate-800 px-6 py-5">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl font-extrabold text-white">Contratos de Instalación</h1>
-            <p className="text-slate-500 text-sm mt-0.5">{contracts.length} registros totales</p>
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/"
+              className="p-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-400 hover:text-white hover:border-slate-600 transition-all active:scale-95 group"
+            >
+              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </Link>
+            <div>
+              <h1 className="text-2xl font-extrabold text-white uppercase tracking-tight">Contratos de Instalación</h1>
+              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-0.5">{contracts.length} registros totales</p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <select 

@@ -34,7 +34,7 @@ interface Message {
 }
 
 export default function NOCDashboard() {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
@@ -253,6 +253,27 @@ export default function NOCDashboard() {
             <span className="text-xs font-black uppercase tracking-wider bg-slate-800 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700">Abiertos: {tickets.filter(t => t.status === 'OPEN').length}</span>
             <span className="text-xs font-black uppercase tracking-wider bg-red-950/30 text-red-400 px-3 py-1.5 rounded-full border border-red-900/30 animate-pulse">Críticos: {tickets.filter(t => t.priority === 'CRITICAL').length}</span>
           </div>
+          <div className="mt-4 text-[10px] font-black text-cyan-500/50 uppercase tracking-[0.3em]">DEBUG: NAV ENABLED</div>
+        </div>
+
+        {/* Navegación Principal */}
+        <div className="px-6 py-4 space-y-2 border-b border-white/5 bg-slate-900/20">
+          <Link href="/contratos" className="flex items-center gap-4 px-4 py-3 rounded-2xl text-xs font-black uppercase tracking-[0.2em] text-slate-500 hover:text-white hover:bg-white/5 transition-all group">
+            <svg className="w-5 h-5 text-slate-600 group-hover:text-cyan-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Auditoría de Contratos
+          </Link>
+          
+          {(session?.user as any)?.role === "ADMIN" && (
+            <Link href="/usuarios" className="flex items-center gap-4 px-4 py-3 rounded-2xl text-xs font-black uppercase tracking-[0.2em] text-slate-500 hover:text-white hover:bg-white/5 transition-all group border border-cyan-500/10 bg-cyan-500/5">
+              <svg className="w-5 h-5 text-cyan-600 group-hover:text-cyan-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              Gestión de Equipo
+              <span className="ml-auto w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.5)]"></span>
+            </Link>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
