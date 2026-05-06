@@ -12,6 +12,8 @@ if (typeof window !== 'undefined') {
 }
 
 interface AntennaContractFormProps {
+  agents: Array<{ id: string; name: string; role: string }>;
+  nextInstallId: string;
   initialData?: {
     clientName?: string;
     clientEmail?: string;
@@ -21,11 +23,11 @@ interface AntennaContractFormProps {
   };
 }
 
-export default function AntennaContractForm({ initialData }: AntennaContractFormProps) {
+export default function AntennaContractForm({ agents, nextInstallId, initialData }: AntennaContractFormProps) {
   const [formData, setFormData] = useState({
     installDate: new Date().toLocaleDateString('es-AR'),
-    installId: '',
-    agentName: '',
+    installId: nextInstallId || '',
+    agentName: agents.length > 0 ? agents[0].name : '',
     razonSocial: initialData?.clientName || '',
     cuit: '',
     fantasia: 'MR TECHNOLOGY',
@@ -54,7 +56,7 @@ export default function AntennaContractForm({ initialData }: AntennaContractForm
     finalizadaInstalacion: false,
     clienteAclaracion: initialData?.clientName || '',
     clienteDni: initialData?.clientDni || '',
-    agenteNombreCheck: '',
+    agenteNombreCheck: agents.length > 0 ? agents[0].name : '',
     agenteDniCheck: '',
   });
 
@@ -308,7 +310,7 @@ export default function AntennaContractForm({ initialData }: AntennaContractForm
         <div className="flex justify-between items-start mb-10 border-b-4 border-[#001a33] pb-6">
           <div className="w-1/2">
             <img 
-              src="https://fuxshvuzitunztgajvve.supabase.co/storage/v1/object/public/articulos/logo_mr_tech.png" 
+              src="/logo_mr_tech.png" 
               alt="Logo" 
               className="max-h-24 object-contain"
             />
@@ -337,13 +339,16 @@ export default function AntennaContractForm({ initialData }: AntennaContractForm
              </div>
              <div className="flex items-center gap-4">
                 <span className="inter font-black text-[10px] text-slate-500 uppercase tracking-widest">Agente Oficial</span>
-                <input 
+                <select 
                   id="agentName"
-                  type="text" 
                   value={formData.agentName}
                   onChange={handleInputChange}
-                  className="input-header w-48 uppercase"
-                />
+                  className="input-header w-48 uppercase appearance-none"
+                >
+                  {agents.map(agent => (
+                    <option key={agent.id} value={agent.name}>{agent.name}</option>
+                  ))}
+                </select>
              </div>
           </div>
         </div>
@@ -514,25 +519,28 @@ export default function AntennaContractForm({ initialData }: AntennaContractForm
                 />
                 <span className="inter font-black text-xs uppercase tracking-tighter">Instalación Finalizada</span>
              </div>
-             {formData.finalizadaInstalacion && (
-               <div className="flex flex-col gap-2 animate-in slide-in-from-top-2">
-                 <input 
+              {formData.finalizadaInstalacion && (
+                <div className="flex flex-col gap-2 animate-in slide-in-from-top-2">
+                  <select 
                     id="agenteNombreCheck" 
                     value={formData.agenteNombreCheck} 
                     onChange={handleInputChange}
-                    placeholder="Firma Agente"
-                    className="text-center font-bold text-sm uppercase"
-                 />
-                 <input 
+                    className="text-center font-bold text-sm uppercase bg-transparent border-b border-slate-300 outline-none appearance-none"
+                  >
+                    {agents.map(agent => (
+                      <option key={agent.id} value={agent.name}>{agent.name}</option>
+                    ))}
+                  </select>
+                  <input 
                     id="agenteDniCheck" 
                     value={formData.agenteDniCheck} 
                     onChange={handleInputChange}
                     placeholder="DNI para cerrar"
                     className="text-center font-bold text-sm"
                     maxLength={8}
-                 />
-               </div>
-             )}
+                  />
+                </div>
+              )}
           </div>
         </div>
 
