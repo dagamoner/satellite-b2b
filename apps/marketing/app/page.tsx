@@ -334,40 +334,50 @@ export default function MarketingPage() {
             <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Satelital</h2>
             <div className="grid md:grid-cols-3 gap-8">
                {/* Mini X */}
-               <div className="bg-slate-900/60 backdrop-blur-2xl border border-slate-700/60 rounded-[2.5rem] p-8 hover:border-blue-500/60 hover:bg-slate-900/90 transition-all duration-500 group shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
+               <div className="bg-slate-900/40 backdrop-blur-2xl border border-slate-800 rounded-[2.5rem] p-8 hover:border-blue-500/50 transition-all duration-500 group shadow-2xl flex flex-col relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600/0 via-blue-600/20 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative z-10 flex-grow">
-                     <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/30 text-blue-400 shadow-inner shrink-0">
-                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
-                           </div>
-                           <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors drop-shadow-sm leading-tight">Antena Mini X</h3>
+                     <div className="flex items-start gap-5 mb-8">
+                        <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-400 shadow-[0_0_15px_rgba(37,99,235,0.1)] shrink-0">
+                           <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                        </div>
+                        <div className="flex flex-col">
+                           <h3 className="text-2xl font-bold text-white leading-tight">Antena Mini X</h3>
+                           <span className="text-slate-400 text-sm mt-1 font-medium tracking-wide">Compacta · Potente · Portátil</span>
                         </div>
                      </div>
-                     <p className="text-slate-300 mb-6 leading-relaxed text-sm font-light">
+
+                     <div className="flex items-center gap-4 mb-8">
+                        <div className="h-1 flex-grow bg-slate-800 rounded-full overflow-hidden">
+                           <div className="h-full w-1/3 bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)]" />
+                        </div>
+                        <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                     </div>
+
+                     <p className="text-slate-400 mb-8 leading-relaxed text-sm font-light">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Diseño y dinámica.
                      </p>
                      
-                     <div className="bg-slate-950/50 rounded-2xl p-5 border border-slate-800 mb-6">
-                        <div className="flex justify-between items-end mb-4 border-b border-slate-800 pb-4">
+                     <div className="bg-slate-950/40 rounded-3xl p-6 border border-slate-800/50 mb-2">
+                        <div className="flex justify-between items-end mb-6 border-b border-slate-800 pb-6">
                            <div>
-                              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Importe</p>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-3xl font-black text-white">$300.000</span>
+                                 <span className="text-4xl font-black text-white">$300.000</span>
                               </div>
-                              <p className="text-[10px] text-slate-400 uppercase">+ IVA (Efectivo)</p>
+                              <p className="text-[9px] text-slate-500 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">O 3 Cuotas</p>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
                               <div className="flex items-baseline gap-1 justify-end">
                                  <span className="text-2xl font-bold text-blue-400">$120.000</span>
                               </div>
-                              <p className="text-[10px] text-slate-400 uppercase">+ IVA</p>
+                              <p className="text-[9px] text-slate-500 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
                         </div>
                         <Button 
                           onClick={() => openLeadModal("HARDWARE", "Antena Mini X", "Adquisición de equipamiento Starlink Mini con soporte de activación.")}
-                          className="w-full bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white font-bold py-4 rounded-xl border border-blue-500/50 transition-colors"
+                          className="w-full bg-slate-900 hover:bg-blue-600 text-slate-300 hover:text-white font-bold py-4 rounded-xl border border-slate-800 hover:border-blue-500 transition-all duration-300"
                         >
                           Comprar Equipamiento
                         </Button>
@@ -376,41 +386,66 @@ export default function MarketingPage() {
                </div>
 
                {/* Estándar V4 */}
-               <div className="bg-slate-900/60 backdrop-blur-2xl border border-cyan-500/40 rounded-[2.5rem] p-8 hover:border-cyan-400/70 shadow-[0_0_40px_rgba(6,182,212,0.15)] transition-all duration-500 relative group overflow-hidden flex flex-col">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full" />
-                  <div className="relative z-10 flex-grow">
-                     <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center border border-cyan-500/40 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.3)] group-hover:scale-110 transition-transform shrink-0">
-                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 012 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
-                           </div>
-                           <h3 className="text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors drop-shadow-sm leading-tight">Antena Estándar V4 <span className="block text-sm font-normal text-cyan-200">+ Router WiFi 6</span></h3>
+               <div className="bg-slate-900/40 backdrop-blur-3xl border-2 border-cyan-500/30 rounded-[2.5rem] p-8 hover:border-cyan-400 shadow-[0_0_50px_rgba(6,182,212,0.15)] transition-all duration-500 relative group overflow-hidden flex flex-col">
+                  <div className="absolute top-6 left-8 bg-cyan-600/20 border border-cyan-500/30 text-cyan-400 px-3 py-1 text-[10px] font-black rounded-lg tracking-widest uppercase z-20">MÁS POPULAR</div>
+                  
+                  <div className="relative z-10 flex-grow mt-10">
+                     <div className="flex items-start gap-5 mb-8">
+                        <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center border border-cyan-500/30 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.2)] shrink-0">
+                           <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 012 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" /></svg>
+                        </div>
+                        <div className="flex flex-col">
+                           <h3 className="text-2xl font-bold text-white leading-tight">Antena Estándar V4</h3>
+                           <span className="text-cyan-400 text-sm mt-1 font-medium tracking-wide">+ Router WiFi 6</span>
                         </div>
                      </div>
-                     <p className="text-slate-200 mb-6 leading-relaxed text-sm font-light">
+
+                     <div className="flex flex-wrap gap-2 mb-8">
+                        <div className="bg-slate-950/60 border border-slate-800 px-3 py-1.5 rounded-lg flex items-center gap-2">
+                           <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a10.5 10.5 0 0114.142 0M1.414 8.414a15.5 15.5 0 0121.172 0" /></svg>
+                           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">WiFi 6</span>
+                        </div>
+                        <div className="bg-slate-950/60 border border-slate-800 px-3 py-1.5 rounded-lg flex items-center gap-2">
+                           <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Alta Potencia</span>
+                        </div>
+                        <div className="bg-slate-950/60 border border-slate-800 px-3 py-1.5 rounded-lg flex items-center gap-2">
+                           <svg className="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                           <span className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Estable</span>
+                        </div>
+                     </div>
+
+                     <div className="flex items-center gap-4 mb-8">
+                        <div className="h-1 flex-grow bg-slate-800 rounded-full overflow-hidden">
+                           <div className="h-full w-full bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.6)]" />
+                        </div>
+                        <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                     </div>
+
+                     <p className="text-slate-200 mb-8 leading-relaxed text-sm font-light">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Prioridad Satelital, diseño y robustez.
                      </p>
                      
-                     <div className="bg-slate-950/50 rounded-2xl p-5 border border-cyan-500/20 mb-6">
-                        <div className="flex justify-between items-end mb-4 border-b border-cyan-900/50 pb-4">
+                     <div className="bg-cyan-500/5 rounded-3xl p-6 border border-cyan-500/20 mb-2">
+                        <div className="flex justify-between items-end mb-6 border-b border-cyan-900/30 pb-6">
                            <div>
-                              <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">Importe</p>
+                              <p className="text-[10px] text-cyan-500/70 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-3xl font-black text-white">$500.000</span>
+                                 <span className="text-4xl font-black text-white">$500.000</span>
                               </div>
-                              <p className="text-[10px] text-cyan-400/70 uppercase">+ IVA (Efectivo)</p>
+                              <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">O 3 Cuotas</p>
+                              <p className="text-[10px] text-cyan-500/70 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
                               <div className="flex items-baseline gap-1 justify-end">
                                  <span className="text-2xl font-bold text-cyan-400">$200.000</span>
                               </div>
-                              <p className="text-[10px] text-cyan-400/70 uppercase">+ IVA</p>
+                              <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
                         </div>
                         <Button 
                           onClick={() => openLeadModal("HARDWARE", "Antena Estándar V4", "Equipamiento de alto rendimiento con router WiFi 6 integrado.")}
-                          className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 rounded-xl shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-colors"
+                          className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all duration-300"
                         >
                           Comprar Equipamiento
                         </Button>
@@ -419,40 +454,50 @@ export default function MarketingPage() {
                </div>
 
                {/* Itinerante */}
-               <div className="bg-slate-900/60 backdrop-blur-2xl border border-slate-700/60 rounded-[2.5rem] p-8 hover:border-green-500/60 hover:bg-slate-900/90 transition-all duration-500 group shadow-[0_0_30px_rgba(0,0,0,0.5)] flex flex-col">
+               <div className="bg-slate-900/40 backdrop-blur-2xl border border-slate-800 rounded-[2.5rem] p-8 hover:border-green-500/50 transition-all duration-500 group shadow-2xl flex flex-col relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600/0 via-green-600/20 to-green-600/0 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative z-10 flex-grow">
-                     <div className="flex justify-between items-center mb-6">
-                        <div className="flex items-center gap-3">
-                           <div className="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center border border-green-500/30 text-green-400 shadow-inner shrink-0">
-                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                           </div>
-                           <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors drop-shadow-sm leading-tight">Antena Itinerante</h3>
+                     <div className="flex items-start gap-5 mb-8">
+                        <div className="w-16 h-16 rounded-2xl bg-green-500/10 flex items-center justify-center border border-green-500/20 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.1)] shrink-0">
+                           <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div className="flex flex-col">
+                           <h3 className="text-2xl font-bold text-white leading-tight">Antena Itinerante</h3>
+                           <span className="text-slate-400 text-sm mt-1 font-medium tracking-wide">Conexión en movimiento</span>
                         </div>
                      </div>
-                     <p className="text-slate-300 mb-6 leading-relaxed text-sm font-light">
-                        Servicio asincrónico hasta 300M Reales SATELITALES. Diseño portátil, ideal para sectores rurales y alejados de difícil acceso.
+
+                     <div className="flex items-center gap-4 mb-8">
+                        <div className="h-1 flex-grow bg-slate-800 rounded-full overflow-hidden">
+                           <div className="h-full w-2/3 bg-green-600 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                        </div>
+                        <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                     </div>
+
+                     <p className="text-slate-400 mb-8 leading-relaxed text-sm font-light">
+                        Servicio asincrónico hasta 300M Reales SATELITALES. Diseño portátil, ideal para sectores rurales.
                      </p>
                      
-                     <div className="bg-slate-950/50 rounded-2xl p-5 border border-slate-800 mb-6 mt-auto">
-                        <div className="flex justify-between items-end mb-4 border-b border-slate-800 pb-4">
+                     <div className="bg-slate-950/40 rounded-3xl p-6 border border-slate-800/50 mb-2 mt-auto">
+                        <div className="flex justify-between items-end mb-6 border-b border-slate-800 pb-6">
                            <div>
-                              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Importe</p>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-3xl font-black text-white">$300.000</span>
+                                 <span className="text-4xl font-black text-white">$300.000</span>
                               </div>
-                              <p className="text-[10px] text-slate-400 uppercase">+ IVA (Efectivo)</p>
+                              <p className="text-[9px] text-slate-500 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">O 3 Cuotas</p>
+                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
                               <div className="flex items-baseline gap-1 justify-end">
                                  <span className="text-2xl font-bold text-green-400">$120.000</span>
                               </div>
-                              <p className="text-[10px] text-slate-400 uppercase">+ IVA</p>
+                              <p className="text-[9px] text-slate-500 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
                         </div>
                         <Button 
-                          onClick={() => openLeadModal("HARDWARE", "Antena Itinerante", "Antena portátil Starlink diseñada para movilidad extrema y lugares remotos.")}
-                          className="w-full bg-green-600/20 hover:bg-green-600 text-green-300 hover:text-white font-bold py-4 rounded-xl border border-green-500/50 transition-colors"
+                          onClick={() => openLeadModal("HARDWARE", "Antena Itinerante", "Antena portátil Starlink diseñada para movilidad extrema.")}
+                          className="w-full bg-slate-900 hover:bg-green-600 text-slate-300 hover:text-white font-bold py-4 rounded-xl border border-slate-800 hover:border-green-500 transition-all duration-300"
                         >
                           Comprar Equipamiento
                         </Button>
