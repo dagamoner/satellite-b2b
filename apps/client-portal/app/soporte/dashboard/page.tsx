@@ -129,97 +129,144 @@ export default function SupportDashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Telemetry Row */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {[
+            { label: 'Latencia Satelital', value: '620ms', sub: 'Orbita Geoestacionaria', color: 'text-cyan-500', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+            { label: 'Calidad de Señal', value: '-84 dBm', sub: 'Excelente / Sin nubes', color: 'text-emerald-500', icon: 'M5.05 9.05a7 7 0 019.9 0M1.5 5.5a11 11 0 0115 0m-13.5 10.5h12' },
+            { label: 'Disponibilidad Anual', value: '99.8%', sub: 'SLA Corporativo', color: 'text-blue-500', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+          ].map((stat, i) => (
+            <div key={i} className="bg-slate-900/40 border border-white/5 p-6 rounded-[2rem] hover:border-white/10 transition-all group overflow-hidden relative">
+              <div className="absolute top-0 right-0 p-4 text-white/5 group-hover:text-white/10 transition-colors">
+                <svg className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={stat.icon} /></svg>
+              </div>
+              <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1">{stat.label}</p>
+              <h4 className={`text-3xl font-black ${stat.color} tracking-tighter mb-1`}>{stat.value}</h4>
+              <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{stat.sub}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           <aside className="lg:col-span-1 space-y-8">
+            {/* Contract Info Card */}
             <div className="bg-gradient-to-b from-slate-900/80 to-slate-950 border border-white/10 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                 <svg className="w-24 h-24 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
               </div>
               <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.2em] mb-6">Detalles del Contrato</h3>
               <div className="space-y-6">
                 <div>
                   <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-widest mb-1">Número Maestro</p>
-                  <p className="text-xl font-mono font-black text-white">{(session?.user as any)?.contractNumber}</p>
+                  <p className="text-xl font-mono font-black text-white">{(session?.user as any)?.contractNumber || 'SAT-B2B-88392'}</p>
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Estado del Servicio</p>
                   <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
                     currentContract?.status === 'COMPLETED' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
                     currentContract?.status === 'PENDING' ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20' :
-                    'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                    'bg-blue-500/10 text-blue-500 border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.3)]'
                   }`}>
-                    {currentContract?.status || "Activo / Alta Velocidad"}
+                    {currentContract?.status || "En Línea / Operativo"}
                   </span>
                 </div>
               </div>
-              <div className="mt-8 pt-8 border-t border-white/5">
-                <button className="w-full py-4 bg-slate-950/50 hover:bg-slate-900 border border-slate-800 text-slate-300 font-bold rounded-2xl transition-all text-xs uppercase tracking-widest flex items-center justify-center gap-3">
+              <div className="mt-8 pt-8 border-t border-white/5 space-y-3">
+                <button className="w-full py-4 bg-slate-950/50 hover:bg-slate-900 border border-slate-800 text-slate-300 font-bold rounded-2xl transition-all text-[10px] uppercase tracking-widest flex items-center justify-center gap-3">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                  Descargar Copia Contrato
+                  Copia de Contrato
                 </button>
               </div>
+            </div>
+
+            {/* Mission Expansion Card */}
+            <div className="bg-slate-900/30 border border-cyan-500/10 rounded-[2rem] p-8 overflow-hidden relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full" />
+              <h3 className="text-xs font-black text-cyan-500 uppercase tracking-[0.2em] mb-6">Misiones de Expansión</h3>
+              <div className="space-y-3">
+                <button 
+                  onClick={() => window.open('/?request=survey', '_blank')}
+                  className="w-full py-5 bg-cyan-500/10 hover:bg-cyan-500 text-cyan-400 hover:text-white font-black rounded-2xl transition-all border border-cyan-500/20 text-[10px] uppercase tracking-widest flex flex-col items-center justify-center gap-2 group"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
+                  Solicitar Relevamiento
+                </button>
+                <button 
+                  onClick={() => window.open('/#hardware', '_blank')}
+                  className="w-full py-5 bg-white/5 hover:bg-white text-slate-400 hover:text-slate-950 font-black rounded-2xl transition-all border border-white/5 text-[10px] uppercase tracking-widest flex flex-col items-center justify-center gap-2 group"
+                >
+                  <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                  Adquirir Hardware
+                </button>
+              </div>
+              <p className="mt-6 text-[9px] text-slate-600 uppercase font-bold tracking-widest leading-relaxed">Añadir puntos de conexión mejora la resiliencia de su red.</p>
             </div>
           </aside>
 
           <section className="lg:col-span-2">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
               <div>
-                <h1 className="text-4xl font-black text-white tracking-tighter uppercase">Incidentes</h1>
-                <p className="text-slate-500 text-sm mt-1">Gestión técnica y reportes en tiempo real</p>
+                <h1 className="text-4xl font-black text-white tracking-tighter uppercase">Registro de Incidentes</h1>
+                <p className="text-slate-500 text-sm mt-1">Logs técnicos y asistencia en vivo desde el NOC</p>
               </div>
               <button 
                 onClick={() => setShowModal(true)}
-                className="group relative px-8 py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-cyan-500/20 flex items-center gap-3 overflow-hidden text-sm uppercase tracking-widest"
+                className="group relative px-8 py-5 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black rounded-2xl transition-all shadow-xl shadow-cyan-500/10 flex items-center gap-3 overflow-hidden text-xs uppercase tracking-widest"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-                Reportar Falla
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 4v16m8-8H4" /></svg>
+                Reportar Anomalía
               </button>
             </div>
 
             <div className="space-y-4">
               {tickets.length === 0 ? (
-                <div className="py-24 text-center border-2 border-dashed border-slate-800/50 rounded-[2.5rem] bg-slate-900/10">
-                  <div className="w-20 h-20 bg-slate-900 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-700">
-                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
+                <div className="py-24 text-center border-2 border-dashed border-white/5 rounded-[3rem] bg-slate-900/10">
+                  <div className="w-20 h-20 bg-slate-900 border border-white/5 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-700">
+                    <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   </div>
-                  <h3 className="text-white font-bold text-lg mb-1 uppercase tracking-tight">Todo despejado</h3>
-                  <p className="text-slate-500 text-sm max-w-xs mx-auto">No hay incidentes técnicos activos para esta conexión en este momento.</p>
+                  <h3 className="text-white font-black text-xl mb-1 uppercase tracking-tighter">Sistemas Nominales</h3>
+                  <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">No se detectan fallas de red activas</p>
                 </div>
               ) : (
                 tickets.map(t => (
                   <div 
                     key={t.id}
                     onClick={() => router.push(`/soporte/${t.id}`)}
-                    className="group relative p-8 bg-slate-900/40 border border-white/5 rounded-3xl hover:border-cyan-500/50 hover:bg-slate-900/60 transition-all cursor-pointer overflow-hidden shadow-sm"
+                    className="group relative p-8 bg-slate-900/20 border border-white/5 rounded-3xl hover:border-cyan-500/50 hover:bg-slate-900/40 transition-all cursor-pointer overflow-hidden"
                   >
-                    <div className="absolute top-0 right-0 p-8 opacity-0 group-hover:opacity-10 transition-opacity">
-                       <svg className="w-12 h-12 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                    </div>
+                    <div className="absolute inset-y-0 left-0 w-1 bg-transparent group-hover:bg-cyan-500 transition-all" />
                     
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                      <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <span className="text-[10px] font-black text-cyan-500 bg-cyan-500/10 px-2.5 py-1 rounded-lg border border-cyan-500/20 uppercase tracking-widest">
+                      <div className="space-y-4">
+                        <div className="flex items-center gap-4">
+                          <span className="text-[10px] font-black text-cyan-500 bg-cyan-500/10 px-3 py-1 rounded-lg border border-cyan-500/20 uppercase tracking-widest font-mono">
                             {t.ticketNumber}
                           </span>
-                          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{new Date(t.createdAt).toLocaleDateString()}</span>
+                          <span className="text-[10px] text-slate-600 font-bold uppercase tracking-widest">{new Date(t.createdAt).toLocaleDateString()}</span>
                         </div>
-                        <h4 className="text-2xl font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight">{t.title}</h4>
-                        <p className="text-xs text-slate-500 font-semibold uppercase tracking-widest">{t.category}</p>
+                        <div>
+                           <h4 className="text-2xl font-black text-white group-hover:text-cyan-400 transition-colors uppercase tracking-tight leading-none mb-2">{t.title}</h4>
+                           <div className="flex items-center gap-2">
+                              <span className="w-2 h-2 rounded-full bg-slate-700 group-hover:bg-cyan-500 animate-pulse" />
+                              <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.2em]">{t.category}</p>
+                           </div>
+                        </div>
                       </div>
                       
-                      <div className="flex items-center gap-6">
-                        <div className="text-left md:text-right">
-                          <div className={`inline-flex items-center gap-2 text-[10px] font-black px-4 py-1.5 rounded-full border mb-2 ${
-                            t.status === 'OPEN' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 
+                      <div className="flex items-center gap-8">
+                        <div className="text-left md:text-right space-y-2">
+                          <div className={`inline-flex items-center gap-3 text-[9px] font-black px-5 py-2 rounded-full border uppercase tracking-[0.2em] ${
+                            t.status === 'OPEN' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.2)]' : 
                             t.status === 'IN_PROGRESS' ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-500' :
                             'bg-emerald-500/10 border-emerald-500/30 text-emerald-500'
                           }`}>
-                            <span className="w-1.5 h-1.5 bg-current rounded-full" />
                             {t.status}
                           </div>
-                          <p className="text-[10px] text-slate-600 font-black uppercase tracking-[0.3em]">Prioridad {t.priority}</p>
+                          <p className="text-[9px] text-slate-700 font-black uppercase tracking-[0.3em]">PRIORIDAD: {t.priority}</p>
+                        </div>
+                        <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                           <svg className="w-6 h-6 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                         </div>
                       </div>
                     </div>
