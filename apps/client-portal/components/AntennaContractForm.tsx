@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+import { saveInstallationContract } from '../app/contrato/actions';
+
 // Nota: html2pdf debe cargarse dinámicamente en el cliente
 let html2pdf: any;
 if (typeof window !== 'undefined') {
@@ -109,6 +111,28 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
     };
 
     try {
+      // 1. Guardar en Base de Datos
+      const dataToSave = {
+        titular: formData.razonSocial,
+        dni: formData.clienteDni,
+        email: formData.email,
+        telefono: formData.phone,
+        ubicacion: formData.direccion,
+        nroSerieKit: formData.serialKit,
+        producto: formData.hardwareType,
+        ubicacionAntena: formData.ubicacion,
+        obstrucciones: formData.obstrucciones,
+        velocidadBajada: formData.downloadSpeed,
+        velocidadSubida: formData.uploadSpeed,
+        latencia: formData.latencia,
+        modoRed: formData.modoRed,
+        technicianId: agents.find(a => a.name === formData.agenteNombreCheck)?.id,
+      };
+
+      const result = await saveInstallationContract(dataToSave);
+      console.log("Contrato guardado en DB:", result);
+
+      // 2. Generar PDF
       await html2pdf().set(opt).from(element).save();
       
       // WhatsApp Logic
@@ -118,7 +142,7 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
         setIsExporting(false);
       }, 3000);
     } catch (err) {
-      console.error("Error en PDF:", err);
+      console.error("Error en proceso final:", err);
       setIsExporting(false);
     }
   };
@@ -300,9 +324,6 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 19l-7-7 7-7" strokeWidth={2} /></svg>
             Volver al Portal
          </Link>
-         <div className="text-slate-400 font-bold orbitron text-xs uppercase tracking-widest">
-            Modo Edición Contractual
-         </div>
       </div>
 
       <div ref={reportRef} className="premium-page">

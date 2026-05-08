@@ -237,13 +237,15 @@ export default function MarketingPage() {
 
           <div className="flex gap-4 items-center">
              <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"} className="group">
-                <div className="relative overflow-hidden transition-all duration-500 hover:scale-110">
+                <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
                    <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
+                   <span className={`text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
                 </div>
              </Link>
              <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"} className="group">
-                <div className="relative overflow-hidden transition-all duration-500 hover:scale-110 hidden sm:block">
+                <div className="flex-col items-center gap-1 transition-all duration-500 hover:scale-110 hidden sm:flex">
                    <img src="/card_noc.png" alt="NOC" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
+                   <span className={`text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </Link>
           </div>

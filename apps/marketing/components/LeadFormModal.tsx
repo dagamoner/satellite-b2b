@@ -109,7 +109,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
             p_contract: data.contractNumber
           });
 
-          window.location.href = `${targetBase}/contratos?${params.toString()}`;
+          window.location.href = `${targetBase}/contrato?${params.toString()}`;
         }, 3000);
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");
