@@ -7,16 +7,16 @@ export function useRealtimeMessages(ticketId: string | undefined) {
   const fetchMessages = async () => {
     if (!ticketId) return;
     const { data } = await supabase
-      .from('support_messages')
+      .from('ticket_messages')
       .select('*, author:users(name, role)')
-      .eq('ticket_id', ticketId)
-      .order('created_at', { ascending: true });
+      .eq('ticketId', ticketId)
+      .order('createdAt', { ascending: true });
     
     if (data) {
       const mapped = data.map((m: any) => ({
         ...m,
-        authorId: m.author_id,
-        createdAt: m.created_at,
+        authorId: m.authorId,
+        createdAt: m.createdAt,
         author: m.author ? { name: m.author.name, role: m.author.role } : undefined
       }));
       setMessages(mapped);
@@ -34,8 +34,8 @@ export function useRealtimeMessages(ticketId: string | undefined) {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'support_messages',
-          filter: `ticket_id=eq.${ticketId}`
+          table: 'ticket_messages',
+          filter: `ticketId=eq.${ticketId}`
         },
         () => {
           fetchMessages();

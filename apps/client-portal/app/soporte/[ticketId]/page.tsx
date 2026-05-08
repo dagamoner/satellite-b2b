@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, use } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
@@ -22,7 +22,8 @@ interface Ticket {
   priority: string;
 }
 
-export default function TicketChatPage({ params }: { params: { ticketId: string } }) {
+export default function TicketChatPage({ params }: { params: Promise<{ ticketId: string }> }) {
+  const { ticketId } = use(params);
   const [ticket, setTicket] = useState<Ticket | null>(null);
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -30,7 +31,7 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
   const { data: session, status } = useSession();
   
   // --- Realtime Hook ---
-  const { messages, setMessages } = useRealtimeMessages(params.ticketId);
+  const { messages, setMessages } = useRealtimeMessages(ticketId);
   // ---------------------
 
   
@@ -48,20 +49,20 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
     if (status === "authenticated" && session?.user) {
       fetchInitialData();
     }
-  }, [status, session, router, params.ticketId]);
+  }, [status, session, router, ticketId]);
 
 
   const fetchInitialData = async () => {
     try {
-      const res = await fetch(`/api/support/tickets/${params.ticketId}/messages`);
+      const res = await fetch(`/api/support/tickets/${ticketId}/messages`);
       const data = await res.json();
       setMessages(data.messages);
       lastMessageCount.current = data.messages.length;
       
       // Simular carga de metadata de ticket
       setTicket({
-        id: params.ticketId,
-        ticketNumber: "TK-" + params.ticketId.slice(0, 5).toUpperCase(),
+        id: ticketId,
+        ticketNumber: "TK-" + ticketId.slice(0, 5).toUpperCase(),
         title: "Incidencia Técnica en Proceso",
         status: "IN_PROGRESS",
         priority: "HIGH"
@@ -100,7 +101,7 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
 
     setSending(true);
     try {
-      const res = await fetch(`/api/support/tickets/${params.ticketId}/messages`, {
+      const res = await fetch(`/api/support/tickets/${ticketId}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -114,6 +115,9 @@ export default function TicketChatPage({ params }: { params: { ticketId: string 
         setMessages(prev => [...prev, data.message]);
         lastMessageCount.current += 1;
         setContent("");
+      } else {
+        const errorData = await res.json();
+        alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (err) {
       alert("Error al enviar mensaje");
