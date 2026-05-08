@@ -688,7 +688,7 @@ export default function MarketingPage() {
       <footer className="relative z-10 bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
          <img src="/logo.jpg" className="w-20 h-20 rounded-full mx-auto mb-8 opacity-80 hover:opacity-100 transition-opacity border-2 border-slate-700 hover:border-blue-500 shadow-xl" alt="MR Technology" />
-         <p className="tracking-[0.4em] mb-4 text-white font-black text-2xl drop-shadow-lg">M A I P Ú - M E N D O Z A</p>
+         <p className="tracking-[0.3em] mb-4 text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
          <p className="tracking-[0.2em] mb-8 text-blue-400 font-bold text-sm uppercase drop-shadow-sm">Partner Tecnológico Starlink B2B</p>
          <p className="mb-12 max-w-xl mx-auto font-light text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
          <div className="flex justify-center gap-10 text-sm mb-16 font-semibold">
