@@ -687,13 +687,13 @@ export default function MarketingPage() {
       {/* Footer */}
       <footer className="relative z-10 bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
-         <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 mb-10 relative z-10">
-            <img src="/logo.jpg" className="h-16 md:h-20 w-auto rounded-full opacity-80 hover:opacity-100 transition-all border-2 border-slate-700 hover:border-blue-500 shadow-xl" alt="MR Technology" />
-            <img src="/footer_ciberseguridad.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-blue-500/50 shadow-lg" alt="Ciberseguridad" />
-            <img src="/footer_ia.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-cyan-500/50 shadow-lg" alt="Inteligencia Artificial" />
-            <img src="/footer_informatica.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-indigo-500/50 shadow-lg" alt="Informática" />
-            <img src="/footer_it_ia.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-purple-500/50 shadow-lg" alt="IT & IA" />
-            <img src="/footer_alianzas.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-emerald-500/50 shadow-lg" alt="Alianzas Estratégicas" />
+         <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 mb-10 relative z-10 min-h-[80px]">
+            <img src="/logo.jpg" className="h-16 md:h-20 w-auto rounded-full opacity-80 hover:opacity-100 transition-all border-2 border-slate-700 hover:border-blue-500 shadow-xl object-contain" alt="MR Technology" />
+            <img src="/footer_ciberseguridad.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-blue-500/50 shadow-lg object-contain" alt="Ciberseguridad" onError={(e) => e.currentTarget.style.display='none'} />
+            <img src="/footer_ia.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-cyan-500/50 shadow-lg object-contain" alt="Inteligencia Artificial" onError={(e) => e.currentTarget.style.display='none'} />
+            <img src="/footer_informatica.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-indigo-500/50 shadow-lg object-contain" alt="Informática" onError={(e) => e.currentTarget.style.display='none'} />
+            <img src="/footer_it_ia.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-purple-500/50 shadow-lg object-contain" alt="IT & IA" onError={(e) => e.currentTarget.style.display='none'} />
+            <img src="/footer_alianzas.png" className="h-16 md:h-20 w-auto rounded-xl opacity-80 hover:opacity-100 transition-all border border-slate-800 hover:border-emerald-500/50 shadow-lg object-contain" alt="Alianzas Estratégicas" onError={(e) => e.currentTarget.style.display='none'} />
          </div>
          <p className="tracking-[0.3em] mb-4 text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
          <p className="tracking-[0.2em] mb-8 text-blue-400 font-bold text-sm uppercase drop-shadow-sm">Partner Tecnológico Starlink B2B</p>
