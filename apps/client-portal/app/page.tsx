@@ -242,7 +242,7 @@ function EntryPortalContent() {
           <div className="mt-10 pt-8 border-t border-white/5 flex flex-col items-center gap-4">
              <p className="text-[10px] text-slate-600 uppercase tracking-tight text-center leading-relaxed">
                Acceso exclusivo para clientes corporativos de MR Technology. <br/>
-               Si no recuerda sus credenciales, contacte al NOC.<br/>
+               Si no recuerda sus credenciales, contacte a soporte técnico.<br/>
                <span className="text-cyan-500/70 font-bold mt-2 inline-block">Para probar use DNI: demo / Contrato: demo</span>
              </p>
              <div className="flex gap-4 opacity-50">

@@ -33,7 +33,7 @@ interface Message {
   author?: { name: string; role: string };
 }
 
-export default function NOCDashboard() {
+export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -387,8 +387,8 @@ export default function NOCDashboard() {
                {/* Hilo de Mensajes */}
                <div className="flex flex-col gap-8 max-w-5xl mx-auto w-full">
                   {messages.map((msg) => {
-                    const isSystem = msg.content.includes("NOC HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
-                    const isNoc = msg.authorId !== null && !isSystem;
+                    const isSystem = msg.content.includes("SISTEMA HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
+                    const isStaff = msg.authorId !== null && !isSystem;
                     
                     if (isSystem) {
                       return (
@@ -401,13 +401,13 @@ export default function NOCDashboard() {
                     }
 
                     return (
-                      <div key={msg.id} className={`flex ${isNoc ? "justify-end" : "justify-start"} items-end gap-4 group animate-in slide-in-from-bottom-4 duration-300`}>
-                        {!isNoc && (
+                      <div key={msg.id} className={`flex ${isStaff ? "justify-end" : "justify-start"} items-end gap-4 group animate-in slide-in-from-bottom-4 duration-300`}>
+                        {!isStaff && (
                           <div className="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center flex-shrink-0 text-slate-400 font-bold border border-white/10 shadow-lg">C</div>
                         )}
-                        <div className={`max-w-[75%] flex flex-col ${isNoc ? "items-end" : "items-start"}`}>
+                        <div className={`max-w-[75%] flex flex-col ${isStaff ? "items-end" : "items-start"}`}>
                           <div className={`px-8 py-5 rounded-[2rem] text-sm font-medium shadow-xl leading-relaxed transition-all hover:shadow-2xl ${
-                            isNoc 
+                            isStaff 
                               ? "bg-cyan-600 text-white rounded-br-none" 
                               : "bg-slate-800/90 text-slate-100 rounded-bl-none border border-white/10"
                           }`}>
@@ -415,11 +415,11 @@ export default function NOCDashboard() {
                           </div>
                           <span className="text-xs text-slate-500 font-black mt-3 uppercase tracking-widest px-2">
                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            {isNoc && ` · OPERADOR NOC`}
+                            {isStaff && ` · SOPORTE TÉCNICO`}
                           </span>
                         </div>
-                        {isNoc && (
-                          <div className="w-12 h-12 rounded-2xl bg-cyan-600 flex items-center justify-center flex-shrink-0 text-white font-black shadow-lg shadow-cyan-500/30 text-sm">NOC</div>
+                        {isStaff && (
+                          <div className="w-12 h-12 rounded-2xl bg-cyan-600 flex items-center justify-center flex-shrink-0 text-white font-black shadow-lg shadow-cyan-500/30 text-sm">MRT</div>
                         )}
                       </div>
                     );
@@ -432,7 +432,7 @@ export default function NOCDashboard() {
                <div className="max-w-4xl mx-auto flex gap-6 bg-slate-950 p-3 rounded-[3rem] border border-white/10 shadow-2xl group transition-all focus-within:border-cyan-500/40">
                   <textarea 
                     className="flex-1 bg-transparent border-none rounded-2xl px-6 py-5 text-md text-white focus:ring-0 outline-none resize-none placeholder:text-slate-700 font-medium custom-scrollbar"
-                    placeholder="Escriba respuesta técnica detallada..."
+                    placeholder="Escriba respuesta operativa detallada..."
                     rows={1}
                     value={reply}
                     onChange={e => setReply(e.target.value)}
@@ -471,7 +471,7 @@ export default function NOCDashboard() {
                 </div>
              </div>
              <div className="text-center">
-               <p className="font-black text-sm uppercase tracking-[0.6em] text-slate-700 mb-4">NOC Operations Centre</p>
+               <p className="font-black text-sm uppercase tracking-[0.6em] text-slate-700 mb-4">Centro de Operaciones MRT</p>
                <h3 className="text-3xl font-black text-white uppercase tracking-tighter opacity-30">Seleccione un Ticket para operar</h3>
              </div>
           </div>

@@ -9,7 +9,7 @@ const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Admin Dashboard - MR Technology",
-  description: "NOC Administrative Control",
+  description: "Gestión Administrativa MR Technology",
 };
 
 export default function RootLayout({

@@ -6,18 +6,49 @@ export const dynamic = "force-dynamic";
 
 /**
  * GET /api/support/tickets/[id]/messages
- * Obtiene todos los mensajes de un ticket específico.
+ * Obtiene todos los mensajes de un ticket específico y su metadata.
+ * Permite acceso via Sesión o via DNI (para leads).
  */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const { searchParams } = new URL(request.url);
+  const pDni = searchParams.get("p_dni");
 
   try {
     const session = await auth();
-    if (!session) {
+    
+    // Si no hay sesión, validamos por DNI
+    if (!session && !pDni) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+    }
+
+    const ticket = await prisma.supportTicket.findUnique({
+      where: { id },
+      include: {
+        contract: {
+          select: {
+            clientDni: true,
+            clientName: true,
+            clientEmail: true,
+            clientPhone: true,
+            planType: true,
+            contractNumber: true,
+            status: true,
+          }
+        }
+      }
+    });
+
+    if (!ticket) {
+      return NextResponse.json({ error: "Ticket no encontrado" }, { status: 404 });
+    }
+
+    // Validación de seguridad por DNI si no hay sesión
+    if (!session && ticket.contract.clientDni !== pDni) {
+      return NextResponse.json({ error: "DNI no coincide con el ticket" }, { status: 403 });
     }
 
     const messages = await prisma.ticketMessage.findMany({
@@ -30,8 +61,19 @@ export async function GET(
       }
     });
 
-    return NextResponse.json({ messages });
+    return NextResponse.json({ 
+      ticket: {
+        id: ticket.id,
+        ticketNumber: ticket.ticketNumber,
+        title: ticket.title,
+        status: ticket.status,
+        priority: ticket.priority,
+        contract: ticket.contract
+      },
+      messages 
+    });
   } catch (error) {
+    console.error("[GET_MESSAGES_ERROR]", error);
     return NextResponse.json({ error: "Error al obtener mensajes" }, { status: 500 });
   }
 }
@@ -45,15 +87,29 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const { searchParams } = new URL(request.url);
+  const pDni = searchParams.get("p_dni");
 
   try {
     const session = await auth();
-    if (!session) {
+    
+    // Si no hay sesión, validamos por DNI
+    if (!session && !pDni) {
       return NextResponse.json({ error: "No autorizado" }, { status: 401 });
     }
 
+    // Verificar que el ticket existe y el DNI coincide (si no hay sesión)
+    if (!session) {
+      const ticket = await prisma.supportTicket.findUnique({
+        where: { id },
+        include: { contract: { select: { clientDni: true } } }
+      });
+      if (!ticket || ticket.contract.clientDni !== pDni) {
+        return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+      }
+    }
+
     const { content, attachments, authorId } = await request.json();
-    console.log("[API_CLIENT_MESSAGES] POST request received:", { ticketId: id, content, authorId });
 
     if (!content) {
       return NextResponse.json({ error: "El contenido es vacío" }, { status: 400 });
@@ -72,8 +128,6 @@ export async function POST(
         }
       }
     });
-
-    console.log("[API_CLIENT_MESSAGES] Message created successfully:", message.id);
 
     // Actualizar el updatedAt del ticket para ordenamiento
     await prisma.supportTicket.update({

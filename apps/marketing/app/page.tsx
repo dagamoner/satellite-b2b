@@ -244,7 +244,7 @@ export default function MarketingPage() {
              </Link>
              <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"} className="group">
                 <div className="flex-col items-center gap-1 transition-all duration-500 hover:scale-110 hidden sm:flex">
-                   <img src="/card_noc.png" alt="NOC" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
+                   <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
                    <span className={`text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </Link>
@@ -290,7 +290,7 @@ export default function MarketingPage() {
           <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"}>
             <Button size="lg" className="h-14 px-8 rounded-2xl bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold text-lg shadow-xl transition-all hover:scale-105 active:scale-95 border border-slate-700 flex gap-3 group">
               <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              Soporte / Hub NOC
+               Soporte / Centro Técnico
             </Button>
           </Link>
         </div>
@@ -718,11 +718,11 @@ export default function MarketingPage() {
                
                <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-indigo-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
                   <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                     <img src="/icon_noc_center.png" alt="NOC" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
+                     <img src="/icon_noc_center.png" alt="Centro de Operaciones" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
                   </div>
-                  <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Centro Operativo (NOC)</h4>
+                  <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Centro de Operaciones</h4>
                   <ul className="text-slate-300 text-sm space-y-4 font-medium">
-                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Operador NOC / NOC Technician.</li>
+                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Operador Técnico / Soporte Especializado.</li>
                      <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Analista SOC (con foco estricto en redes).</li>
                      <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Especialista en monitorización constante.</li>
                      <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Resolución y mitigación de incidentes.</li>

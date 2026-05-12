@@ -92,7 +92,7 @@ export default function SupportDashboard() {
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
-          <p className="text-cyan-500 font-mono text-xs animate-pulse uppercase tracking-widest">Sincronizando con NOC...</p>
+          <p className="text-cyan-500 font-mono text-xs animate-pulse uppercase tracking-widest">Sincronizando con el centro de control...</p>
         </div>
       </div>
     );
@@ -106,7 +106,7 @@ export default function SupportDashboard() {
             <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center font-black text-white shadow-lg shadow-cyan-500/20 text-xl">MR</div>
             <div>
               <h2 className="text-white font-black text-xl tracking-tight leading-none uppercase">Portal Corporativo</h2>
-              <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.3em] mt-1.5 opacity-80">Network Operations Center</p>
+              <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.3em] mt-1.5 opacity-80">Centro de Operaciones de Red</p>
             </div>
           </div>
           
@@ -207,7 +207,7 @@ export default function SupportDashboard() {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10">
               <div>
                 <h1 className="text-4xl font-black text-white tracking-tighter uppercase">Registro de Incidentes</h1>
-                <p className="text-slate-500 text-sm mt-1">Logs técnicos y asistencia en vivo desde el NOC</p>
+                <p className="text-slate-500 text-sm mt-1">Logs técnicos y asistencia en vivo desde el centro de soporte</p>
               </div>
               <button 
                 onClick={() => setShowModal(true)}
@@ -345,7 +345,7 @@ export default function SupportDashboard() {
                   disabled={creating}
                   className="flex-1 bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-cyan-500/20 text-xs uppercase tracking-widest"
                 >
-                  {creating ? "Enviando al NOC..." : "Enviar Reporte"}
+                  {creating ? "Enviando reporte..." : "Enviar Reporte"}
                 </button>
               </div>
             </form>

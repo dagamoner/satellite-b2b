@@ -101,15 +101,10 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
           }
           
           const params = new URLSearchParams({
-            p_name: formData.name,
-            p_email: formData.email,
             p_dni: normalizedDni,
-            p_phone: formData.phone,
-            p_plan: planInfo.title,
-            p_contract: data.contractNumber
           });
 
-          window.location.href = `${targetBase}/contrato?${params.toString()}`;
+          window.location.href = `${targetBase}/soporte/${data.ticketId}?${params.toString()}`;
         }, 3000);
       } else {
         const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");

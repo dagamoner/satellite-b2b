@@ -1,9 +1,5 @@
-"use client";
-import { useState, useEffect, useRef, use } from "react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
-
+import { useSearchParams } from "next/navigation";
+import AntennaContractForm from "../../../components/AntennaContractForm";
 
 interface Message {
   id: string;
@@ -20,6 +16,7 @@ interface Ticket {
   title: string;
   status: string;
   priority: string;
+  contract?: any;
 }
 
 export default function TicketChatPage({ params }: { params: Promise<{ ticketId: string }> }) {
@@ -29,12 +26,13 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState("");
   const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const pDni = searchParams.get("p_dni");
   
   // --- Realtime Hook ---
   const { messages, setMessages } = useRealtimeMessages(ticketId);
   // ---------------------
 
-  
   const scrollRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const lastMessageCount = useRef<number>(0);
@@ -46,29 +44,31 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
   }, []);
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user) {
+    // Permitir acceso si está autenticado O si tiene p_dni (Lead)
+    if ((status === "authenticated" && session?.user) || pDni) {
       fetchInitialData();
+    } else if (status === "unauthenticated" && !pDni) {
+      // Redirigir a login si no hay DNI y no está autenticado
+      router.push("/auth/signin");
     }
-  }, [status, session, router, ticketId]);
-
+  }, [status, session, router, ticketId, pDni]);
 
   const fetchInitialData = async () => {
     try {
-      const res = await fetch(`/api/support/tickets/${ticketId}/messages`);
+      const url = new URL(`/api/support/tickets/${ticketId}/messages`, window.location.origin);
+      if (pDni) url.searchParams.set("p_dni", pDni);
+
+      const res = await fetch(url.toString());
+      if (!res.ok) {
+        throw new Error("Error fetching ticket data");
+      }
       const data = await res.json();
       setMessages(data.messages);
       lastMessageCount.current = data.messages.length;
-      
-      // Simular carga de metadata de ticket
-      setTicket({
-        id: ticketId,
-        ticketNumber: "TK-" + ticketId.slice(0, 5).toUpperCase(),
-        title: "Incidencia Técnica en Proceso",
-        status: "IN_PROGRESS",
-        priority: "HIGH"
-      });
+      setTicket(data.ticket);
     } catch (err) {
       console.error(err);
+      // alert("No se pudo cargar el ticket. Verifique su acceso.");
     } finally {
       setLoading(false);
     }
@@ -78,16 +78,12 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
   useEffect(() => {
     if (messages.length > lastMessageCount.current) {
       const lastMsg = messages[messages.length - 1];
-      // Solo suena si el mensaje es del NOC/Sistema (authorId no es null)
       if (lastMsg.authorId !== null) {
         audioRef.current?.play().catch(() => {});
       }
       lastMessageCount.current = messages.length;
     }
   }, [messages]);
-
-  // Ya no necesitamos fetchMessages local
-
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -101,13 +97,15 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
 
     setSending(true);
     try {
-      console.log("[CHAT] Sending message for ticket:", ticketId);
-      const res = await fetch(`/api/support/tickets/${ticketId}/messages`, {
+      const url = new URL(`/api/support/tickets/${ticketId}/messages`, window.location.origin);
+      if (pDni) url.searchParams.set("p_dni", pDni);
+
+      const res = await fetch(url.toString(), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           content,
-          authorId: null, // Cliente
+          authorId: session?.user?.id || null, // Autor nulo si es cliente/lead
         }),
       });
 
@@ -118,7 +116,6 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
         setContent("");
       } else {
         const errorData = await res.json();
-        console.error("[CHAT] Error response:", errorData);
         alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (err) {
@@ -129,7 +126,36 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
     }
   };
 
-  if (loading || !session) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-cyan-500 font-black tracking-widest animate-pulse">ESTABLECIENDO CONEXIÓN SEGURA...</div>;
+  if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-cyan-500 font-black tracking-widest animate-pulse uppercase">Estableciendo enlace seguro...</div>;
+
+  // Si el estado es CONTRACT_INITIATED, TECH_IN_PROGRESS o SIGNATURE_PENDING, mostramos el formulario
+  const showContractForm = ticket?.status === "CONTRACT_INITIATED" || 
+                         ticket?.status === "TECH_IN_PROGRESS" || 
+                         ticket?.status === "SIGNATURE_PENDING" ||
+                         ticket?.status === "COMPLETED";
+
+  if (showContractForm && ticket) {
+    return (
+      <div className="min-h-screen bg-[#020617] overflow-y-auto">
+        <AntennaContractForm 
+          nextInstallId={ticket.contract?.contractNumber || ticket.ticketNumber}
+          initialData={{
+            clientName: ticket.contract?.clientName || "",
+            clientEmail: ticket.contract?.clientEmail || "",
+            clientDni: ticket.contract?.clientDni || "",
+            clientPhone: ticket.contract?.clientPhone || "",
+            planType: ticket.contract?.planType || "",
+          }}
+          ticketStatus={ticket.status}
+          ticketId={ticketId}
+          onBack={() => {
+            // Permitir volver al chat si no está finalizado
+            fetchInitialData();
+          }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-screen bg-[#020617] text-slate-300 overflow-hidden font-sans">
@@ -151,7 +177,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
         <div className="mt-auto p-8">
            <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 rounded-[2rem] shadow-2xl shadow-blue-500/10">
               <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">Soporte VIP 24/7</p>
-              <p className="text-sm font-bold text-white">Su conexión satelital está siendo monitoreada por el NOC central.</p>
+              <p className="text-sm font-bold text-white">Su conexión satelital está siendo monitoreada por nuestro centro de operaciones.</p>
            </div>
         </div>
       </aside>
@@ -174,7 +200,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
               </div>
               <div className="flex items-center gap-2 mt-2">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
-                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Canal Directo con MR Technology NOC</span>
+                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Canal Directo con Soporte Técnico MR Technology</span>
               </div>
             </div>
           </div>
@@ -194,7 +220,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
 
           {messages.map((msg) => {
             const isMe = msg.authorId === null;
-            const isSystem = msg.content.includes("NOC HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
+            const isSystem = msg.content.includes("EL SISTEMA HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
             
             if (isSystem) {
               return (
@@ -213,7 +239,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
               <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"} items-start gap-4 animate-in slide-in-from-bottom-4 duration-500`}>
                 {!isMe && (
                   <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10 border border-white/10">
-                     <span className="text-[10px] font-black text-white">NOC</span>
+                     <span className="text-[10px] font-black text-white">MRT</span>
                   </div>
                 )}
                 <div className={`max-w-[75%] flex flex-col ${isMe ? "items-end" : "items-start"}`}>
@@ -276,7 +302,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
                 <textarea 
                   className="flex-1 bg-transparent border-none text-white text-base px-2 py-4 focus:ring-0 outline-none resize-none max-h-40 placeholder:text-slate-700 font-medium"
                   rows={1}
-                  placeholder="Escriba su reporte detallado para el NOC..."
+                  placeholder="Escriba su reporte detallado para el equipo técnico..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   onKeyDown={(e) => {

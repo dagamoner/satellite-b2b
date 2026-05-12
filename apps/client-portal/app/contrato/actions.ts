@@ -14,9 +14,59 @@ export async function getTechnicians() {
   }
 }
 
+/**
+ * Actualiza el estado de un ticket y opcionalmente guarda datos en el contrato vinculado.
+ */
+export async function updateTicketStatus(ticketId: string, status: string, contractData?: any) {
+  try {
+    // 1. Buscar el ticket para encontrar el contractId
+    const ticket = await prisma.supportTicket.findUnique({
+      where: { id: ticketId },
+      select: { contractId: true, ticketNumber: true }
+    });
+
+    if (!ticket) throw new Error("Ticket no encontrado");
+
+    // 2. Actualizar el estado del Ticket
+    await prisma.supportTicket.update({
+      where: { id: ticketId },
+      data: { 
+        status,
+        updatedAt: new Date()
+      }
+    });
+
+    // 3. Si hay datos de contrato, actualizarlos
+    if (contractData) {
+      await prisma.installationContract.update({
+        where: { id: ticket.contractId },
+        data: {
+          ...contractData,
+          // Si el ticket se marca como COMPLETED, el contrato también
+          status: status === "COMPLETED" ? "COMPLETED" : undefined
+        }
+      });
+    }
+
+    // 4. Agregar mensaje de sistema al hilo del ticket
+    await prisma.ticketMessage.create({
+      data: {
+        ticketId,
+        content: `EL SISTEMA HA CAMBIADO EL ESTADO A: ${status.replace('_', ' ')}`,
+        authorId: null, // Sistema
+      }
+    });
+
+    return { success: true };
+  } catch (error: any) {
+    console.error("[UPDATE_TICKET_STATUS_ERROR]", error);
+    throw error;
+  }
+}
+
 export async function saveInstallationContract(data: any) {
   try {
-    // 1. Generar número de contrato correlativo si no viene (aunque ya debería venir)
+    // 1. Generar número de contrato correlativo si no viene
     const count = await prisma.installationContract.count();
     const contractNumber = `MR-${new Date().getFullYear()}-${(count + 1).toString().padStart(4, '0')}`;
 
@@ -24,7 +74,7 @@ export async function saveInstallationContract(data: any) {
     const contract = await prisma.installationContract.create({
       data: {
         contractNumber,
-        status: "COMPLETED", // Marcamos como completado al guardar desde este formulario
+        status: "COMPLETED",
         clientName: data.titular,
         clientEmail: data.email || "",
         clientPhone: data.telefono || "",
@@ -32,10 +82,12 @@ export async function saveInstallationContract(data: any) {
         address: data.ubicacion,
         city: data.ciudad || "Mendoza",
         equipmentType: data.producto === "Starlink Mini X" ? "MINI_X" : "STANDARD_V4",
-        planType: "BASICO_V4", // Hardcoded por ahora o mapper
+        planType: "BASICO_V4",
         
-        // Datos Técnicos
         kitSerialNumber: data.nroSerieKit,
+        terminalId: data.terminalId,
+        antennaModel: data.antennaModel,
+        cableColor: data.cableColor,
         hardwareVersion: data.versionHardware,
         antennaLocation: data.ubicacionAntena,
         obstructions: data.obstrucciones,
@@ -44,20 +96,19 @@ export async function saveInstallationContract(data: any) {
         latency: parseInt(data.latencia) || 0,
         networkMode: data.modoRed,
 
-        // Firmas (Base64)
+        latitude: parseFloat(data.latitud) || null,
+        longitude: parseFloat(data.longitud) || null,
+
         techSignature: data.techSignature,
         clientSignature: data.clientSignature,
 
-        // Fotos (Placeholders para futuro)
         photoCasa: data.photoCasa,
         photoAntena: data.photoAntena,
         photoRouter: data.photoRouter,
         photoCable: data.photoCable,
         photoTest: data.photoTest,
 
-        // Vinculación con técnico
         technicianId: data.technicianId,
-        
         installedAt: new Date(),
       }
     });

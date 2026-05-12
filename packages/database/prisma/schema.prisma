@@ -65,6 +65,9 @@ model InstallationContract {
 
   // Datos Técnicos de la Instalación (Punto 1)
   kitSerialNumber String?
+  terminalId      String?
+  antennaModel    String?
+  cableColor      String?
   hardwareVersion String?
   antennaLocation String?
   obstructions    String?
@@ -72,6 +75,16 @@ model InstallationContract {
   uploadSpeed     Float?
   latency         Int?
   networkMode     String?
+  
+  // Coordenadas
+  latitude        Float?
+  longitude       Float?
+
+  // Checklist de Validación
+  alturaCheck     Boolean?      @default(false)
+  soporteCheck    Boolean?      @default(false)
+  routerCheck     Boolean?      @default(false)
+  speedCheck      Boolean?      @default(false)
 
   // Firmas Digitales (Base64)
   techSignature   String?

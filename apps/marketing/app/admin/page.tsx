@@ -10,7 +10,7 @@ const INITIAL_TICKETS = [
   { id: 't-4', title: 'Solicitud de IP Pública Extra', description: 'El cliente requiere una asignación nueva para sus cámaras de CCTV.', status: 'OPEN', priority: 'MEDIUM', created_at: new Date(Date.now() - 7200000).toISOString() }
 ];
 
-export default function NOCDashboard() {
+export default function AdminDashboard() {
   const [tickets, setTickets] = useState<any[]>(INITIAL_TICKETS);
 
   const updateStatus = (id: string, newStatus: string) => {

@@ -43,7 +43,7 @@ export async function PATCH(
     let systemMessage = "";
     
     if (priority && priority !== currentTicket.priority) {
-      systemMessage = `⚠️ EL NOC HA CAMBIADO LA PRIORIDAD A: ${priority}`;
+      systemMessage = `⚠️ EL SISTEMA HA CAMBIADO LA PRIORIDAD A: ${priority}`;
     } else if (status && status !== currentTicket.status) {
       const statusLabels: any = {
         'OPEN': 'ABIERTO',

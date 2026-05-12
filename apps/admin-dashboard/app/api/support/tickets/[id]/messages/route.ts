@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * GET /api/support/tickets/[id]/messages
- * Obtiene el hilo de comunicación del ticket para el operador NOC.
+ * Obtiene el hilo de comunicación del ticket para el personal técnico.
  */
 export async function GET(
   request: NextRequest,
@@ -34,7 +34,7 @@ export async function GET(
 
 /**
  * POST /api/support/tickets/[id]/messages
- * Permite al operador NOC responder al cliente.
+ * Permite al equipo de operaciones responder al cliente.
  */
 export async function POST(
   request: NextRequest,

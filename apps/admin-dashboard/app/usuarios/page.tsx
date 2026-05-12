@@ -69,7 +69,7 @@ export default function UsuariosPage() {
                 Gestión de <span className="text-cyan-500">Equipo</span>
               </h1>
               <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                Administración de Operadores NOC y Personal Técnico
+                Administración de Equipo y Soporte Técnico
               </p>
             </div>
           </div>

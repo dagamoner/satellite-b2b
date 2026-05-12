@@ -43,7 +43,9 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
     const pPlan = searchParams.get("p_plan");
     const pPhone = searchParams.get("p_phone");
 
-    if (pName || pEmail || pDni || pPlan || pPhone) {
+    const pContract = searchParams.get("p_contract");
+
+    if (pName || pEmail || pDni || pPlan || pPhone || pContract) {
       // Detección de planes que no requieren formulario de antena
       const special = pPlan === "Plan Full Estándar V4" || pPlan === "Relevamiento IT - Planes Empresariales";
       setIsSpecialPlan(special);
@@ -60,6 +62,9 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
       });
     }
   }, [searchParams]);
+
+  const pContract = searchParams.get("p_contract");
+  const finalInstallId = pContract || nextInstallId;
 
   // ── Vista de planes especiales (Skip Form) ──────────────────────────────
   if (isSpecialPlan) {
@@ -80,7 +85,7 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
               </h1>
               <p className="text-xl text-slate-400 font-light mb-10 leading-relaxed">
                 Su requerimiento para <strong className="text-blue-400 font-bold">{searchParams.get("p_plan")}</strong> ha sido recibido exitosamente. 
-                El Centro de Operaciones de Red (NOC) está realizando el relevamiento técnico inicial.
+                Nuestro equipo técnico está realizando el relevamiento inicial de su solicitud.
               </p>
 
               <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-8 mb-10 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -126,7 +131,7 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   return (
     <AntennaContractForm 
       agents={agents}
-      nextInstallId={nextInstallId}
+      nextInstallId={finalInstallId}
       initialData={{
         clientName: form.clientName,
         clientEmail: form.clientEmail,

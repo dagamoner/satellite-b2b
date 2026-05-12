@@ -109,7 +109,7 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
                     formData.role === "TECH" ? "bg-slate-800 text-white shadow-lg border border-white/5" : "text-slate-600 hover:text-slate-400"
                   }`}
                 >
-                  Técnico NOC
+                  Especialista Técnico
                 </button>
                 <button
                   type="button"
