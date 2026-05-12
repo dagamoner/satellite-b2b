@@ -1,4 +1,9 @@
-import { useSearchParams } from "next/navigation";
+"use client";
+
+import React, { useState, useEffect, useRef, use } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
 import AntennaContractForm from "../../../components/AntennaContractForm";
 
 interface Message {
