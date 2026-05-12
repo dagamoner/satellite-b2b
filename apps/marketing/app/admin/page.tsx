@@ -35,7 +35,7 @@ export default function NOCDashboard() {
           <div className="flex items-center gap-4">
             <img src="/logo.jpg" alt="MR Technology Logo" className="w-20 h-20 rounded-full shadow-xl border-2 border-slate-700 object-cover" />
             <h1 className="text-3xl font-bold text-white">
-               NOC MR Technology <span className="text-xl font-normal text-slate-500 ml-2">| Kanban de Operaciones</span>
+               Dashboard Administrativo <span className="text-xl font-normal text-slate-500 ml-2">| Gestión de Servicios</span>
             </h1>
           </div>
           <div className="flex items-center gap-3">
