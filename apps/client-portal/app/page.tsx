@@ -17,6 +17,9 @@ export default function EntryPortal() {
 function EntryPortalContent() {
   const [dni, setDni] = useState("");
   const [contractNumber, setContractNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isTechMode, setIsTechMode] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -68,20 +71,35 @@ function EntryPortalContent() {
     setLoading(true);
 
     try {
-      // Normalizar DNI: solo números
-      const normalizedDni = dni.replace(/\D/g, "");
-      // Normalizar Contrato: Reemplazar espacios por guiones
-      const normalizedContract = contractNumber.trim().replace(/\s+/g, "-");
-      
-      // Validar con Zod
-      loginSchema.parse({ dni: normalizedDni, contractNumber: normalizedContract });
+      if (isTechMode) {
+        // Login para técnicos
+        const result = await signIn("technician-credentials", {
+          email,
+          password,
+          redirect: false,
+        });
 
-      // Usamos el comportamiento por defecto de NextAuth para redireccionar
-      await signIn("client-credentials", {
-        dni: normalizedDni,
-        contractNumber: normalizedContract,
-        callbackUrl: "/soporte/dashboard",
-      });
+        if (result?.error) {
+          setError("Credenciales de técnico inválidas");
+        } else {
+          router.push("/soporte/dashboard");
+        }
+      } else {
+        // Normalizar DNI: solo números
+        const normalizedDni = dni.replace(/\D/g, "");
+        // Normalizar Contrato: Reemplazar espacios por guiones
+        const normalizedContract = contractNumber.trim().replace(/\s+/g, "-");
+        
+        // Validar con Zod
+        loginSchema.parse({ dni: normalizedDni, contractNumber: normalizedContract });
+
+        // Usamos el comportamiento por defecto de NextAuth para redireccionar
+        await signIn("client-credentials", {
+          dni: normalizedDni,
+          contractNumber: normalizedContract,
+          callbackUrl: "/soporte/dashboard",
+        });
+      }
     } catch (err: any) {
       if (err.name === "ZodError" || err instanceof z.ZodError) {
         setError(err.errors[0].message);
@@ -92,6 +110,7 @@ function EntryPortalContent() {
       setLoading(false);
     }
   };
+
 
   return (
     <main className="min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-cyan-500/30">
@@ -136,37 +155,55 @@ function EntryPortalContent() {
           </div>
 
           <form onSubmit={handleLogin} className="space-y-6">
-            <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                Identificación de Cliente
-              </label>
-              <div className="relative group">
-                <input
-                  type="text"
-                  value={dni}
-                  onChange={(e) => setDni(e.target.value)}
-                  placeholder="DNI o CUIT"
-                  className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500/50 transition-all placeholder:text-slate-700"
-                  required
-                />
-              </div>
-            </div>
+            {!isTechMode ? (
+              <>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">DNI Titular</label>
+                  <input
+                    type="text"
+                    value={dni}
+                    onChange={(e) => setDni(e.target.value)}
+                    placeholder="00.000.000"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
+                  />
+                </div>
 
-            <div className="space-y-2">
-              <label className="block text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">
-                Número de Solicitud
-              </label>
-              <div className="relative group">
-                <input
-                  type="text"
-                  value={contractNumber}
-                  onChange={(e) => setContractNumber(e.target.value)}
-                  placeholder="SOL-2026-XXXX o MR-..."
-                  className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500/50 transition-all placeholder:text-slate-700 font-mono"
-                  required
-                />
-              </div>
-            </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Número de Contrato</label>
+                  <input
+                    type="text"
+                    value={contractNumber}
+                    onChange={(e) => setContractNumber(e.target.value)}
+                    placeholder="TK-2024-XXXX"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700 uppercase"
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Email Staff</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="usuario@mrtechnology.com"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Contraseña</label>
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
+                  />
+                </div>
+              </>
+            )}
 
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs py-4 px-5 rounded-2xl animate-shake">
@@ -186,9 +223,20 @@ function EntryPortalContent() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative z-10 group-hover:text-white transition-colors">
-                {loading ? "VALIDANDO..." : "ACCEDER A LA RED"}
+                {loading ? "VALIDANDO..." : (isTechMode ? "ACCEDER COMO TÉCNICO" : "ACCEDER A LA RED")}
               </span>
             </button>
+
+            <div className="text-center">
+               <button 
+                  type="button"
+                  onClick={() => setIsTechMode(!isTechMode)}
+                  className="text-[10px] font-black text-cyan-500/50 hover:text-cyan-400 uppercase tracking-widest transition-colors"
+               >
+                  {isTechMode ? "← Volver a Acceso Cliente" : "Acceso Personal MR Technology →"}
+               </button>
+            </div>
+
           </form>
 
           <div className="mt-10 pt-8 border-t border-white/5 flex flex-col items-center gap-4">

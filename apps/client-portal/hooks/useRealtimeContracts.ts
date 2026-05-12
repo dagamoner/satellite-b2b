@@ -9,14 +9,14 @@ export function useRealtimeContracts() {
     const { data } = await supabase
       .from('installation_contracts')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('createdAt', { ascending: false });
     
     if (data) {
       const mapped = data.map((c: any) => ({
         ...c,
-        contractNumber: c.contract_number,
-        clientName: c.client_name,
-        createdAt: c.created_at
+        contractNumber: c.contractNumber,
+        clientName: c.clientName,
+        createdAt: c.createdAt
       }));
       setContracts(mapped);
     }

@@ -123,14 +123,15 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-2xl animate-in fade-in duration-300">
-      <div className="w-full max-w-xl bg-slate-900 border border-white/10 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500">
+      <div className="w-full max-w-7xl bg-slate-900/40 border border-white/10 rounded-[4rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-[750px] transition-all duration-700">
         {/* Glow Effects */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500" />
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 blur-[80px] rounded-full" />
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-50" />
+        <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
         
         {success ? (
-          <div className="py-8 text-center animate-in zoom-in duration-500">
+          <div className="w-full py-20 px-10 text-center animate-in zoom-in duration-500 flex flex-col items-center justify-center">
             <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
                <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
@@ -156,17 +157,19 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         ) : (
           <>
             <div className="flex flex-col lg:flex-row min-h-[600px]">
-              {/* Left Panel: Mission Details */}
-              <div className="lg:w-1/3 bg-slate-950/50 p-10 border-r border-white/5 flex flex-col justify-between relative overflow-hidden">
+              <div className="lg:w-[35%] bg-slate-950/40 p-8 md:p-12 border-r border-white/5 flex flex-col justify-between relative overflow-hidden">
                 <div className="relative z-10">
-                  <span className="text-[10px] font-black text-cyan-500 uppercase tracking-[0.3em] bg-cyan-500/10 px-3 py-1 rounded-lg mb-6 inline-block">
-                    {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'Configuración de Enlace'}
-                  </span>
-                  <h2 className="text-3xl font-black text-white uppercase tracking-tighter leading-tight mb-4">
-                    {planInfo.title}
-                  </h2>
-                  <div className="h-1 w-12 bg-cyan-500 mb-6 shadow-[0_0_15px_rgba(6,182,212,0.8)]" />
-                  <p className="text-slate-400 text-sm font-medium leading-relaxed">
+                  <div className="mb-8">
+                    <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20 mb-6 inline-block">
+                      {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'Configuración de Enlace'}
+                    </span>
+                    <h2 className="text-3xl font-black text-white uppercase tracking-tight leading-tight mb-8">
+                      {planInfo.title}
+                    </h2>
+                    <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-blue-600 mb-10 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)]" />
+                  </div>
+                  
+                  <p className="text-slate-400 text-sm font-medium leading-relaxed mb-10">
                     {planInfo.description}
                   </p>
 
@@ -189,78 +192,78 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                   </div>
                 </div>
 
-                <div className="relative z-10 pt-10 border-t border-white/5">
-                   <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_8px_rgba(6,182,212,1)]" />
-                      <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Estado del Canal</span>
+                <div className="relative z-10 pt-8 border-t border-white/5">
+                   <div className="flex items-center gap-3 mb-3">
+                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_12px_rgba(6,182,212,1)]" />
+                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Canal de Enlace Directo</span>
                    </div>
-                   <p className="text-[11px] font-bold text-cyan-400/70 uppercase">Cifrado de Punto a Punto Activo</p>
+                   <p className="text-[12px] font-black text-cyan-400/80 uppercase tracking-wider">Cifrado de Punto a Punto Activo</p>
                 </div>
-
-                {/* Decorative Pattern */}
-                <div className="absolute bottom-[-20%] left-[-20%] w-[300px] h-[300px] bg-cyan-500/5 blur-[100px] rounded-full pointer-events-none" />
               </div>
 
               {/* Right Panel: Form */}
-              <div className="lg:w-2/3 p-10 bg-slate-900/30">
-                <div className="flex justify-between items-center mb-10">
-                  <h3 className="text-xl font-black text-white uppercase tracking-widest">Datos de la Solicitud</h3>
+              <div className="lg:w-[65%] p-10 md:p-20 bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
+                <div className="flex justify-between items-center mb-16">
+                  <div>
+                    <h3 className="text-xl font-black text-white uppercase tracking-[0.3em] leading-none mb-3">Datos de la Solicitud</h3>
+                    <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
+                  </div>
                   <button 
                     type="button"
                     onClick={handleManualClose}
-                    className="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-full flex items-center justify-center text-slate-500 hover:text-white transition-all border border-white/5"
+                    className="w-12 h-12 bg-white/5 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 rounded-2xl flex items-center justify-center text-slate-500 transition-all border border-white/10 group active:scale-90"
                   >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                    <svg className="w-6 h-6 transition-transform group-hover:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Nombre y Apellido</label>
+                <form onSubmit={handleSubmit} className="space-y-8 flex-1">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Nombre y Apellido</label>
                       <input 
                         type="text" 
                         required
                         value={formData.name}
                         onChange={e => setFormData({...formData, name: e.target.value})}
                         placeholder="Juan Pérez"
-                        className="w-full bg-black/40 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700 font-bold"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">DNI / CUIT Titular</label>
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">DNI / CUIT Titular</label>
                       <input 
                         type="text" 
                         required
                         value={formData.dni}
                         onChange={e => setFormData({...formData, dni: e.target.value})}
                         placeholder="20345678901"
-                        className="w-full bg-black/40 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700 font-mono font-bold"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Email de Contacto</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Email de Contacto</label>
                       <input 
                         type="email" 
                         required
                         value={formData.email}
                         onChange={e => setFormData({...formData, email: e.target.value})}
                         placeholder="correo@empresa.com"
-                        className="w-full bg-black/40 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Teléfono Móvil</label>
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Teléfono Móvil</label>
                       <input 
                         type="tel" 
                         required
                         value={formData.phone}
                         onChange={e => setFormData({...formData, phone: e.target.value})}
                         placeholder="+54 9..."
-                        className="w-full bg-black/40 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:border-cyan-500/50 outline-none transition-all placeholder:text-slate-700"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
                   </div>
@@ -279,30 +282,35 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     </div>
                   )}
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Observaciones / Detalles</label>
+                  <div className="space-y-4">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Observaciones / Detalles</label>
                     <textarea 
-                      rows={3}
+                      rows={4}
                       value={formData.message}
                       onChange={e => setFormData({...formData, message: e.target.value})}
                       placeholder="Describa brevemente el entorno de instalación..."
-                      className="w-full bg-black/40 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:border-cyan-500/50 outline-none transition-all resize-none placeholder:text-slate-700 text-sm"
+                      className="w-full bg-black/40 border border-white/5 text-white rounded-3xl px-8 py-6 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all resize-none placeholder:text-slate-800 text-sm font-medium shadow-2xl"
                     />
                   </div>
 
-                  <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                  <div className="pt-6 flex flex-col sm:flex-row gap-4">
                     <button 
                       type="submit"
                       disabled={loading}
-                      className="flex-grow bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black py-5 rounded-2xl transition-all shadow-xl shadow-cyan-500/10 text-xs uppercase tracking-[0.2em] group active:scale-[0.98]"
+                      className="flex-grow bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black py-6 rounded-2xl transition-all shadow-2xl shadow-cyan-500/20 text-sm uppercase tracking-[0.3em] group active:scale-[0.98] border border-transparent hover:border-cyan-400/50"
                     >
-                      {loading ? "ESTABLECIENDO ENLACE..." : "INICIAR PROCESO DE ALTA"}
+                      {loading ? (
+                        <div className="flex items-center justify-center gap-3">
+                          <div className="w-5 h-5 border-3 border-slate-900 border-t-transparent animate-spin rounded-full" />
+                          <span>ESTABLECIENDO ENLACE...</span>
+                        </div>
+                      ) : "INICIAR PROCESO DE ALTA"}
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-center gap-2">
-                    <svg className="w-4 h-4 text-slate-700" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                    <span className="text-[9px] text-slate-700 font-bold uppercase tracking-widest">Seguridad de Datos de Nivel Corporativo</span>
+                  <div className="flex items-center justify-center gap-3 opacity-40 hover:opacity-100 transition-opacity duration-500">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Seguridad de Grado Militar · MR Technology</span>
                   </div>
                 </form>
               </div>

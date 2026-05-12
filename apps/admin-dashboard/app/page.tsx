@@ -84,12 +84,15 @@ export default function NOCDashboard() {
 
     setSending(true);
     try {
+      const currentUserId = (session?.user as any)?.id;
+      console.log("[CHAT] Sending message for ticket:", selectedTicket.id, "as user:", currentUserId);
+
       const res = await fetch(`/api/support/tickets/${selectedTicket.id}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           content: reply,
-          authorId: null, 
+          authorId: currentUserId || null,
         }),
       });
 
@@ -97,9 +100,14 @@ export default function NOCDashboard() {
         const data = await res.json();
         setMessages(prev => [...prev, data.message]);
         setReply("");
+      } else {
+        const errorData = await res.json();
+        console.error("[CHAT] Error response:", errorData);
+        alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (err) {
-      alert("Error al enviar respuesta");
+      console.error("[CHAT] Fetch error:", err);
+      alert("Error de conexión al enviar respuesta");
     } finally {
       setSending(false);
     }
@@ -172,10 +180,10 @@ export default function NOCDashboard() {
           <div className="flex flex-col items-center mb-10 text-center">
             <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center font-black text-white shadow-2xl shadow-cyan-500/20 text-2xl mb-6">MR</div>
             <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 tracking-tight mb-2">
-              NOC Admin
+              Gestión Administrativa
             </h1>
             <p className="text-slate-400 font-medium text-sm">
-              Acceso Exclusivo para Operadores
+              Acceso Restringido
             </p>
           </div>
 
@@ -186,7 +194,7 @@ export default function NOCDashboard() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@mrtechnology.com"
+                placeholder="tu@email.com"
                 className="w-full bg-slate-950/50 border border-slate-800 text-white rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500/50 transition-all placeholder:text-slate-700"
                 required
               />
@@ -222,7 +230,7 @@ export default function NOCDashboard() {
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
               Regresar a la Página Principal
             </Link>
-            <div className="text-cyan-500/40 text-[11px] font-bold">Usuario: admin@mrtechnology.com / admin</div>
+            <div className="text-cyan-500/20 text-[10px] font-bold uppercase tracking-widest">Acceso Restringido - Personal Autorizado</div>
           </div>
         </div>
       </main>
@@ -241,8 +249,8 @@ export default function NOCDashboard() {
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-[1.2rem] flex items-center justify-center text-white font-black shadow-2xl shadow-cyan-500/20">MR</div>
               <div>
-                <h1 className="text-white font-black text-lg tracking-tight uppercase">NOC Manager</h1>
-                <span className="text-xs text-cyan-500 font-black uppercase tracking-[0.2em]">Network Intelligence</span>
+                <h1 className="text-white font-black text-lg tracking-tight uppercase">Panel de Operaciones</h1>
+                <span className="text-xs text-slate-500 font-black uppercase tracking-[0.2em]">MR Technology</span>
               </div>
             </div>
             <button onClick={handleLogout} className="text-xs text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-400/50 bg-red-500/10 px-4 py-2 rounded-xl uppercase font-black transition-all">
@@ -291,7 +299,7 @@ export default function NOCDashboard() {
                 }`}
               >
                 <div className="flex justify-between items-start mb-4">
-                  <span className="text-xs font-mono font-black text-slate-600 tracking-tighter">{t.ticketNumber}</span>
+                  <span className="text-xs font-mono font-black text-cyan-500 tracking-tighter">{t.ticketNumber}</span>
                   <span className={`text-xs font-black px-3 py-1 rounded-full border tracking-widest ${priorityStyles[t.priority]}`}>
                     {t.priority}
                   </span>
@@ -322,7 +330,7 @@ export default function NOCDashboard() {
                   <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none">{selectedTicket.title}</h2>
                 </div>
                 <div className="flex items-center gap-3 mt-3">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded font-mono font-bold tracking-tighter border border-slate-700">{selectedTicket.ticketNumber}</span>
+                  <span className="text-xs bg-slate-800 text-cyan-400 px-2 py-1 rounded font-mono font-bold tracking-tighter border border-cyan-500/30">{selectedTicket.ticketNumber}</span>
                   <div className="w-1.5 h-1.5 bg-slate-700 rounded-full" />
                   <p className="text-sm text-slate-400 font-medium">
                     Cliente: <span className="text-white font-bold">{selectedTicket.contract.clientName}</span> 

@@ -7,11 +7,11 @@ export const dynamic = "force-dynamic";
 // PATCH /api/contracts/[id] — Actualizar estado, notas o fecha de un contrato (admin)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await cookies();
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
 
     const { status, techNotes, scheduledDate, installedAt } = body;
@@ -39,12 +39,13 @@ export async function PATCH(
 // GET /api/contracts/[id] — Obtener un contrato por ID
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await cookies();
+    const { id } = await params;
     const contract = await db.installationContract.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!contract) {

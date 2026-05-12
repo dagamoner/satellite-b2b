@@ -10,9 +10,9 @@ export const dynamic = "force-dynamic";
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     await cookies();
@@ -38,13 +38,14 @@ export async function GET(
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     await cookies();
     const { content, attachments, authorId } = await request.json();
+    console.log("[API_ADMIN_MESSAGES] POST request received:", { ticketId: id, content, authorId });
 
     if (!content) {
       return NextResponse.json({ error: "Mensaje vacío" }, { status: 400 });
@@ -55,7 +56,7 @@ export async function POST(
         content,
         attachments: attachments ? JSON.stringify(attachments) : null,
         ticketId: id,
-        authorId: authorId, // ID del operador/técnico
+        authorId: authorId, 
       },
       include: {
         author: {
@@ -64,6 +65,8 @@ export async function POST(
       }
     });
 
+    console.log("[API_ADMIN_MESSAGES] Message created successfully:", message.id);
+
     // Actualizar timestamp del ticket para que suba en el inbox
     await prisma.supportTicket.update({
       where: { id },
@@ -71,7 +74,11 @@ export async function POST(
     });
 
     return NextResponse.json({ success: true, message });
-  } catch (error) {
-    return NextResponse.json({ error: "Error al enviar respuesta técnica" }, { status: 500 });
+  } catch (error: any) {
+    console.error("[API_ADMIN_MESSAGES] POST error:", error);
+    return NextResponse.json({ 
+      error: "Error al enviar respuesta técnica", 
+      details: error.message 
+    }, { status: 500 });
   }
 }

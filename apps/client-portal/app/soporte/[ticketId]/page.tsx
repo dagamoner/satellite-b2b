@@ -101,6 +101,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
 
     setSending(true);
     try {
+      console.log("[CHAT] Sending message for ticket:", ticketId);
       const res = await fetch(`/api/support/tickets/${ticketId}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -117,10 +118,12 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
         setContent("");
       } else {
         const errorData = await res.json();
+        console.error("[CHAT] Error response:", errorData);
         alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (err) {
-      alert("Error al enviar mensaje");
+      console.error("[CHAT] Fetch error:", err);
+      alert("Error de conexión al enviar mensaje");
     } finally {
       setSending(false);
     }

@@ -11,7 +11,7 @@ const PhotoViewer = dynamic(() => import("./components/PhotoViewer"), { ssr: fal
 
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
-type ContractStatus = "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
+type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
 
 interface Contract {
   id: string;
@@ -55,6 +55,7 @@ interface Contract {
 
 // ── Config de estados ──────────────────────────────────────────────────────
 const STATUS_CONFIG: Record<ContractStatus, { label: string; color: string; dot: string }> = {
+  LEAD:        { label: "Lead (Web)",     color: "bg-purple-500/15 text-purple-400 border-purple-500/30",  dot: "bg-purple-400" },
   PENDING:     { label: "Pendiente",      color: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",  dot: "bg-yellow-400" },
   APPROVED:    { label: "Aprobado",       color: "bg-blue-500/15 text-blue-400 border-blue-500/30",        dot: "bg-blue-400"   },
   IN_PROGRESS: { label: "En Proceso",     color: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30",  dot: "bg-indigo-400" },
@@ -371,7 +372,7 @@ export default function ContratosAdminPage() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Métricas */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           {(Object.entries(STATUS_CONFIG) as [ContractStatus, typeof STATUS_CONFIG[ContractStatus]][]).map(([s, cfg]) => (
             <button
               key={s}

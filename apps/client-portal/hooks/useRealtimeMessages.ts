@@ -6,18 +6,22 @@ export function useRealtimeMessages(ticketId: string | undefined) {
 
   const fetchMessages = async () => {
     if (!ticketId) return;
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('ticket_messages')
-      .select('*, author:users(name, role)')
+      .select('*, users(name, role)')
       .eq('ticketId', ticketId)
       .order('createdAt', { ascending: true });
     
+    if (error) {
+      console.error("[useRealtimeMessages] Error fetching messages:", error);
+    }
+
     if (data) {
       const mapped = data.map((m: any) => ({
         ...m,
         authorId: m.authorId,
         createdAt: m.createdAt,
-        author: m.author ? { name: m.author.name, role: m.author.role } : undefined
+        author: m.users ? { name: m.users.name, role: m.users.role } : undefined
       }));
       setMessages(mapped);
     }

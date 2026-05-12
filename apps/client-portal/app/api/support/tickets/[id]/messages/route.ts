@@ -53,6 +53,7 @@ export async function POST(
     }
 
     const { content, attachments, authorId } = await request.json();
+    console.log("[API_CLIENT_MESSAGES] POST request received:", { ticketId: id, content, authorId });
 
     if (!content) {
       return NextResponse.json({ error: "El contenido es vacío" }, { status: 400 });
@@ -63,7 +64,7 @@ export async function POST(
         content,
         attachments: attachments || null,
         ticketId: id,
-        authorId: authorId || null, // null si es el cliente
+        authorId: authorId || null, 
       },
       include: {
         author: {
@@ -72,6 +73,8 @@ export async function POST(
       }
     });
 
+    console.log("[API_CLIENT_MESSAGES] Message created successfully:", message.id);
+
     // Actualizar el updatedAt del ticket para ordenamiento
     await prisma.supportTicket.update({
       where: { id },
@@ -79,8 +82,11 @@ export async function POST(
     });
 
     return NextResponse.json({ success: true, message });
-  } catch (error) {
-    console.error("[POST_MESSAGE_ERROR]", error);
-    return NextResponse.json({ error: "Error al enviar mensaje" }, { status: 500 });
+  } catch (error: any) {
+    console.error("[API_CLIENT_MESSAGES] POST error:", error);
+    return NextResponse.json({ 
+      error: "Error al enviar mensaje",
+      details: error.message 
+    }, { status: 500 });
   }
 }

@@ -1,7 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
 // Usamos variables publicas seguras. En el admin, luego integramos la validación SSR de cookies.
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://mock.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'mock-anon-key';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseKey);
+if (!supabaseUrl || !supabaseKey) {
+  console.warn("⚠️ Supabase configuration missing! Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY env vars.");
+}
+
+export const supabase = createClient(
+  supabaseUrl || 'https://mock.supabase.co', 
+  supabaseKey || 'mock-anon-key'
+);

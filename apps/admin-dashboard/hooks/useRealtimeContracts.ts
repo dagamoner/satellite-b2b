@@ -6,18 +6,23 @@ export function useRealtimeContracts() {
   const [loading, setLoading] = useState(true);
 
   const fetchContracts = async () => {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('installation_contracts')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('createdAt', { ascending: false });
     
+    if (error) {
+      console.error("[useRealtimeContracts] Error fetching contracts:", error);
+    }
+
     if (data) {
+      console.log("[useRealtimeContracts] Contracts fetched successfully:", data.length);
       // Mapeo para mantener compatibilidad con el frontend
       const mapped = data.map((c: any) => ({
         ...c,
-        contractNumber: c.contract_number,
-        clientName: c.client_name,
-        createdAt: c.created_at
+        contractNumber: c.contractNumber,
+        clientName: c.clientName,
+        createdAt: c.createdAt
       }));
       setContracts(mapped);
     }

@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+
 
 import { saveInstallationContract } from '../app/contrato/actions';
 
@@ -62,6 +64,11 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
     agenteDniCheck: '',
   });
 
+  const { data: session } = useSession();
+  const isTechnician = session?.user?.role === 'TECH' || session?.user?.role === 'ADMIN';
+
+
+  const [currentStep, setCurrentStep] = useState(1);
   const [isExporting, setIsExporting] = useState(false);
   const [showFinalModal, setShowFinalModal] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
@@ -198,7 +205,7 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
           min-height: 297mm;
           padding: 15mm;
           margin: 0 auto;
-          background-color: #e8f0fe;
+          background-color: #ffffff;
           box-shadow: 0 0 40px rgba(0,0,0,0.15);
           position: relative;
           border-radius: 4px;
@@ -222,11 +229,35 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
         }
 
         .input-header:focus, .input-header-filled {
-          background: rgba(255, 255, 255, 0.6);
+          background: #ffffff !important;
           border-bottom-color: #2b6cb0;
-          color: #111 !important;
+          color: #000000 !important;
           font-weight: 900;
         }
+
+        input, select, textarea {
+          background: #ffffff !important;
+          color: #000000 !important;
+          border: 2px solid #cbd5e1 !important;
+          -webkit-text-fill-color: #000000 !important;
+          font-weight: 900 !important;
+          font-size: 14px !important;
+          opacity: 1 !important;
+        }
+
+        input::placeholder, textarea::placeholder {
+          color: #94a3b8 !important;
+        }
+
+
+        input:disabled, select:disabled, textarea:disabled {
+          background: #f8fafc !important;
+          color: #1e293b !important;
+          -webkit-text-fill-color: #1e293b !important;
+          cursor: not-allowed;
+          opacity: 1 !important;
+        }
+
 
         .section-title {
           font-size: 16px;
@@ -256,19 +287,20 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
           font-size: 9px;
           font-weight: 700;
           text-transform: uppercase;
-          color: #64748b;
+          color: #0f172a;
           margin-bottom: 2px;
           display: block;
         }
 
         input:not(.input-header), select {
           width: 100%;
-          padding: 6px 10px;
-          border: 1px solid #cbd5e1;
-          border-radius: 6px;
-          font-size: 13px;
-          font-weight: 700;
-          background: white;
+          padding: 8px 12px;
+          border: 2px solid #94a3b8 !important;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 900 !important;
+          background: white !important;
+          color: black !important;
         }
 
         .photo-box {
@@ -333,7 +365,7 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
          <div className="flex items-center gap-4">
             <div className="text-right hidden sm:block">
                <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Estado</p>
-               <p className="text-cyan-400 font-bold text-xs uppercase tracking-tighter">Configuración en Tiempo Real</p>
+               <p className="text-cyan-400 font-bold text-xs uppercase tracking-tighter">Sincronización Activa</p>
             </div>
             <div className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
          </div>
@@ -354,152 +386,305 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
             </div>
 
             {/* Form Section */}
-            <div className="bg-slate-900/60 backdrop-blur-xl border border-white/5 rounded-[3rem] p-8 md:p-12 shadow-2xl">
-               <div className="flex items-center gap-4 mb-10 pb-6 border-b border-white/5">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30">
-                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" strokeWidth={2}/></svg>
-                  </div>
-                  <div>
-                     <h2 className="orbitron text-2xl font-black text-white tracking-widest uppercase">Editor de Certificación</h2>
-                     <p className="text-slate-500 text-xs font-bold uppercase tracking-wider">Complete los campos para generar el documento legal</p>
-                  </div>
-               </div>
+            <div className="bg-white border-2 border-slate-300 rounded-[3.5rem] p-10 md:p-16 shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 blur-[100px] -mr-32 -mt-32" />
+               {/* Step Navigation Indicators */}
+                <div className="flex justify-between items-center mb-12 gap-2 relative z-10 overflow-x-auto pb-4 no-print">
+                   {[1,2,3,4,5,6,7].map(num => (
+                      <div key={num} className="flex flex-col items-center gap-2 min-w-[60px]">
+                         <div className={`w-10 h-10 rounded-full flex items-center justify-center font-black transition-all border-2 ${currentStep === num ? 'bg-blue-600 border-blue-600 text-white scale-110 shadow-lg shadow-blue-500/30' : currentStep > num ? 'bg-green-500 border-green-500 text-white' : 'bg-white border-slate-300 text-slate-400'}`}>
+                            {currentStep > num ? '✓' : num}
+                         </div>
+                         <span className={`text-[8px] font-black uppercase tracking-widest ${currentStep === num ? 'text-blue-800' : 'text-slate-400'}`}>
+                            {num === 1 ? 'Suscrip.' : num === 2 ? 'Cliente' : num === 3 ? 'Técnico' : num === 4 ? 'Tests' : num === 5 ? 'Fotos' : num === 6 ? 'Certif.' : 'Firma'}
+                         </span>
+                      </div>
+                   ))}
+                </div>
 
-               {/* We will map form inputs here, styled as glassmorphism */}
-               {/* But let's keep the existing reportRef for PDF generation, hiding it visually or showing it as a 'Live Preview' */}
-               
-               <div className="grid md:grid-cols-2 gap-8">
-                  {/* Reuse the logic but with much better UI */}
-                  <div className="space-y-6">
-                     <div className="section-title !m-0 !bg-transparent !border-blue-500 !text-blue-400">Titular del Servicio</div>
-                     <div className="space-y-4">
-                        <div className="group">
-                           <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block group-focus-within:text-blue-400 transition-colors">Razón Social / Nombre Completo</label>
-                           <input 
-                              id="razonSocial" 
-                              value={formData.razonSocial} 
-                              onChange={handleInputChange} 
-                              className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
-                           />
-                        </div>
-                        <div className="grid grid-cols-2 gap-4">
-                           <div className="group">
-                              <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Provincia</label>
-                              <input id="provincia" value={formData.provincia} onChange={handleInputChange} className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-blue-500 outline-none transition-all" />
-                           </div>
-                           <div className="group">
-                              <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Localidad</label>
-                              <input id="localidad" value={formData.localidad} onChange={handleInputChange} className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-blue-500 outline-none transition-all uppercase" />
-                           </div>
-                        </div>
-                        <div className="group">
-                           <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Dirección de Instalación</label>
-                           <input id="direccion" value={formData.direccion} onChange={handleInputChange} className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-blue-500 outline-none transition-all uppercase" />
-                        </div>
-                     </div>
-                  </div>
+                <div className="relative z-10">
+                   {/* Step 1: Suscripción */}
+                   {currentStep === 1 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-blue-600 !text-blue-800 !px-0 border-b-2 pb-2 font-black">Detalles de Suscripción</div>
+                         <div className="grid md:grid-cols-2 gap-8">
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Fecha de Instalación</label>
+                               <input id="installDate" value={formData.installDate} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all" />
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">ID de Instalación (SOL-XXXX)</label>
+                               <input id="installId" value={formData.installId} onChange={handleInputChange} placeholder="SOL-2026-XXXX" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all" />
+                            </div>
+                            <div className="group md:col-span-2">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Agente Oficial</label>
+                               <input value="MR TECHNOLOGY" disabled className="w-full bg-slate-50 border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-black focus:border-blue-600 outline-none transition-all" />
+                            </div>
+                         </div>
+                      </div>
+                   )}
 
-                  <div className="space-y-6">
-                     <div className="section-title !m-0 !bg-transparent !border-cyan-500 !text-cyan-400">Instalación y Rendimiento</div>
-                     <div className="space-y-4">
-                        <div className="group">
-                           <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Ubicación de la Antena</label>
-                           <input id="ubicacion" value={formData.ubicacion} onChange={handleInputChange} placeholder="EJ: Techo, Torre 10m" className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-cyan-500 outline-none transition-all uppercase" />
-                        </div>
-                        <div className="group">
-                           <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Nivel de Obstrucciones</label>
-                           <select id="obstrucciones" value={formData.obstrucciones} onChange={handleInputChange} className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-bold focus:border-cyan-500 outline-none transition-all">
-                              <option>Ninguna (0%)</option>
-                              <option>Mínima (< 1%)</option>
-                              <option>Moderada (1-5%)</option>
-                              <option>Crítica (> 5%)</option>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+                   {/* Step 2: Datos del Cliente */}
+                   {currentStep === 2 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-blue-600 !text-blue-800 !px-0 border-b-2 pb-2 font-black">Datos del Cliente</div>
+                         <div className="space-y-6">
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Razón Social / Nombre Completo</label>
+                               <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all uppercase" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">CUIT / CUIL</label>
+                                  <input id="cuit" value={formData.cuit} onChange={handleInputChange} placeholder="00-00000000-0" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all" />
+                               </div>
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">Nombre de Fantasía</label>
+                                  <input id="fantasia" value={formData.fantasia} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all uppercase" />
+                               </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">Email de Contacto</label>
+                                  <input id="email" type="email" value={formData.email} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all" />
+                               </div>
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">Celular de Contacto</label>
+                                  <input id="phone" value={formData.phone} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all" />
+                               </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">Categoría</label>
+                                  <select id="categoria" value={formData.categoria} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all">
+                                     <option value="">Seleccionar...</option>
+                                     <option value="HOGAREÑO">HOGAREÑO</option>
+                                     <option value="EMPRESA">EMPRESA</option>
+                                     <option value="PYME">PYME</option>
+                                     <option value="BODEGA">BODEGA</option>
+                                  </select>
+                               </div>
+                               <div className="group">
+                                  <label className="text-black text-[11px] font-black uppercase mb-1 block">Dirección de Instalación</label>
+                                  <input id="direccion" value={formData.direccion} onChange={handleInputChange} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-blue-600 outline-none transition-all uppercase" />
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   )}
 
-               {/* Performance Steps */}
-               <div className="mt-12 p-8 bg-blue-600/5 rounded-[2rem] border border-blue-500/10">
-                  <div className="flex items-center gap-3 mb-6">
-                     <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(37,99,235,1)]" />
-                     <h3 className="text-white font-black uppercase tracking-widest text-sm">Tests de Rendimiento Satelital</h3>
-                  </div>
-                  <div className="grid grid-cols-3 gap-6 mb-6">
-                     <div className="bg-black/40 p-4 rounded-2xl border border-slate-800">
-                        <label className="text-slate-500 text-[8px] font-black uppercase mb-2 block">Descarga (Mbps)</label>
-                        <input id="downloadSpeed" value={formData.downloadSpeed} onChange={handleInputChange} className="w-full bg-transparent text-2xl font-black text-blue-400 outline-none" placeholder="000" />
-                     </div>
-                     <div className="bg-black/40 p-4 rounded-2xl border border-slate-800">
-                        <label className="text-slate-500 text-[8px] font-black uppercase mb-2 block">Carga (Mbps)</label>
-                        <input id="uploadSpeed" value={formData.uploadSpeed} onChange={handleInputChange} className="w-full bg-transparent text-2xl font-black text-cyan-400 outline-none" placeholder="00" />
-                     </div>
-                     <div className="bg-black/40 p-4 rounded-2xl border border-slate-800">
-                        <label className="text-slate-500 text-[8px] font-black uppercase mb-2 block">Latencia (ms)</label>
-                        <input id="latencia" value={formData.latencia} onChange={handleInputChange} className="w-full bg-transparent text-2xl font-black text-green-400 outline-none" placeholder="00" />
-                     </div>
-                  </div>
-                  <div className="group">
-                     <label className="text-slate-500 text-[10px] font-black uppercase mb-1 block">Observaciones Técnicas</label>
-                     <textarea 
-                        id="obsTecnicas" 
-                        value={formData.obsTecnicas} 
-                        onChange={handleInputChange} 
-                        rows={2}
-                        className="w-full bg-black/40 border border-slate-800 rounded-xl px-4 py-3 text-white font-medium focus:border-blue-500 outline-none transition-all resize-none"
-                        placeholder="Detalles adicionales sobre la instalación..."
-                     />
-                  </div>
-               </div>
+                   {/* Step 3: Detalles Técnicos Starlink (Solo Técnico) */}
+                   {currentStep === 3 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-cyan-600 !text-cyan-800 !px-0 border-b-2 pb-2 font-black flex justify-between items-center">
+                            <span>Detalles Técnicos Starlink</span>
+                            {!isTechnician && <span className="bg-red-100 text-red-600 text-[10px] px-2 py-1 rounded-md">SOLO PERSONAL AUTORIZADO</span>}
+                         </div>
+                         <div className={`grid md:grid-cols-2 gap-8 ${!isTechnician ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Número de Serie (Kit)</label>
+                               <input id="serialKit" value={formData.serialKit} onChange={handleInputChange} disabled={!isTechnician} placeholder="KIT-XXXXXX" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-cyan-600 outline-none transition-all uppercase" />
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Tipo de Hardware</label>
+                               <select id="hardwareType" value={formData.hardwareType} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-cyan-600 outline-none transition-all">
+                                  <option value="ESTANDAR V4">ESTANDAR V4</option>
+                                  <option value="MINI X">MINI X</option>
+                                  <option value="ITINERANTE">ITINERANTE</option>
+                               </select>
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Ubicación de la Antena</label>
+                               <input id="ubicacion" value={formData.ubicacion} onChange={handleInputChange} disabled={!isTechnician} placeholder="EJ: Techo principal" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-cyan-600 outline-none transition-all uppercase" />
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Nivel de Obstrucciones</label>
+                               <select id="obstrucciones" value={formData.obstrucciones} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-cyan-600 outline-none transition-all">
+                                  <option>Ninguna (0%)</option>
+                                  <option>Mínima (< 1%)</option>
+                                  <option>Moderada (1-5%)</option>
+                                  <option>Crítica (> 5%)</option>
+                               </select>
+                            </div>
+                         </div>
+                      </div>
+                   )}
 
-               {/* Validations & Signatures Section */}
-               <div className="mt-12 grid md:grid-cols-2 gap-8">
-                  <div className={`p-6 rounded-[2rem] border transition-all duration-500 ${formData.aceptoContrato ? 'bg-green-500/10 border-green-500/30' : 'bg-slate-900/40 border-white/5'}`}>
-                     <div className="flex items-center gap-4 mb-4">
-                        <input 
-                           id="aceptoContrato" 
-                           type="checkbox" 
-                           checked={formData.aceptoContrato}
-                           onChange={handleInputChange}
-                           className="w-6 h-6 accent-green-500 rounded-lg cursor-pointer"
-                        />
-                        <div>
-                           <p className="text-white font-black text-sm uppercase tracking-tighter">Validación del Titular</p>
-                           <p className="text-slate-500 text-[10px] uppercase font-bold">Acepto los términos del servicio</p>
-                        </div>
-                     </div>
-                     {formData.aceptoContrato && (
-                        <div className="space-y-4 animate-in slide-in-from-top-2">
-                           <input id="clienteAclaracion" value={formData.clienteAclaracion} onChange={handleInputChange} placeholder="Aclaración del Titular" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-white text-xs font-bold uppercase outline-none focus:border-green-500" />
-                           <input id="clienteDni" value={formData.clienteDni} onChange={handleInputChange} placeholder="Número de Documento" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-white text-xs font-bold outline-none focus:border-green-500" />
-                        </div>
-                     )}
-                  </div>
+                   {/* Step 4: Pruebas de Rendimiento (Solo Técnico) */}
+                   {currentStep === 4 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-green-600 !text-green-800 !px-0 border-b-2 pb-2 font-black flex justify-between items-center">
+                            <span>Pruebas de Rendimiento</span>
+                            {!isTechnician && <span className="bg-red-100 text-red-600 text-[10px] px-2 py-1 rounded-md">SOLO PERSONAL AUTORIZADO</span>}
+                         </div>
+                         <div className={`space-y-8 ${!isTechnician ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
+                            <div className="grid grid-cols-3 gap-6">
+                               <div className="bg-white p-6 rounded-2xl border-2 border-slate-400 shadow-sm">
+                                  <label className="text-black text-[9px] font-black uppercase mb-2 block">Descarga (Mbps)</label>
+                                  <input id="downloadSpeed" value={formData.downloadSpeed} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-transparent text-3xl font-black text-blue-800 outline-none" placeholder="000" />
+                               </div>
+                               <div className="bg-white p-6 rounded-2xl border-2 border-slate-400 shadow-sm">
+                                  <label className="text-black text-[9px] font-black uppercase mb-2 block">Carga (Mbps)</label>
+                                  <input id="uploadSpeed" value={formData.uploadSpeed} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-transparent text-3xl font-black text-cyan-800 outline-none" placeholder="00" />
+                               </div>
+                               <div className="bg-white p-6 rounded-2xl border-2 border-slate-400 shadow-sm">
+                                  <label className="text-black text-[9px] font-black uppercase mb-2 block">Latencia (ms)</label>
+                                  <input id="latencia" value={formData.latencia} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-transparent text-3xl font-black text-green-800 outline-none" placeholder="00" />
+                               </div>
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Modo de Red</label>
+                               <select id="modoRed" value={formData.modoRed} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-green-600 outline-none transition-all">
+                                  <option>Router Starlink</option>
+                                  <option>Modo Bypass</option>
+                                  <option>Router Cliente</option>
+                               </select>
+                            </div>
+                            <div className="group">
+                               <label className="text-black text-[11px] font-black uppercase mb-1 block">Observaciones Técnicas</label>
+                               <textarea id="obsTecnicas" value={formData.obsTecnicas} onChange={handleInputChange} disabled={!isTechnician} rows={3} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-bold focus:border-green-600 outline-none transition-all resize-none" placeholder="Detalles sobre el rendimiento o instalación..." />
+                            </div>
+                         </div>
+                      </div>
+                   )}
 
-                  <div className={`p-6 rounded-[2rem] border transition-all duration-500 ${formData.finalizadaInstalacion ? 'bg-blue-500/10 border-blue-500/30' : 'bg-slate-900/40 border-white/5'}`}>
-                     <div className="flex items-center gap-4 mb-4">
-                        <input 
-                           id="finalizadaInstalacion" 
-                           type="checkbox" 
-                           checked={formData.finalizadaInstalacion}
-                           onChange={handleInputChange}
-                           className="w-6 h-6 accent-blue-500 rounded-lg cursor-pointer"
-                        />
-                        <div>
-                           <p className="text-white font-black text-sm uppercase tracking-tighter">Certificación Técnica</p>
-                           <p className="text-slate-500 text-[10px] uppercase font-bold">Instalación completada y verificada</p>
-                        </div>
-                     </div>
-                     {formData.finalizadaInstalacion && (
-                        <div className="space-y-4 animate-in slide-in-from-top-2">
-                           <select id="agenteNombreCheck" value={formData.agenteNombreCheck} onChange={handleInputChange} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-white text-xs font-bold uppercase outline-none focus:border-blue-500">
-                              {agents.map(agent => (
-                                 <option key={agent.id} value={agent.name}>{agent.name}</option>
-                              ))}
-                           </select>
-                           <input id="agenteDniCheck" value={formData.agenteDniCheck} onChange={handleInputChange} placeholder="DNI del Técnico (Confirmación)" className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2 text-white text-xs font-bold outline-none focus:border-blue-500" maxLength={8} />
-                        </div>
-                     )}
+                   {/* Step 5: Registro Fotográfico (Solo Técnico) */}
+                   {currentStep === 5 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-orange-600 !text-orange-800 !px-0 border-b-2 pb-2 font-black flex justify-between items-center">
+                            <span>Registro Fotográfico</span>
+                            {!isTechnician && <span className="bg-red-100 text-red-600 text-[10px] px-2 py-1 rounded-md">SOLO PERSONAL AUTORIZADO</span>}
+                         </div>
+                         <div className={`grid grid-cols-2 md:grid-cols-3 gap-4 ${!isTechnician ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
+                            {['antena', 'montaje', 'router', 'speedtest', 'obstruccion', 'entorno'].map((key) => (
+                               <div key={key} className="space-y-2">
+                                  <label className="text-black text-[9px] font-black uppercase text-center block">{key}</label>
+                                  <div className="photo-box relative h-40 border-slate-400" onClick={() => isTechnician && document.getElementById(`file-${key}`)?.click()}>
+                                     {photos[key] ? (
+                                        <img src={photos[key]} className="w-full h-full object-cover rounded-lg" />
+                                     ) : (
+                                        <div className="text-center p-4">
+                                           <svg className="w-8 h-8 mx-auto text-slate-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" strokeWidth={1.5}/><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" strokeWidth={1.5}/></svg>
+                                           <span className="text-[9px] font-black text-slate-400 uppercase">Subir Foto</span>
+                                        </div>
+                                     )}
+                                     <input id={`file-${key}`} type="file" className="hidden" accept="image/*" onChange={(e) => handlePhotoUpload(key, e)} disabled={!isTechnician} />
+                                  </div>
+                               </div>
+                            ))}
+                         </div>
+                      </div>
+                   )}
+
+                   {/* Step 6: Certificación Técnica (Solo Técnico) */}
+                   {currentStep === 6 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-blue-700 !text-blue-900 !px-0 border-b-2 pb-2 font-black flex justify-between items-center">
+                            <span>Certificación Técnica</span>
+                            {!isTechnician && <span className="bg-red-100 text-red-600 text-[10px] px-2 py-1 rounded-md">SOLO PERSONAL AUTORIZADO</span>}
+                         </div>
+                         <div className={`p-10 rounded-[3rem] border-4 transition-all duration-500 ${formData.finalizadaInstalacion ? 'bg-blue-50 border-blue-600 shadow-xl shadow-blue-500/10' : 'bg-white border-slate-300'} ${!isTechnician ? 'opacity-50 grayscale pointer-events-none' : ''}`}>
+                            <div className="flex items-center gap-6 mb-8">
+                               <input id="finalizadaInstalacion" type="checkbox" checked={formData.finalizadaInstalacion} onChange={handleInputChange} disabled={!isTechnician} className="w-10 h-10 accent-blue-600 rounded-xl cursor-pointer" />
+                               <div>
+                                  <p className="text-black font-black text-xl uppercase tracking-tighter">Certificación Técnica</p>
+                                  <p className="text-blue-800 text-xs uppercase font-black">Declaro que la instalación ha sido completada según los estándares de MR TECHNOLOGY</p>
+                               </div>
+                            </div>
+                            {formData.finalizadaInstalacion && (
+                               <div className="grid md:grid-cols-2 gap-6 animate-in slide-in-from-top-4">
+                                  <div className="group">
+                                     <label className="text-black text-[11px] font-black uppercase mb-1 block">Agente Certificador</label>
+                                     <select id="agenteNombreCheck" value={formData.agenteNombreCheck} onChange={handleInputChange} disabled={!isTechnician} className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-black uppercase outline-none focus:border-blue-600">
+                                        {agents.map(agent => <option key={agent.id} value={agent.name}>{agent.name}</option>)}
+                                     </select>
+                                  </div>
+                                  <div className="group">
+                                     <label className="text-black text-[11px] font-black uppercase mb-1 block">DNI del Técnico (Firma Digital)</label>
+                                     <input id="agenteDniCheck" value={formData.agenteDniCheck} onChange={handleInputChange} disabled={!isTechnician} placeholder="Ingrese su DNI para firmar" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-black outline-none focus:border-blue-600" maxLength={8} />
+                                  </div>
+                               </div>
+                            )}
+                         </div>
+                      </div>
+                   )}
+
+                   {/* Step 7: Aceptación del Cliente */}
+                   {currentStep === 7 && (
+                      <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
+                         <div className="section-title !m-0 !bg-transparent !border-green-700 !text-green-900 !px-0 border-b-2 pb-2 font-black flex justify-between items-center">
+                            <span>Conformidad del Cliente</span>
+                            {!formData.finalizadaInstalacion && <span className="bg-orange-100 text-orange-600 text-[10px] px-2 py-1 rounded-md uppercase">Esperando Validación Técnica</span>}
+                         </div>
+                         <div className={`p-10 rounded-[3rem] border-4 transition-all duration-500 ${formData.aceptoContrato ? 'bg-green-50 border-green-600 shadow-xl shadow-green-500/10' : 'bg-white border-slate-300'} ${!formData.finalizadaInstalacion ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
+                            <div className="flex items-center gap-6 mb-8">
+                               <input id="aceptoContrato" type="checkbox" checked={formData.aceptoContrato} onChange={handleInputChange} disabled={!formData.finalizadaInstalacion} className="w-10 h-10 accent-green-600 rounded-xl cursor-pointer" />
+                               <div>
+                                  <p className="text-black font-black text-xl uppercase tracking-tighter">Firma del Titular</p>
+                                  <p className="text-green-800 text-xs uppercase font-black">He verificado el funcionamiento y acepto los términos del servicio</p>
+                               </div>
+                            </div>
+                            {formData.aceptoContrato && (
+                               <div className="grid md:grid-cols-2 gap-6 animate-in slide-in-from-top-4">
+                                  <div className="group">
+                                     <label className="text-black text-[11px] font-black uppercase mb-1 block">Nombre y Apellido / Aclaración</label>
+                                     <input id="clienteAclaracion" value={formData.clienteAclaracion} onChange={handleInputChange} placeholder="Nombre completo" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-black uppercase outline-none focus:border-green-600" />
+                                  </div>
+                                  <div className="group">
+                                     <label className="text-black text-[11px] font-black uppercase mb-1 block">DNI / Documento del Titular</label>
+                                     <input id="clienteDni" value={formData.clienteDni} onChange={handleInputChange} placeholder="Número de documento" className="w-full bg-white border-2 border-slate-400 rounded-xl px-4 py-3 text-black font-black outline-none focus:border-green-600" />
+                                  </div>
+                               </div>
+                            )}
+                            {!formData.finalizadaInstalacion && (
+                               <div className="mt-8 p-6 bg-orange-50 border-2 border-orange-200 rounded-2xl flex items-center gap-4 text-orange-800">
+                                  <svg className="w-8 h-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" strokeWidth={2}/></svg>
+                                  <p className="text-xs font-black uppercase leading-relaxed">La firma del cliente se habilitará automáticamente una vez que el técnico complete la Certificación Técnica en el paso anterior.</p>
+                               </div>
+                            )}
+                         </div>
+                      </div>
+                   )}
+                </div>
+
+                {/* Navigation Buttons */}
+                <div className="mt-12 pt-8 border-t-2 border-slate-100 flex justify-between items-center no-print">
+                   <button 
+                      onClick={() => currentStep > 1 && setCurrentStep(prev => prev - 1)}
+                      className={`px-8 py-3 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 ${currentStep === 1 ? 'opacity-0 pointer-events-none' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                   >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M15 19l-7-7 7-7" strokeWidth={3}/></svg>
+                      Anterior
+                   </button>
+                   
+                   <div className="text-center">
+                      <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Paso {currentStep} de 7</p>
+                      <div className="flex gap-1 mt-1">
+                         {[1,2,3,4,5,6,7].map(n => <div key={n} className={`w-3 h-1 rounded-full ${currentStep === n ? 'bg-blue-600' : 'bg-slate-200'}`} />)}
+                      </div>
+                   </div>
+
+                   {currentStep < 7 ? (
+                      <button 
+                         onClick={() => setCurrentStep(prev => prev + 1)}
+                         className="px-8 py-3 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2"
+                      >
+                         Siguiente
+                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7" strokeWidth={3}/></svg>
+                      </button>
+                   ) : (
+                      <div className="flex flex-col items-end">
+                         {!formData.aceptoContrato && <p className="text-[9px] font-black text-red-500 uppercase mb-2">Debe firmar para finalizar</p>}
+                         <button 
+                            disabled={!formData.aceptoContrato || !formData.finalizadaInstalacion || formData.agenteDniCheck.length < 7}
+                            onClick={generatePDF}
+                            className={`px-8 py-3 rounded-2xl font-black uppercase tracking-widest transition-all flex items-center gap-2 ${formData.aceptoContrato && formData.finalizadaInstalacion ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-500/20' : 'bg-slate-200 text-slate-400 cursor-not-allowed'}`}
+                         >
+                            Finalizar y Descargar
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" strokeWidth={3}/></svg>
+                         </button>
+                      </div>
+                   )}
                   </div>
                </div>
             </div>
@@ -573,27 +758,27 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
         <div className="form-grid">
           <div className="form-row">
             <label>Razón Social</label>
-            <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="uppercase" />
+            <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} className="uppercase font-black text-black" />
           </div>
           <div className="form-row">
             <label>CUIT</label>
-            <input id="cuit" value={formData.cuit} onChange={handleInputChange} placeholder="00-00000000-0" />
+            <input id="cuit" value={formData.cuit} onChange={handleInputChange} placeholder="00-00000000-0" className="font-black text-black" />
           </div>
           <div className="form-row">
             <label>Nombre de Fantasía</label>
-            <input id="fantasia" value={formData.fantasia} onChange={handleInputChange} className="uppercase" />
+            <input id="fantasia" value={formData.fantasia} onChange={handleInputChange} className="uppercase font-black text-black" />
           </div>
           <div className="form-row">
             <label>Email</label>
-            <input id="email" type="email" value={formData.email} onChange={handleInputChange} />
+            <input id="email" type="email" value={formData.email} onChange={handleInputChange} className="font-black text-black" />
           </div>
           <div className="form-row">
             <label>WSP / Celular</label>
-            <input id="phone" value={formData.phone} onChange={handleInputChange} />
+            <input id="phone" value={formData.phone} onChange={handleInputChange} className="font-black text-black" />
           </div>
           <div className="form-row">
             <label>Categoría</label>
-            <select id="categoria" value={formData.categoria} onChange={handleInputChange}>
+            <select id="categoria" value={formData.categoria} onChange={handleInputChange} className="font-black text-black">
               <option value="">Seleccionar...</option>
               <option value="HOGAREÑO">HOGAREÑO</option>
               <option value="EMPRESA">EMPRESA</option>
@@ -603,7 +788,7 @@ export default function AntennaContractForm({ agents, nextInstallId, initialData
           </div>
           <div className="form-row full">
             <label>Dirección</label>
-            <input id="direccion" value={formData.direccion} onChange={handleInputChange} className="uppercase" />
+            <input id="direccion" value={formData.direccion} onChange={handleInputChange} className="uppercase font-black text-black" />
           </div>
         </div>
 

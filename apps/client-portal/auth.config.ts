@@ -10,6 +10,7 @@ export const authConfig = {
         token.dni = (user as any).dni;
         token.contractNumber = (user as any).contractNumber;
         token.contractId = user.id;
+        token.role = (user as any).role || "CLIENT";
       }
       return token;
     },
@@ -18,6 +19,7 @@ export const authConfig = {
         (session.user as any).dni = token.dni;
         (session.user as any).contractNumber = token.contractNumber;
         (session.user as any).contractId = token.contractId;
+        (session.user as any).role = token.role;
       }
       return session;
     },

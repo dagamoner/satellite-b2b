@@ -1,6 +1,6 @@
 generator client {
-  provider   = "prisma-client-js"
-  engineType = "library"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -113,7 +113,7 @@ model SupportTicket {
   id              String         @id @default(uuid())
   
   // Número de ticket visible (ej: TK-0001)
-  ticketNumber    String         @unique
+  ticketNumber    String
   
   title           String
   description     String

@@ -9,7 +9,7 @@ async function generateTicketNumber() {
   const year = new Date().getFullYear();
   const count = await db.supportTicket.count();
   const seq = String(count + 1).padStart(4, "0");
-  return `TK-${year}-${seq}`;
+  return `SOL-${year}-${seq}`;
 }
 
 /**

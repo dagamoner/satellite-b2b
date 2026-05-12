@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     const contractNumber = await generateLeadNumber();
-    const ticketNumber = await generateTicketNumber();
+    const ticketNumber = contractNumber; // Unificamos los números para trazabilidad absoluta
 
     // 1. Crear el Contrato en estado LEAD
     const contract = await db.installationContract.create({
