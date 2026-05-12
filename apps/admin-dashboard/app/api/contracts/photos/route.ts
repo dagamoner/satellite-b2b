@@ -5,14 +5,14 @@ import { cookies } from "next/headers";
 export const dynamic = "force-dynamic";
 
 // Usamos las variables de entorno para conectar con Supabase Storage
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
 
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(request: NextRequest) {
   try {
-    await await cookies();
+    await cookies();
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
 
