@@ -159,7 +159,13 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
         clientEmail: contractData.clientEmail,
         clientDni: contractData.clientDni,
         clientPhone: contractData.clientPhone,
+        clientCategory: contractData.clientCategory,
         planType: contractData.planType,
+        street: contractData.street,
+        houseNumber: contractData.houseNumber,
+        city: contractData.city,
+        province: contractData.province,
+        zipCode: contractData.zipCode,
         // Pre-fill tech data if exists
         serialKit: contractData.kitSerialNumber,
         terminalId: contractData.terminalId,

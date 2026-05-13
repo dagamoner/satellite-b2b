@@ -51,12 +51,16 @@ model InstallationContract {
   clientEmail    String
   clientPhone    String
   clientDni      String        // DNI o CUIT
+  clientCategory String?       // Hogareño, PYME, Empresa, etc.
   companyName    String?       // Nombre de empresa (opcional)
 
-  // Datos de instalación
-  address        String
-  city           String        @default("Mendoza")
-  province       String        @default("Mendoza")
+  // Datos de instalación detallados
+  address        String        // Dirección completa (concatenada o resumen)
+  street         String?       // Calle
+  houseNumber    String?       // Número
+  city           String        // Localidad
+  province       String        // Provincia
+  zipCode        String?       // C.P.
   country        String        @default("Argentina")
 
   // Producto y plan contratado

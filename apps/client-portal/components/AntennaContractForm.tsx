@@ -23,7 +23,13 @@ interface AntennaContractFormProps {
     clientEmail?: string;
     clientDni?: string;
     clientPhone?: string;
+    clientCategory?: string;
     planType?: string;
+    street?: string;
+    houseNumber?: string;
+    city?: string;
+    province?: string;
+    zipCode?: string;
   };
 }
 
@@ -43,12 +49,16 @@ export default function AntennaContractForm({
     cuit: initialData?.clientDni || '',
     email: initialData?.clientEmail || '',
     phone: initialData?.clientPhone || '',
+    category: initialData?.clientCategory || 'Hogareño',
     direccion: '',
+    street: initialData?.street || '',
+    houseNumber: initialData?.houseNumber || '',
+    zipCode: initialData?.zipCode || '',
     terminalId: '',
     serialKit: '',
     hardwareType: initialData?.planType || 'Antena Estándar V4',
-    ciudad: 'Mendoza',
-    provincia: 'Mendoza',
+    ciudad: initialData?.city || '',
+    provincia: initialData?.province || 'Mendoza',
     // Technical Specs
     downloadSpeed: '',
     uploadSpeed: '',
@@ -100,9 +110,13 @@ export default function AntennaContractForm({
         clientEmail: formData.email,
         clientPhone: formData.phone,
         clientDni: formData.cuit,
-        address: formData.direccion,
+        clientCategory: formData.category,
+        street: formData.street,
+        houseNumber: formData.houseNumber,
         city: formData.ciudad,
         province: formData.provincia,
+        zipCode: formData.zipCode,
+        address: `${formData.street} ${formData.houseNumber}, ${formData.ciudad}, ${formData.provincia}`,
       });
       onBack(); // Vuelve al chat o refresca
     } catch (err) {
@@ -298,13 +312,48 @@ export default function AntennaContractForm({
               <label>Teléfono / WhatsApp</label>
               <input id="phone" value={formData.phone} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
-            <div className="input-field full-row">
+            <div className="input-field">
               <label>Correo Electrónico</label>
               <input id="email" type="email" value={formData.email} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
+            <div className="input-field">
+              <label>Categoría</label>
+              <select id="category" value={formData.category} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="Hogareño">Hogareño</option>
+                <option value="Hogareño residencial">Hogareño residencial</option>
+                <option value="Local comercial">Local comercial</option>
+                <option value="Local gastronómico">Local gastronómico</option>
+                <option value="PYME">PYME</option>
+                <option value="Empresa">Empresa</option>
+                <option value="Bodega">Bodega</option>
+              </select>
+            </div>
+            
             <div className="input-field full-row">
-              <label>Dirección de Instalación</label>
-              <input id="direccion" value={formData.direccion} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
+              <label>Provincia</label>
+              <select id="provincia" value={formData.provincia} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                {["Buenos Aires", "CABA", "Catamarca", "Chaco", "Chubut", "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"].map(p => (
+                  <option key={p} value={p}>{p}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="input-field">
+              <label>Localidad / Ciudad</label>
+              <input id="ciudad" value={formData.ciudad} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="Ej: San Rafael" />
+            </div>
+            <div className="input-field">
+              <label>C.P.</label>
+              <input id="zipCode" value={formData.zipCode} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="5500" />
+            </div>
+
+            <div className="input-field">
+              <label>Dirección / Calle</label>
+              <input id="street" value={formData.street} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="Av. San Martín" />
+            </div>
+            <div className="input-field">
+              <label>Número</label>
+              <input id="houseNumber" value={formData.houseNumber} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="1234" />
             </div>
           </div>
         </div>
