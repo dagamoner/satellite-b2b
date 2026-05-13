@@ -60,7 +60,7 @@ export async function PATCH(
         ...(photoTest && { photoTest }),
         ...(photoApp && { photoApp }),
         ...(photoRack && { photoRack }),
-        ...(body.technicianSignature && { technicianSignature: body.technicianSignature }),
+        ...(body.techSignature && { techSignature: body.techSignature }),
       },
     });
 
