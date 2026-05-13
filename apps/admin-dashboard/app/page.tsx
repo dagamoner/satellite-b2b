@@ -43,6 +43,10 @@ export default function AdminDashboard() {
   const [reply, setReply] = useState("");
   const [sending, setSending] = useState(false);
 
+  // Filtros
+  const [filterPriority, setFilterPriority] = useState<TicketPriority | "ALL">("ALL");
+  const [filterStatus, setFilterStatus] = useState<TicketStatus | "ALL">("OPEN");
+
   // --- Realtime Hooks ---
   const { tickets, loading: loadingTickets } = useRealtimeTickets();
   const { messages, setMessages } = useRealtimeMessages(selectedTicket?.id);
@@ -258,8 +262,35 @@ export default function AdminDashboard() {
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
-            <span className="text-xs font-black uppercase tracking-wider bg-slate-800 text-slate-400 px-3 py-1.5 rounded-full border border-slate-700">Abiertos: {tickets.filter(t => t.status === 'OPEN').length}</span>
-            <span className="text-xs font-black uppercase tracking-wider bg-red-950/30 text-red-400 px-3 py-1.5 rounded-full border border-red-900/30 animate-pulse">Críticos: {tickets.filter(t => t.priority === 'CRITICAL').length}</span>
+            <button 
+              onClick={() => setFilterStatus(filterStatus === "OPEN" ? "ALL" : "OPEN")}
+              className={`text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border transition-all ${filterStatus === "OPEN" ? "bg-cyan-500 text-white border-cyan-400 shadow-lg shadow-cyan-500/20" : "bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500"}`}
+            >
+              Abiertos: {tickets.filter(t => t.status === 'OPEN').length}
+            </button>
+            
+            {["CRITICAL", "HIGH", "MEDIUM", "LOW"].map((p) => (
+              <button
+                key={p}
+                onClick={() => setFilterPriority(filterPriority === p ? "ALL" : p as any)}
+                className={`text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border transition-all ${
+                  filterPriority === p 
+                    ? priorityStyles[p as TicketPriority].replace('/20', '') + " shadow-lg" 
+                    : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"
+                } ${p === 'CRITICAL' && filterPriority !== 'CRITICAL' ? 'animate-pulse' : ''}`}
+              >
+                {p}: {tickets.filter(t => t.priority === p).length}
+              </button>
+            ))}
+            
+            {(filterPriority !== "ALL" || filterStatus !== "ALL") && (
+              <button 
+                onClick={() => { setFilterPriority("ALL"); setFilterStatus("ALL"); }}
+                className="text-[9px] font-black uppercase tracking-wider bg-white/5 text-slate-500 px-3 py-1.5 rounded-full border border-white/10 hover:text-white transition-colors"
+              >
+                Limpiar
+              </button>
+            )}
           </div>
         </div>
 
@@ -285,10 +316,18 @@ export default function AdminDashboard() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar">
-          {tickets.length === 0 ? (
-            <div className="p-8 text-center text-slate-600 font-bold uppercase text-xs tracking-widest py-20">No hay tickets activos</div>
-          ) : (
-            tickets.map(t => (
+          {(() => {
+            const filtered = tickets.filter(t => {
+              if (filterPriority !== "ALL" && t.priority !== filterPriority) return false;
+              if (filterStatus !== "ALL" && t.status !== filterStatus) return false;
+              return true;
+            });
+
+            if (filtered.length === 0) {
+              return <div className="p-8 text-center text-slate-600 font-bold uppercase text-[10px] tracking-widest py-20 bg-slate-900/20 rounded-3xl border border-dashed border-white/5">No hay tickets con este filtro</div>;
+            }
+
+            return filtered.map(t => (
               <div 
                 key={t.id}
                 onClick={() => setSelectedTicket(t)}
@@ -315,8 +354,8 @@ export default function AdminDashboard() {
                   </span>
                 </div>
               </div>
-            ))
-          )}
+            ));
+          })()}
         </div>
       </aside>
 
