@@ -32,3 +32,5 @@ export const authConfig = {
   secret: process.env.AUTH_SECRET,
   debug: true,
 } satisfies NextAuthConfig;
+
+console.log("DEBUG: Auth configuration initialized. Secret present:", !!process.env.AUTH_SECRET);
