@@ -259,23 +259,23 @@ export default function AntennaContractForm({
           <div className="form-grid">
             <div className="input-field full-row">
               <label>Nombre / Razón Social</label>
-              <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} disabled={ticketStatus !== 'CONTRACT_INITIATED'} />
+              <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field">
               <label>DNI / CUIT</label>
-              <input id="cuit" value={formData.cuit} onChange={handleInputChange} disabled={ticketStatus !== 'CONTRACT_INITIATED'} />
+              <input id="cuit" value={formData.cuit} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field">
               <label>Teléfono / WhatsApp</label>
-              <input id="phone" value={formData.phone} onChange={handleInputChange} disabled={ticketStatus !== 'CONTRACT_INITIATED'} />
+              <input id="phone" value={formData.phone} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field full-row">
               <label>Correo Electrónico</label>
-              <input id="email" type="email" value={formData.email} onChange={handleInputChange} disabled={ticketStatus !== 'CONTRACT_INITIATED'} />
+              <input id="email" type="email" value={formData.email} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field full-row">
               <label>Dirección de Instalación</label>
-              <input id="direccion" value={formData.direccion} onChange={handleInputChange} disabled={ticketStatus !== 'CONTRACT_INITIATED'} placeholder="Calle, Número, Localidad" />
+              <input id="direccion" value={formData.direccion} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
           </div>
         </div>
@@ -394,7 +394,7 @@ export default function AntennaContractForm({
       <div className="actions">
         <button className="btn-action btn-secondary" onClick={onBack}>Volver al Chat</button>
         
-        {ticketStatus === 'CONTRACT_INITIATED' && (
+        {(['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)) && (
           <button className="btn-action" onClick={handleClientDataConfirm}>Confirmar Mis Datos</button>
         )}
         
