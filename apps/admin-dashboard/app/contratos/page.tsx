@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
+import SignatureCanvas from "react-signature-canvas";
 import { useRealtimeContracts } from "../../hooks/useRealtimeContracts";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
@@ -108,6 +109,7 @@ function ContractModal({
   const [saving, setSaving] = useState(false);
   const [savedOk, setSavedOk] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
+  const [techObservations, setTechObservations] = useState(contract.techNotes || ""); // Notas técnicas generales
 
   // Estados técnicos editables
   const [kitSerialNumber, setKitSerialNumber] = useState(contract.kitSerialNumber || "");
@@ -130,6 +132,8 @@ function ContractModal({
     photoRack: contract.photoRack || "",
   });
 
+  const sigCanvas = useRef<SignatureCanvas>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -149,7 +153,7 @@ function ContractModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status,
-          techNotes,
+          techNotes: techObservations,
           scheduledDate: scheduledDate || undefined,
           kitSerialNumber,
           antennaModel,
@@ -162,6 +166,7 @@ function ContractModal({
           networkMode,
           perfObservations,
           ...photos,
+          techSignature: sigCanvas.current?.isEmpty() ? (contract.techSignature || undefined) : sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png"),
           ...(status === "COMPLETED" ? { installedAt: new Date().toISOString() } : {}),
         }),
       });
@@ -185,10 +190,10 @@ function ContractModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Tabs */}
-        <div className="flex border-b border-slate-700 mb-6">
-          <button onClick={() => setActiveTab("general")} className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${activeTab === "general" ? "text-blue-400 border-b-2 border-blue-500" : "text-slate-500 hover:text-slate-300"}`}>General</button>
-          <button onClick={() => setActiveTab("tecnico")} className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${activeTab === "tecnico" ? "text-blue-400 border-b-2 border-blue-500" : "text-slate-500 hover:text-slate-300"}`}>Ficha Técnica</button>
-          <button onClick={() => setActiveTab("evidencias")} className={`px-6 py-3 text-xs font-bold uppercase tracking-widest transition-all ${activeTab === "evidencias" ? "text-blue-400 border-b-2 border-blue-500" : "text-slate-500 hover:text-slate-300"}`}>Evidencias</button>
+        <div className="flex border-b border-slate-700 mb-6 overflow-x-auto scrollbar-hide">
+          <button onClick={() => setActiveTab("general")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "general" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>01. General</button>
+          <button onClick={() => setActiveTab("tecnico")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "tecnico" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>02. Auditoría Técnica</button>
+          <button onClick={() => setActiveTab("evidencias")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "evidencias" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>03. Evidencias</button>
         </div>
 
         {/* Tab Content */}
@@ -226,13 +231,22 @@ function ContractModal({
                     </select>
                   </div>
                   <div>
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Notas Técnicas / Observaciones</label>
+                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Notas Administrativas</label>
                     <textarea
                       value={techNotes}
                       onChange={(e) => setTechNotes(e.target.value)}
-                      rows={4}
+                      rows={3}
                       className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none resize-none transition-all"
+                      placeholder="Notas para el equipo de administración..."
                     />
+                  </div>
+                  <div className="pt-4">
+                    <button 
+                      onClick={() => setActiveTab("tecnico")}
+                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2"
+                    >
+                      Comenzar Auditoría Técnica 🛰️
+                    </button>
                   </div>
                 </div>
               </div>
@@ -368,6 +382,47 @@ function ContractModal({
                   </div>
                 </div>
               </div>
+
+              {/* Firma del Técnico */}
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-6">04. Firma del Técnico</h3>
+                <div className="space-y-4">
+                  <div className="bg-white rounded-xl overflow-hidden shadow-inner border border-slate-700">
+                    <SignatureCanvas 
+                      ref={sigCanvas}
+                      penColor="#0f172a"
+                      canvasProps={{ width: 500, height: 200, className: "w-full cursor-crosshair" }}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="text-[9px] text-slate-500 italic">Al firmar, usted confirma que la instalación cumple con los estándares de calidad de MR Technology.</p>
+                    <button 
+                      onClick={() => sigCanvas.current?.clear()}
+                      className="text-[10px] font-bold text-red-400 hover:text-red-300 uppercase tracking-widest"
+                    >
+                      Limpiar Firma
+                    </button>
+                  </div>
+                  {contract.techSignature && (
+                    <div className="pt-4 border-t border-slate-700/50">
+                      <p className="text-[10px] text-slate-500 uppercase font-bold mb-2">Firma Guardada Anteriormente:</p>
+                      <img src={contract.techSignature} className="h-16 bg-white/5 rounded-lg border border-white/10" alt="Firma previa" />
+                    </div>
+                  )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Botón de navegación */}
+              <div className="pt-4">
+                <button 
+                  onClick={() => setActiveTab("evidencias")}
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-2xl transition-all shadow-lg flex items-center justify-center gap-2"
+                >
+                  Continuar a Evidencias Fotográficas 📸
+                </button>
+              </div>
             </div>
           )}
 
@@ -402,8 +457,30 @@ function ContractModal({
                         </label>
                       )}
                    </div>
-                </div>
-              ))}
+                    </div>
+                 </div>
+               ))}
+             </div>
+              
+              {/* Botón Guardar Final */}
+              <div className="mt-8 pt-8 border-t border-slate-800">
+                <button
+                  onClick={save}
+                  disabled={saving}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black py-5 rounded-2xl transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-3 text-lg tracking-widest uppercase"
+                >
+                  {saving ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      Guardando Auditoría...
+                    </>
+                  ) : savedOk ? (
+                    "✅ ¡Guardado con Éxito!"
+                  ) : (
+                    "💾 Guardar y Finalizar Auditoría"
+                  )}
+                </button>
+              </div>
             </div>
           )}
         </div>

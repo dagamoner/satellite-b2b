@@ -23,7 +23,8 @@
     "next": "15.1.7",
     "next-auth": "5.0.0-beta.25",
     "react": "^19.2.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-signature-canvas": "^1.1.0-alpha.2"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.0.0",
@@ -35,6 +36,7 @@
     "@types/node": "^22.15.30",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.1",
+    "@types/react-signature-canvas": "^1.0.7",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.39.1",
     "postcss": "^8.5.3",
