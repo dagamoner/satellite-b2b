@@ -348,39 +348,65 @@ export default function AntennaContractForm({
           </div>
         </div>
 
-        {/* SECTION 4: HOLOGRAPHIC SIGNATURE (Visible: SIGNATURE_PENDING) */}
-        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') && (
-          <div className="doc-section">
-            <div className="section-header">04. Conformidad y Firma Holográfica</div>
-            <div className="signature-area">
-              <p style={{ fontSize: '0.7rem', marginBottom: '15px', color: '#64748b' }}>
-                Yo, <strong>{formData.razonSocial}</strong>, acepto la instalación realizada y los términos del contrato de servicio satelital.
-              </p>
-              
-              {ticketStatus === 'SIGNATURE_PENDING' ? (
-                <>
-                  <div className="sig-canvas-container">
-                    <SignatureCanvas 
-                      ref={sigCanvas}
-                      penColor='#0f172a'
-                      canvasProps={{width: 600, height: 200, className: 'sigCanvas'}}
-                    />
-                  </div>
-                  <button onClick={() => sigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block">Limpiar Firma</button>
-                  
-                  <div className="mt-6 flex items-center gap-3">
-                    <input type="checkbox" id="accept" checked={isAccepted} onChange={(e) => setIsAccepted(e.target.checked)} className="w-5 h-5" />
-                    <label htmlFor="accept" className="normal-case font-medium text-slate-700">Acepto los términos y condiciones del servicio.</label>
-                  </div>
-                </>
+        {/* SECTION 4: HOLOGRAPHIC SIGNATURES */}
+        <div className="doc-section">
+          <div className="section-header">04. Conformidad y Firmas</div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Firma del Técnico */}
+            <div className="signature-box border rounded-2xl p-6 bg-slate-50/50">
+              <p className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Firma del Instalador Autorizado</p>
+              {ticketStatus === 'TECH_IN_PROGRESS' ? (
+                <div className="text-center py-10 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 text-xs italic">
+                  El técnico estampará su firma al finalizar <br/> los parámetros técnicos.
+                </div>
               ) : (
                 <div className="flex justify-center p-4">
-                  <img src={initialData?.clientDni /* Fallback or actual data */} alt="Firma" className="max-h-24 opacity-80" />
+                  <div className="h-20 w-40 bg-slate-200/50 rounded flex items-center justify-center text-[10px] text-slate-400">FIRMA TÉCNICA REGISTRADA</div>
+                </div>
+              )}
+            </div>
+
+            {/* Firma del Cliente */}
+            <div className="signature-box border rounded-2xl p-6 bg-blue-50/30 border-blue-100">
+              <p className="text-[10px] font-black uppercase text-blue-500 mb-4 tracking-widest text-center">Firma de Aceptación del Cliente</p>
+              
+              {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') ? (
+                <>
+                  <p className="text-[10px] mb-4 text-slate-600 leading-relaxed text-center">
+                    Yo, <strong>{formData.razonSocial}</strong>, acepto la instalación realizada y los términos del contrato.
+                  </p>
+                  
+                  {ticketStatus === 'SIGNATURE_PENDING' ? (
+                    <>
+                      <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
+                        <SignatureCanvas 
+                          ref={sigCanvas}
+                          penColor='#0f172a'
+                          canvasProps={{width: 300, height: 150, className: 'sigCanvas'}}
+                        />
+                      </div>
+                      <button onClick={() => sigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma</button>
+                      
+                      <div className="mt-4 flex items-center gap-3 justify-center">
+                        <input type="checkbox" id="accept" checked={isAccepted} onChange={(e) => setIsAccepted(e.target.checked)} className="w-4 h-4" />
+                        <label htmlFor="accept" className="normal-case font-medium text-[10px] text-slate-700">Acepto los términos y condiciones.</label>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex justify-center p-4">
+                      <div className="h-20 w-40 bg-blue-500/10 rounded flex items-center justify-center text-[10px] text-blue-500 font-bold uppercase tracking-tighter">CONTRATO FIRMADO DIGITALMENTE</div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-10 text-slate-300 text-[10px] uppercase font-bold tracking-tighter">
+                  Esperando finalización <br/> de instalación técnica...
                 </div>
               )}
             </div>
           </div>
-        )}
+        </div>
 
         <div className="doc-section" style={{ marginTop: '40px' }}>
           <p style={{ fontSize: '0.6rem', lineHeight: '1.4', color: '#94a3b8', textAlign: 'center' }}>
