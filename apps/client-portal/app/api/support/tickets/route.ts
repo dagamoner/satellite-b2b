@@ -56,7 +56,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Faltan campos obligatorios o sesión no válida" }, { status: 400 });
     }
 
-    const ticketNumber = await generateTicketNumber();
+    // Generar el número de ticket
+    let ticketNumber = "";
+    
+    if (category === "Contrato") {
+      // 1. Obtener el número del contrato base (la solicitud original)
+      const baseContract = await db.installationContract.findUnique({
+        where: { id: contractId },
+        select: { contractNumber: true }
+      });
+      
+      const baseNumber = baseContract?.contractNumber || "SOL-0000-0000";
+      
+      // 2. Contar cuántos tickets de tipo contrato existen para este contratoId para la extensión
+      const contractTicketsCount = await db.supportTicket.count({
+        where: { 
+          contractId,
+          category: "Contrato"
+        }
+      });
+      
+      const extension = String(contractTicketsCount + 1).padStart(6, "0");
+      ticketNumber = `${baseNumber}-C-${extension}`;
+    } else {
+      // Generador estándar para otras categorías
+      ticketNumber = await generateTicketNumber();
+    }
 
     const ticket = await db.supportTicket.create({
       data: {
