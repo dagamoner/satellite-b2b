@@ -3,12 +3,12 @@ import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
-  await await cookies();
+  await cookies();
   return handlers.GET(req);
 }
 
 export async function POST(req: NextRequest) {
-  await await cookies();
+  await cookies();
   return handlers.POST(req);
 }
 
