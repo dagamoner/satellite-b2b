@@ -50,24 +50,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         if (!credentials?.dni || !credentials?.contractNumber) return null;
 
-        // Buscamos el contrato que coincida con el DNI del cliente y el número de contrato
-        const contract = await prisma.installationContract.findFirst({
-          where: {
-            clientDni: credentials.dni as string,
-            contractNumber: credentials.contractNumber as string,
-          },
-        });
+        try {
+          console.log("DEBUG: Attempting database query for DNI:", credentials.dni);
+          // Buscamos el contrato que coincida con el DNI del cliente y el número de contrato
+          const contract = await prisma.installationContract.findFirst({
+            where: {
+              clientDni: credentials.dni as string,
+              contractNumber: credentials.contractNumber as string,
+            },
+          });
 
-        if (!contract) return null;
+          if (!contract) {
+            console.log("DEBUG: No contract found for these credentials.");
+            return null;
+          }
 
-        // Para el cliente, el 'user' es el contrato/titular
-        return {
-          id: contract.id,
-          name: contract.clientName,
-          email: contract.clientEmail,
-          dni: contract.clientDni,
-          contractNumber: contract.contractNumber,
-        };
+          console.log("DEBUG: Login successful for:", contract.clientName);
+          // Para el cliente, el 'user' es el contrato/titular
+          return {
+            id: contract.id,
+            name: contract.clientName,
+            email: contract.clientEmail,
+            dni: contract.clientDni,
+            contractNumber: contract.contractNumber,
+          };
+        } catch (error: any) {
+          console.error("CRITICAL PRISMA ERROR:", error);
+          throw new Error("Error de base de datos durante la autenticación.");
+        }
       },
     }),
   ],
