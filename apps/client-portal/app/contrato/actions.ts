@@ -19,17 +19,47 @@ export async function getTechnicians() {
  */
 export async function updateTicketStatus(ticketId: string, status: string, contractData?: any) {
   try {
-    // 1. Buscar el ticket para encontrar el contractId
-    const ticket = await prisma.supportTicket.findUnique({
-      where: { id: ticketId },
-      select: { contractId: true, ticketNumber: true }
-    });
+    let ticket = null;
 
-    if (!ticket) throw new Error("Ticket no encontrado");
+    // 1. Intentar buscar por ID (UUID)
+    if (ticketId && ticketId.length > 20) {
+      ticket = await prisma.supportTicket.findUnique({
+        where: { id: ticketId },
+        select: { id: true, contractId: true, ticketNumber: true }
+      });
+    }
+
+    // 2. Si no se encontró, intentar buscar por ticketNumber (ej: SOL-2026-0067)
+    if (!ticket && ticketId) {
+      ticket = await prisma.supportTicket.findFirst({
+        where: { ticketNumber: ticketId },
+        select: { id: true, contractId: true, ticketNumber: true }
+      });
+    }
+
+    // 3. Si sigue sin encontrarse y tenemos DNI, buscar el ticket abierto más reciente del cliente
+    if (!ticket && contractData?.clientDni) {
+      ticket = await prisma.supportTicket.findFirst({
+        where: { 
+          category: "Contrato",
+          status: { in: ["OPEN", "CONTRACT_INITIATED", "LEAD"] },
+          // Relacionar con el contrato que tenga ese DNI
+          contract: {
+            clientDni: contractData.clientDni
+          }
+        },
+        orderBy: { createdAt: 'desc' },
+        select: { id: true, contractId: true, ticketNumber: true }
+      });
+    }
+
+    if (!ticket) throw new Error("No se encontró una solicitud activa para vincular estos datos.");
+
+    const effectiveTicketId = ticket.id;
 
     // 2. Actualizar el estado del Ticket
     await prisma.supportTicket.update({
-      where: { id: ticketId },
+      where: { id: effectiveTicketId },
       data: { 
         status,
         updatedAt: new Date()
@@ -51,7 +81,7 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
     // 4. Agregar mensaje de sistema al hilo del ticket
     await prisma.ticketMessage.create({
       data: {
-        ticketId,
+        ticketId: effectiveTicketId,
         content: `EL SISTEMA HA CAMBIADO EL ESTADO A: ${status.replace('_', ' ')}`,
         authorId: null, // Sistema
       }
