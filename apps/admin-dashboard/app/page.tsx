@@ -261,36 +261,38 @@ export default function AdminDashboard() {
               Salir
             </button>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-3">
             <button 
               onClick={() => setFilterStatus(filterStatus === "OPEN" ? "ALL" : "OPEN")}
-              className={`text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border transition-all ${filterStatus === "OPEN" ? "bg-cyan-500 text-white border-cyan-400 shadow-lg shadow-cyan-500/20" : "bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500"}`}
+              className={`col-span-2 text-[10px] font-black uppercase tracking-widest px-4 py-4 rounded-[1.5rem] border transition-all flex items-center justify-between ${filterStatus === "OPEN" ? "bg-cyan-500 text-white border-cyan-400 shadow-xl shadow-cyan-500/20 scale-[1.02]" : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"}`}
             >
-              Abiertos: {tickets.filter(t => t.status === 'OPEN').length}
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full bg-current ${filterStatus === 'OPEN' ? 'animate-pulse' : ''}`} />
+                Tickets Abiertos
+              </div>
+              <span className="bg-black/20 px-2 py-1 rounded-lg text-[10px]">{tickets.filter(t => t.status === 'OPEN').length}</span>
             </button>
             
-            {["CRITICAL", "HIGH", "MEDIUM", "LOW"].map((p) => (
-              <button
-                key={p}
-                onClick={() => setFilterPriority(filterPriority === p ? "ALL" : p as any)}
-                className={`text-[9px] font-black uppercase tracking-wider px-3 py-1.5 rounded-full border transition-all ${
-                  filterPriority === p 
-                    ? priorityStyles[p as TicketPriority].replace('/20', '') + " shadow-lg" 
-                    : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"
-                } ${p === 'CRITICAL' && filterPriority !== 'CRITICAL' ? 'animate-pulse' : ''}`}
-              >
-                {p}: {tickets.filter(t => t.priority === p).length}
-              </button>
-            ))}
-            
-            {(filterPriority !== "ALL" || filterStatus !== "ALL") && (
-              <button 
-                onClick={() => { setFilterPriority("ALL"); setFilterStatus("ALL"); }}
-                className="text-[9px] font-black uppercase tracking-wider bg-white/5 text-slate-500 px-3 py-1.5 rounded-full border border-white/10 hover:text-white transition-colors"
-              >
-                Limpiar
-              </button>
-            )}
+            {["CRITICAL", "HIGH", "MEDIUM", "LOW"].map((p) => {
+              const count = tickets.filter(t => t.priority === p).length;
+              const isActive = filterPriority === p;
+              const styles = priorityStyles[p as TicketPriority];
+              
+              return (
+                <button
+                  key={p}
+                  onClick={() => setFilterPriority(isActive ? "ALL" : p as any)}
+                  className={`text-[9px] font-black uppercase tracking-widest p-4 rounded-[1.5rem] border transition-all flex flex-col gap-2 items-start ${
+                    isActive 
+                      ? `${styles.replace('/20', '')} border-current shadow-lg scale-[1.05]` 
+                      : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"
+                  } ${p === 'CRITICAL' && !isActive && count > 0 ? 'animate-pulse border-red-500/30' : ''}`}
+                >
+                  <span className="opacity-60">{p}</span>
+                  <span className="text-xl font-black">{count}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 

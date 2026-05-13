@@ -44,6 +44,8 @@ export async function POST(request: NextRequest) {
         equipmentType: type === "HARDWARE" ? "SOLICITUD_HARDWARE" : "PENDIENTE",
         planType: planName || "POR_DEFINIR",
         address: "Pendiente de definición comercial",
+        city: "Por definir",
+        province: "Por definir",
         installationNotes: `Interés inicial: ${type}. Mensaje: ${message}`,
       }
     });

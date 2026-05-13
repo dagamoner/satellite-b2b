@@ -58,8 +58,8 @@ model InstallationContract {
   address        String        // Dirección completa (concatenada o resumen)
   street         String?       // Calle
   houseNumber    String?       // Número
-  city           String        // Localidad
-  province       String        // Provincia
+  city           String?       @default("Por definir") // Localidad
+  province       String?       @default("Por definir") // Provincia
   zipCode        String?       // C.P.
   country        String        @default("Argentina")
 

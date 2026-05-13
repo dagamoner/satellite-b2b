@@ -35,22 +35,24 @@ interface Contract {
   createdAt: string;
   // Nuevos campos técnicos
   kitSerialNumber?: string;
-  hardwareVersion?: string;
+  antennaModel?: string;
   antennaLocation?: string;
   obstructions?: string;
+  obstructionObject?: string;
   downloadSpeed?: number;
   uploadSpeed?: number;
   latency?: number;
   networkMode?: string;
+  perfObservations?: string;
   techSignature?: string;
   clientSignature?: string;
-  photoCasa?: string;
   photoAntena?: string;
+  photoSoporte?: string;
   photoRouter?: string;
-  photoCable?: string;
   photoTest?: string;
-  photoObstrucciones?: string;
-  technician?: { name: string, email: string };
+  photoApp?: string;
+  photoRack?: string;
+  technician?: { id: string, name: string, email: string };
 }
 
 // ── Config de estados ──────────────────────────────────────────────────────
@@ -107,6 +109,38 @@ function ContractModal({
   const [savedOk, setSavedOk] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
 
+  // Estados técnicos editables
+  const [kitSerialNumber, setKitSerialNumber] = useState(contract.kitSerialNumber || "");
+  const [antennaModel, setAntennaModel] = useState(contract.antennaModel || "STANDAR V4");
+  const [antennaLocation, setAntennaLocation] = useState(contract.antennaLocation || "");
+  const [obstructions, setObstructions] = useState(contract.obstructions || "Ninguna 0%");
+  const [obstructionObject, setObstructionObject] = useState(contract.obstructionObject || "");
+  const [downloadSpeed, setDownloadSpeed] = useState(contract.downloadSpeed?.toString() || "");
+  const [uploadSpeed, setUploadSpeed] = useState(contract.uploadSpeed?.toString() || "");
+  const [latency, setLatency] = useState(contract.latency?.toString() || "");
+  const [networkMode, setNetworkMode] = useState(contract.networkMode || "Router Starlink");
+  const [perfObservations, setPerfObservations] = useState(contract.perfObservations || "");
+  
+  const [photos, setPhotos] = useState<Record<string, string>>({
+    photoAntena: contract.photoAntena || "",
+    photoSoporte: contract.photoSoporte || "",
+    photoRouter: contract.photoRouter || "",
+    photoTest: contract.photoTest || "",
+    photoApp: contract.photoApp || "",
+    photoRack: contract.photoRack || "",
+  });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPhotos(prev => ({ ...prev, [field]: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const save = async () => {
     setSaving(true);
     try {
@@ -117,6 +151,17 @@ function ContractModal({
           status,
           techNotes,
           scheduledDate: scheduledDate || undefined,
+          kitSerialNumber,
+          antennaModel,
+          antennaLocation,
+          obstructions,
+          obstructionObject,
+          downloadSpeed: parseFloat(downloadSpeed) || 0,
+          uploadSpeed: parseFloat(uploadSpeed) || 0,
+          latency: parseInt(latency) || 0,
+          networkMode,
+          perfObservations,
+          ...photos,
           ...(status === "COMPLETED" ? { installedAt: new Date().toISOString() } : {}),
         }),
       });
@@ -196,65 +241,169 @@ function ContractModal({
 
           {activeTab === "tecnico" && (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50">
-                  <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest block mb-1">Equipamiento</span>
-                  <p className="text-sm text-cyan-400 font-bold">{EQUIPMENT_LABELS[contract.equipmentType]}</p>
+              {/* Detalles Técnicos Starlink */}
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-6 flex justify-between items-center">
+                  02. Detalles Técnicos Starlink
+                  <span className="bg-blue-500/10 text-blue-400 px-2 py-1 rounded text-[10px]">Técnico</span>
+                </h3>
+                
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Número de Serie Kit</label>
+                    <input 
+                      value={kitSerialNumber}
+                      onChange={e => setKitSerialNumber(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                      placeholder="KIT-000000"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Tipo de Antena</label>
+                    <select 
+                      value={antennaModel}
+                      onChange={e => setAntennaModel(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                    >
+                      <option value="MINI X">MINI X</option>
+                      <option value="STANDAR V4">STANDAR V4</option>
+                      <option value="ITINERANTE">ITINERANTE</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Ubicación de Antena</label>
+                    <input 
+                      value={antennaLocation}
+                      onChange={e => setAntennaLocation(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                      placeholder="Ej: Terraza, Mástil"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Obstrucciones</label>
+                    <select 
+                      value={obstructions}
+                      onChange={e => setObstructions(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                    >
+                      <option value="Ninguna 0%">Ninguna 0%</option>
+                      <option value="Minima <1%">Mínima &lt;1%</option>
+                      <option value="Moderada 1-5%">Moderada 1-5%</option>
+                      <option value="Crítica >5%">Crítica &gt;5%</option>
+                      <option value="Objeto">Objeto</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="bg-slate-800/40 p-4 rounded-2xl border border-slate-700/50">
-                  <span className="text-[10px] text-slate-500 uppercase font-black tracking-widest block mb-1">Plan contratado</span>
-                  <p className="text-sm text-cyan-400 font-bold">{PLAN_LABELS[contract.planType]}</p>
-                </div>
+
+                {obstructions === "Objeto" && (
+                  <div className="mt-4 animate-in fade-in slide-in-from-top-2">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Descripción del Objeto</label>
+                    <input 
+                      value={obstructionObject}
+                      onChange={e => setObstructionObject(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                      placeholder="Describa el objeto que genera obstrucción..."
+                    />
+                  </div>
+                )}
               </div>
 
+              {/* Pruebas de Rendimiento */}
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-4">Resultados de Instalación</h3>
+                <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-6">03. Pruebas de Rendimiento</h3>
+                
                 <div className="grid grid-cols-3 gap-6 mb-6">
-                   <div className="text-center p-3 bg-slate-900/50 rounded-xl">
-                      <span className="text-slate-500 text-[10px] block mb-1 font-bold">Bajada</span>
-                      <span className="text-emerald-400 text-lg font-black">{contract.downloadSpeed || 0} <small className="text-[10px]">Mbps</small></span>
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase block text-center">Bajada (Mbps)</label>
+                      <input 
+                        value={downloadSpeed}
+                        onChange={e => setDownloadSpeed(e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-3 text-emerald-400 text-center font-black outline-none focus:border-emerald-500"
+                        placeholder="0.0"
+                      />
                    </div>
-                   <div className="text-center p-3 bg-slate-900/50 rounded-xl">
-                      <span className="text-slate-500 text-[10px] block mb-1 font-bold">Subida</span>
-                      <span className="text-blue-400 text-lg font-black">{contract.uploadSpeed || 0} <small className="text-[10px]">Mbps</small></span>
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase block text-center">Subida (Mbps)</label>
+                      <input 
+                        value={uploadSpeed}
+                        onChange={e => setUploadSpeed(e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-3 text-blue-400 text-center font-black outline-none focus:border-blue-500"
+                        placeholder="0.0"
+                      />
                    </div>
-                   <div className="text-center p-3 bg-slate-900/50 rounded-xl">
-                      <span className="text-slate-500 text-[10px] block mb-1 font-bold">Latencia</span>
-                      <span className="text-indigo-400 text-lg font-black">{contract.latency || 0} <small className="text-[10px]">ms</small></span>
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase block text-center">Latencia (ms)</label>
+                      <input 
+                        value={latency}
+                        onChange={e => setLatency(e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-3 text-indigo-400 text-center font-black outline-none focus:border-indigo-500"
+                        placeholder="0"
+                      />
                    </div>
                 </div>
-                <div className="grid gap-3 text-sm border-t border-slate-700 pt-5">
-                   <div className="flex justify-between"><span className="text-slate-500">Nro Serie Kit:</span><span className="text-white font-mono">{contract.kitSerialNumber || "N/A"}</span></div>
-                   <div className="flex justify-between"><span className="text-slate-500">Modo de Red:</span><span className="text-white">{contract.networkMode || "N/A"}</span></div>
-                   <div className="flex justify-between"><span className="text-slate-500">Técnico encargado:</span><span className="text-blue-400 font-bold">{contract.technician?.name || "No asignado"}</span></div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Modo de Red</label>
+                    <select 
+                      value={networkMode}
+                      onChange={e => setNetworkMode(e.target.value)}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                    >
+                      <option value="Router Starlink">Router Starlink</option>
+                      <option value="Switch Starlink">Switch Starlink</option>
+                      <option value="Router + Switch Starlink">Router + Switch Starlink</option>
+                      <option value="Router o Switch del Cliente">Router o Switch del Cliente</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Observaciones de Rendimiento</label>
+                    <textarea 
+                      value={perfObservations}
+                      onChange={e => setPerfObservations(e.target.value)}
+                      rows={2}
+                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm outline-none focus:border-blue-500 resize-none"
+                      placeholder="Notas sobre estabilidad, cobertura, etc..."
+                    />
+                  </div>
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-6">
-                 <div className="space-y-2">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Firma del Cliente</span>
-                    <div className="bg-white/5 border border-slate-800 rounded-xl p-2 aspect-[3/1] flex items-center justify-center overflow-hidden">
-                       {contract.clientSignature ? <img src={contract.clientSignature} className="max-h-full invert" /> : <span className="text-slate-700 text-xs">Sin firma</span>}
-                    </div>
-                 </div>
-                 <div className="space-y-2">
-                    <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Firma del Técnico</span>
-                    <div className="bg-white/5 border border-slate-800 rounded-xl p-2 aspect-[3/1] flex items-center justify-center overflow-hidden">
-                       {contract.techSignature ? <img src={contract.techSignature} className="max-h-full invert opacity-80" /> : <span className="text-slate-700 text-xs">Sin firma</span>}
-                    </div>
-                 </div>
               </div>
             </div>
           )}
 
           {activeTab === "evidencias" && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              <PhotoViewer path={contract.photoAntena || null} label="Antena" />
-              <PhotoViewer path={contract.photoCasa || null} label="Fachada" />
-              <PhotoViewer path={contract.photoRouter || null} label="Router" />
-              <PhotoViewer path={contract.photoCable || null} label="Cableado" />
-              <PhotoViewer path={contract.photoTest || null} label="Speedtest" />
-              <PhotoViewer path={contract.photoObstrucciones || null} label="Obstrucciones" />
+              {[
+                { id: 'photoAntena', label: 'Antena (Panorámica)' },
+                { id: 'photoSoporte', label: 'Montaje & Soporte' },
+                { id: 'photoRouter', label: 'Router/Switch Interior' },
+                { id: 'photoTest', label: 'Test Velocidad' },
+                { id: 'photoApp', label: 'Obstrucciones' },
+                { id: 'photoRack', label: 'Rack Empresarial' }
+              ].map((item) => (
+                <div key={item.id} className="space-y-2">
+                   <label className="text-[10px] uppercase tracking-widest font-bold text-slate-500">{item.label}</label>
+                   <div className="relative group aspect-video bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-pointer hover:border-blue-500/50 transition-all shadow-inner">
+                      {photos[item.id] ? (
+                        <>
+                          <img src={photos[item.id]} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity gap-2">
+                             <label className="cursor-pointer bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-lg border border-white/20">
+                                Cambiar
+                                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
+                             </label>
+                          </div>
+                        </>
+                      ) : (
+                        <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-colors">
+                           <svg className="w-6 h-6 mb-2 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
+                           <span className="text-[9px] font-black text-slate-700 uppercase">Cargar Foto</span>
+                           <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
+                        </label>
+                      )}
+                   </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

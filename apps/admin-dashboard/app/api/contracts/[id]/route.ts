@@ -14,7 +14,28 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
-    const { status, techNotes, scheduledDate, installedAt } = body;
+    const { 
+      status, 
+      techNotes, 
+      scheduledDate, 
+      installedAt,
+      kitSerialNumber,
+      antennaModel,
+      antennaLocation,
+      obstructions,
+      obstructionObject,
+      downloadSpeed,
+      uploadSpeed,
+      latency,
+      networkMode,
+      perfObservations,
+      photoAntena,
+      photoSoporte,
+      photoRouter,
+      photoTest,
+      photoApp,
+      photoRack
+    } = body;
 
     const updated = await db.installationContract.update({
       where: { id },
@@ -23,6 +44,22 @@ export async function PATCH(
         ...(techNotes !== undefined && { techNotes }),
         ...(scheduledDate && { scheduledDate: new Date(scheduledDate) }),
         ...(installedAt && { installedAt: new Date(installedAt) }),
+        ...(kitSerialNumber && { kitSerialNumber }),
+        ...(antennaModel && { antennaModel }),
+        ...(antennaLocation && { antennaLocation }),
+        ...(obstructions && { obstructions }),
+        ...(obstructionObject !== undefined && { obstructionObject }),
+        ...(downloadSpeed !== undefined && { downloadSpeed: parseFloat(downloadSpeed) }),
+        ...(uploadSpeed !== undefined && { uploadSpeed: parseFloat(uploadSpeed) }),
+        ...(latency !== undefined && { latency: parseInt(latency) }),
+        ...(networkMode && { networkMode }),
+        ...(perfObservations !== undefined && { perfObservations }),
+        ...(photoAntena && { photoAntena }),
+        ...(photoSoporte && { photoSoporte }),
+        ...(photoRouter && { photoRouter }),
+        ...(photoTest && { photoTest }),
+        ...(photoApp && { photoApp }),
+        ...(photoRack && { photoRack }),
       },
     });
 
