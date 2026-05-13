@@ -58,6 +58,12 @@ export default function AntennaContractForm({
     obstructions: '0%',
     cableColor: 'Gris',
     antennaModel: 'Standard V4',
+    // Photos
+    photoCasa: '',
+    photoAntena: '',
+    photoRouter: '',
+    photoCable: '',
+    photoTest: '',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -69,6 +75,17 @@ export default function AntennaContractForm({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, [field]: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Fase 1: Cliente confirma sus datos
@@ -109,6 +126,12 @@ export default function AntennaContractForm({
         uploadSpeed: parseFloat(formData.uploadSpeed) || 0,
         latency: parseInt(formData.latency) || 0,
         networkMode: formData.networkMode,
+        // Enviar Fotos
+        photoCasa: formData.photoCasa,
+        photoAntena: formData.photoAntena,
+        photoRouter: formData.photoRouter,
+        photoCable: formData.photoCable,
+        photoTest: formData.photoTest,
       });
       onBack();
     } catch (err) {
@@ -317,11 +340,23 @@ export default function AntennaContractForm({
           {ticketStatus === 'TECH_IN_PROGRESS' && (
             <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-6">
               {['photoCasa', 'photoAntena', 'photoRouter', 'photoCable', 'photoTest'].map((photo) => (
-                <div key={photo} className="border-2 border-dashed border-slate-200 rounded-2xl p-4 text-center hover:border-blue-500 transition-colors">
-                  <label className="cursor-pointer">
-                    <input type="file" className="hidden" accept="image/*" onChange={() => alert('Evidencia capturada con éxito')} />
-                    <div className="text-[10px] font-black uppercase text-slate-400 mb-2">{photo.replace('photo', 'FOTO ')}</div>
-                    <svg className="w-6 h-6 mx-auto text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                <div key={photo} className={`border-2 border-dashed rounded-2xl p-4 text-center transition-all overflow-hidden relative group ${formData[photo as keyof typeof formData] ? 'border-green-500 bg-green-50/50' : 'border-slate-200 hover:border-blue-500'}`}>
+                  <label className="cursor-pointer block h-full">
+                    <input type="file" className="hidden" accept="image/*" capture="environment" onChange={(e) => handleFileChange(e, photo)} />
+                    
+                    {formData[photo as keyof typeof formData] ? (
+                      <div className="relative">
+                        <img src={formData[photo as keyof typeof formData] as string} className="h-24 w-full object-cover rounded-lg shadow-sm" alt="Preview" />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
+                          <span className="text-white text-[8px] font-bold uppercase">Cambiar</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="text-[10px] font-black uppercase text-slate-400 mb-2">{photo.replace('photo', 'FOTO ')}</div>
+                        <svg className="w-6 h-6 mx-auto text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                      </>
+                    )}
                   </label>
                 </div>
               ))}
