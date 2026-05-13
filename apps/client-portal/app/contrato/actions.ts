@@ -149,3 +149,23 @@ export async function saveInstallationContract(data: any) {
     return { success: false, error: error.message };
   }
 }
+export async function getTicketInfo(ticketId: string) {
+  try {
+    let ticket = null;
+    if (ticketId.length > 20) {
+      ticket = await prisma.supportTicket.findUnique({
+        where: { id: ticketId },
+        include: { contract: true }
+      });
+    } else {
+      ticket = await prisma.supportTicket.findFirst({
+        where: { ticketNumber: ticketId },
+        include: { contract: true }
+      });
+    }
+    return ticket;
+  } catch (error) {
+    console.error("Error fetching ticket info:", error);
+    return null;
+  }
+}

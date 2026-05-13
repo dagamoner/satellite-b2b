@@ -94,9 +94,12 @@ model InstallationContract {
   // Registro de Evidencia (Fotos)
   photoCasa       String?      // URL o ID de la foto de la fachada
   photoAntena     String?      // URL o ID de la foto de la ubicación de la antena
+  photoSoporte    String?      // Foto de Montaje y Soporte
   photoRouter     String?      // URL o ID de la foto del router instalado
   photoCable      String?      // URL o ID de la foto del cableado/pasamuros
   photoTest       String?      // URL o ID de la captura del speedtest
+  photoApp        String?      // Captura de Obstrucciones (App)
+  photoRack       String?      // Foto de Rack Empresarial
 
   // Vinculación con el técnico
   technicianId   String?

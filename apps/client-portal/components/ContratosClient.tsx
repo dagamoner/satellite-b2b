@@ -2,6 +2,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import AntennaContractForm from "./AntennaContractForm";
+import { getTicketInfo } from "../app/contrato/actions";
 
 interface FormData {
   clientName: string;
@@ -33,6 +34,8 @@ export default function ContratosClient({ agents, nextInstallId }: ContratosClie
 function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   const [form, setForm] = useState<FormData>(INITIAL_DATA);
   const [isSpecialPlan, setIsSpecialPlan] = useState(false);
+  const [realStatus, setRealStatus] = useState<string | null>(null);
+  const [contractData, setContractData] = useState<any>(null);
   const searchParams = useSearchParams();
 
   // Auto-fill effect from URL params
@@ -59,6 +62,21 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
         if (pDni) next.clientDni = normalizedDni;
         if (pPhone) next.clientPhone = pPhone;
         return next;
+      });
+    }
+  }, [searchParams]);
+
+  // Fetch real ticket status if pTicket is present
+  useEffect(() => {
+    const pTicket = searchParams.get("p_ticket");
+    if (pTicket) {
+      getTicketInfo(pTicket).then(ticket => {
+        if (ticket) {
+          setRealStatus(ticket.status);
+          if (ticket.contract) {
+            setContractData(ticket.contract);
+          }
+        }
       });
     }
   }, [searchParams]);
@@ -134,9 +152,26 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
       agents={agents}
       nextInstallId={finalInstallId}
       ticketId={pTicket || ""} 
-      ticketStatus={pTicket ? "CONTRACT_INITIATED" : "OPEN"}
+      ticketStatus={realStatus || (pTicket ? "CONTRACT_INITIATED" : "OPEN")}
       onBack={() => window.history.back()}
-      initialData={{
+      initialData={contractData ? {
+        clientName: contractData.clientName,
+        clientEmail: contractData.clientEmail,
+        clientDni: contractData.clientDni,
+        clientPhone: contractData.clientPhone,
+        planType: contractData.planType,
+        // Pre-fill tech data if exists
+        serialKit: contractData.kitSerialNumber,
+        terminalId: contractData.terminalId,
+        antennaModel: contractData.antennaModel,
+        antennaLocation: contractData.antennaLocation,
+        obstructions: contractData.obstructions,
+        downloadSpeed: contractData.downloadSpeed?.toString(),
+        uploadSpeed: contractData.uploadSpeed?.toString(),
+        latency: contractData.latency?.toString(),
+        networkMode: contractData.networkMode,
+        observations: contractData.techNotes,
+      } : {
         clientName: form.clientName,
         clientEmail: form.clientEmail,
         clientDni: form.clientDni,

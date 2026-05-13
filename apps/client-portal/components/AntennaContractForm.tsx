@@ -55,15 +55,15 @@ export default function AntennaContractForm({
     latency: '',
     networkMode: 'DHCP/Router',
     antennaLocation: '',
-    obstructions: '0%',
-    cableColor: 'Gris',
     antennaModel: 'Standard V4',
+    observations: '',
     // Photos
-    photoCasa: '',
     photoAntena: '',
+    photoSoporte: '',
     photoRouter: '',
-    photoCable: '',
     photoTest: '',
+    photoApp: '',
+    photoRack: '',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -87,6 +87,8 @@ export default function AntennaContractForm({
       reader.readAsDataURL(file);
     }
   };
+
+  const techSigCanvas = useRef<SignatureCanvas>(null);
 
   // Fase 1: Cliente confirma sus datos
   const handleClientDataConfirm = async () => {
@@ -126,12 +128,16 @@ export default function AntennaContractForm({
         uploadSpeed: parseFloat(formData.uploadSpeed) || 0,
         latency: parseInt(formData.latency) || 0,
         networkMode: formData.networkMode,
+        techNotes: formData.observations,
+        // Firmas
+        techSignature: techSigCanvas.current?.toDataURL(),
         // Enviar Fotos
-        photoCasa: formData.photoCasa,
         photoAntena: formData.photoAntena,
+        photoSoporte: formData.photoSoporte,
         photoRouter: formData.photoRouter,
-        photoCable: formData.photoCable,
         photoTest: formData.photoTest,
+        photoApp: formData.photoApp,
+        photoRack: formData.photoRack,
       });
       onBack();
     } catch (err) {
@@ -308,52 +314,66 @@ export default function AntennaContractForm({
           <div className="section-header">02. Especificaciones Técnicas (Starlink)</div>
           <div className="form-grid">
             <div className="input-field">
-              <label>ID Terminal (KIT)</label>
-              <input id="terminalId" value={formData.terminalId} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: 0000-0000" />
+              <label>Número de Serie (KIT/Dish)</label>
+              <input id="serialKit" value={formData.serialKit} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: KIT-000000" />
             </div>
             <div className="input-field">
-              <label>Número de Serie</label>
-              <input id="serialKit" value={formData.serialKit} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="KIT-000000" />
-            </div>
-            <div className="input-field">
-              <label>Modelo de Antena</label>
-              <input id="antennaModel" value={formData.antennaModel} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} />
+              <label>Tipo de Antena</label>
+              <select id="antennaModel" value={formData.antennaModel} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+                <option value="Standard V4">Standard V4 (Motorless)</option>
+                <option value="Standard V2">Standard V2 (Actuated)</option>
+                <option value="High Performance">High Performance</option>
+                <option value="Flat High Performance">Flat High Performance</option>
+              </select>
             </div>
             <div className="input-field">
               <label>Ubicación de Antena</label>
-              <input id="antennaLocation" value={formData.antennaLocation} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Techo, Mástil" />
+              <input id="antennaLocation" value={formData.antennaLocation} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Terraza, Mástil" />
             </div>
             <div className="input-field">
-              <label>Obstrucciones</label>
-              <input id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} />
+              <label>Obstrucciones (%)</label>
+              <input id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0%" />
             </div>
-            <div className="input-field">
-              <label>Modo de Red</label>
-              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} className="w-full">
-                <option value="DHCP/Router">DHCP/Router</option>
-                <option value="Bypass/Bridge">Bypass/Bridge</option>
-              </select>
-            </div>
+          </div>
+
+          <div className="mt-8">
+            <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Observaciones del Técnico</label>
+            <textarea 
+              id="observations" 
+              value={formData.observations} 
+              onChange={(e: any) => handleInputChange(e)} 
+              disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
+              className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
+              rows={4}
+              placeholder="Detalle aquí cualquier particularidad de la instalación..."
+            />
           </div>
 
           {/* PHOTO EVIDENCE (Only for Technician) */}
           {ticketStatus === 'TECH_IN_PROGRESS' && (
             <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-6">
-              {['photoCasa', 'photoAntena', 'photoRouter', 'photoCable', 'photoTest'].map((photo) => (
-                <div key={photo} className={`border-2 border-dashed rounded-2xl p-4 text-center transition-all overflow-hidden relative group ${formData[photo as keyof typeof formData] ? 'border-green-500 bg-green-50/50' : 'border-slate-200 hover:border-blue-500'}`}>
+              {[
+                { id: 'photoAntena', label: 'Antena (Panorámica)' },
+                { id: 'photoSoporte', label: 'Montaje y Soporte' },
+                { id: 'photoRouter', label: 'Router/Switch Interior' },
+                { id: 'photoTest', label: 'Test de Velocidad' },
+                { id: 'photoApp', label: 'Obstrucciones (App)' },
+                { id: 'photoRack', label: 'Rack Empresarial' }
+              ].map((item) => (
+                <div key={item.id} className={`border-2 border-dashed rounded-2xl p-4 text-center transition-all overflow-hidden relative group ${formData[item.id as keyof typeof formData] ? 'border-green-500 bg-green-50/50' : 'border-slate-200 hover:border-blue-500'}`}>
                   <label className="cursor-pointer block h-full">
-                    <input type="file" className="hidden" accept="image/*" capture="environment" onChange={(e) => handleFileChange(e, photo)} />
+                    <input type="file" className="hidden" accept="image/*" capture="environment" onChange={(e) => handleFileChange(e, item.id)} />
                     
-                    {formData[photo as keyof typeof formData] ? (
+                    {formData[item.id as keyof typeof formData] ? (
                       <div className="relative">
-                        <img src={formData[photo as keyof typeof formData] as string} className="h-24 w-full object-cover rounded-lg shadow-sm" alt="Preview" />
+                        <img src={formData[item.id as keyof typeof formData] as string} className="h-24 w-full object-cover rounded-lg shadow-sm" alt="Preview" />
                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
                           <span className="text-white text-[8px] font-bold uppercase">Cambiar</span>
                         </div>
                       </div>
                     ) : (
                       <>
-                        <div className="text-[10px] font-black uppercase text-slate-400 mb-2">{photo.replace('photo', 'FOTO ')}</div>
+                        <div className="text-[10px] font-black uppercase text-slate-400 mb-2">{item.label}</div>
                         <svg className="w-6 h-6 mx-auto text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                       </>
                     )}
@@ -380,6 +400,13 @@ export default function AntennaContractForm({
               <label>Latencia (ms)</label>
               <input id="latency" value={formData.latency} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0" />
             </div>
+            <div className="input-field">
+              <label>Modo de Red</label>
+              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} className="w-full">
+                <option value="DHCP/Router">DHCP/Router</option>
+                <option value="Bypass/Bridge">Bypass/Bridge</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -390,14 +417,21 @@ export default function AntennaContractForm({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Firma del Técnico */}
             <div className="signature-box border rounded-2xl p-6 bg-slate-50/50">
-              <p className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Firma del Instalador Autorizado</p>
+              <p className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Visto Bueno / Firma del Técnico</p>
               {ticketStatus === 'TECH_IN_PROGRESS' ? (
-                <div className="text-center py-10 border-2 border-dashed border-slate-200 rounded-xl text-slate-400 text-xs italic">
-                  El técnico estampará su firma al finalizar <br/> los parámetros técnicos.
-                </div>
+                <>
+                  <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
+                    <SignatureCanvas 
+                      ref={techSigCanvas}
+                      penColor='#0f172a'
+                      canvasProps={{width: 300, height: 150, className: 'sigCanvas'}}
+                    />
+                  </div>
+                  <button onClick={() => techSigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma Técnico</button>
+                </>
               ) : (
                 <div className="flex justify-center p-4">
-                  <div className="h-20 w-40 bg-slate-200/50 rounded flex items-center justify-center text-[10px] text-slate-400">FIRMA TÉCNICA REGISTRADA</div>
+                  <div className="h-20 w-40 bg-slate-200/50 rounded flex items-center justify-center text-[10px] text-slate-400 font-bold uppercase">INSTALACIÓN AUDITADA</div>
                 </div>
               )}
             </div>
