@@ -1,5 +1,5 @@
 import { Pool } from "pg";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 
 // Singleton para no re-crear el cliente en cada hot-reload en desarrollo
