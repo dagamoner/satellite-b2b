@@ -172,11 +172,13 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
         antennaModel: contractData.antennaModel,
         antennaLocation: contractData.antennaLocation,
         obstructions: contractData.obstructions,
+        obstructionObject: contractData.obstructionObject,
         downloadSpeed: contractData.downloadSpeed?.toString(),
         uploadSpeed: contractData.uploadSpeed?.toString(),
         latency: contractData.latency?.toString(),
         networkMode: contractData.networkMode,
         observations: contractData.techNotes,
+        perfObservations: contractData.perfObservations,
       } : {
         clientName: form.clientName,
         clientEmail: form.clientEmail,

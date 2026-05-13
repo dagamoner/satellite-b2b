@@ -65,8 +65,11 @@ export default function AntennaContractForm({
     latency: '',
     networkMode: 'DHCP/Router',
     antennaLocation: '',
-    antennaModel: 'Standard V4',
+    antennaModel: 'STANDAR V4',
+    obstructions: 'Ninguna 0%',
+    obstructionObject: '',
     observations: '',
+    perfObservations: '',
     // Photos
     photoAntena: '',
     photoSoporte: '',
@@ -143,6 +146,8 @@ export default function AntennaContractForm({
         latency: parseInt(formData.latency) || 0,
         networkMode: formData.networkMode,
         techNotes: formData.observations,
+        obstructionObject: formData.obstructionObject,
+        perfObservations: formData.perfObservations,
         // Firmas
         techSignature: techSigCanvas.current?.toDataURL(),
         // Enviar Fotos
@@ -369,10 +374,9 @@ export default function AntennaContractForm({
             <div className="input-field">
               <label>Tipo de Antena</label>
               <select id="antennaModel" value={formData.antennaModel} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
-                <option value="Standard V4">Standard V4 (Motorless)</option>
-                <option value="Standard V2">Standard V2 (Actuated)</option>
-                <option value="High Performance">High Performance</option>
-                <option value="Flat High Performance">Flat High Performance</option>
+                <option value="MINI X">MINI X</option>
+                <option value="STANDAR V4">STANDAR V4</option>
+                <option value="ITINERANTE">ITINERANTE</option>
               </select>
             </div>
             <div className="input-field">
@@ -380,21 +384,34 @@ export default function AntennaContractForm({
               <input id="antennaLocation" value={formData.antennaLocation} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Terraza, Mástil" />
             </div>
             <div className="input-field">
-              <label>Obstrucciones (%)</label>
-              <input id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0%" />
+              <label>Obstrucciones</label>
+              <select id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+                <option value="Ninguna 0%">Ninguna 0%</option>
+                <option value="Minima <1%">Mínima &lt;1%</option>
+                <option value="Moderada 1-5%">Moderada 1-5%</option>
+                <option value="Crítica >5%">Crítica &gt;5%</option>
+                <option value="Objeto">Objeto (Especificar)</option>
+              </select>
             </div>
+
+            {formData.obstructions === 'Objeto' && (
+              <div className="input-field full-row animate-in fade-in slide-in-from-top-2">
+                <label>Descripción del Objeto Obstructor</label>
+                <input id="obstructionObject" value={formData.obstructionObject} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Árbol, Chimenea, Edificio..." />
+              </div>
+            )}
           </div>
 
           <div className="mt-8">
-            <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Observaciones del Técnico</label>
+            <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Observaciones Técnicas Generales</label>
             <textarea 
               id="observations" 
               value={formData.observations} 
               onChange={(e: any) => handleInputChange(e)} 
               disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
               className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
-              rows={4}
-              placeholder="Detalle aquí cualquier particularidad de la instalación..."
+              rows={3}
+              placeholder="Notas generales de la instalación..."
             />
           </div>
 
@@ -451,11 +468,26 @@ export default function AntennaContractForm({
             </div>
             <div className="input-field">
               <label>Modo de Red</label>
-              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} className="w-full">
-                <option value="DHCP/Router">DHCP/Router</option>
-                <option value="Bypass/Bridge">Bypass/Bridge</option>
+              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+                <option value="Router Starlink">Router Starlink</option>
+                <option value="Switch Starlink">Switch Starlink</option>
+                <option value="Router + Switch Starlink">Router + Switch Starlink</option>
+                <option value="Router o Switch del Cliente">Router o Switch del Cliente</option>
               </select>
             </div>
+          </div>
+
+          <div className="mt-8">
+            <label className="text-[10px] font-black uppercase text-slate-400 mb-2 block">Observaciones de Rendimiento</label>
+            <textarea 
+              id="perfObservations" 
+              value={formData.perfObservations} 
+              onChange={(e: any) => handleInputChange(e)} 
+              disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
+              className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
+              rows={3}
+              placeholder="Notas sobre la estabilidad, velocidad, latencia, etc..."
+            />
           </div>
         </div>
 

@@ -76,10 +76,12 @@ model InstallationContract {
   hardwareVersion String?
   antennaLocation String?
   obstructions    String?
+  obstructionObject String?     // Descripción del objeto que obstruye
   downloadSpeed   Float?
   uploadSpeed     Float?
   latency         Int?
   networkMode     String?
+  perfObservations String?      // Observaciones específicas de rendimiento
   
   // Coordenadas
   latitude        Float?
