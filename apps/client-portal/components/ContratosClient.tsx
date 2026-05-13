@@ -64,6 +64,7 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   }, [searchParams]);
 
   const pContract = searchParams.get("p_contract");
+  const pTicket = searchParams.get("p_ticket"); 
   const finalInstallId = pContract || nextInstallId;
 
   // ── Vista de planes especiales (Skip Form) ──────────────────────────────
@@ -132,6 +133,9 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
     <AntennaContractForm 
       agents={agents}
       nextInstallId={finalInstallId}
+      ticketId={pTicket || ""} 
+      ticketStatus={pTicket ? "CONTRACT_INITIATED" : "OPEN"}
+      onBack={() => window.history.back()}
       initialData={{
         clientName: form.clientName,
         clientEmail: form.clientEmail,
