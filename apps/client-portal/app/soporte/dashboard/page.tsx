@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@repo/ui/button";
@@ -31,21 +31,14 @@ export default function SupportDashboard() {
   const [currentContract, setCurrentContract] = useState<any>(null);
 
   useEffect(() => {
-    if (session?.user?.contractId && contracts.length > 0) {
-      const found = contracts.find(c => c.id === (session.user as any).contractId);
+    if (session?.user && 'contractId' in session.user && contracts.length > 0) {
+      const found = contracts.find(c => c.id === (session.user as { contractId: string }).contractId);
       if (found) setCurrentContract(found);
     }
   }, [contracts, session]);
   // -------------------------------
 
-  useEffect(() => {
-    if (status === "authenticated" && session?.user) {
-      const contractId = (session.user as any).contractId;
-      fetchTickets(contractId);
-    }
-  }, [status, session]);
-
-  const fetchTickets = async (contractId: string) => {
+  const fetchTickets = useCallback(async (contractId: string) => {
     try {
       const res = await fetch(`/api/support/tickets?contractId=${contractId}`);
       if (res.ok) {
@@ -57,10 +50,19 @@ export default function SupportDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    if (status === "authenticated" && session?.user && 'contractId' in session.user) {
+      const contractId = (session.user as { contractId: string }).contractId;
+      fetchTickets(contractId);
+    }
+  }, [status, session, fetchTickets]);
 
   const handleCreateTicket = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!session?.user || !('contractId' in session.user)) return;
+
     setCreating(true);
     try {
       const res = await fetch("/api/support/tickets", {
@@ -68,13 +70,13 @@ export default function SupportDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...newTicket,
-          contractId: (session?.user as any).contractId
+          contractId: (session.user as { contractId: string }).contractId
         }),
       });
       if (res.ok) {
         setShowModal(false);
         setNewTicket({ title: "", description: "", category: "Conectividad" });
-        fetchTickets((session?.user as any).contractId);
+        fetchTickets((session.user as { contractId: string }).contractId);
       }
     } catch (err) {
       alert("Error al crear el incidente");
@@ -158,7 +160,7 @@ export default function SupportDashboard() {
               <div className="space-y-6">
                 <div>
                   <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-widest mb-1">Número Maestro</p>
-                  <p className="text-xl font-mono font-black text-white">{(session?.user as any)?.contractNumber || 'SAT-B2B-88392'}</p>
+                  <p className="text-xl font-mono font-black text-white">{(session?.user as { contractNumber?: string })?.contractNumber || 'SAT-B2B-88392'}</p>
                 </div>
                 <div>
                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Estado del Servicio</p>
@@ -238,7 +240,7 @@ export default function SupportDashboard() {
                             title: "Llenado de Contrato de Instalación en Curso",
                             description: `El cliente ha iniciado el proceso de llenado y edición del contrato para la solicitud ${currentContract.contractNumber}.`,
                             category: "Contrato",
-                            contractId: (session?.user as any).contractId
+                            contractId: (session?.user as { contractId: string }).contractId
                           }),
                         });
                         const data = await response.json();

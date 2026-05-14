@@ -10,12 +10,24 @@
     "postinstall": "turbo run generate"
   },
   "devDependencies": {
-    "@prisma/client": "^6.2.1",
+    "@parcel/watcher": "^2.5.6",
+    "@prisma/client": "6.19.3",
+    "@tailwindcss/oxide": "^4.2.2",
     "dotenv": "^17.4.2",
+    "lightningcss": "^1.32.0",
     "prettier": "^3.6.0",
     "prettier-plugin-tailwindcss": "^0.7.1",
-    "prisma": "^6.2.1",
+    "prisma": "6.19.3",
     "turbo": "^2.9.6"
+  },
+  "optionalDependencies": {
+    "@parcel/watcher-linux-x64-glibc": "^2.5.6",
+    "@parcel/watcher-linux-x64-musl": "^2.5.6",
+    "@parcel/watcher-win32-x64": "^2.5.6",
+    "lightningcss-linux-x64-gnu": "^1.32.0",
+    "lightningcss-linux-x64-musl": "^1.32.0",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.2.2",
+    "@tailwindcss/oxide-linux-x64-musl": "^4.2.2"
   },
   "engines": {
     "node": ">=18"
@@ -30,5 +42,10 @@
     "@types/pg": "^8.20.0",
     "pg": "^8.20.0",
     "zod": "^4.3.6"
+  },
+  "overrides": {
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "next": "15.2.9"
   }
 }

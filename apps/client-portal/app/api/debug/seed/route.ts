@@ -29,7 +29,10 @@ export async function GET() {
         clientDni: "12345678",
         clientName: "Usuario de Prueba B2B",
         clientEmail: "test@client.com",
-        serviceType: "STARLINK_B2B",
+        clientPhone: "+549261000000",
+        address: "Calle Falsa 123, Mendoza",
+        equipmentType: "STANDARD_V4",
+        planType: "EMPRESARIAL",
         status: "ACTIVE",
       },
     });

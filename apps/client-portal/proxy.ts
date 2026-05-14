@@ -3,9 +3,9 @@ import { authConfig } from "./auth.config";
 import { NextResponse } from "next/server";
 
 const nextAuth = NextAuth(authConfig);
-export const { auth } = nextAuth;
-
-export default auth((req) => {
+export const { auth } = nextAuth as any;
+ 
+export default auth((req: any) => {
   const isLoggedIn = !!req.auth;
   const isAuthPage = req.nextUrl.pathname === "/";
   const isSoportePage = req.nextUrl.pathname.startsWith("/soporte");

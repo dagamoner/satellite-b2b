@@ -1,37 +1,17 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRealtimeTickets } from "../hooks/useRealtimeTickets";
-import { useRealtimeMessages } from "../hooks/useRealtimeMessages";
-
+import { useRealtimeTickets, Ticket, TicketStatus, TicketPriority } from "../hooks/useRealtimeTickets";
+import { useRealtimeMessages, Message } from "../hooks/useRealtimeMessages";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-// Tipos basados en schema.prisma
-type TicketStatus = "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED";
-type TicketPriority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
-
-interface Ticket {
-  id: string;
-  ticketNumber: string;
-  title: string;
-  category: string;
-  status: TicketStatus;
-  priority: TicketPriority;
-  description: string;
-  createdAt: string;
-  contract: {
-    clientName: string;
-    contractNumber: string;
-  }
-}
-
-interface Message {
-  id: string;
-  content: string;
-  authorId: string | null;
-  createdAt: string;
-  author?: { name: string; role: string };
-}
+// interface Message {
+//   id: string;
+//   content: string;
+//   authorId: string | null;
+//   createdAt: string;
+//   author?: { name: string; role: string };
+// }
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -71,7 +51,7 @@ export default function AdminDashboard() {
         setSelectedTicket(updated);
       }
     }
-  }, [tickets, selectedTicket?.id]);
+  }, [tickets, selectedTicket]);
 
 
   useEffect(() => {
@@ -88,7 +68,7 @@ export default function AdminDashboard() {
 
     setSending(true);
     try {
-      const currentUserId = (session?.user as any)?.id;
+      const currentUserId = (session?.user as { id?: string })?.id;
       console.log("[CHAT] Sending message for ticket:", selectedTicket.id, "as user:", currentUserId);
 
       const res = await fetch(`/api/support/tickets/${selectedTicket.id}/messages`, {
@@ -142,7 +122,7 @@ export default function AdminDashboard() {
       
       // La actualización en Realtime refrescará el ticket automáticamente
 
-    } catch (error) {
+    } catch (_error) {
       alert("Error actualizando ticket");
       // Revertir si falla
       setSelectedTicket(prev => prev ? { ...prev, status: oldStatus, priority: oldPriority } : null);
@@ -281,7 +261,7 @@ export default function AdminDashboard() {
               return (
                 <button
                   key={p}
-                  onClick={() => setFilterPriority(isActive ? "ALL" : p as any)}
+                  onClick={() => setFilterPriority(isActive ? "ALL" : p as TicketPriority)}
                   className={`text-[9px] font-black uppercase tracking-widest p-4 rounded-[1.5rem] border transition-all flex flex-col gap-2 items-start ${
                     isActive 
                       ? `${styles.replace('/20', '')} border-current shadow-lg scale-[1.05]` 
@@ -307,7 +287,7 @@ export default function AdminDashboard() {
             Auditoría
           </Link>
 
-          {(session?.user as any)?.role === "ADMIN" && (
+          {(session?.user as { role?: string })?.role === "ADMIN" && (
             <Link href="/usuarios" className="flex items-center gap-4 text-xs font-black uppercase tracking-widest text-white hover:text-cyan-400 transition-colors">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -386,7 +366,7 @@ export default function AdminDashboard() {
                   {["LOW", "MEDIUM", "HIGH", "CRITICAL"].map((p) => (
                     <button
                       key={p}
-                      onClick={() => updateTicketStatus(undefined, p as any)}
+                      onClick={() => updateTicketStatus(undefined, p as TicketPriority)}
                       className={`px-4 py-2 rounded-xl text-xs font-black tracking-widest transition-all ${
                         selectedTicket.priority === p 
                           ? "bg-slate-800 text-white shadow-lg border border-white/5" 
@@ -422,7 +402,7 @@ export default function AdminDashboard() {
                     <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                   </div>
                   <h4 className="text-xs font-black text-cyan-500 uppercase tracking-[0.4em] mb-6 text-center">Incidente Inicial Reportado</h4>
-                  <p className="text-slate-200 text-lg italic text-center leading-relaxed font-medium">"{selectedTicket.description}"</p>
+                  <p className="text-slate-200 text-lg italic text-center leading-relaxed font-medium">&quot;{selectedTicket.description}&quot;</p>
                </div>
 
                {/* Hilo de Mensajes */}

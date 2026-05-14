@@ -5,7 +5,7 @@ import { authConfig } from "../auth.config";
 
 import bcrypt from "bcryptjs";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const result = NextAuth({
   ...authConfig,
   secret: process.env.AUTH_SECRET,
   providers: [
@@ -74,7 +74,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             dni: contract.clientDni,
             contractNumber: contract.contractNumber,
           };
-        } catch (error: any) {
+        } catch (error) {
           console.error("CRITICAL PRISMA ERROR:", error);
           throw new Error("Error de base de datos durante la autenticación.");
         }
@@ -82,3 +82,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
 });
+
+export const handlers = result.handlers;
+export const auth = result.auth as any;
+export const signIn = result.signIn;
+export const signOut = result.signOut;

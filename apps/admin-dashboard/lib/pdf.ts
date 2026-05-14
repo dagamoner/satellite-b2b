@@ -3,12 +3,52 @@
  * IMPORTANTE: Se usan imports dinámicos dentro de la función para evitar 
  * errores de SSR en Next.js (window is not defined, etc).
  */
-export const generateContractPDF = async (contract: any) => {
+interface Contract {
+  id: string;
+  contractNumber: string;
+  clientName: string;
+  clientDni: string;
+  clientEmail: string;
+  clientPhone: string;
+  companyName?: string;
+  address: string;
+  city: string;
+  province: string;
+  equipmentType: string;
+  planType: string;
+  monthlyFee?: string | number;
+  createdAt: string | Date;
+  downloadSpeed?: number;
+  uploadSpeed?: number;
+  latency?: number;
+  kitSerialNumber?: string;
+  hardwareVersion?: string;
+  antennaLocation?: string;
+  networkMode?: string;
+  technician?: { name: string };
+  clientSignature?: string;
+  techSignature?: string;
+  photoCasa?: string;
+  photoAntena?: string;
+  photoRouter?: string;
+  photoCable?: string;
+  photoTest?: string;
+  photoObstrucciones?: string;
+}
+
+export const generateContractPDF = async (contract: Contract) => {
   // Carga dinámica de librerías (solo en el cliente)
-  const [ { default: jsPDF }, { default: autoTable } ] = await Promise.all([
+  const [ { default: jsPDFConstructor }, { default: autoTable } ] = await Promise.all([
     import("jspdf"),
     import("jspdf-autotable")
   ]);
+
+  // Interfaz para extender jsPDF con lastAutoTable
+  interface jsPDFWithAutoTable extends InstanceType<typeof jsPDFConstructor> {
+    lastAutoTable: {
+      finalY: number;
+    };
+  }
 
   // Función auxiliar para cargar imágenes de URL/Base64
   const loadImage = (url: string): Promise<HTMLImageElement> => {
@@ -21,7 +61,7 @@ export const generateContractPDF = async (contract: any) => {
     });
   };
 
-  const doc = new jsPDF();
+  const doc = new jsPDFConstructor() as jsPDFWithAutoTable;
   const pageWidth = doc.internal.pageSize.getWidth();
 
   const EQUIPMENT_LABELS: Record<string, string> = {
@@ -82,7 +122,7 @@ export const generateContractPDF = async (contract: any) => {
     styles: { fontSize: 10 },
   });
 
-  currentY = (doc as any).lastAutoTable.finalY + 15;
+  currentY = doc.lastAutoTable.finalY + 15;
 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
@@ -105,7 +145,7 @@ export const generateContractPDF = async (contract: any) => {
     styles: { fontSize: 10 },
   });
 
-  currentY = (doc as any).lastAutoTable.finalY + 15;
+  currentY = doc.lastAutoTable.finalY + 15;
 
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
@@ -129,7 +169,7 @@ export const generateContractPDF = async (contract: any) => {
     styles: { fontSize: 10 },
   });
 
-  currentY = (doc as any).lastAutoTable.finalY + 10;
+  currentY = doc.lastAutoTable.finalY + 10;
 
   // --- Sección Técnica (Si tiene datos) ---
   if (contract.downloadSpeed || contract.kitSerialNumber) {
@@ -157,7 +197,7 @@ export const generateContractPDF = async (contract: any) => {
        styles: { fontSize: 9 },
        headStyles: { fillColor: [51, 65, 85] }
      });
-     currentY = (doc as any).lastAutoTable.finalY + 15;
+     currentY = doc.lastAutoTable.finalY + 15;
   }
 
   // --- Firmas ---
@@ -212,6 +252,7 @@ export const generateContractPDF = async (contract: any) => {
     let photoY = 35;
     for (let i = 0; i < photos.length; i++) {
       const p = photos[i];
+      if (!p) continue;
       // Obtener URL firmada
       try {
         const res = await fetch(`/api/contracts/photos?path=${encodeURIComponent(p.path!)}`);

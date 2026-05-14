@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
+export interface Message {
+  id: string;
+  content: string;
+  authorId: string | null;
+  createdAt: string;
+  author?: { name: string; role: string };
+}
+
 export function useRealtimeMessages(ticketId: string | undefined) {
-  const [messages, setMessages] = useState<any[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const fetchMessages = async () => {
     if (!ticketId) return;
@@ -17,7 +25,7 @@ export function useRealtimeMessages(ticketId: string | undefined) {
     }
 
     if (data) {
-      const mapped = data.map((m: any) => ({
+      const mapped: Message[] = data.map((m: any) => ({
         ...m,
         authorId: m.authorId,
         createdAt: m.createdAt,

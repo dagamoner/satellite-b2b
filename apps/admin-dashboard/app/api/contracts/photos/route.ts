@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     if (error) throw error;
 
     return NextResponse.json({ signedUrl: data.signedUrl });
-  } catch (error: any) {
+  } catch (error) {
     console.error("[GET /api/contracts/photos]", error);
     return NextResponse.json({ error: "Error al generar URL firmada" }, { status: 500 });
   }

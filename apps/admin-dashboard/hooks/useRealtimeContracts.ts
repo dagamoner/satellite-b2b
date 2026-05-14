@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
+interface RealtimeContract {
+  id: string;
+  contractNumber: string;
+  clientName: string;
+  createdAt: string;
+  status: string;
+  [key: string]: any; // Para compatibilidad con otros campos dinámicos de Supabase
+}
+
 export function useRealtimeContracts() {
-  const [contracts, setContracts] = useState<any[]>([]);
+  const [contracts, setContracts] = useState<RealtimeContract[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchContracts = async () => {
@@ -23,7 +32,7 @@ export function useRealtimeContracts() {
         contractNumber: c.contractNumber,
         clientName: c.clientName,
         createdAt: c.createdAt
-      }));
+      })) as RealtimeContract[];
       setContracts(mapped);
     }
     setLoading(false);

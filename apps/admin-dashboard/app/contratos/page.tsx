@@ -1,14 +1,13 @@
 "use client";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
 import SignatureCanvas from "react-signature-canvas";
 import { useRealtimeContracts } from "../../hooks/useRealtimeContracts";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 
-const AdminPdfButton = dynamic(() => import("../../components/AdminPdfButton"), { ssr: false });
-const PhotoViewer = dynamic(() => import("./components/PhotoViewer"), { ssr: false });
+// Componentes dinámicos removidos si no se usan directamente aquí o causan warnings
 
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
@@ -403,14 +402,6 @@ function ContractModal({
                       Limpiar Firma
                     </button>
                   </div>
-                  {contract.techSignature && (
-                    <div className="pt-4 border-t border-slate-700/50">
-                      <p className="text-[10px] text-slate-500 uppercase font-bold mb-2">Firma Guardada Anteriormente:</p>
-                      <img src={contract.techSignature} className="h-16 bg-white/5 rounded-lg border border-white/10" alt="Firma previa" />
-                    </div>
-                  )}
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -427,41 +418,49 @@ function ContractModal({
           )}
 
           {activeTab === "evidencias" && (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {[
-                { id: 'photoAntena', label: 'Antena (Panorámica)' },
-                { id: 'photoSoporte', label: 'Montaje & Soporte' },
-                { id: 'photoRouter', label: 'Router/Switch Interior' },
-                { id: 'photoTest', label: 'Test Velocidad' },
-                { id: 'photoApp', label: 'Obstrucciones' },
-                { id: 'photoRack', label: 'Rack Empresarial' }
-              ].map((item) => (
-                <div key={item.id} className="space-y-2">
-                   <label className="text-[10px] uppercase tracking-widest font-bold text-slate-500">{item.label}</label>
-                   <div className="relative group aspect-video bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-pointer hover:border-blue-500/50 transition-all shadow-inner">
-                      {photos[item.id] ? (
-                        <>
-                          <img src={photos[item.id]} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity gap-2">
-                             <label className="cursor-pointer bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-lg border border-white/20">
-                                Cambiar
-                                <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
-                             </label>
-                          </div>
-                        </>
-                      ) : (
-                        <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-colors">
-                           <svg className="w-6 h-6 mb-2 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
-                           <span className="text-[9px] font-black text-slate-700 uppercase">Cargar Foto</span>
-                           <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
-                        </label>
-                      )}
-                   </div>
+            <div className="space-y-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {[
+                  { id: 'photoAntena', label: 'Antena (Panorámica)' },
+                  { id: 'photoSoporte', label: 'Montaje & Soporte' },
+                  { id: 'photoRouter', label: 'Router/Switch Interior' },
+                  { id: 'photoTest', label: 'Test Velocidad' },
+                  { id: 'photoApp', label: 'Obstrucciones' },
+                  { id: 'photoRack', label: 'Rack Empresarial' }
+                ].map((item) => {
+                  const photoUrl = photos[item.id];
+                  return (
+                    <div key={item.id} className="space-y-2">
+                       <label className="text-[10px] uppercase tracking-widest font-bold text-slate-500">{item.label}</label>
+                       <div className="relative group aspect-video bg-slate-950 border border-slate-800 rounded-xl overflow-hidden cursor-pointer hover:border-blue-500/50 transition-all shadow-inner">
+                          {photoUrl ? (
+                            <>
+                              <Image 
+                                src={photoUrl} 
+                                alt={item.label}
+                                fill
+                                className="object-cover" 
+                              />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity gap-2">
+                               <label className="cursor-pointer bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1.5 rounded-lg border border-white/20">
+                                  Cambiar
+                                  <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
+                               </label>
+                            </div>
+                          </>
+                        ) : (
+                          <label className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-colors">
+                             <svg className="w-6 h-6 mb-2 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
+                             <span className="text-[9px] font-black text-slate-700 uppercase">Cargar Foto</span>
+                             <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileChange(e, item.id)} />
+                          </label>
+                        )}
+                      </div>
                     </div>
-                 </div>
-               ))}
-             </div>
-              
+                  );
+                })}
+              </div>
+                
               {/* Botón Guardar Final */}
               <div className="mt-8 pt-8 border-t border-slate-800">
                 <button
@@ -599,7 +598,7 @@ export default function ContratosAdminPage() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Métricas */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
-          {(Object.entries(STATUS_CONFIG) as [ContractStatus, typeof STATUS_CONFIG[ContractStatus]][]).map(([s, cfg]) => (
+          {(Object.entries(STATUS_CONFIG) as [ContractStatus, typeof STATUS_CONFIG[ContractStatus]][]).map(([s]) => (
             <button
               key={s}
               onClick={() => setFilterStatus(filterStatus === s ? "ALL" : s)}

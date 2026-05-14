@@ -1,8 +1,26 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
+export type TicketStatus = "OPEN" | "IN_PROGRESS" | "RESOLVED" | "CLOSED";
+export type TicketPriority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+
+export interface Ticket {
+  id: string;
+  ticketNumber: string;
+  title: string;
+  category: string;
+  status: TicketStatus;
+  priority: TicketPriority;
+  description: string;
+  createdAt: string;
+  contract: {
+    clientName: string;
+    contractNumber: string;
+  }
+}
+
 export function useRealtimeTickets() {
-  const [tickets, setTickets] = useState<any[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchTickets = async () => {
@@ -28,7 +46,7 @@ export function useRealtimeTickets() {
       console.log("[useRealtimeTickets] Success! Raw data received:", data?.length || 0);
       
       // Mapeo para mantener compatibilidad con el frontend actual
-      const mapped = (data || []).map((t: any) => {
+      const mapped: Ticket[] = (data || []).map((t: any) => {
         // Supabase a veces devuelve las relaciones como un array
         const contractData = Array.isArray(t.contract) ? t.contract[0] : t.contract;
         

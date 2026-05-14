@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
-import { saveInstallationContract, updateTicketStatus } from '../app/contrato/actions';
+import { updateTicketStatus } from "@/app/contrato/actions";
 
 // html2pdf debe cargarse dinámicamente en el cliente
-let html2pdf: any;
+let html2pdf: any; // Se mantiene any por simplicidad con la librería externa
 if (typeof window !== 'undefined') {
   import('html2pdf.js').then((module) => {
     html2pdf = module.default;
@@ -30,7 +30,56 @@ interface AntennaContractFormProps {
     city?: string;
     province?: string;
     zipCode?: string;
+    terminalId?: string;
+    serialKit?: string;
+    downloadSpeed?: string;
+    uploadSpeed?: string;
+    latency?: string;
+    networkMode?: string;
+    antennaLocation?: string;
+    antennaModel?: string;
+    obstructions?: string;
+    obstructionObject?: string;
+    observations?: string;
+    perfObservations?: string;
   };
+}
+
+// Interfaz para el estado del formulario
+interface AntennaFormData {
+  installDate: string;
+  installId: string;
+  razonSocial: string;
+  cuit: string;
+  email: string;
+  phone: string;
+  category: string;
+  direccion: string;
+  street: string;
+  houseNumber: string;
+  zipCode: string;
+  terminalId: string;
+  serialKit: string;
+  hardwareType: string;
+  ciudad: string;
+  provincia: string;
+  downloadSpeed: string;
+  uploadSpeed: string;
+  latency: string;
+  networkMode: string;
+  antennaLocation: string;
+  antennaModel: string;
+  obstructions: string;
+  obstructionObject: string;
+  observations: string;
+  perfObservations: string;
+  photoAntena: string;
+  photoSoporte: string;
+  photoRouter: string;
+  photoTest: string;
+  photoApp: string;
+  photoRack: string;
+  cableColor?: string;
 }
 
 export default function AntennaContractForm({ 
@@ -42,7 +91,7 @@ export default function AntennaContractForm({
   initialData 
 }: AntennaContractFormProps) {
   
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<AntennaFormData>({
     installDate: new Date().toLocaleDateString('es-AR'),
     installId: nextInstallId || '',
     razonSocial: initialData?.clientName || '',
@@ -54,22 +103,22 @@ export default function AntennaContractForm({
     street: initialData?.street || '',
     houseNumber: initialData?.houseNumber || '',
     zipCode: initialData?.zipCode || '',
-    terminalId: '',
-    serialKit: '',
+    terminalId: initialData?.terminalId || '',
+    serialKit: initialData?.serialKit || '',
     hardwareType: initialData?.planType || 'Antena Estándar V4',
     ciudad: initialData?.city || '',
     provincia: initialData?.province || 'Mendoza',
     // Technical Specs
-    downloadSpeed: '',
-    uploadSpeed: '',
-    latency: '',
-    networkMode: 'DHCP/Router',
-    antennaLocation: '',
-    antennaModel: 'STANDAR V4',
-    obstructions: 'Ninguna 0%',
-    obstructionObject: '',
-    observations: '',
-    perfObservations: '',
+    downloadSpeed: initialData?.downloadSpeed || '',
+    uploadSpeed: initialData?.uploadSpeed || '',
+    latency: initialData?.latency || '',
+    networkMode: initialData?.networkMode || 'DHCP/Router',
+    antennaLocation: initialData?.antennaLocation || '',
+    antennaModel: initialData?.antennaModel || 'STANDAR V4',
+    obstructions: initialData?.obstructions || 'Ninguna 0%',
+    obstructionObject: initialData?.obstructionObject || '',
+    observations: initialData?.observations || '',
+    perfObservations: initialData?.perfObservations || '',
     // Photos
     photoAntena: '',
     photoSoporte: '',
@@ -123,6 +172,7 @@ export default function AntennaContractForm({
       });
       onBack(); // Vuelve al chat o refresca
     } catch (err) {
+      console.error(err);
       alert("Error al confirmar datos");
     } finally {
       setIsExporting(false);
@@ -407,7 +457,7 @@ export default function AntennaContractForm({
             <textarea 
               id="observations" 
               value={formData.observations} 
-              onChange={(e: any) => handleInputChange(e)} 
+              onChange={(e) => handleInputChange(e)} 
               disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
               className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
               rows={3}
@@ -482,7 +532,7 @@ export default function AntennaContractForm({
             <textarea 
               id="perfObservations" 
               value={formData.perfObservations} 
-              onChange={(e: any) => handleInputChange(e)} 
+              onChange={(e) => handleInputChange(e)} 
               disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
               className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
               rows={3}

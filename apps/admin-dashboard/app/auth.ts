@@ -1,11 +1,10 @@
 console.log("[AUTH] Loading auth.ts config...");
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const result = NextAuth({
   providers: [
     Credentials({
       name: "Credentials",
@@ -61,8 +60,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).role = token.role;
-        (session.user as any).id = token.sub;
+        const user = session.user as { role?: string; id?: string };
+        user.role = token.role as string;
+        user.id = token.sub as string;
       }
       return session;
     },
@@ -75,3 +75,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   secret: process.env.AUTH_SECRET,
 });
+
+export const handlers = result.handlers;
+export const auth = result.auth as any;
+export const signIn = result.signIn;
+export const signOut = result.signOut;

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { loginSchema } from "@repo/validation";
@@ -27,23 +27,7 @@ function EntryPortalContent() {
 
   const { status } = useSession();
 
-  // El middleware ahora maneja la redirección si el usuario ya está autenticado.
-  useEffect(() => {
-    // Solo manejamos el auto-login si no estamos autenticados aún
-    if (status === "unauthenticated") {
-      const pDni = searchParams.get("p_dni");
-      const pContract = searchParams.get("p_contract");
-      const pTicket = searchParams.get("p_ticket");
-
-      if (pDni && pContract) {
-        setDni(pDni);
-        setContractNumber(pContract);
-        autoLogin(pDni, pContract, pTicket);
-      }
-    }
-  }, [status, searchParams]);
-
-  const autoLogin = async (dniVal: string, contractVal: string, ticketId?: string | null) => {
+  const autoLogin = useCallback(async (dniVal: string, contractVal: string, ticketId?: string | null) => {
     setLoading(true);
     setError("");
     try {
@@ -63,7 +47,23 @@ function EntryPortalContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // El middleware ahora maneja la redirección si el usuario ya está autenticado.
+  useEffect(() => {
+    // Solo manejamos el auto-login si no estamos autenticados aún
+    if (status === "unauthenticated") {
+      const pDni = searchParams.get("p_dni");
+      const pContract = searchParams.get("p_contract");
+      const pTicket = searchParams.get("p_ticket");
+
+      if (pDni && pContract) {
+        setDni(pDni);
+        setContractNumber(pContract);
+        autoLogin(pDni, pContract, pTicket);
+      }
+    }
+  }, [status, searchParams, autoLogin]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,11 +100,13 @@ function EntryPortalContent() {
           callbackUrl: "/soporte/dashboard",
         });
       }
-    } catch (err: any) {
-      if (err.name === "ZodError" || err instanceof z.ZodError) {
-        setError(err.errors[0].message);
-      } else {
+    } catch (err: unknown) {
+      if (err instanceof z.ZodError) {
+        setError(err.issues[0]?.message || "Error de validación");
+      } else if (err instanceof Error) {
         setError(err.message);
+      } else {
+        setError("Ocurrió un error inesperado");
       }
     } finally {
       setLoading(false);
