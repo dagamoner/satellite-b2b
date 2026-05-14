@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@repo/ui/button";
+import { Card } from "@repo/ui/card";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LeadFormModal from "../components/LeadFormModal";
@@ -149,6 +150,8 @@ const SpaceBackground = () => {
   );
 }
 
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function MarketingPage() {
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{
@@ -172,13 +175,16 @@ export default function MarketingPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#020617] text-slate-50 font-sans selection:bg-blue-500/30 overflow-x-hidden relative">
+    <main className="min-h-screen bg-[#020617] text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative">
       
       {/* Nuestro interactivo fondo del espacio */}
       <SpaceBackground />
 
       {/* Sello de Agua - Logo MR Technology */}
-      <div
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.07 }}
+        transition={{ duration: 2 }}
         aria-hidden="true"
         className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center"
       >
@@ -187,14 +193,13 @@ export default function MarketingPage() {
           alt=""
           className="w-[520px] max-w-[60vw] select-none"
           style={{
-            opacity: 0.07,
             filter: 'grayscale(100%) brightness(3)',
             mixBlendMode: 'screen',
             WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
             maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
           }}
         />
-      </div>
+      </motion.div>
 
       {/* Halo de luz adicional sobre el fondo, no invasivo */}
       <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
@@ -203,7 +208,11 @@ export default function MarketingPage() {
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-[#020617]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-1" : "bg-transparent py-6"}`}>
         <div className={`max-w-7xl mx-auto px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-20 md:h-24" : "h-32 md:h-44"}`}>
-          <div className="flex items-center gap-6 group cursor-pointer mt-2 md:mt-0">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-6 group cursor-pointer mt-2 md:mt-0"
+          >
              <div className="relative shrink-0">
                <div className="absolute inset-0 bg-blue-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
                <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg transition-all duration-500 ${scrolled ? "w-12 h-12 md:w-16 md:h-16" : "w-16 h-16 md:w-32 md:h-32"}`} />
@@ -222,24 +231,31 @@ export default function MarketingPage() {
                  </a>
                </div>
              </div>
-          </div>
+          </motion.div>
           
           <div className="hidden lg:flex items-center gap-4 xl:gap-8">
-            <a href="#antenas" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
-              <img src="/nav_equipos.png" alt="Equipos" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
-              <span className={`text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Equipos</span>
-            </a>
-            <a href="#planes" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
-              <img src="/nav_planes.png" alt="Planes" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
-              <span className={`text-[9px] font-bold uppercase tracking-widest text-teal-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Planes</span>
-            </a>
-            <a href="#consultoria" className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
-              <img src="/nav_servicios.png" alt="Servicios" className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
-              <span className={`text-[9px] font-bold uppercase tracking-widest text-purple-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Servicios IT</span>
-            </a>
+            {["antenas", "planes", "consultoria"].map((id, index) => (
+              <motion.a 
+                key={id}
+                href={`#${id}`}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * (index + 1) }}
+                className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110"
+              >
+                <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-10" : "h-16 md:h-20"}`} />
+                <span className={`text-[9px] font-bold uppercase tracking-widest transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"} ${id === 'antenas' ? 'text-blue-400/80' : id === 'planes' ? 'text-teal-400/80' : 'text-purple-400/80'}`}>
+                  {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
+                </span>
+              </motion.a>
+            ))}
           </div>
 
-          <div className="flex gap-4 items-center">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex gap-4 items-center"
+          >
              <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"} className="group">
                 <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
                    <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
@@ -252,7 +268,7 @@ export default function MarketingPage() {
                    <span className={`text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </Link>
-          </div>
+          </motion.div>
         </div>
       </nav>
 
@@ -264,86 +280,91 @@ export default function MarketingPage() {
 
       {/* Hero Section */}
       <section className="relative z-10 pt-56 pb-24 md:pt-64 md:pb-32 px-6 flex flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full flex flex-col items-center"
+        >
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 max-w-6xl leading-[1.1] text-white">
+            Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-3xl md:text-5xl lg:text-6xl">
+              y en el lugar que tu empresa se encuentre, sin limites geográficos.
+            </span>
+          </h1>
+          <p className="text-xl text-slate-300 max-w-3xl mb-12 leading-relaxed font-light">
+            Alta velocidad estable. Hardware revolucionario desde <strong className="text-white font-bold">$300.000</strong> con abonos desde <strong className="text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
+          </p>
 
+          <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-5 w-full max-w-5xl mx-auto">
+            <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"}>
+              <Button size="lg" variant="premium" className="group flex gap-3">
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                Portal B2B Clientes
+              </Button>
+            </Link>
 
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 max-w-6xl leading-[1.1] text-white">
-          Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-3xl md:text-5xl lg:text-6xl">
-            y en el lugar que tu empresa se encuentre, sin limites geográficos.
-          </span>
-        </h1>
-        <p className="text-xl text-slate-300 max-w-3xl mb-12 leading-relaxed font-light">
-          Alta velocidad estable. Hardware revolucionario desde <strong className="text-white font-bold">$300.000</strong> con abonos desde <strong className="text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
-        </p>
+            <a href="#antenas">
+              <Button size="lg" variant="glow" className="group flex gap-3">
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                Comprar Hardware
+              </Button>
+            </a>
 
-        <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-5 w-full max-w-5xl mx-auto">
-          <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"}>
-            <Button size="lg" className="h-14 px-8 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all hover:scale-105 active:scale-95 border border-blue-500 flex gap-3 group">
-              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-              Portal B2B Clientes
-            </Button>
-          </Link>
+            <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"}>
+              <Button size="lg" variant="outline" className="group flex gap-3">
+                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                 Soporte / Centro Técnico
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
 
-          <a href="#antenas">
-            <Button size="lg" className="h-14 px-8 rounded-2xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-lg shadow-[0_0_20px_rgba(8,145,178,0.3)] transition-all hover:scale-105 active:scale-95 border border-cyan-500 flex gap-3 group">
-              <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-              Comprar Hardware
-            </Button>
-          </a>
-
-          <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"}>
-            <Button size="lg" className="h-14 px-8 rounded-2xl bg-[#0f172a] hover:bg-[#1e293b] text-white font-bold text-lg shadow-xl transition-all hover:scale-105 active:scale-95 border border-slate-700 flex gap-3 group">
-              <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-               Soporte / Centro Técnico
-            </Button>
-          </Link>
-        </div>
-
-                <div className="mt-28 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center w-full max-w-6xl relative z-10 border-t border-slate-800/50 pt-16">
-            <div className="flex flex-col items-center group">
-              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                 <img src="/icon_uptime.png" alt="Uptime" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
-              </div>
-              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">+99.9%</h4>
-              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Tiempo de Actividad</p>
-            </div>
-            <div className="flex flex-col items-center group">
-              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                 <img src="/icon_plugplay.png" alt="Plug & Play" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.4)]" />
-              </div>
-              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Plug & Play</h4>
-              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Instalación Sencilla</p>
-            </div>
-            <div className="flex flex-col items-center group">
-              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                 <img src="/icon_extreme.png" alt="Extremo" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
-              </div>
-              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Extremo</h4>
-              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Resiste Incidencias</p>
-            </div>
-            <div className="flex flex-col items-center group">
-              <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                 <img src="/icon_unlimited.png" alt="Ilimitados" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(20,184,166,0.4)]" />
-              </div>
-              <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">Ilimitados</h4>
-              <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">Datos Alta Velocidad</p>
-            </div>
-        </div>
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+              hidden: {}
+            }}
+            className="mt-28 grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 text-center w-full max-w-6xl relative z-10 border-t border-slate-800/50 pt-16"
+          >
+            {[
+              { img: "uptime", val: "+99.9%", label: "Tiempo de Actividad", color: "blue-500" },
+              { img: "plugplay", val: "Plug & Play", label: "Instalación Sencilla", color: "cyan-500" },
+              { img: "extreme", val: "Extremo", label: "Resiste Incidencias", color: "indigo-500" },
+              { img: "unlimited", val: "Ilimitados", label: "Datos Alta Velocidad", color: "teal-500" }
+            ].map((stat, i) => (
+              <motion.div 
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
+                className="flex flex-col items-center group"
+              >
+                <div className="w-24 h-24 mb-6 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                   <img 
+                    src={`/icon_${stat.img}.png`} 
+                    alt={stat.label} 
+                    className="w-full h-full object-contain" 
+                   />
+                </div>
+                <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">{stat.val}</h4>
+                <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
       </section>
 
       {/* Hardware Section */}
       <section id="antenas" className="relative z-10 py-24 bg-[#020617]/40 backdrop-blur-xl border-y border-slate-800/80 px-6">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Satelital</h2>
-            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Sa            <div className="grid md:grid-cols-3 gap-8">
                {/* Mini X */}
-               <div className="bg-[#050b16]/60 backdrop-blur-2xl border border-blue-500/10 rounded-[2.5rem] p-8 hover:border-blue-500/40 transition-all duration-500 group shadow-2xl flex flex-col relative overflow-hidden">
-                  {/* Circuit lines decorative background */}
-                  <div className="absolute top-0 right-0 w-32 h-32 opacity-10 pointer-events-none">
-                     <svg width="100%" height="100%" viewBox="0 0 100 100"><path d="M0 20 H60 V100" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-blue-500"/></svg>
-                  </div>
-                  
+               <Card glow variant="glass" className="p-8 flex flex-col relative overflow-hidden">
                   <div className="relative z-10 flex-grow">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-blue-600/5 flex items-center justify-center border-2 border-blue-500/30 text-blue-400 shadow-[0_0_30px_rgba(37,99,235,0.2)] group-hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all shrink-0">
@@ -357,7 +378,12 @@ export default function MarketingPage() {
 
                      <div className="flex items-center gap-4 mb-10">
                         <div className="h-[3px] flex-grow bg-slate-900 rounded-full overflow-hidden">
-                           <div className="h-full w-1/4 bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]" />
+                           <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: "25%" }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            className="h-full bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.8)]" 
+                           />
                         </div>
                         <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
@@ -384,28 +410,23 @@ export default function MarketingPage() {
                            </div>
                         </div>
                         <Button 
+                          variant="premium"
                           onClick={() => openLeadModal("HARDWARE", "Antena Mini X", "Adquisición de equipamiento Starlink Mini con soporte de activación.")}
-                          className="w-full bg-[#0a0f1a] hover:bg-blue-600 text-slate-400 hover:text-white font-bold py-4 rounded-xl border border-slate-800 hover:border-blue-500 transition-all duration-300"
+                          className="w-full"
                         >
                           Comprar Equipamiento
                         </Button>
                      </div>
                   </div>
-               </div>
+               </Card>
 
                {/* Estándar V4 */}
-               <div className="bg-[#050b16]/80 backdrop-blur-3xl border-2 border-cyan-500 rounded-[2.5rem] p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] transition-all duration-500 relative group overflow-hidden flex flex-col scale-105 z-20">
-                  {/* Tech circuitry pattern */}
-                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
-                     <svg width="100%" height="100%"><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1"/></pattern><rect width="100%" height="100%" fill="url(#grid)" /></svg>
-                  </div>
-
+               <Card glow variant="glass" className="p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] border-cyan-500 transform scale-105 z-20 relative">
                   <div className="absolute top-6 left-8 bg-blue-900/40 border border-blue-500/30 text-blue-400 px-4 py-1 text-[11px] font-black rounded-lg tracking-widest uppercase z-20 shadow-[0_0_15px_rgba(37,99,235,0.2)]">MÁS POPULAR</div>
                   
                   <div className="relative z-10 flex-grow mt-12">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-24 h-24 rounded-[1.8rem] bg-cyan-500/5 flex items-center justify-center border-2 border-cyan-500 text-cyan-400 shadow-[0_0_40px_rgba(6,182,212,0.4)] shrink-0">
-                           {/* Custom Router Icon matching image */}
                            <svg className="w-12 h-12 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <rect x="4" y="6" width="16" height="5" rx="1" />
                               <rect x="4" y="14" width="16" height="5" rx="1" />
@@ -420,23 +441,22 @@ export default function MarketingPage() {
                      </div>
 
                      <div className="flex flex-wrap gap-3 mb-10">
-                        <div className="bg-black/60 border border-cyan-900/50 px-4 py-2 rounded-xl flex items-center gap-3">
-                           <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071a10.5 10.5 0 0114.142 0M1.414 8.414a15.5 15.5 0 0121.172 0" /></svg>
-                           <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">WiFi 6</span>
-                        </div>
-                        <div className="bg-black/60 border border-cyan-900/50 px-4 py-2 rounded-xl flex items-center gap-3">
-                           <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                           <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">Alta Potencia</span>
-                        </div>
-                        <div className="bg-black/60 border border-cyan-900/50 px-4 py-2 rounded-xl flex items-center gap-3">
-                           <svg className="w-4 h-4 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
-                           <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">Estable</span>
-                        </div>
+                        {["WiFi 6", "Alta Potencia", "Estable"].map((tag, i) => (
+                           <div key={i} className="bg-black/60 border border-cyan-900/50 px-4 py-2 rounded-xl flex items-center gap-3">
+                              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_cyan]" />
+                              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">{tag}</span>
+                           </div>
+                        ))}
                      </div>
 
                      <div className="flex items-center gap-4 mb-10">
                         <div className="h-[4px] flex-grow bg-slate-950 rounded-full overflow-hidden">
-                           <div className="h-full w-full bg-cyan-500 shadow-[0_0_25px_rgba(6,182,212,0.8)]" />
+                           <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: "100%" }}
+                            transition={{ duration: 1.5, delay: 0.5 }}
+                            className="h-full bg-cyan-500 shadow-[0_0_25px_rgba(6,182,212,0.8)]" 
+                           />
                         </div>
                         <svg className="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
@@ -463,19 +483,18 @@ export default function MarketingPage() {
                            </div>
                         </div>
                         <Button 
+                          variant="glow"
                           onClick={() => openLeadModal("HARDWARE", "Antena Estándar V4", "Equipamiento de alto rendimiento con router WiFi 6 integrado.")}
-                          className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-black py-4 rounded-xl shadow-[0_0_30px_rgba(6,182,212,0.4)] transition-all duration-300"
+                          className="w-full text-lg"
                         >
                           Comprar Equipamiento
                         </Button>
                      </div>
                   </div>
-               </div>
+               </Card>
 
                {/* Itinerante */}
-               <div className="bg-[#050b16]/60 backdrop-blur-2xl border border-green-500/10 rounded-[2.5rem] p-8 hover:border-green-500/40 transition-all duration-500 group shadow-2xl flex flex-col relative overflow-hidden">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600/0 via-green-600/20 to-green-600/0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
+               <Card glow variant="glass" className="p-8 group shadow-2xl flex flex-col relative overflow-hidden">
                   <div className="relative z-10 flex-grow">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-green-600/5 flex items-center justify-center border-2 border-green-500/30 text-green-400 shadow-[0_0_30px_rgba(34,197,94,0.2)] group-hover:shadow-[0_0_40px_rgba(34,197,94,0.4)] transition-all shrink-0">
@@ -489,7 +508,12 @@ export default function MarketingPage() {
 
                      <div className="flex items-center gap-4 mb-10">
                         <div className="h-[3px] flex-grow bg-slate-900 rounded-full overflow-hidden">
-                           <div className="h-full w-2/3 bg-green-600 shadow-[0_0_15px_rgba(34,197,94,0.8)]" />
+                           <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: "66%" }}
+                            transition={{ duration: 1.2, delay: 0.5 }}
+                            className="h-full bg-green-600 shadow-[0_0_15px_rgba(34,197,94,0.8)]" 
+                           />
                         </div>
                         <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
@@ -516,14 +540,17 @@ export default function MarketingPage() {
                            </div>
                         </div>
                         <Button 
+                          variant="premium"
                           onClick={() => openLeadModal("HARDWARE", "Antena Itinerante", "Antena portátil Starlink diseñada para movilidad extrema.")}
-                          className="w-full bg-[#0a0f1a] hover:bg-green-600 text-slate-400 hover:text-white font-bold py-4 rounded-xl border border-slate-800 hover:border-green-500 transition-all duration-300"
+                          className="w-full"
                         >
                           Comprar Equipamiento
                         </Button>
                      </div>
                   </div>
-               </div>
+               </Card>
+            </div>
+      </div>
 
             </div>
          </div>
@@ -587,27 +614,31 @@ export default function MarketingPage() {
 
          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {/* Plan Básico Mini */}
-            <div className="bg-slate-900/80 backdrop-blur-xl border border-blue-500/30 rounded-3xl p-8 flex flex-col hover:border-blue-500 shadow-xl shadow-blue-900/10 transition-all group">
+            <Card glow variant="glass" className="p-8 flex flex-col group">
                <h4 className="text-2xl font-bold text-blue-300 mb-2">Plan Básico Mini</h4>
                <div className="mb-6 h-1 w-10 bg-blue-900 rounded-full group-hover:w-16 transition-all group-hover:bg-blue-500" />
                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
                <p className="text-5xl font-black text-white mb-2 tracking-tight">$90.000</p>
                <p className="text-xs text-slate-400 mb-8">+ IVA</p>
                <ul className="text-sm text-slate-300 space-y-4 mb-10 flex-grow font-medium">
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Servicio Mensual</li>
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Soporte remoto ilimitado</li>
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Consultoría y Asesoramiento MR</li>
+                  {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      {item}
+                    </li>
+                  ))}
                </ul>
                 <Button 
+                  variant="outline"
                   onClick={() => openLeadModal("PLAN", "Plan Básico Mini", "Adquisición del plan mensual básico mini.")}
-                  className="w-full bg-slate-800 hover:bg-blue-600 text-white font-bold py-6 rounded-xl border border-slate-600 hover:border-blue-500 transition-colors shadow-lg"
+                  className="w-full"
                 >
                   Seleccionar Plan
                 </Button>
-            </div>
+            </Card>
 
             {/* Plan Básico Estándar V4 */}
-            <div className="bg-[#0f172a]/95 backdrop-blur-xl border-2 border-blue-500 rounded-3xl p-8 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.25)] relative transform lg:-translate-y-4 hover:-translate-y-6 transition-transform">
+            <Card glow variant="glass" className="p-8 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.25)] border-blue-500 transform lg:-translate-y-4 hover:-translate-y-6 transition-transform relative">
                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.8)]">RECOMENDADO</div>
                <h4 className="text-2xl font-bold text-blue-400 mb-2 mt-2">Plan Básico Estándar V4</h4>
                <div className="mb-6 h-1 w-12 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.8)]" />
@@ -615,20 +646,24 @@ export default function MarketingPage() {
                <p className="text-5xl font-black text-white mb-2 tracking-tight drop-shadow-md">$120.000</p>
                <p className="text-xs text-blue-200/50 mb-8">+ IVA</p>
                <ul className="text-sm text-slate-200 space-y-4 mb-10 flex-grow font-medium">
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Servicio Mensual</li>
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Soporte remoto ilimitado</li>
-                  <li className="flex items-start gap-3"><svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Consultoría y Asesoramiento MR</li>
+                  {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      {item}
+                    </li>
+                  ))}
                </ul>
                 <Button 
+                  variant="premium"
                   onClick={() => openLeadModal("PLAN", "Plan Básico Estándar V4", "Suscripción mensual Básico Estándar V4.")}
-                  className="w-full bg-blue-600 hover:bg-blue-500 text-white font-black py-7 rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all text-lg"
+                  className="w-full text-lg"
                 >
                   Seleccionar Plan
                 </Button>
-            </div>
+            </Card>
 
             {/* Plan Full Estándar V4 */}
-            <div className="bg-slate-900/80 backdrop-blur-xl border border-cyan-500/50 rounded-3xl p-8 flex flex-col hover:border-cyan-400 shadow-xl shadow-cyan-900/10 transition-colors group">
+            <Card glow variant="glass" className="p-8 flex flex-col border-cyan-500 group">
                <h4 className="text-2xl font-bold text-cyan-400 mb-2">Plan Full Estándar V4</h4>
                <div className="mb-6 h-1 w-10 bg-cyan-900 rounded-full group-hover:w-16 transition-all group-hover:bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
                <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
@@ -642,13 +677,13 @@ export default function MarketingPage() {
                   <li className="flex items-start gap-3 text-cyan-300 font-bold"><svg className="w-5 h-5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Mantenimiento Preventivo y Activo</li>
                </ul>
                 <Button 
-                  variant="outline" 
+                  variant="glow" 
                   onClick={() => openLeadModal("PLAN", "Plan Full Estándar V4", "Suscripción Premium V4 con visita presencial mensual.")}
-                  className="w-full border-cyan-500 text-cyan-300 hover:bg-cyan-900/50 hover:text-cyan-100 font-bold py-6 rounded-xl transition-colors shadow-[0_0_15px_rgba(6,182,212,0.2)] bg-cyan-950/30"
+                  className="w-full"
                 >
                   Cotizar Solución
                 </Button>
-            </div>
+            </Card>
          </div>
 
          {/* Ideal Para Section */}
@@ -705,47 +740,67 @@ export default function MarketingPage() {
                <p className="text-slate-200 max-w-2xl mx-auto text-xl font-light">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-               {/* Column 1 */}
-               <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-blue-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                     <img src="/icon_architecture.png" alt="Arquitectura" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Arquitectura & Relevamiento</h4>
-                  <ul className="text-slate-300 text-sm space-y-4 font-medium">
-                     <li className="flex items-start gap-3"><span className="text-blue-400 block shrink-0 drop-shadow-sm">•</span> Relevamiento inicial del parque informático.</li>
-                     <li className="flex items-start gap-3"><span className="text-blue-400 block shrink-0 drop-shadow-sm">•</span> Análisis de Topología y Tipología de la RED interna.</li>
-                     <li className="flex items-start gap-3"><span className="text-blue-400 block shrink-0 drop-shadow-sm">•</span> Plano Físico y Digital del Armado Estructural.</li>
-                     <li className="flex items-start gap-3"><span className="text-blue-400 block shrink-0 drop-shadow-sm">•</span> Documentación objetiva de la red.</li>
-                  </ul>
-               </div>
-               
-               <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-indigo-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                     <img src="/icon_noc_center.png" alt="Centro de Operaciones" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Centro de Operaciones</h4>
-                  <ul className="text-slate-300 text-sm space-y-4 font-medium">
-                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Operador Técnico / Soporte Especializado.</li>
-                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Analista SOC (con foco estricto en redes).</li>
-                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Especialista en monitorización constante.</li>
-                     <li className="flex items-start gap-3"><span className="text-indigo-400 block shrink-0 drop-shadow-sm">•</span> Resolución y mitigación de incidentes.</li>
-                  </ul>
-               </div>
-               
-               <div className="group bg-slate-900/60 backdrop-blur-lg p-10 rounded-[2.5rem] border border-slate-700/80 hover:border-emerald-500/60 hover:bg-slate-900/90 shadow-2xl transition-all duration-300">
-                  <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                     <img src="/icon_engineering.png" alt="Ingeniería" className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.4)]" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">Ingeniería & Soporte</h4>
-                  <ul className="text-slate-300 text-sm space-y-4 font-medium">
-                     <li className="flex items-start gap-3"><span className="text-emerald-400 block shrink-0 drop-shadow-sm">•</span> Técnico de soporte y Field Network Engineer.</li>
-                     <li className="flex items-start gap-3"><span className="text-emerald-400 block shrink-0 drop-shadow-sm">•</span> Instalador de Fibra Óptica certificado.</li>
-                     <li className="flex items-start gap-3"><span className="text-emerald-400 block shrink-0 drop-shadow-sm">•</span> Técnico de cableado estructurado IT.</li>
-                     <li className="flex items-start gap-3"><span className="text-emerald-400 block shrink-0 drop-shadow-sm">•</span> Protocolos de mitigación in-situ.</li>
-                  </ul>
-               </div>
-            </div>
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                visible: { transition: { staggerChildren: 0.15 } },
+                hidden: {}
+              }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+               {[
+                 { 
+                   title: "Arquitectura & Relevamiento", 
+                   icon: "architecture", 
+                   color: "blue",
+                   items: [
+                     "Relevamiento inicial del parque informático.",
+                     "Análisis de Topología y Tipología de la RED interna.",
+                     "Plano Físico y Digital del Armado Estructural.",
+                     "Documentación objetiva de la red."
+                   ]
+                 },
+                 { 
+                   title: "Centro de Operaciones", 
+                   icon: "noc_center", 
+                   color: "indigo",
+                   items: [
+                     "Operador Técnico / Soporte Especializado.",
+                     "Analista SOC (con foco estricto en redes).",
+                     "Especialista en monitorización constante.",
+                     "Resolución y mitigación de incidentes."
+                   ]
+                 },
+                 { 
+                   title: "Ingeniería & Soporte", 
+                   icon: "engineering", 
+                   color: "emerald",
+                   items: [
+                     "Técnico de soporte y Field Network Engineer.",
+                     "Instalador de Fibra Óptica certificado.",
+                     "Técnico de cableado estructurado IT.",
+                     "Protocolos de mitigación in-situ."
+                   ]
+                 }
+               ].map((service, i) => (
+                 <Card key={i} glow variant="glass" className="p-10 group">
+                    <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                       <img src={`/icon_${service.icon}.png`} alt={service.title} className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(var(--${service.color}-shadow),0.4)]`} />
+                    </div>
+                    <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">{service.title}</h4>
+                    <ul className="text-slate-300 text-sm space-y-4 font-medium">
+                       {service.items.map((item, j) => (
+                         <li key={j} className="flex items-start gap-3">
+                           <span className={`text-${service.color}-400 block shrink-0 drop-shadow-sm`}>•</span> 
+                           {item}
+                         </li>
+                       ))}
+                    </ul>
+                 </Card>
+               ))}
+            </motion.div>
          </div>
       </section>
 

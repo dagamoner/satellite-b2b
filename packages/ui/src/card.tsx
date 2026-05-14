@@ -1,30 +1,63 @@
-import { type ReactNode } from "react";
+"use client"
 
-export function Card({
-  title,
-  children,
-  href,
-}: {
-  title: string;
-  children: ReactNode;
-  href: string;
-}) {
+import * as React from "react"
+import { motion } from "framer-motion"
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+  variant?: 'default' | 'glass' | 'glow' | 'accent';
+  hover?: boolean;
+}
+
+export function Card({ 
+  children, 
+  className, 
+  variant = 'default',
+  hover = true 
+}: CardProps) {
+  const baseStyles = "relative overflow-hidden rounded-[2rem] border transition-all duration-500"
+  
+  const variants = {
+    default: "bg-slate-900/50 border-white/10",
+    glass: "bg-slate-950/40 backdrop-blur-xl border-white/10",
+    glow: "bg-slate-900/50 border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.05)]",
+    accent: "bg-gradient-to-br from-slate-900 to-slate-950 border-cyan-500/30",
+  }
+
+  const hoverStyles = hover ? "hover:border-cyan-500/40 hover:shadow-[0_0_40px_rgba(6,182,212,0.1)] hover:-translate-y-1" : ""
+
   return (
-    <a
-      className="ui:group ui:rounded-lg ui:border ui:border-transparent ui:px-5 ui:py-4 ui:transition-colors hover:ui:border-neutral-700 hover:ui:bg-neutral-800/30"
-      href={`${href}?utm_source=create-turbo&utm_medium=with-tailwind&utm_campaign=create-turbo"`}
-      rel="noopener noreferrer"
-      target="_blank"
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className={cn(baseStyles, variants[variant], hoverStyles, className)}
     >
-      <h2 className="ui:mb-3 ui:text-2xl ui:font-semibold">
-        {title}{" "}
-        <span className="ui:inline-block ui:transition-transform group-hover:ui:translate-x-1 motion-reduce:ui:transform-none">
-          -&gt;
-        </span>
-      </h2>
-      <p className="ui:m-0 ui:max-w-[30ch] ui:text-sm ui:opacity-50">
+      {/* Subtle Inner Highlight */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
+      
+      <div className="relative z-10">
         {children}
-      </p>
-    </a>
-  );
+      </div>
+    </motion.div>
+  )
+}
+
+export function CardHeader({ children, className }: { children: React.ReactNode, className?: string }) {
+  return <div className={cn("p-6 pb-2", className)}>{children}</div>
+}
+
+export function CardContent({ children, className }: { children: React.ReactNode, className?: string }) {
+  return <div className={cn("p-6 pt-2", className)}>{children}</div>
+}
+
+export function CardFooter({ children, className }: { children: React.ReactNode, className?: string }) {
+  return <div className={cn("p-6 pt-0 flex items-center", className)}>{children}</div>
 }

@@ -4,11 +4,18 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import { loginSchema } from "@repo/validation";
 import { z } from "zod";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { Card } from "@repo/ui/card";
 
 export default function EntryPortal() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-cyan-500 font-black animate-pulse">CARGANDO PORTAL...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10" />
+        <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin relative z-10" />
+        <div className="text-cyan-500 font-black tracking-[0.5em] text-[10px] uppercase animate-pulse relative z-10">Iniciando Sistemas B2B</div>
+      </div>
+    }>
       <EntryPortalContent />
     </Suspense>
   );
@@ -34,24 +41,19 @@ function EntryPortalContent() {
       const normalizedDni = dniVal.replace(/\D/g, "");
       const normalizedContract = contractVal.trim().replace(/\s+/g, "-");
       
-      console.log("Auto-login attempt:", { normalizedDni, normalizedContract });
-
       await signIn("client-credentials", {
         dni: normalizedDni,
         contractNumber: normalizedContract,
         callbackUrl: ticketId ? `/soporte/${ticketId}` : "/soporte/dashboard",
       });
     } catch (err) {
-      console.error("Auto-login failed:", err);
       setError("Error de red durante el acceso automático.");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // El middleware ahora maneja la redirección si el usuario ya está autenticado.
   useEffect(() => {
-    // Solo manejamos el auto-login si no estamos autenticados aún
     if (status === "unauthenticated") {
       const pDni = searchParams.get("p_dni");
       const pContract = searchParams.get("p_contract");
@@ -72,7 +74,6 @@ function EntryPortalContent() {
 
     try {
       if (isTechMode) {
-        // Login para técnicos
         const result = await signIn("technician-credentials", {
           email,
           password,
@@ -85,15 +86,11 @@ function EntryPortalContent() {
           router.push("/soporte/dashboard");
         }
       } else {
-        // Normalizar DNI: solo números
         const normalizedDni = dni.replace(/\D/g, "");
-        // Normalizar Contrato: Reemplazar espacios por guiones
         const normalizedContract = contractNumber.trim().replace(/\s+/g, "-");
         
-        // Validar con Zod
         loginSchema.parse({ dni: normalizedDni, contractNumber: normalizedContract });
 
-        // Usamos el comportamiento por defecto de NextAuth para redireccionar
         await signIn("client-credentials", {
           dni: normalizedDni,
           contractNumber: normalizedContract,
@@ -113,164 +110,212 @@ function EntryPortalContent() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1 }
+  };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center p-4 selection:bg-cyan-500/30">
-      {/* Fondo Animado de Gradiente Cinético */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-900/20 blur-[120px] rounded-full animate-pulse" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/20 blur-[150px] rounded-full" />
+    <main className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 selection:bg-cyan-500/30 relative overflow-hidden">
+      {/* Elementos Decorativos de Fondo */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full -mr-64 -mt-64" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-500/5 blur-[180px] rounded-full -ml-80 -mb-80" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30" />
       </div>
 
-      <div className="w-full max-w-md relative z-10">
-        <a 
-          href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "/"} 
-          className="mb-6 flex items-center gap-2 text-xs font-black uppercase text-slate-500 hover:text-cyan-400 transition-colors tracking-widest"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Volver a Inicio
-        </a>
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full max-w-lg relative z-10"
+      >
+        <motion.div variants={itemVariants} className="mb-12">
+          <a 
+            href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "/"} 
+            className="group flex items-center gap-4 text-[10px] font-black uppercase text-slate-500 hover:text-white transition-all tracking-[0.4em]"
+          >
+            <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/5 flex items-center justify-center group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </div>
+            Volver al Inicio
+          </a>
+        </motion.div>
 
-        {/* Card con Glassmorphism */}
-        <div className="bg-slate-900/40 border border-white/10 backdrop-blur-2xl rounded-[2.5rem] p-10 shadow-2xl overflow-hidden">
-          {/* Brillo Superior */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+        <Card variant="glass" className="p-12 border-white/5 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
           
-          <div className="flex flex-col items-center mb-10 text-center">
-            <div className="relative mb-6">
-              <div className="absolute inset-0 bg-cyan-500 blur-2xl opacity-20 animate-pulse" />
-              <div className="w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-3xl flex items-center justify-center relative shadow-inner">
-                <svg className="w-10 h-10 text-white drop-shadow-md" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="flex flex-col items-center mb-12 text-center">
+            <motion.div 
+              variants={itemVariants}
+              className="relative mb-8 group"
+            >
+              <div className="absolute inset-0 bg-cyan-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
+              <div className="w-24 h-24 bg-slate-900 border border-white/10 rounded-[2.5rem] flex items-center justify-center relative shadow-inner overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent" />
+                <svg className="w-10 h-10 text-cyan-500 relative z-10 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-            </div>
+            </motion.div>
             
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 tracking-tight mb-2">
-              Mi Portal B2B
-            </h1>
-            <p className="text-slate-500 font-medium text-sm">
-              Centro de Operaciones y Soporte Satelital
-            </p>
+            <motion.h1 
+              variants={itemVariants}
+              className="text-5xl font-black text-white tracking-tighter mb-4 uppercase leading-none"
+            >
+              Portal <span className="text-cyan-500">B2B</span>
+            </motion.h1>
+            <motion.p 
+              variants={itemVariants}
+              className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.5em]"
+            >
+              Centro de Operaciones Corporativas
+            </motion.p>
           </div>
 
-          <form onSubmit={handleLogin} className="space-y-6">
-            {!isTechMode ? (
-              <>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">DNI Titular</label>
-                  <input
-                    type="text"
-                    value={dni}
-                    onChange={(e) => setDni(e.target.value)}
-                    placeholder="00.000.000"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
-                  />
-                </div>
+          <form onSubmit={handleLogin} className="space-y-8">
+            <AnimatePresence mode="wait">
+              {!isTechMode ? (
+                <motion.div 
+                  key="client-mode"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Identificación DNI</label>
+                    <input
+                      type="text"
+                      value={dni}
+                      onChange={(e) => setDni(e.target.value)}
+                      placeholder="Identidad del Titular"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Número de Contrato</label>
-                  <input
-                    type="text"
-                    value={contractNumber}
-                    onChange={(e) => setContractNumber(e.target.value)}
-                    placeholder="TK-2024-XXXX"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700 uppercase"
-                  />
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Email Staff</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="usuario@mrtechnology.com"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
-                  />
-                </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">ID de Contrato</label>
+                    <input
+                      type="text"
+                      value={contractNumber}
+                      onChange={(e) => setContractNumber(e.target.value)}
+                      placeholder="TK-202X-XXXX"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 uppercase shadow-inner"
+                    />
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div 
+                  key="tech-mode"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Terminal Operador</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="usuario@dominio.com"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-1">Contraseña</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white font-bold outline-none focus:border-cyan-500 focus:bg-white/10 transition-all placeholder:text-slate-700"
-                  />
-                </div>
-              </>
-            )}
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Clave de Acceso</label>
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="••••••••••••"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs py-4 px-5 rounded-2xl animate-shake">
-                <div className="flex items-center gap-3">
-                  <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                  </svg>
-                  <span>{error}</span>
-                </div>
-              </div>
-            )}
+            <AnimatePresence>
+              {error && (
+                <motion.div 
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-black py-4 px-6 rounded-2xl overflow-hidden uppercase tracking-widest"
+                >
+                  <div className="flex items-center gap-4">
+                    <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span>{error}</span>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            <button
+            <motion.button
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full relative group overflow-hidden bg-white text-slate-950 font-black py-4 rounded-2xl transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:hover:scale-100 shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+              className="w-full relative group overflow-hidden bg-white text-slate-950 font-black py-5 rounded-[1.8rem] transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)] active:shadow-none disabled:opacity-50"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10 group-hover:text-white transition-colors">
-                {loading ? "VALIDANDO..." : (isTechMode ? "ACCEDER COMO TÉCNICO" : "ACCEDER A LA RED")}
+              <span className="relative z-10 group-hover:text-white transition-colors uppercase tracking-[0.3em] text-[11px]">
+                {loading ? "Sincronizando..." : (isTechMode ? "Acceder a Consola" : "Ingresar a la Red")}
               </span>
-            </button>
+            </motion.button>
 
-            <div className="text-center">
+            <motion.div variants={itemVariants} className="text-center">
                <button 
                   type="button"
                   onClick={() => setIsTechMode(!isTechMode)}
-                  className="text-[10px] font-black text-cyan-500/50 hover:text-cyan-400 uppercase tracking-widest transition-colors"
+                  className="text-[9px] font-black text-slate-600 hover:text-cyan-400 uppercase tracking-[0.3em] transition-all py-2"
                >
-                  {isTechMode ? "← Volver a Acceso Cliente" : "Acceso Personal MR Technology →"}
+                  {isTechMode ? "← Volver a Terminal Cliente" : "Terminal Operativo Especializado →"}
                </button>
-            </div>
-
+            </motion.div>
           </form>
 
-          <div className="mt-10 pt-8 border-t border-white/5 flex flex-col items-center gap-4">
-             <p className="text-[10px] text-slate-600 uppercase tracking-tight text-center leading-relaxed">
-               Acceso exclusivo para clientes corporativos de MR Technology. <br/>
-               Si no recuerda sus credenciales, contacte a soporte técnico.<br/>
-               <span className="text-cyan-500/70 font-bold mt-2 inline-block">Para probar use DNI: demo / Contrato: demo</span>
+          <motion.div 
+            variants={itemVariants}
+            className="mt-12 pt-10 border-t border-white/5 flex flex-col items-center gap-6"
+          >
+             <p className="text-[9px] text-slate-700 uppercase font-black tracking-widest text-center leading-loose opacity-60">
+               Acceso Protegido por Encriptación de Grado Militar. <br/>
+               <span className="text-cyan-500/50 mt-3 inline-block bg-cyan-500/5 px-4 py-1.5 rounded-full border border-cyan-500/10">DNI: <span className="text-cyan-400">demo</span> · Contrato: <span className="text-cyan-400">demo</span></span>
              </p>
-             <div className="flex gap-4 opacity-50">
-                <div className="w-8 h-[2px] bg-slate-800 rounded-full" />
-                <div className="w-2 h-[2px] bg-slate-800 rounded-full" />
-                <div className="w-8 h-[2px] bg-slate-800 rounded-full" />
-             </div>
+          </motion.div>
+        </Card>
+
+        <motion.div variants={itemVariants} className="mt-12 flex flex-col items-center gap-6">
+          <div className="flex gap-4">
+             <div className="w-12 h-[1px] bg-slate-900 rounded-full" />
+             <div className="w-3 h-[1px] bg-cyan-500/20 rounded-full" />
+             <div className="w-12 h-[1px] bg-slate-900 rounded-full" />
           </div>
-        </div>
-
-        {/* Footer simple */}
-        <p className="text-center mt-8 text-slate-500 text-[10px] uppercase tracking-[0.2em] font-medium font-mono">
-          MR TECHNOLOGY SATELLITE B2B PORTAL v2026.04
-        </p>
-      </div>
-
-      <style jsx global>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-        }
-        .animate-shake {
-          animation: shake 0.2s ease-in-out 0s 2;
-        }
-      `}</style>
+          <p className="text-center text-slate-700 text-[9px] uppercase tracking-[0.8em] font-black">
+            Satellite NOC Portal v2026.05
+          </p>
+        </motion.div>
+      </motion.div>
     </main>
   );
 }

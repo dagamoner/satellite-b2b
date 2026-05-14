@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef, use } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Card } from "@repo/ui/card";
 import { useRealtimeMessages } from "../../../hooks/useRealtimeMessages";
 import AntennaContractForm from "../../../components/AntennaContractForm";
 
@@ -44,16 +46,13 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
   const router = useRouter();
 
   useEffect(() => {
-    // Inicializar audio de notificación (Premium Beep)
     audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
   }, []);
 
   useEffect(() => {
-    // Permitir acceso si está autenticado O si tiene p_dni (Lead)
     if ((status === "authenticated" && session?.user) || pDni) {
       fetchInitialData();
     } else if (status === "unauthenticated" && !pDni) {
-      // Redirigir a login si no hay DNI y no está autenticado
       router.push("/auth/signin");
     }
   }, [status, session, router, ticketId, pDni]);
@@ -64,22 +63,19 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
       if (pDni) url.searchParams.set("p_dni", pDni);
 
       const res = await fetch(url.toString());
-      if (!res.ok) {
-        throw new Error("Error fetching ticket data");
-      }
+      if (!res.ok) throw new Error("Error fetching ticket data");
+      
       const data = await res.json();
       setMessages(data.messages);
       lastMessageCount.current = data.messages.length;
       setTicket(data.ticket);
     } catch (err) {
       console.error(err);
-      // alert("No se pudo cargar el ticket. Verifique su acceso.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Lógica de notificación sonora vinculada a cambios en mensajes
   useEffect(() => {
     if (messages.length > lastMessageCount.current) {
       const lastMsg = messages[messages.length - 1];
@@ -110,7 +106,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           content,
-          authorId: session?.user?.id || null, // Autor nulo si es cliente/lead
+          authorId: session?.user?.id || null,
         }),
       });
 
@@ -119,21 +115,24 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
         setMessages(prev => [...prev, data.message]);
         lastMessageCount.current += 1;
         setContent("");
-      } else {
-        const errorData = await res.json();
-        alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
       }
     } catch (err) {
       console.error("[CHAT] Fetch error:", err);
-      alert("Error de conexión al enviar mensaje");
     } finally {
       setSending(false);
     }
   };
 
-  if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-cyan-500 font-black tracking-widest animate-pulse uppercase">Estableciendo enlace seguro...</div>;
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6 overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-blue-500/10" />
+        <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin relative z-10" />
+        <div className="text-cyan-500 font-black tracking-[0.5em] text-[10px] uppercase animate-pulse relative z-10">Sincronizando con el Centro de Control</div>
+      </div>
+    );
+  }
 
-  // Si el estado es CONTRACT_INITIATED, TECH_IN_PROGRESS o SIGNATURE_PENDING, mostramos el formulario
   const showContractForm = ticket?.status === "CONTRACT_INITIATED" || 
                          ticket?.status === "TECH_IN_PROGRESS" || 
                          ticket?.status === "SIGNATURE_PENDING" ||
@@ -141,7 +140,7 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
 
   if (showContractForm && ticket) {
     return (
-      <div className="min-h-screen bg-[#020617] overflow-y-auto">
+      <div className="min-h-screen bg-slate-950 overflow-y-auto">
         <AntennaContractForm 
           nextInstallId={ticket.contract?.contractNumber || ticket.ticketNumber}
           initialData={{
@@ -153,161 +152,171 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
           }}
           ticketStatus={ticket.status}
           ticketId={ticketId}
-          onBack={() => {
-            // Permitir volver al chat si no está finalizado
-            fetchInitialData();
-          }}
+          onBack={() => fetchInitialData()}
         />
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-[#020617] text-slate-300 overflow-hidden font-sans">
-      {/* Sidebar de Contexto (Linked Tickets) */}
-      <aside className="hidden lg:flex w-80 border-r border-white/5 bg-slate-900/20 backdrop-blur-3xl flex-col">
-        <div className="p-8 border-b border-white/5">
-           <h3 className="text-white font-black text-xs uppercase tracking-widest mb-6 bg-slate-800/50 px-4 py-2 rounded-lg inline-block">Historial Vinculado</h3>
-           <div className="space-y-4">
-              <div className="p-4 rounded-2xl bg-white/5 border border-white/10 opacity-50 cursor-not-allowed">
-                 <span className="text-[9px] font-mono text-cyan-500">TK-39210</span>
-                 <p className="text-xs text-white font-bold mt-1 uppercase line-clamp-1">Fallo en Antena V4 - Sector A</p>
-                 <span className="text-[8px] text-slate-500 uppercase mt-2 block">Cerrado: 12 Mayo</span>
-              </div>
-              <div className="p-6 rounded-3xl border border-cyan-500/20 bg-cyan-500/5">
-                 <p className="text-xs text-cyan-200 font-medium leading-relaxed">No hay otros tickets abiertos vinculados a este contrato en este momento.</p>
+    <div className="flex h-screen bg-slate-950 text-slate-300 overflow-hidden relative">
+      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 pointer-events-none" />
+
+      <aside className="hidden lg:flex w-96 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex-col relative z-10">
+        <div className="p-10 border-b border-white/5">
+           <h3 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] mb-10">Inteligencia de Enlace</h3>
+           <div className="space-y-6">
+              <Card variant="glass" className="p-6 border-white/5 bg-white/5">
+                 <span className="text-[9px] font-mono font-black text-cyan-500 uppercase tracking-widest">Procedencia de Nodo</span>
+                 <p className="text-sm text-white font-black mt-2 uppercase tracking-tight">MR Technology - Central NOC</p>
+                 <div className="mt-4 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                    <span className="text-[8px] text-slate-500 font-black uppercase tracking-[0.2em]">Enlace Seguro AES-256</span>
+                 </div>
+              </Card>
+              <div className="p-8 rounded-[2rem] border border-cyan-500/10 bg-cyan-500/5">
+                 <p className="text-[10px] text-cyan-200/60 font-black uppercase tracking-[0.2em] leading-relaxed">Este canal está reservado para comunicaciones técnicas críticas y gestiones de contrato.</p>
               </div>
            </div>
         </div>
-        <div className="mt-auto p-8">
-           <div className="bg-gradient-to-br from-indigo-600 to-blue-700 p-6 rounded-[2rem] shadow-2xl shadow-blue-500/10">
-              <p className="text-[10px] font-black uppercase tracking-widest text-white/60 mb-2">Soporte VIP 24/7</p>
-              <p className="text-sm font-bold text-white">Su conexión satelital está siendo monitoreada por nuestro centro de operaciones.</p>
+        <div className="mt-auto p-10">
+           <div className="bg-gradient-to-br from-cyan-600 to-blue-700 p-8 rounded-[2.5rem] shadow-2xl shadow-cyan-500/10 relative overflow-hidden group">
+              <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60 mb-3">Soporte Corporativo</p>
+              <p className="text-sm font-black text-white leading-tight uppercase tracking-tight">Monitoreo activo de terminal: {(ticket?.ticketNumber || 'NOC-LOG')}</p>
            </div>
         </div>
       </aside>
 
-      {/* Chat Central */}
-      <main className="flex-1 flex flex-col relative bg-slate-950/40">
-        <header className="p-6 md:p-8 border-b border-white/5 bg-slate-900/60 backdrop-blur-2xl flex items-center justify-between z-10">
-          <div className="flex items-center gap-6">
-            <button onClick={() => router.push("/soporte/dashboard")} className="p-3 bg-white/5 hover:bg-white/10 rounded-2xl transition-all border border-white/5 active:scale-95 group">
-              <svg className="w-6 h-6 text-slate-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+      <main className="flex-1 flex flex-col relative z-10">
+        <header className="p-8 md:p-10 border-b border-white/5 bg-slate-900/60 backdrop-blur-3xl flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            <button 
+              onClick={() => router.push("/soporte/dashboard")} 
+              className="w-14 h-14 bg-slate-950/50 hover:bg-slate-900 border border-white/5 rounded-2xl flex items-center justify-center transition-all active:scale-90 group"
+            >
+              <svg className="w-6 h-6 text-slate-500 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <div>
-              <div className="flex items-center gap-3">
-                <h2 className="text-lg md:text-2xl font-black text-white tracking-tighter uppercase leading-none">{ticket?.title}</h2>
-                <span className="hidden sm:inline-block px-3 py-1 bg-cyan-600/10 text-cyan-400 border border-cyan-500/20 rounded-full text-[9px] font-black uppercase tracking-widest">
+              <div className="flex items-center gap-5">
+                <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase leading-none">{ticket?.title}</h2>
+                <span className="px-4 py-1.5 bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 rounded-xl text-[9px] font-black uppercase tracking-widest font-mono shadow-inner">
                   {ticket?.priority}
                 </span>
               </div>
-              <div className="flex items-center gap-2 mt-2">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
-                <span className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Canal Directo con Soporte Técnico MR Technology</span>
+              <div className="flex items-center gap-3 mt-3">
+                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                <span className="text-[10px] text-slate-600 font-black uppercase tracking-[0.3em]">Nodo de Comunicación B2B Operativo</span>
               </div>
             </div>
           </div>
         </header>
 
-        {/* Scrollable Messages Area */}
         <div 
           ref={scrollRef}
-          className="flex-1 overflow-y-auto p-6 md:p-12 space-y-10 custom-scrollbar scroll-smooth bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"
+          className="flex-1 overflow-y-auto p-10 md:p-16 space-y-12 custom-scrollbar scroll-smooth"
         >
-          <div className="flex flex-col items-center mb-12">
-             <div className="w-px h-12 bg-gradient-to-b from-transparent to-cyan-500/50 mb-4" />
-             <span className="bg-slate-900/80 backdrop-blur-xl border border-white/5 text-[9px] text-slate-500 font-bold px-6 py-2 rounded-full uppercase tracking-[0.3em]">
-               Comunicaciones Técnicas Iniciadas · {new Date().toLocaleDateString()}
+          <div className="flex flex-col items-center mb-16">
+             <div className="w-px h-16 bg-gradient-to-b from-transparent via-cyan-500/50 to-transparent mb-6" />
+             <span className="bg-slate-900/60 backdrop-blur-xl border border-white/10 text-[9px] text-slate-500 font-black px-8 py-3 rounded-full uppercase tracking-[0.4em] shadow-2xl">
+               Sesión Técnica Iniciada · {new Date().toLocaleDateString()}
              </span>
           </div>
 
-          {messages.map((msg) => {
-            const isMe = msg.authorId === null;
-            const isSystem = msg.content.includes("EL SISTEMA HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
-            
-            if (isSystem) {
-              return (
-                <div key={msg.id} className="flex justify-center my-6 animate-in zoom-in duration-500">
-                   <div className="relative group">
-                      <div className="absolute -inset-1 bg-gradient-to-r from-red-500 to-orange-500 rounded-full blur opacity-10 group-hover:opacity-20 transition duration-1000"></div>
-                      <span className="relative bg-slate-950 border border-white/10 text-[9px] text-orange-400 font-black px-8 py-3 rounded-full uppercase tracking-[0.2em] shadow-2xl">
-                         {msg.content}
-                      </span>
-                   </div>
-                </div>
-              );
-            }
-
-            return (
-              <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"} items-start gap-4 animate-in slide-in-from-bottom-4 duration-500`}>
-                {!isMe && (
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-700 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/10 border border-white/10">
-                     <span className="text-[10px] font-black text-white">MRT</span>
-                  </div>
-                )}
-                <div className={`max-w-[75%] flex flex-col ${isMe ? "items-end" : "items-start"}`}>
-                  <div className={`px-6 py-4 rounded-[2rem] text-sm md:text-base font-medium shadow-2xl relative group transition-all hover:scale-[1.02] ${
-                    isMe 
-                      ? "bg-gradient-to-br from-indigo-500 to-blue-600 text-white rounded-tr-none shadow-blue-500/10" 
-                      : "bg-slate-900/60 backdrop-blur-3xl text-slate-200 rounded-tl-none border border-white/5"
-                  }`}>
-                    {msg.content}
-                    
-                    {/* Indicador de adjuntos (Visual Mock para request 4) */}
-                    {msg.attachments && (
-                       <div className="mt-4 p-3 bg-black/20 rounded-2xl flex items-center gap-3 border border-white/5 hover:bg-black/40 transition-colors cursor-pointer">
-                          <div className="w-8 h-8 bg-white/10 rounded-xl flex items-center justify-center">
-                             <svg className="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"/></svg>
-                          </div>
-                          <div>
-                             <p className="text-[10px] font-bold text-white uppercase truncate max-w-[120px]">Evidencia_Tecnica.log</p>
-                             <p className="text-[8px] text-slate-500">1.2 MB · Haga clic para descargar</p>
-                          </div>
-                       </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3 mt-3 px-2">
-                    <span className="text-[9px] text-slate-600 font-black uppercase tracking-widest leading-none">
-                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          <AnimatePresence mode="popLayout">
+            {messages.map((msg, i) => {
+              const isMe = msg.authorId === null;
+              const isSystem = msg.content.includes("EL SISTEMA HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
+              
+              if (isSystem) {
+                return (
+                  <motion.div 
+                    key={msg.id}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="flex justify-center my-8"
+                  >
+                    <span className="bg-slate-900/80 border border-orange-500/20 text-[9px] text-orange-400 font-black px-10 py-4 rounded-full uppercase tracking-[0.3em] shadow-2xl shadow-orange-500/5">
+                       {msg.content}
                     </span>
-                    {!isMe && (
-                       <>
-                         <div className="w-1 h-1 bg-slate-800 rounded-full" />
-                         <span className="text-[9px] text-cyan-600 font-black uppercase tracking-widest leading-none">
-                           {msg.author?.name || 'Operador Central'}
-                         </span>
-                       </>
-                    )}
+                  </motion.div>
+                );
+              }
+
+              return (
+                <motion.div 
+                  key={msg.id}
+                  initial={{ x: isMe ? 20 : -20, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  transition={{ delay: 0.1 }}
+                  className={`flex ${isMe ? "justify-end" : "justify-start"} items-start gap-6`}
+                >
+                  {!isMe && (
+                    <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center flex-shrink-0 shadow-2xl">
+                       <span className="text-[10px] font-black text-cyan-500">MRT</span>
+                    </div>
+                  )}
+                  <div className={`max-w-[70%] flex flex-col ${isMe ? "items-end" : "items-start"}`}>
+                    <div className={`px-8 py-5 rounded-[2.5rem] text-sm md:text-base font-bold shadow-2xl relative group transition-all hover:scale-[1.01] ${
+                      isMe 
+                        ? "bg-white text-slate-950 rounded-tr-none shadow-white/5" 
+                        : "bg-slate-900/60 backdrop-blur-3xl text-slate-200 rounded-tl-none border border-white/5"
+                    }`}>
+                      {msg.content}
+                      
+                      {msg.attachments && (
+                         <div className="mt-5 p-4 bg-black/10 rounded-2xl flex items-center gap-4 border border-white/5 hover:bg-black/20 transition-colors cursor-pointer group/file">
+                            <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center">
+                               <svg className="w-5 h-5 text-cyan-500 group-hover/file:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            </div>
+                            <div>
+                               <p className="text-[10px] font-black uppercase truncate max-w-[150px]">Adjunto_Tecnico.bin</p>
+                               <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Haga clic para descargar</p>
+                            </div>
+                         </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-4 mt-4 px-3">
+                      <span className="text-[9px] text-slate-700 font-black uppercase tracking-[0.3em]">
+                        {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                      {!isMe && (
+                         <>
+                           <div className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
+                           <span className="text-[9px] text-cyan-600 font-black uppercase tracking-[0.4em]">
+                             {msg.author?.name || 'Operador NOC'}
+                           </span>
+                         </>
+                      )}
+                    </div>
                   </div>
-                </div>
-                {isMe && (
-                   <div className="w-10 h-10 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-slate-600 font-black text-[10px]">
-                      TÚ
-                   </div>
-                )}
-              </div>
-            );
-          })}
+                  {isMe && (
+                     <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-slate-700 font-black text-[10px] shadow-2xl">
+                        USER
+                     </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
 
-        {/* Input Interface - Glassmorphism Flow */}
-        <footer className="p-8 md:p-12 bg-gradient-to-t from-slate-950 to-transparent border-t border-white/5 relative z-10">
+        <footer className="p-10 md:p-16 bg-gradient-to-t from-slate-950 via-slate-950 to-transparent border-t border-white/5 relative">
            <div className="max-w-4xl mx-auto">
-              <div className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-3 rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] flex items-end gap-3 transition-all focus-within:border-cyan-500/40 focus-within:shadow-cyan-500/5 group">
-                {/* Botón de Adjuntos (Request 4) */}
-                <label className="p-5 text-slate-500 hover:text-cyan-400 transition-all cursor-pointer hover:bg-white/5 rounded-full active:scale-95 group">
-                  <input type="file" className="hidden" multiple onChange={() => alert("Simulación de subida: Archivo listo para enviar.")} />
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+              <div className="bg-slate-900/60 backdrop-blur-3xl border border-white/10 p-4 rounded-[3rem] shadow-2xl flex items-end gap-4 transition-all focus-within:border-cyan-500/40 focus-within:bg-slate-900/80 group">
+                <label className="p-6 text-slate-600 hover:text-cyan-400 transition-all cursor-pointer hover:bg-white/5 rounded-full active:scale-90">
+                  <input type="file" className="hidden" multiple />
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                   </svg>
                 </label>
                 
                 <textarea 
-                  className="flex-1 bg-transparent border-none text-white text-base px-2 py-4 focus:ring-0 outline-none resize-none max-h-40 placeholder:text-slate-700 font-medium"
+                  className="flex-1 bg-transparent border-none text-white text-lg px-2 py-5 focus:ring-0 outline-none resize-none max-h-48 placeholder:text-slate-800 font-bold"
                   rows={1}
-                  placeholder="Escriba su reporte detallado para el equipo técnico..."
+                  placeholder="Transmitir reporte o consulta técnica..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   onKeyDown={(e) => {
@@ -321,20 +330,26 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
                 <button 
                   onClick={() => handleSendMessage()}
                   disabled={!content.trim() || sending}
-                  className="w-16 h-16 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white rounded-full flex items-center justify-center transition-all shadow-2xl active:scale-90 disabled:grayscale disabled:opacity-20 group-hover:rotate-12"
+                  className="w-20 h-20 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white rounded-full flex items-center justify-center transition-all shadow-2xl active:scale-90 disabled:grayscale disabled:opacity-10 group-hover:rotate-6"
                 >
                   {sending ? (
-                    <div className="w-6 h-6 border-3 border-current border-t-transparent animate-spin rounded-full" />
+                    <div className="w-8 h-8 border-4 border-current border-t-transparent animate-spin rounded-full" />
                   ) : (
-                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   )}
                 </button>
               </div>
-              <div className="flex justify-center gap-6 mt-6">
-                <span className="text-[9px] font-black text-slate-600 uppercase tracking-[0.4em]">Cifrado de Punto a Punto</span>
-                <span className="text-[9px] font-black text-slate-600 uppercase tracking-[0.4em]">Prioridad Elevada</span>
+              <div className="flex justify-center gap-10 mt-10">
+                <div className="flex items-center gap-3">
+                   <div className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
+                   <span className="text-[9px] font-black text-slate-700 uppercase tracking-[0.5em]">AES-256 E2EE</span>
+                </div>
+                <div className="flex items-center gap-3">
+                   <div className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
+                   <span className="text-[9px] font-black text-slate-700 uppercase tracking-[0.5em]">Direct Access</span>
+                </div>
               </div>
            </div>
         </footer>

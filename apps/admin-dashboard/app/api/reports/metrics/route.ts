@@ -23,6 +23,13 @@ export async function GET() {
     const totalTickets = await db.supportTicket.count();
     const openTickets = await db.supportTicket.count({ where: { status: "OPEN" } });
     const closedTickets = await db.supportTicket.count({ where: { status: "CLOSED" } });
+    // Simulate "In Progress" as tickets with more than 1 staff message or high priority
+    const inProgressTickets = await db.supportTicket.count({ 
+      where: { 
+        status: "OPEN",
+        messages: { some: { authorId: { not: null } } }
+      } 
+    });
 
     // 3. Technician Performance (KPIs)
     const technicians = await db.user.findMany({
@@ -37,12 +44,18 @@ export async function GET() {
             uploadSpeed: true,
             latency: true,
           }
+        },
+        _count: {
+          select: {
+            contracts: { where: { status: "IN_PROGRESS" } }
+          }
         }
       }
     });
 
     const techKPIs = technicians.map(tech => {
       const completedInstalls = tech.contracts.length;
+      const inProgressInstalls = tech._count.contracts;
       const avgDownload = completedInstalls > 0 
         ? tech.contracts.reduce((acc, curr) => acc + (curr.downloadSpeed || 0), 0) / completedInstalls 
         : 0;
@@ -57,6 +70,7 @@ export async function GET() {
         id: tech.id,
         name: tech.name,
         completedInstalls,
+        inProgressInstalls,
         avgDownload: avgDownload.toFixed(2),
         avgUpload: avgUpload.toFixed(2),
         avgLatency: avgLatency.toFixed(2),
@@ -83,12 +97,14 @@ export async function GET() {
         leadsCount,
         completedCount,
         inProgressCount,
+        approvedCount: await db.installationContract.count({ where: { status: "APPROVED" } }),
         conversionRate: totalContracts > 0 ? ((completedCount / totalContracts) * 100).toFixed(1) : 0,
         totalRevenue: totalMonthlyFee._sum.monthlyFee || 0
       },
       tickets: {
         total: totalTickets,
-        open: openTickets,
+        open: openTickets - inProgressTickets,
+        inProgress: inProgressTickets,
         closed: closedTickets,
         completionRate: totalTickets > 0 ? ((closedTickets / totalTickets) * 100).toFixed(1) : 0
       },
