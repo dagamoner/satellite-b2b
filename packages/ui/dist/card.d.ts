@@ -6,8 +6,9 @@ interface CardProps {
     className?: string;
     variant?: 'default' | 'glass' | 'glow' | 'accent';
     hover?: boolean;
+    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
-export declare function Card({ children, className, variant, hover }: CardProps): import("react/jsx-runtime").JSX.Element;
+export declare function Card({ children, className, variant, hover, onClick }: CardProps): import("react/jsx-runtime").JSX.Element;
 export declare function CardHeader({ children, className }: {
     children: React.ReactNode;
     className?: string;

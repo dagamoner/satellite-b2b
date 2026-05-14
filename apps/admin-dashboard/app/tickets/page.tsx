@@ -108,14 +108,37 @@ export default function AdminDashboard() {
 
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const lastMessageCount = useRef<number>(0);
+
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3");
+  }, []);
+
+  useEffect(() => {
+    if (messages.length > lastMessageCount.current) {
+      const lastMsg = messages[messages.length - 1];
+      // Si el mensaje es del cliente (authorId === null o no es el usuario actual)
+      if (lastMsg && lastMsg.authorId === null) {
+        audioRef.current?.play().catch(() => {});
+      }
+      lastMessageCount.current = messages.length;
+    }
+  }, [messages]);
+
+  const isAuthenticated = status === "authenticated";
 
   // Referencia para evitar cierres de estado obsoletos en intervalos
   const selectedTicketRef = useRef<Ticket | null>(null);
   useEffect(() => {
     selectedTicketRef.current = selectedTicket;
   }, [selectedTicket]);
-
-  const isAuthenticated = status === "authenticated";
 
   // Sincronizar el ticket seleccionado con la data fresca de los tickets
   useEffect(() => {
@@ -362,42 +385,42 @@ export default function AdminDashboard() {
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-96 border-r border-white/5 bg-slate-950/40 backdrop-blur-3xl flex flex-col shadow-2xl z-20"
+        className="w-80 border-r border-white/5 bg-slate-950/40 backdrop-blur-3xl flex flex-col shadow-2xl z-20"
       >
-        <div className="p-8 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
-          <div className="flex items-center gap-4 mb-8 justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-[1.2rem] flex items-center justify-center text-white font-black shadow-2xl shadow-cyan-500/20 relative group">
-                <div className="absolute inset-0 bg-white/20 rounded-[1.2rem] scale-0 group-hover:scale-110 transition-transform duration-500" />
+        <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
+          <div className="flex items-center gap-3 mb-6 justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-[1rem] flex items-center justify-center text-white font-black shadow-2xl shadow-cyan-500/20 relative group text-sm">
+                <div className="absolute inset-0 bg-white/20 rounded-[1rem] scale-0 group-hover:scale-110 transition-transform duration-500" />
                 MR
               </div>
               <div>
-                <h1 className="text-white font-black text-lg tracking-tight uppercase leading-none">Dashboard</h1>
-                <span className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em] mt-1 block">Network Ops Center</span>
+                <h1 className="text-white font-black text-base tracking-tight uppercase leading-none">Console</h1>
+                <span className="text-[8px] text-slate-500 font-black uppercase tracking-[0.3em] mt-1 block">NOC Central</span>
               </div>
             </div>
-            <button onClick={handleLogout} className="text-[10px] text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-400/50 bg-red-500/5 px-4 py-2 rounded-xl uppercase font-black transition-all hover:bg-red-500/10">
-              Cerrar
+            <button onClick={handleLogout} className="text-[8px] text-red-400 hover:text-red-300 border border-red-500/30 hover:border-red-400/50 bg-red-500/5 px-3 py-1.5 rounded-lg uppercase font-black transition-all hover:bg-red-500/10">
+              Out
             </button>
           </div>
 
-          <div className="text-[10px] font-black text-cyan-500/50 uppercase tracking-[0.4em] mb-4 text-center">Filtros de Red</div>
+          <div className="text-[9px] font-black text-cyan-500/50 uppercase tracking-[0.4em] mb-4 text-center">Filtros de Red</div>
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-2 gap-3"
+            className="grid grid-cols-2 gap-2"
           >
             <motion.button 
               variants={itemVariants}
               onClick={() => setFilterStatus(filterStatus === "OPEN" ? "ALL" : "OPEN")}
-              className={`col-span-2 text-[10px] font-black uppercase tracking-widest px-6 py-4 rounded-[1.5rem] border transition-all flex items-center justify-between group ${filterStatus === "OPEN" ? "bg-cyan-500 text-white border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.3)] scale-[1.02]" : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"}`}
+              className={`col-span-2 text-[9px] font-black uppercase tracking-widest px-4 py-3 rounded-[1rem] border transition-all flex items-center justify-between group ${filterStatus === "OPEN" ? "bg-cyan-500 text-white border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]" : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"}`}
             >
-              <div className="flex items-center gap-3">
-                <span className={`w-2 h-2 rounded-full bg-current ${filterStatus === 'OPEN' ? 'animate-pulse' : ''}`} />
+              <div className="flex items-center gap-2">
+                <span className={`w-1.5 h-1.5 rounded-full bg-current ${filterStatus === 'OPEN' ? 'animate-pulse' : ''}`} />
                 Canales Abiertos
               </div>
-              <span className="bg-black/20 px-3 py-1 rounded-lg text-[10px] font-black">{tickets.filter(t => t.status === 'OPEN').length}</span>
+              <span className="bg-black/20 px-2 py-0.5 rounded text-[8px] font-black">{tickets.filter(t => t.status === 'OPEN').length}</span>
             </motion.button>
             
             {["CRITICAL", "HIGH", "MEDIUM", "LOW"].map((p) => {
@@ -410,14 +433,14 @@ export default function AdminDashboard() {
                   variants={itemVariants}
                   key={p}
                   onClick={() => setFilterPriority(isActive ? "ALL" : p as TicketPriority)}
-                  className={`text-[9px] font-black uppercase tracking-widest p-4 rounded-[1.5rem] border transition-all flex flex-col gap-1 items-start group ${
+                  className={`text-[8px] font-black uppercase tracking-widest p-3 rounded-[1rem] border transition-all flex flex-col gap-0.5 items-start group ${
                     isActive 
-                      ? `${styles.replace('/20', '')} border-current shadow-lg scale-[1.05]` 
+                      ? `${styles.replace('/20', '')} border-current shadow-md` 
                       : "bg-slate-900/40 text-slate-500 border-white/5 hover:border-white/10"
                   }`}
                 >
                   <span className="opacity-60">{p}</span>
-                  <span className="text-xl font-black">{count}</span>
+                  <span className="text-lg font-black">{count}</span>
                 </motion.button>
               );
             })}
@@ -425,16 +448,16 @@ export default function AdminDashboard() {
         </div>
 
         {/* Acceso al Dashboard Global */}
-        <div className="px-8 py-4 border-b border-white/5 bg-cyan-500/[0.01]">
-          <Link href="/" className="flex items-center justify-center gap-3 bg-slate-900/50 border border-white/5 hover:border-cyan-500/30 p-4 rounded-2xl transition-all group">
-            <svg className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="px-6 py-3 border-b border-white/5 bg-cyan-500/[0.01]">
+          <Link href="/" className="flex items-center justify-center gap-2 bg-slate-900/50 border border-white/5 hover:border-cyan-500/30 p-3 rounded-xl transition-all group">
+            <svg className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em] group-hover:text-white transition-colors">Volver al Dashboard</span>
+            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.2em] group-hover:text-white transition-colors">Volver al Dashboard</span>
           </Link>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-slate-950/20">
+        <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar bg-slate-950/20">
           <AnimatePresence mode="popLayout">
             {(() => {
               const filtered = tickets.filter(t => {
@@ -449,9 +472,9 @@ export default function AdminDashboard() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="p-12 text-center text-slate-700 font-black uppercase text-[9px] tracking-[0.3em] py-24 bg-slate-900/10 rounded-[3rem] border border-dashed border-white/5"
+                    className="p-8 text-center text-slate-700 font-black uppercase text-[8px] tracking-[0.3em] py-16 bg-slate-900/10 rounded-[2rem] border border-dashed border-white/5"
                   >
-                    Cero incidencias encontradas
+                    Cero incidencias
                   </motion.div>
                 );
               }
@@ -465,32 +488,32 @@ export default function AdminDashboard() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ delay: idx * 0.05 }}
                   onClick={() => setSelectedTicket(t)}
-                  className={`p-6 rounded-[2.2rem] border transition-all duration-500 group cursor-pointer relative overflow-hidden ${
+                  className={`p-4 rounded-[1.5rem] border transition-all duration-300 group cursor-pointer relative overflow-hidden ${
                     selectedTicket?.id === t.id 
-                      ? "bg-slate-900/80 border-cyan-500/40 shadow-[0_0_50px_rgba(6,182,212,0.15)] ring-1 ring-cyan-500/20" 
+                      ? "bg-slate-900/80 border-cyan-500/40 shadow-[0_0_30px_rgba(6,182,212,0.1)] ring-1 ring-cyan-500/20" 
                       : "bg-slate-900/20 border-white/5 hover:border-white/10 hover:bg-slate-900/40"
                   }`}
                 >
                   {selectedTicket?.id === t.id && (
                     <motion.div 
                       layoutId="activeIndicator"
-                      className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)]"
+                      className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]"
                     />
                   )}
                   
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-black text-cyan-500/60 tracking-tighter uppercase">{t.ticketNumber}</span>
-                    <span className={`text-[8px] font-black px-3 py-1 rounded-full border tracking-[0.2em] uppercase ${priorityStyles[t.priority]}`}>
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="text-[8px] font-mono font-black text-cyan-500/60 tracking-tighter uppercase">{t.ticketNumber}</span>
+                    <span className={`text-[7px] font-black px-2 py-0.5 rounded-full border tracking-[0.1em] uppercase ${priorityStyles[t.priority]}`}>
                       {t.priority}
                     </span>
                   </div>
-                  <h3 className="text-white font-black text-md mb-2 uppercase tracking-tight line-clamp-2 leading-tight group-hover:text-cyan-400 transition-colors">{t.title}</h3>
-                  <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest truncate max-w-[90%]">{t.contract.clientName}</p>
+                  <h3 className="text-white font-black text-xs mb-1 uppercase tracking-tight line-clamp-1 leading-tight group-hover:text-cyan-400 transition-colors">{t.title}</h3>
+                  <p className="text-[9px] text-slate-600 font-bold uppercase tracking-widest truncate max-w-[90%]">{t.contract.clientName}</p>
                   
-                  <div className="mt-5 flex justify-between items-center border-t border-white/5 pt-4 text-[9px] font-black uppercase tracking-widest">
-                    <span className="text-slate-700">{new Date(t.createdAt).toLocaleDateString()}</span>
-                    <span className={`flex items-center gap-2 ${t.status === 'OPEN' ? 'text-amber-500' : 'text-cyan-500'}`}>
-                      <span className={`w-1.5 h-1.5 rounded-full bg-current ${t.status === 'OPEN' ? 'animate-pulse' : ''}`} />
+                  <div className="mt-3 flex justify-between items-center border-t border-white/5 pt-2 text-[8px] font-black uppercase tracking-widest">
+                    <span className="text-slate-700">{new Date(t.createdAt).toLocaleDateString([], { day: '2-digit', month: '2-digit' })}</span>
+                    <span className={`flex items-center gap-1.5 ${t.status === 'OPEN' ? 'text-amber-500' : 'text-cyan-500'}`}>
+                      <span className={`w-1 h-1 rounded-full bg-current ${t.status === 'OPEN' ? 'animate-pulse' : ''}`} />
                       {t.status}
                     </span>
                   </div>
@@ -575,23 +598,24 @@ export default function AdminDashboard() {
             {/* Area de Intercambio Técnico */}
             <div 
               ref={scrollRef}
-              className="flex-1 overflow-y-auto p-12 flex flex-col gap-12 custom-scrollbar relative"
+              className="flex-1 overflow-y-auto p-8 lg:p-12 flex flex-col gap-10 custom-scrollbar relative"
             >
                {/* Contexto Inicial */}
                <motion.div 
                  initial={{ scale: 0.95, opacity: 0 }}
                  animate={{ scale: 1, opacity: 1 }}
-                 className="relative self-center max-w-3xl w-full"
+                 className="relative self-center max-w-2xl w-full"
                >
                  <div className="absolute inset-0 bg-cyan-500/5 blur-3xl rounded-full" />
-                 <Card variant="glass" className="p-10 border-cyan-500/20" hover={false}>
-                    <h4 className="text-[9px] font-black text-cyan-500 uppercase tracking-[0.6em] mb-6 text-center opacity-50">Reporte de Incidente</h4>
-                    <p className="text-slate-200 text-xl font-medium text-center leading-relaxed italic tracking-tight">&quot;{selectedTicket.description}&quot;</p>
+                 <Card variant="glass" className="p-8 border-cyan-500/10" hover={false}>
+                    <h4 className="text-[8px] font-black text-cyan-500/50 uppercase tracking-[0.5em] mb-4 text-center">Incidente Inicial</h4>
+                    <p className="text-slate-300 text-lg font-medium text-center leading-relaxed italic tracking-tight opacity-80">&quot;{selectedTicket.description}&quot;</p>
                  </Card>
                </motion.div>
 
                {/* Hilo de Mensajes */}
-               <div className="flex flex-col gap-10 max-w-5xl mx-auto w-full mb-20">
+               <div className="flex flex-col gap-8 max-w-4xl mx-auto w-full mb-10">
+                    <AnimatePresence mode="popLayout">
                     {messages.map((msg, idx) => {
                       const isSystem = msg.content.startsWith("[SISTEMA]");
                       const isStaff = msg.authorId !== null && !isSystem;
@@ -602,15 +626,12 @@ export default function AdminDashboard() {
                             key={msg.id} 
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="flex justify-center my-8"
+                            className="flex justify-center my-4"
                           >
-                            <div className="relative group/system">
-                              <div className="absolute inset-0 bg-cyan-500/20 blur-xl opacity-0 group-hover/system:opacity-100 transition-opacity" />
-                              <span className="relative z-10 bg-slate-900/80 border border-cyan-500/30 text-[9px] text-cyan-400 font-black px-12 py-3.5 rounded-full uppercase tracking-[0.4em] backdrop-blur-2xl shadow-2xl flex items-center gap-4">
-                                <div className="w-1 h-1 bg-cyan-500 rounded-full animate-pulse" />
-                                {msg.content.replace("[SISTEMA]", "").trim()}
-                              </span>
-                            </div>
+                            <span className="bg-slate-900/60 border border-cyan-500/20 text-[8px] text-cyan-500/70 font-black px-8 py-2.5 rounded-full uppercase tracking-[0.3em] backdrop-blur-md shadow-xl flex items-center gap-3">
+                              <div className="w-1 h-1 bg-cyan-500 rounded-full animate-pulse" />
+                              {msg.content.replace("[SISTEMA]", "").trim()}
+                            </span>
                           </motion.div>
                         );
                       }
@@ -620,70 +641,93 @@ export default function AdminDashboard() {
                           key={msg.id} 
                           initial={{ opacity: 0, x: isStaff ? 20 : -20 }}
                           animate={{ opacity: 1, x: 0 }}
-                          className={`flex ${isStaff ? "justify-end" : "justify-start"} items-end gap-5 group`}
+                          className={`flex ${isStaff ? "justify-end" : "justify-start"} items-end gap-4 group`}
                         >
                           {!isStaff && (
-                            <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-[10px] font-black text-slate-700 shadow-xl group-hover:border-cyan-500/20 transition-all">CLI</div>
+                            <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-[9px] font-black text-slate-700 shadow-xl">CLI</div>
                           )}
-                          <div className={`max-w-[70%] flex flex-col ${isStaff ? "items-end" : "items-start"}`}>
-                            <div className={`px-8 py-6 rounded-[2.5rem] text-sm font-medium shadow-2xl leading-relaxed transition-all relative overflow-hidden ${
-                              isStaff 
-                                ? "bg-cyan-600 text-white rounded-br-none shadow-cyan-500/10" 
-                                : "bg-slate-900/80 text-slate-100 rounded-bl-none border border-white/10 backdrop-blur-xl shadow-black/40"
-                            }`}>
-                              {isStaff && <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 blur-2xl rounded-full -mr-16 -mt-16" />}
+                          <div className={`max-w-[75%] flex flex-col ${isStaff ? "items-end" : "items-start"}`}>
+                            <Card 
+                              variant={isStaff ? "accent" : "glass"} 
+                              hover={false}
+                              className={`px-6 py-4 rounded-[1.8rem] text-sm leading-relaxed ${
+                                isStaff 
+                                  ? "rounded-br-none border-cyan-500/20 text-white" 
+                                  : "rounded-bl-none border-white/5 text-slate-200"
+                              }`}
+                            >
                               {msg.content}
-                            </div>
-                            <span className="text-[8px] text-slate-600 font-black mt-4 uppercase tracking-[0.3em] px-2 flex items-center gap-2">
+                            </Card>
+                            <span className="text-[7px] text-slate-600 font-black mt-2 uppercase tracking-[0.2em] px-2 flex items-center gap-2">
                               {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                               <span className="w-1 h-1 bg-slate-800 rounded-full" />
-                              {isStaff ? "OPERADOR NOC" : "TERMINAL CLIENTE"}
+                              {isStaff ? "NOC OPERATOR" : "CLIENT TERMINAL"}
                             </span>
                           </div>
                           {isStaff && (
-                            <div className="w-12 h-12 rounded-2xl bg-cyan-600 flex items-center justify-center flex-shrink-0 text-white font-black shadow-lg shadow-cyan-500/20 text-[10px] relative overflow-hidden">
-                              <div className="absolute inset-0 bg-white/20 animate-pulse" />
-                              <span className="relative z-10">STAFF</span>
+                            <div className="w-10 h-10 rounded-xl bg-cyan-600 flex items-center justify-center flex-shrink-0 text-white font-black shadow-lg shadow-cyan-500/20 text-[8px] relative overflow-hidden">
+                              <div className="absolute inset-0 bg-white/10 animate-pulse" />
+                              <span className="relative z-10">NOC</span>
                             </div>
                           )}
                         </motion.div>
                       );
                     })}
-                  </AnimatePresence>
+                    </AnimatePresence>
                </div>
             </div>
 
             {/* Input de Operador */}
-            <footer className="p-12 border-t border-white/5 bg-slate-950/60 backdrop-blur-3xl relative z-20">
-               <div className="max-w-4xl mx-auto flex gap-6 bg-slate-950/80 p-4 rounded-[3rem] border border-white/10 shadow-2xl focus-within:border-cyan-500/40 focus-within:shadow-[0_0_50px_rgba(6,182,212,0.1)] transition-all duration-500">
-                  <textarea 
-                    className="flex-1 bg-transparent border-none rounded-2xl px-6 py-4 text-md text-white focus:ring-0 outline-none resize-none placeholder:text-slate-800 font-bold custom-scrollbar"
-                    placeholder="Escriba respuesta operativa detallada..."
-                    rows={1}
-                    value={reply}
-                    onChange={e => setReply(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        handleSendReply();
-                      }
-                    }}
-                  />
-                  <button 
-                    onClick={handleSendReply}
-                    disabled={!reply.trim() || sending}
-                    className="w-14 h-14 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white rounded-full shadow-2xl transition-all flex flex-col items-center justify-center active:scale-90 disabled:grayscale disabled:opacity-20"
-                  >
-                    {sending ? (
-                      <div className="w-6 h-6 border-2 border-current border-t-transparent animate-spin rounded-full" />
-                    ) : (
-                      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                      </svg>
-                    )}
-                  </button>
+            <footer className="p-8 lg:p-10 border-t border-white/5 bg-slate-950/60 backdrop-blur-3xl relative z-20">
+               <div className="max-w-4xl mx-auto space-y-6">
+                  {/* Quick Responses */}
+                  <div className="flex flex-wrap gap-2 justify-center pb-2">
+                    {[
+                      { label: "Diagnóstico", text: "Recibido. Iniciando diagnóstico remoto de enlace." },
+                      { label: "Visita", text: "Se requiere visita técnica presencial. Coordinando agenda." },
+                      { label: "Restablecido", text: "Parámetros de señal optimizados. Por favor verifique conexión." },
+                      { label: "Contrato", text: "Gestión de contrato en curso. Procediendo con la activación." }
+                    ].map((q, i) => (
+                      <button 
+                        key={i}
+                        onClick={() => setReply(q.text)}
+                        className="text-[8px] font-black uppercase tracking-widest px-4 py-2 bg-slate-900/50 border border-white/5 rounded-full text-slate-500 hover:text-cyan-400 hover:border-cyan-500/30 transition-all hover:scale-105 active:scale-95"
+                      >
+                        {q.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex gap-4 bg-slate-950/80 p-3 rounded-[2.5rem] border border-white/10 shadow-2xl focus-within:border-cyan-500/40 transition-all duration-500">
+                    <textarea 
+                      className="flex-1 bg-transparent border-none rounded-2xl px-5 py-3 text-sm text-white focus:ring-0 outline-none resize-none placeholder:text-slate-800 font-bold custom-scrollbar"
+                      placeholder="Escriba respuesta operativa..."
+                      rows={1}
+                      value={reply}
+                      onChange={e => setReply(e.target.value)}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleSendReply();
+                        }
+                      }}
+                    />
+                    <button 
+                      onClick={handleSendReply}
+                      disabled={!reply.trim() || sending}
+                      className="w-12 h-12 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white rounded-full shadow-2xl transition-all flex items-center justify-center active:scale-90 disabled:grayscale disabled:opacity-20"
+                    >
+                      {sending ? (
+                        <div className="w-5 h-5 border-2 border-current border-t-transparent animate-spin rounded-full" />
+                      ) : (
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[7px] font-black text-center text-slate-800 uppercase tracking-[0.6em]">Comunicaciones Encriptadas · NOC Protocol v4.2</p>
                </div>
-               <p className="text-[8px] font-black text-center text-slate-700 mt-8 uppercase tracking-[0.6em]">Comunicaciones Encriptadas · Centro de Operaciones Satelitales</p>
             </footer>
           </motion.div>
         ) : (

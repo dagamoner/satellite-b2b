@@ -79,7 +79,8 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
   useEffect(() => {
     if (messages.length > lastMessageCount.current) {
       const lastMsg = messages[messages.length - 1];
-      if (lastMsg.authorId !== null) {
+      // Si el mensaje es del operador (authorId !== null)
+      if (lastMsg && lastMsg.authorId !== null) {
         audioRef.current?.play().catch(() => {});
       }
       lastMessageCount.current = messages.length;
@@ -236,9 +237,9 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
                     key={msg.id}
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="flex justify-center my-8"
+                    className="flex justify-center my-6"
                   >
-                    <span className="bg-slate-900/80 border border-orange-500/20 text-[9px] text-orange-400 font-black px-10 py-4 rounded-full uppercase tracking-[0.3em] shadow-2xl shadow-orange-500/5">
+                    <span className="bg-slate-900/80 border border-cyan-500/20 text-[8px] text-cyan-400 font-black px-8 py-3 rounded-full uppercase tracking-[0.3em] shadow-2xl backdrop-blur-xl">
                        {msg.content}
                     </span>
                   </motion.div>
@@ -251,49 +252,52 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
                   initial={{ x: isMe ? 20 : -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.1 }}
-                  className={`flex ${isMe ? "justify-end" : "justify-start"} items-start gap-6`}
+                  className={`flex ${isMe ? "justify-end" : "justify-start"} items-end gap-4`}
                 >
                   {!isMe && (
-                    <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/10 flex items-center justify-center flex-shrink-0 shadow-2xl">
-                       <span className="text-[10px] font-black text-cyan-500">MRT</span>
+                    <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center flex-shrink-0 shadow-2xl">
+                       <span className="text-[9px] font-black text-cyan-500">MRT</span>
                     </div>
                   )}
-                  <div className={`max-w-[70%] flex flex-col ${isMe ? "items-end" : "items-start"}`}>
-                    <div className={`px-8 py-5 rounded-[2.5rem] text-sm md:text-base font-bold shadow-2xl relative group transition-all hover:scale-[1.01] ${
-                      isMe 
-                        ? "bg-white text-slate-950 rounded-tr-none shadow-white/5" 
-                        : "bg-slate-900/60 backdrop-blur-3xl text-slate-200 rounded-tl-none border border-white/5"
-                    }`}>
+                  <div className={`max-w-[75%] flex flex-col ${isMe ? "items-end" : "items-start"}`}>
+                    <Card 
+                      variant={isMe ? "glass" : "accent"}
+                      hover={false}
+                      className={`px-6 py-4 rounded-[1.8rem] text-sm md:text-base leading-relaxed ${
+                        isMe 
+                          ? "rounded-br-none bg-white text-slate-950" 
+                          : "rounded-bl-none border-cyan-500/20 text-slate-100"
+                      }`}
+                    >
                       {msg.content}
                       
                       {msg.attachments && (
-                         <div className="mt-5 p-4 bg-black/10 rounded-2xl flex items-center gap-4 border border-white/5 hover:bg-black/20 transition-colors cursor-pointer group/file">
-                            <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center">
-                               <svg className="w-5 h-5 text-cyan-500 group-hover/file:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                         <div className="mt-4 p-3 bg-black/10 rounded-xl flex items-center gap-3 border border-white/5 hover:bg-black/20 transition-colors cursor-pointer group/file">
+                            <div className="w-8 h-8 bg-white/5 rounded-lg flex items-center justify-center">
+                               <svg className="w-4 h-4 text-cyan-500 group-hover/file:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                             </div>
                             <div>
-                               <p className="text-[10px] font-black uppercase truncate max-w-[150px]">Adjunto_Tecnico.bin</p>
-                               <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest">Haga clic para descargar</p>
+                               <p className="text-[9px] font-black uppercase truncate max-w-[120px]">Adjunto_Tecnico.bin</p>
                             </div>
                          </div>
                       )}
-                    </div>
-                    <div className="flex items-center gap-4 mt-4 px-3">
-                      <span className="text-[9px] text-slate-700 font-black uppercase tracking-[0.3em]">
+                    </Card>
+                    <div className="flex items-center gap-3 mt-3 px-2">
+                      <span className="text-[8px] text-slate-700 font-black uppercase tracking-[0.2em]">
                         {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                       {!isMe && (
                          <>
-                           <div className="w-1.5 h-1.5 bg-slate-800 rounded-full" />
-                           <span className="text-[9px] text-cyan-600 font-black uppercase tracking-[0.4em]">
-                             {msg.author?.name || 'Operador NOC'}
+                           <div className="w-1 h-1 bg-slate-800 rounded-full" />
+                           <span className="text-[8px] text-cyan-700 font-black uppercase tracking-[0.3em]">
+                             {msg.author?.name || 'Central NOC'}
                            </span>
                          </>
                       )}
                     </div>
                   </div>
                   {isMe && (
-                     <div className="w-12 h-12 rounded-2xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-slate-700 font-black text-[10px] shadow-2xl">
+                     <div className="w-10 h-10 rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center flex-shrink-0 text-slate-700 font-black text-[9px] shadow-2xl">
                         USER
                      </div>
                   )}
