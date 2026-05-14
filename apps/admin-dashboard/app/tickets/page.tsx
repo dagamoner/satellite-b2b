@@ -390,6 +390,15 @@ export default function AdminDashboard() {
         <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
           <div className="flex items-center gap-3 mb-6 justify-between">
             <div className="flex items-center gap-3">
+              <Link 
+                href="/" 
+                className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90"
+                title="Volver al Dashboard"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                </svg>
+              </Link>
               <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-[1rem] flex items-center justify-center text-white font-black shadow-2xl shadow-cyan-500/20 relative group text-sm">
                 <div className="absolute inset-0 bg-white/20 rounded-[1rem] scale-0 group-hover:scale-110 transition-transform duration-500" />
                 MR
@@ -445,16 +454,6 @@ export default function AdminDashboard() {
               );
             })}
           </motion.div>
-        </div>
-
-        {/* Acceso al Dashboard Global */}
-        <div className="px-6 py-3 border-b border-white/5 bg-cyan-500/[0.01]">
-          <Link href="/" className="flex items-center justify-center gap-2 bg-slate-900/50 border border-white/5 hover:border-cyan-500/30 p-3 rounded-xl transition-all group">
-            <svg className="w-3.5 h-3.5 text-slate-500 group-hover:text-cyan-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span className="text-[8px] font-black text-slate-600 uppercase tracking-[0.2em] group-hover:text-white transition-colors">Volver al Dashboard</span>
-          </Link>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar bg-slate-950/20">
@@ -539,8 +538,16 @@ export default function AdminDashboard() {
                 <motion.div 
                   initial={{ y: -10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-6"
                 >
+                  <button 
+                    onClick={() => setSelectedTicket(null)}
+                    className="w-12 h-12 bg-slate-900 border border-white/10 rounded-2xl flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/40 transition-all active:scale-90 shadow-2xl"
+                  >
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
                   <h2 className="text-4xl font-black text-white tracking-tighter uppercase leading-none">{selectedTicket.title}</h2>
                 </motion.div>
                 <motion.div 
