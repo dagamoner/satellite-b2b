@@ -6,6 +6,9 @@ import { redirect } from "next/navigation";
 
 export default function ReportesPage() {
   const { data: session, status } = useSession();
+  const [metrics, setMetrics] = useState<any>(null);
+  const [loadingMetrics, setLoadingMetrics] = useState(true);
+  
   const [installFilters, setInstallFilters] = useState({
     startDate: "",
     endDate: "",
@@ -21,6 +24,24 @@ export default function ReportesPage() {
   const [downloadingInstall, setDownloadingInstall] = useState(false);
   const [downloadingTickets, setDownloadingTickets] = useState(false);
 
+  // Fetch Metrics
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const res = await fetch("/api/reports/metrics");
+        if (res.ok) {
+          const data = await res.json();
+          setMetrics(data);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingMetrics(false);
+      }
+    };
+    fetchMetrics();
+  }, []);
+
   // Proteger la ruta - solo ADMIN
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -34,6 +55,8 @@ export default function ReportesPage() {
   if (status === "loading") return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-cyan-500 font-bold">Cargando...</div>;
 
   const handleDownloadInstallations = async () => {
+    // ... (rest of the download functions)
+
     setDownloadingInstall(true);
     try {
       const params = new URLSearchParams(installFilters);
@@ -106,7 +129,125 @@ export default function ReportesPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 py-12">
+        {/* Dashboard de Métricas */}
+        <section className="mb-20">
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-2 h-8 bg-cyan-500 rounded-full"></div>
+            <h2 className="text-2xl font-black text-white uppercase tracking-tight">Dashboard de Rendimiento Operativo</h2>
+          </div>
+
+          {loadingMetrics ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1,2,3,4].map(i => <div key={i} className="h-40 bg-slate-900/40 rounded-3xl animate-pulse border border-white/5"></div>)}
+            </div>
+          ) : (
+            <div className="space-y-12">
+              {/* Top KPI Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="bg-slate-900/40 border border-white/10 rounded-[2rem] p-8 shadow-xl hover:border-cyan-500/30 transition-all">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Conversión de Ventas</p>
+                  <div className="flex items-end gap-3">
+                    <span className="text-4xl font-black text-white leading-none">{metrics?.sales?.conversionRate}%</span>
+                    <span className="text-xs text-cyan-400 font-bold pb-1">Leads a Contratos</span>
+                  </div>
+                  <div className="mt-6 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="bg-cyan-500 h-full rounded-full" style={{ width: `${metrics?.sales?.conversionRate}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900/40 border border-white/10 rounded-[2rem] p-8 shadow-xl hover:border-amber-500/30 transition-all">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Tasa de Resolución</p>
+                  <div className="flex items-end gap-3">
+                    <span className="text-4xl font-black text-white leading-none">{metrics?.tickets?.completionRate}%</span>
+                    <span className="text-xs text-amber-400 font-bold pb-1">Tickets Cerrados</span>
+                  </div>
+                  <div className="mt-6 w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div className="bg-amber-500 h-full rounded-full" style={{ width: `${metrics?.tickets?.completionRate}%` }}></div>
+                  </div>
+                </div>
+
+                <div className="bg-slate-900/40 border border-white/10 rounded-[2rem] p-8 shadow-xl hover:border-emerald-500/30 transition-all">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Ingresos Proyectados</p>
+                  <div className="flex items-end gap-3">
+                    <span className="text-4xl font-black text-white leading-none">${metrics?.sales?.totalRevenue?.toLocaleString()}</span>
+                    <span className="text-xs text-emerald-400 font-bold pb-1">Mensual</span>
+                  </div>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest mt-6">Basado en contratos activos</p>
+                </div>
+
+                <div className="bg-slate-900/40 border border-white/10 rounded-[2rem] p-8 shadow-xl hover:border-purple-500/30 transition-all">
+                  <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Carga de Trabajo</p>
+                  <div className="flex items-end gap-3">
+                    <span className="text-4xl font-black text-white leading-none">{metrics?.sales?.inProgressCount}</span>
+                    <span className="text-xs text-purple-400 font-bold pb-1">En Instalación</span>
+                  </div>
+                  <p className="text-[10px] text-slate-600 font-bold uppercase tracking-widest mt-6">Equipos en campo actualmente</p>
+                </div>
+              </div>
+
+              {/* Technician KPI & OKR Panel */}
+              <div className="bg-slate-900/40 border border-white/10 rounded-[3rem] p-10 shadow-2xl">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                  <div>
+                    <h3 className="text-xl font-black text-white uppercase tracking-tight">Performance y OKRs de Técnicos</h3>
+                    <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-2">Métricas de calidad y cumplimiento por operador</p>
+                  </div>
+                  <div className="bg-slate-950/50 border border-white/5 rounded-2xl px-6 py-3">
+                    <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.2em]">Target Mensual: 10 Instalaciones</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  {metrics?.technicians?.map((tech: any) => (
+                    <div key={tech.id} className="bg-slate-950/40 border border-white/5 rounded-3xl p-6 flex flex-col lg:flex-row items-center gap-8 group hover:border-cyan-500/20 transition-all">
+                      <div className="flex items-center gap-4 min-w-[240px]">
+                        <div className="w-12 h-12 rounded-2xl bg-cyan-600 flex items-center justify-center text-white font-black shadow-lg">
+                          {tech.name.split(' ').map((n: string) => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="text-white font-black uppercase tracking-tight">{tech.name}</p>
+                          <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">ID: {tech.id.split('-')[0]}</p>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 flex-1">
+                        <div className="text-center md:text-left">
+                          <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Completados</p>
+                          <p className="text-xl font-black text-white">{tech.completedInstalls}</p>
+                        </div>
+                        <div className="text-center md:text-left">
+                          <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Vel. Promedio</p>
+                          <p className="text-xl font-black text-cyan-400">{tech.avgDownload} <span className="text-[10px]">Mbps</span></p>
+                        </div>
+                        <div className="text-center md:text-left">
+                          <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">Latencia Avg</p>
+                          <p className="text-xl font-black text-amber-400">{tech.avgLatency} <span className="text-[10px]">ms</span></p>
+                        </div>
+                        <div className="text-center md:text-left">
+                          <p className="text-[10px] font-black text-slate-600 uppercase tracking-widest mb-1">OKR Score</p>
+                          <div className="flex items-center gap-3 justify-center md:justify-start">
+                            <span className="text-xl font-black text-emerald-400">{tech.okrScore}%</span>
+                            <div className="w-12 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                              <div className="bg-emerald-500 h-full" style={{ width: `${tech.okrScore}%` }}></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+
+        <div className="flex items-center gap-4 mb-10">
+          <div className="w-2 h-8 bg-amber-500 rounded-full"></div>
+          <h2 className="text-2xl font-black text-white uppercase tracking-tight">Exportación de Datos</h2>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
           
           {/* Instalaciones Report Card */}
           <div className="bg-slate-900/40 border border-white/10 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden group">
