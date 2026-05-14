@@ -149,6 +149,7 @@ export default function AntennaContractForm({
   const [isExporting, setIsExporting] = useState(false);
   const [showFinalModal, setShowFinalModal] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
+  const [isTechAccepted, setIsTechAccepted] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
   const sigCanvas = useRef<SignatureCanvas>(null);
 
@@ -199,6 +200,14 @@ export default function AntennaContractForm({
 
   // Fase 2: Técnico finaliza instalación
   const handleTechFinalize = async () => {
+    if (!isTechAccepted) {
+      alert("El técnico debe confirmar los datos de instalación tildando el checkbox.");
+      return;
+    }
+    if (techSigCanvas.current?.isEmpty()) {
+      alert("Por favor, estampe su firma de técnico.");
+      return;
+    }
     try {
       setIsExporting(true);
       // Actualizar ticket a SIGNATURE_PENDING y guardar datos técnicos
@@ -609,6 +618,10 @@ export default function AntennaContractForm({
                     />
                   </div>
                   <button onClick={() => techSigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma Técnico</button>
+                  <div className="mt-4 flex items-center gap-3 justify-center">
+                    <input type="checkbox" id="techAccept" checked={isTechAccepted} onChange={(e) => setIsTechAccepted(e.target.checked)} className="w-4 h-4" />
+                    <label htmlFor="techAccept" className="normal-case font-medium text-[10px] text-slate-700">Confirmo los datos técnicos.</label>
+                  </div>
                 </>
               ) : (
                 <div className="text-center p-4">
