@@ -42,6 +42,10 @@ interface AntennaContractFormProps {
     obstructionObject?: string;
     observations?: string;
     perfObservations?: string;
+    techName?: string | null;
+    techDni?: string | null;
+    techSignedAt?: Date | string | null;
+    clientSignedAt?: Date | string | null;
   };
 }
 
