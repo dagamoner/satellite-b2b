@@ -93,12 +93,15 @@ function ContractModal({
   contract,
   onClose,
   onUpdated,
+  technicians,
 }: {
   contract: Contract;
   onClose: () => void;
   onUpdated: () => void;
+  technicians: { id: string, name: string }[];
 }) {
   const [status, setStatus] = useState<ContractStatus>(contract.status);
+  const [technicianId, setTechnicianId] = useState(contract.technician?.id || "NONE");
   const [techNotes, setTechNotes] = useState(contract.techNotes || "");
   const [scheduledDate, setScheduledDate] = useState(
     contract.scheduledDate ? contract.scheduledDate.substring(0, 10) : ""
@@ -106,7 +109,6 @@ function ContractModal({
   const [saving, setSaving] = useState(false);
   const [savedOk, setSavedOk] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
-  const [techObservations, setTechObservations] = useState(contract.techNotes || ""); // Notas técnicas generales
 
   // Estados técnicos editables
   const [kitSerialNumber, setKitSerialNumber] = useState(contract.kitSerialNumber || "");
@@ -150,7 +152,8 @@ function ContractModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           status,
-          techNotes: techObservations,
+          technicianId,
+          techNotes,
           scheduledDate: scheduledDate || undefined,
           kitSerialNumber,
           antennaModel,
@@ -212,20 +215,37 @@ function ContractModal({
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
                 <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-4">Gestión de la Instalación</h3>
                 <div className="space-y-5">
-                  <div>
-                    <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Estado Actual</label>
-                    <select
-                      value={status}
-                      onChange={(e) => setStatus(e.target.value as ContractStatus)}
-                      className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                    >
-                      <option value="PENDING">⏳ Pendiente de Revisión</option>
-                      <option value="APPROVED">✅ Aprobado para Instalación</option>
-                      <option value="IN_PROGRESS">🔧 Instalación en Curso</option>
-                      <option value="COMPLETED">✅ Instalación Completada</option>
-                      <option value="REJECTED">❌ Rechazado (Mala Instalación)</option>
-                      <option value="CANCELLED">🚫 Cancelado</option>
-                    </select>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Estado Actual</label>
+                      <select
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value as ContractStatus)}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                      >
+                        <option value="PENDING">⏳ Pendiente de Revisión</option>
+                        <option value="APPROVED">✅ Aprobado para Instalación</option>
+                        <option value="IN_PROGRESS">🔧 Instalación en Curso</option>
+                        <option value="COMPLETED">✅ Instalación Completada</option>
+                        <option value="REJECTED">❌ Rechazado (Mala Instalación)</option>
+                        <option value="CANCELLED">🚫 Cancelado</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Técnico Asignado</label>
+                      <select
+                        value={technicianId}
+                        onChange={(e) => setTechnicianId(e.target.value)}
+                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                      >
+                        <option value="NONE">⚠️ Sin asignar</option>
+                        {technicians.map((t) => (
+                          <option key={t.id} value={t.id}>
+                            👤 {t.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label className="text-xs font-bold text-slate-400 uppercase tracking-tighter block mb-2">Notas Administrativas</label>
@@ -698,7 +718,11 @@ export default function ContratosAdminPage() {
                            </div>
                            <div>
                               <p className="font-semibold text-slate-200 text-sm leading-tight">{c.clientName}</p>
-                              <p className="text-slate-500 text-[10px]">{c.technician?.name || "No asignado"}</p>
+                                {c.technician?.name ? (
+                                  <p className="text-slate-400 text-[10px] font-medium italic">{c.technician.name}</p>
+                                ) : (
+                                  <p className="text-amber-500/80 text-[9px] font-black uppercase tracking-widest animate-pulse">Asignar Técnico +</p>
+                                )}
                            </div>
                         </div>
                       </td>
@@ -742,6 +766,7 @@ export default function ContratosAdminPage() {
           contract={selected}
           onClose={() => setSelected(null)}
           onUpdated={fetchContracts}
+          technicians={technicians}
         />
       )}
     </div>
