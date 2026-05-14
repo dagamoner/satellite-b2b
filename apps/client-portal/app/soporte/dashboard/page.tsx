@@ -477,6 +477,3 @@ export default function SupportDashboard() {
     </div>
   );
 }
-    </div>
-  );
-}

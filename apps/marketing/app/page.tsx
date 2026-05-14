@@ -362,9 +362,10 @@ export default function MarketingPage() {
       <section id="antenas" className="relative z-10 py-24 bg-[#020617]/40 backdrop-blur-xl border-y border-slate-800/80 px-6">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Sa            <div className="grid md:grid-cols-3 gap-8">
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Satelital</h2>
+            <div className="grid md:grid-cols-3 gap-8">
                {/* Mini X */}
-               <Card glow variant="glass" className="p-8 flex flex-col relative overflow-hidden">
+               <Card variant="glass" className="p-8 flex flex-col relative overflow-hidden">
                   <div className="relative z-10 flex-grow">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-blue-600/5 flex items-center justify-center border-2 border-blue-500/30 text-blue-400 shadow-[0_0_30px_rgba(37,99,235,0.2)] group-hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] transition-all shrink-0">
@@ -421,7 +422,7 @@ export default function MarketingPage() {
                </Card>
 
                {/* Estándar V4 */}
-               <Card glow variant="glass" className="p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] border-cyan-500 transform scale-105 z-20 relative">
+               <Card variant="glass" className="p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] border-cyan-500 transform scale-105 z-20 relative">
                   <div className="absolute top-6 left-8 bg-blue-900/40 border border-blue-500/30 text-blue-400 px-4 py-1 text-[11px] font-black rounded-lg tracking-widest uppercase z-20 shadow-[0_0_15px_rgba(37,99,235,0.2)]">MÁS POPULAR</div>
                   
                   <div className="relative z-10 flex-grow mt-12">
@@ -494,7 +495,7 @@ export default function MarketingPage() {
                </Card>
 
                {/* Itinerante */}
-               <Card glow variant="glass" className="p-8 group shadow-2xl flex flex-col relative overflow-hidden">
+               <Card variant="glass" className="p-8 group shadow-2xl flex flex-col relative overflow-hidden">
                   <div className="relative z-10 flex-grow">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-20 h-20 rounded-[1.5rem] bg-green-600/5 flex items-center justify-center border-2 border-green-500/30 text-green-400 shadow-[0_0_30px_rgba(34,197,94,0.2)] group-hover:shadow-[0_0_40px_rgba(34,197,94,0.4)] transition-all shrink-0">
@@ -550,10 +551,8 @@ export default function MarketingPage() {
                   </div>
                </Card>
             </div>
-      </div>
-
-            </div>
          </div>
+      </section>
 
          {/* Instalación Section */}
          <div className="max-w-7xl mx-auto mt-20 bg-gradient-to-br from-[#1a1300]/80 to-[#0a0700]/90 border border-yellow-600/40 rounded-3xl p-10 backdrop-blur-md shadow-[0_0_50px_rgba(202,138,4,0.1)]">
@@ -602,7 +601,7 @@ export default function MarketingPage() {
                </div>
             </div>
          </div>
-      </section>
+
 
       {/* Pricing / Planes Section */}
       <section id="planes" className="relative z-10 py-32 px-6 max-w-7xl mx-auto">
@@ -614,7 +613,7 @@ export default function MarketingPage() {
 
          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {/* Plan Básico Mini */}
-            <Card glow variant="glass" className="p-8 flex flex-col group">
+            <Card variant="glass" className="p-8 flex flex-col group">
                <h4 className="text-2xl font-bold text-blue-300 mb-2">Plan Básico Mini</h4>
                <div className="mb-6 h-1 w-10 bg-blue-900 rounded-full group-hover:w-16 transition-all group-hover:bg-blue-500" />
                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
@@ -638,7 +637,7 @@ export default function MarketingPage() {
             </Card>
 
             {/* Plan Básico Estándar V4 */}
-            <Card glow variant="glass" className="p-8 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.25)] border-blue-500 transform lg:-translate-y-4 hover:-translate-y-6 transition-transform relative">
+            <Card variant="glass" className="p-8 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.25)] border-blue-500 transform lg:-translate-y-4 hover:-translate-y-6 transition-transform relative">
                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.8)]">RECOMENDADO</div>
                <h4 className="text-2xl font-bold text-blue-400 mb-2 mt-2">Plan Básico Estándar V4</h4>
                <div className="mb-6 h-1 w-12 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.8)]" />
@@ -663,7 +662,7 @@ export default function MarketingPage() {
             </Card>
 
             {/* Plan Full Estándar V4 */}
-            <Card glow variant="glass" className="p-8 flex flex-col border-cyan-500 group">
+            <Card variant="glass" className="p-8 flex flex-col border-cyan-500 group">
                <h4 className="text-2xl font-bold text-cyan-400 mb-2">Plan Full Estándar V4</h4>
                <div className="mb-6 h-1 w-10 bg-cyan-900 rounded-full group-hover:w-16 transition-all group-hover:bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
                <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
@@ -785,7 +784,7 @@ export default function MarketingPage() {
                    ]
                  }
                ].map((service, i) => (
-                 <Card key={i} glow variant="glass" className="p-10 group">
+                 <Card key={i} variant="glass" className="p-10 group">
                     <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
                        <img src={`/icon_${service.icon}.png`} alt={service.title} className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(var(--${service.color}-shadow),0.4)]`} />
                     </div>

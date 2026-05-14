@@ -693,7 +693,7 @@ export default function AdminDashboard() {
              />
              
              <div className="w-full max-w-6xl z-20">
-               {session?.user?.role === 'ADMIN' && <QuickMetrics />}
+               {(session?.user as any)?.role === 'ADMIN' && <QuickMetrics />}
              </div>
 
              <div className="relative mt-12">

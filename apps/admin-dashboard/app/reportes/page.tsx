@@ -291,7 +291,7 @@ export default function ReportesPage() {
                           fontSize={9} 
                           tickLine={false} 
                           axisLine={false}
-                          tick={{ fontWeight: 'bold', textTransform: 'uppercase' }}
+                          tick={{ fontWeight: 'bold' }}
                         />
                         <YAxis 
                           stroke="#475569" 
