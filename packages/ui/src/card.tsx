@@ -14,13 +14,15 @@ interface CardProps {
   className?: string;
   variant?: 'default' | 'glass' | 'glow' | 'accent';
   hover?: boolean;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export function Card({ 
   children, 
   className, 
   variant = 'default',
-  hover = true 
+  hover = true,
+  onClick
 }: CardProps) {
   const baseStyles = "relative overflow-hidden rounded-[2rem] border transition-all duration-500"
   
@@ -38,6 +40,7 @@ export function Card({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
+      onClick={onClick}
       className={cn(baseStyles, variants[variant], hoverStyles, className)}
     >
       {/* Subtle Inner Highlight */}

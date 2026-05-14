@@ -258,7 +258,7 @@ export default function AdminOverview() {
                 </div>
               </Card>
 
-              <Card variant="glass" className="p-10 border-cyan-500/10 relative overflow-hidden group cursor-pointer" onClick={() => window.location.href='/tickets'}>
+              <Card variant="glass" className="p-10 border-cyan-500/10 relative overflow-hidden group cursor-pointer" onClick={() => { window.location.href='/tickets' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
                    <p className="text-cyan-500 text-[8px] font-black uppercase tracking-[0.4em] mb-2">Acceso Inmediato</p>
