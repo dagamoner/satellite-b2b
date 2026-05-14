@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import UserModal from "./components/UserModal";
@@ -54,35 +55,57 @@ export default function UsuariosPage() {
   return (
     <div className="min-h-screen bg-[#020617] text-slate-400 p-8">
       <div className="max-w-7xl mx-auto">
-        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-          <div className="flex items-center gap-6">
-            <button 
-              onClick={() => router.push("/")}
-              className="p-4 bg-slate-900 border border-white/5 rounded-2xl text-slate-500 hover:text-cyan-500 hover:border-cyan-500/30 transition-all active:scale-95 group"
-            >
-              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </button>
-            <div>
-              <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">
-                Gestión de <span className="text-cyan-500">Equipo</span>
-              </h1>
-              <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
-                Administración de Equipo y Soporte Técnico
-              </p>
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-900/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 blur-[150px] rounded-full" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10" />
+      </div>
+
+      {/* Unified Navbar */}
+      <nav className="border-b border-white/5 bg-slate-950/50 backdrop-blur-3xl sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+          <div className="flex items-center gap-12">
+            <Link href="/" className="flex items-center gap-4 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center font-black text-white shadow-lg group-hover:scale-110 transition-transform">MR</div>
+              <div className="flex flex-col">
+                <span className="text-white font-black text-sm tracking-tighter uppercase leading-none">NOC Center</span>
+                <span className="text-cyan-500 text-[8px] font-black tracking-[0.2em] mt-1 uppercase">Operations Command</span>
+              </div>
+            </Link>
+            
+            <div className="hidden md:flex items-center gap-10">
+              <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
+              <Link href="/contratos" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Contratos</Link>
+              <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>
+              <Link href="/usuarios" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">Equipo</Link>
             </div>
           </div>
-          <button 
-            onClick={() => setIsModalOpen(true)}
-            className="group relative px-8 py-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-[1.5rem] transition-all shadow-2xl shadow-cyan-500/20 active:scale-95 flex items-center gap-3 overflow-hidden"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            <span className="text-xs font-black uppercase tracking-[0.2em]">Nuevo Operador</span>
-          </button>
+
+          <div className="flex items-center gap-6">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="group relative px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl transition-all shadow-lg active:scale-95 flex items-center gap-3 overflow-hidden"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <span className="text-[9px] font-black uppercase tracking-[0.2em]">Nuevo Operador</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <div className="max-w-7xl mx-auto px-10 py-16 relative z-10">
+        <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+          <div>
+            <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">
+              Gestión de <span className="text-cyan-500">Equipo</span>
+            </h1>
+            <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+              Administración de Equipo y Soporte Técnico
+            </p>
+          </div>
         </header>
 
         <div className="bg-[#0f172a]/50 border border-white/5 rounded-[2.5rem] overflow-hidden backdrop-blur-xl shadow-2xl">

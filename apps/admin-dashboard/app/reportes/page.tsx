@@ -135,34 +135,37 @@ export default function ReportesPage() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10" />
       </div>
 
-      <header className="bg-slate-900/60 border-b border-white/5 px-10 py-8 backdrop-blur-3xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-8">
-          <div className="flex items-center gap-8">
-            <Link 
-              href="/"
-              className="w-14 h-14 bg-slate-950/50 hover:bg-slate-900 border border-white/5 rounded-2xl flex items-center justify-center transition-all active:scale-90 group"
-            >
-              <svg className="w-6 h-6 text-slate-500 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
+      {/* Unified Navbar */}
+      <nav className="border-b border-white/5 bg-slate-950/50 backdrop-blur-3xl sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+          <div className="flex items-center gap-12">
+            <Link href="/" className="flex items-center gap-4 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center font-black text-white shadow-lg group-hover:scale-110 transition-transform">MR</div>
+              <div className="flex flex-col">
+                <span className="text-white font-black text-sm tracking-tighter uppercase leading-none">NOC Center</span>
+                <span className="text-cyan-500 text-[8px] font-black tracking-[0.2em] mt-1 uppercase">Operations Command</span>
+              </div>
             </Link>
-            <div>
-              <h1 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter leading-none">Inteligencia de Datos</h1>
-              <p className="text-cyan-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Advanced Analytics & Business Intelligence MRT</p>
+            
+            <div className="hidden md:flex items-center gap-10">
+              <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
+              <Link href="/contratos" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Contratos</Link>
+              <Link href="/reportes" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">Inteligencia</Link>
+              <Link href="/usuarios" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Equipo</Link>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-6">
-             <div className="flex flex-col items-end">
-                <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.3em]">Estado de Red</span>
-                <span className="text-xs text-emerald-400 font-black flex items-center gap-3 mt-1">
-                   <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-                   SISTEMA ACTIVO
-                </span>
-             </div>
+            <div className="hidden lg:flex flex-col items-end">
+              <span className="text-[8px] font-black text-slate-600 uppercase tracking-widest">NOC Monitor</span>
+              <span className="text-[10px] text-emerald-400 font-black flex items-center gap-2 mt-1">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                ONLINE
+              </span>
+            </div>
           </div>
         </div>
-      </header>
+      </nav>
 
       <motion.div 
         variants={containerVariants}

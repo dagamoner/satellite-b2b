@@ -551,49 +551,71 @@ export default function ContratosAdminPage() {
   }, {} as Record<string, number>);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50">
-      {/* Header */}
-      <div className="bg-slate-900/60 border-b border-slate-800 px-6 py-5">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Link 
-              href="/"
-              className="p-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-400 hover:text-white hover:border-slate-600 transition-all active:scale-95 group"
-            >
-              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-900/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-900/10 blur-[150px] rounded-full" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10" />
+      </div>
+
+      {/* Unified Navbar */}
+      <nav className="border-b border-white/5 bg-slate-950/50 backdrop-blur-3xl sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
+          <div className="flex items-center gap-12">
+            <Link href="/" className="flex items-center gap-4 group">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center font-black text-white shadow-lg group-hover:scale-110 transition-transform">MR</div>
+              <div className="flex flex-col">
+                <span className="text-white font-black text-sm tracking-tighter uppercase leading-none">NOC Center</span>
+                <span className="text-cyan-500 text-[8px] font-black tracking-[0.2em] mt-1 uppercase">Operations Command</span>
+              </div>
             </Link>
-            <div>
-              <h1 className="text-2xl font-extrabold text-white uppercase tracking-tight">Contratos de Instalación</h1>
-              <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mt-0.5">{contracts.length} registros totales</p>
+            
+            <div className="hidden md:flex items-center gap-10">
+              <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
+              <Link href="/contratos" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">Contratos</Link>
+              <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>
+              <Link href="/usuarios" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Equipo</Link>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <select 
-              value={filterTechId}
-              onChange={(e) => setFilterTechId(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-300 focus:outline-none focus:border-blue-500 w-48"
-            >
-              <option value="ALL">👤 Todos los Técnicos</option>
-              {technicians.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
-            </select>
-            <input
-              type="text"
-              placeholder="Buscar contrato, cliente..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-blue-500 w-56"
-            />
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 bg-slate-900/50 border border-white/5 rounded-xl px-4 py-2">
+              <input
+                type="text"
+                placeholder="Buscar contrato..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="bg-transparent text-[10px] font-black text-white placeholder-slate-600 focus:outline-none w-32 uppercase tracking-widest"
+              />
+              <svg className="w-3 h-3 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            </div>
             <button
               onClick={fetchContracts}
-              className="bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-medium transition-colors"
+              className="bg-slate-900/50 hover:bg-slate-800 border border-white/5 text-slate-400 hover:text-white p-2.5 rounded-xl transition-all"
+              title="Actualizar"
             >
-              ↻ Actualizar
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 4v5h.586m15.414 2A8 8 0 118 4.07M20 20v-5h-5.586" /></svg>
             </button>
           </div>
         </div>
-      </div>
+      </nav>
+
+      <div className="max-w-7xl mx-auto px-6 py-12 relative z-10">
+        <header className="mb-12 flex justify-between items-end">
+          <div>
+            <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">Contratos de <span className="text-cyan-500">Instalación</span></h1>
+            <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">{contracts.length} REGISTROS ACTIVOS EN SISTEMA</p>
+          </div>
+          <select 
+            value={filterTechId}
+            onChange={(e) => setFilterTechId(e.target.value)}
+            className="bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest focus:outline-none focus:border-cyan-500/50 transition-all cursor-pointer"
+          >
+            <option value="ALL">TODOS LOS TÉCNICOS</option>
+            {technicians.map(t => <option key={t.id} value={t.id}>{t.name.toUpperCase()}</option>)}
+          </select>
+        </header>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Métricas */}
