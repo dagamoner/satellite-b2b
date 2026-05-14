@@ -5,10 +5,8 @@ import SignatureCanvas from "react-signature-canvas";
 import { useRealtimeContracts } from "../../hooks/useRealtimeContracts";
 import Link from "next/link";
 import Image from "next/image";
-
-
-// Componentes dinámicos removidos si no se usan directamente aquí o causan warnings
-
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
 type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
@@ -509,6 +507,7 @@ function ContractModal({
 
 // ── Página Admin ───────────────────────────────────────────────────────────
 export default function ContratosAdminPage() {
+  const { data: session, status } = useSession();
   const [filterTechId, setFilterTechId] = useState<string>("ALL");
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
   const [selected, setSelected] = useState<Contract | null>(null);
@@ -518,6 +517,24 @@ export default function ContratosAdminPage() {
   // --- Realtime Hook ---
   const { contracts, loading, refetch: fetchContracts } = useRealtimeContracts();
   // ---------------------
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      redirect("/");
+    }
+    if (status === "authenticated" && (session?.user as any)?.role !== "ADMIN") {
+      redirect("/");
+    }
+  }, [status, session]);
+
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6">
+        <div className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
+        <div className="text-cyan-500 font-black tracking-[0.5em] text-[10px] uppercase animate-pulse">Sincronizando Sistema de Contratos</div>
+      </div>
+    );
+  }
 
 
   const fetchTechnicians = async () => {

@@ -20,8 +20,9 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-const QuickMetrics = () => {
+const QuickMetrics = ({ role }: { role?: string }) => {
   const [metrics, setMetrics] = useState<any>(null);
+  const isAdmin = role === "ADMIN";
 
   useEffect(() => {
     fetch("/api/reports/metrics")
@@ -42,18 +43,20 @@ const QuickMetrics = () => {
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10"
+      className={`grid grid-cols-1 ${isAdmin ? 'md:grid-cols-4' : 'md:grid-cols-2'} gap-6 mb-10`}
     >
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-cyan-500/10 group-hover:border-cyan-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Conversión</span>
-            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">{metrics.sales.conversionRate}%</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Leads a Contratos</p>
-        </Card>
-      </Link>
+      {isAdmin && (
+        <Link href="/reportes" className="group">
+          <Card variant="glass" className="p-6 border-cyan-500/10 group-hover:border-cyan-500/30 transition-all cursor-pointer">
+            <div className="flex justify-between items-start">
+              <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Conversión</span>
+              <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
+            </div>
+            <p className="text-2xl font-black text-white mt-4">{metrics.sales.conversionRate}%</p>
+            <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Leads a Contratos</p>
+          </Card>
+        </Link>
+      )}
 
       <Link href="/tickets" className="group">
         <Card variant="glass" className="p-6 border-amber-500/10 group-hover:border-amber-500/30 transition-all cursor-pointer">
@@ -66,18 +69,20 @@ const QuickMetrics = () => {
         </Card>
       </Link>
 
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-emerald-500/10 group-hover:border-emerald-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Revenue</span>
-            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">${metrics.sales.totalRevenue.toLocaleString()}</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Mensual estimado</p>
-        </Card>
-      </Link>
+      {isAdmin && (
+        <Link href="/reportes" className="group">
+          <Card variant="glass" className="p-6 border-emerald-500/10 group-hover:border-emerald-500/30 transition-all cursor-pointer">
+            <div className="flex justify-between items-start">
+              <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Revenue</span>
+              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+            </div>
+            <p className="text-2xl font-black text-white mt-4">${metrics.sales.totalRevenue.toLocaleString()}</p>
+            <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Mensual estimado</p>
+          </Card>
+        </Link>
+      )}
 
-      <Link href="/usuarios" className="group">
+      <Link href={isAdmin ? "/usuarios" : "#"} className="group">
         <Card variant="glass" className="p-6 border-purple-500/10 group-hover:border-purple-500/30 transition-all cursor-pointer">
           <div className="flex justify-between items-start">
             <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Operaciones</span>
@@ -169,8 +174,12 @@ export default function AdminOverview() {
           <div className="flex items-center gap-8">
             <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5">
                 <Link href="/tickets" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Soporte</Link>
-                <Link href="/reportes" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Intelligence</Link>
-                <Link href="/usuarios" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Equipo</Link>
+                {(session?.user as any)?.role === "ADMIN" && (
+                  <>
+                    <Link href="/reportes" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Intelligence</Link>
+                    <Link href="/usuarios" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Equipo</Link>
+                  </>
+                )}
             </div>
             <button onClick={() => signOut()} className="text-[9px] font-black text-red-500/50 hover:text-red-500 uppercase tracking-widest border border-red-500/10 px-4 py-2 rounded-xl transition-all">Desconectar</button>
           </div>
@@ -191,7 +200,7 @@ export default function AdminOverview() {
           </motion.div>
         </header>
 
-        <QuickMetrics />
+        <QuickMetrics role={(session?.user as any)?.role} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
            <Card variant="glass" className="lg:col-span-2 p-10 min-h-[400px] border-white/5">
@@ -237,26 +246,28 @@ export default function AdminOverview() {
            </Card>
 
            <div className="space-y-8">
-              <Card variant="glass" className="p-10 border-white/5">
-                <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Módulos Críticos</h3>
-                <div className="grid grid-cols-1 gap-4">
-                   {[
-                     { name: "Gestión de Contratos", path: "/contratos", icon: "📄" },
-                     { name: "Panel de Reportes", path: "/reportes", icon: "📊" },
-                     { name: "Directorio de Staff", path: "/usuarios", icon: "👥" },
-                   ].map(mod => (
-                     <Link key={mod.path} href={mod.path} className="group p-5 bg-slate-900/50 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                           <span className="text-xl">{mod.icon}</span>
-                           <span className="text-[10px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest transition-colors">{mod.name}</span>
-                        </div>
-                        <svg className="w-4 h-4 text-slate-700 group-hover:text-cyan-500 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                        </svg>
-                     </Link>
-                   ))}
-                </div>
-              </Card>
+              {(session?.user as any)?.role === "ADMIN" && (
+                <Card variant="glass" className="p-10 border-white/5">
+                  <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Módulos Críticos</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      { name: "Gestión de Contratos", path: "/contratos", icon: "📄" },
+                      { name: "Panel de Reportes", path: "/reportes", icon: "📊" },
+                      { name: "Directorio de Staff", path: "/usuarios", icon: "👥" },
+                    ].map(mod => (
+                      <Link key={mod.path} href={mod.path} className="group p-5 bg-slate-900/50 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <span className="text-xl">{mod.icon}</span>
+                            <span className="text-[10px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest transition-colors">{mod.name}</span>
+                          </div>
+                          <svg className="w-4 h-4 text-slate-700 group-hover:text-cyan-500 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                          </svg>
+                      </Link>
+                    ))}
+                  </div>
+                </Card>
+              )}
 
               <Card variant="glass" className="p-10 border-cyan-500/10 relative overflow-hidden group cursor-pointer" onClick={() => { window.location.href='/tickets' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

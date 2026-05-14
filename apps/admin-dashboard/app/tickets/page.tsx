@@ -22,70 +22,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 }
 };
 
-const QuickMetrics = () => {
-  const [metrics, setMetrics] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("/api/reports/metrics")
-      .then(r => r.json())
-      .then(setMetrics)
-      .catch(console.error);
-  }, []);
-
-  if (!metrics) return null;
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10"
-    >
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-cyan-500/10 group-hover:border-cyan-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Conversión</span>
-            <div className="w-2 h-2 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">{metrics.sales.conversionRate}%</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Leads a Contratos</p>
-        </Card>
-      </Link>
-
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-amber-500/10 group-hover:border-amber-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Tickets Activos</span>
-            <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">{metrics.tickets.open + metrics.tickets.inProgress}</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Sin resolver</p>
-        </Card>
-      </Link>
-
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-emerald-500/10 group-hover:border-emerald-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Revenue</span>
-            <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">${metrics.sales.totalRevenue.toLocaleString()}</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Mensual estimado</p>
-        </Card>
-      </Link>
-
-      <Link href="/reportes" className="group">
-        <Card variant="glass" className="p-6 border-purple-500/10 group-hover:border-purple-500/30 transition-all cursor-pointer">
-          <div className="flex justify-between items-start">
-            <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Equipo</span>
-            <div className="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]" />
-          </div>
-          <p className="text-2xl font-black text-white mt-4">{metrics.technicians.length}</p>
-          <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Técnicos activos</p>
-        </Card>
-      </Link>
-    </motion.div>
-  );
-};
+// QuickMetrics removed (unused in this page)
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
