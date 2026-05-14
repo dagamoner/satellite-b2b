@@ -53,8 +53,7 @@ export default function UsuariosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-400 p-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-900/10 blur-[120px] rounded-full" />

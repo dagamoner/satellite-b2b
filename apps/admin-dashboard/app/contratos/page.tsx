@@ -617,7 +617,6 @@ export default function ContratosAdminPage() {
           </select>
         </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Métricas */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           {(Object.entries(STATUS_CONFIG) as [ContractStatus, typeof STATUS_CONFIG[ContractStatus]][]).map(([s]) => (

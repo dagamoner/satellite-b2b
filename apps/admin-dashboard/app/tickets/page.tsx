@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRealtimeTickets, Ticket, TicketStatus, TicketPriority } from "../hooks/useRealtimeTickets";
-import { useRealtimeMessages, Message } from "../hooks/useRealtimeMessages";
+import { useRealtimeTickets, Ticket, TicketStatus, TicketPriority } from "../../hooks/useRealtimeTickets";
+import { useRealtimeMessages, Message } from "../../hooks/useRealtimeMessages";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
