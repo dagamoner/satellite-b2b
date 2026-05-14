@@ -140,34 +140,49 @@ export default function AdminDashboard() {
   const handleSendReply = async () => {
     if (!reply.trim() || !selectedTicket || sending) return;
 
-    setSending(true);
-    try {
-      const currentUserId = (session?.user as { id?: string })?.id;
-      console.log("[CHAT] Sending message for ticket:", selectedTicket.id, "as user:", currentUserId);
+    const tempId = `temp-${Date.now()}`;
+    const newMsgContent = reply.trim();
+    
+    // Optimistic Update
+    setMessages(prev => [...prev, {
+      id: tempId,
+      content: newMsgContent,
+      authorId: (session?.user as any)?.id || "STAFF",
+      createdAt: new Date().toISOString(),
+      author: { name: "Tú", role: "TECH" }
+    }]);
 
-      const res = await fetch(`/api/support/tickets/${selectedTicket.id}/messages`, {
+    setReply("");
+    setSending(true);
+
+    try {
+      const response = await fetch(`/api/support/tickets/${selectedTicket.id}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: reply,
-          authorId: currentUserId || null,
+        body: JSON.stringify({ 
+          content: newMsgContent,
+          authorId: (session?.user as any)?.id || "1" // Usar ID real si existe
         }),
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setMessages(prev => [...prev, data.message]);
-        setReply("");
-      } else {
-        const errorData = await res.json();
-        console.error("[CHAT] Error response:", errorData);
-        alert(`Error: ${errorData.error || "No se pudo enviar el mensaje"}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "No se pudo enviar el mensaje");
       }
-    } catch (err) {
-      console.error("[CHAT] Fetch error:", err);
-      alert("Error de conexión al enviar respuesta");
+      
+      // El hook useRealtimeMessages recibirá el mensaje real via Supabase
+      // y filtrará duplicados si manejamos bien el ID temporal vs Real.
+      // Pero como el ID real será diferente, limpiaremos el temporal después de un momento
+      // o el hook puede manejarlo.
+      
+    } catch (err: any) {
+      console.error("[CHAT] Error:", err);
+      // Revertir cambio optimístico si falla
+      setMessages(prev => prev.filter(m => m.id !== tempId));
+      alert(`Error: ${err.message}`);
     } finally {
       setSending(false);
+      setTimeout(() => scrollToBottom(), 100);
     }
   };
 
@@ -194,7 +209,21 @@ export default function AdminDashboard() {
       
       if (!res.ok) throw new Error("Error en servidor");
       
-      // La actualización en Realtime refrescará el ticket automáticamente
+      // Enviar mensaje de sistema al chat
+      let systemMsg = "";
+      if (status && status !== oldStatus) systemMsg = `[SISTEMA] ESTADO ACTUALIZADO A: ${status}`;
+      if (priority && priority !== oldPriority) systemMsg = `[SISTEMA] PRIORIDAD CAMBIADA A: ${priority}`;
+
+      if (systemMsg) {
+        await fetch(`/api/support/tickets/${ticket.id}/messages`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            content: systemMsg,
+            authorId: null // Los mensajes de sistema no tienen autor físico o son null
+          }),
+        });
+      }
 
     } catch (_error) {
       alert("Error actualizando ticket");
@@ -563,9 +592,8 @@ export default function AdminDashboard() {
 
                {/* Hilo de Mensajes */}
                <div className="flex flex-col gap-10 max-w-5xl mx-auto w-full mb-20">
-                  <AnimatePresence>
                     {messages.map((msg, idx) => {
-                      const isSystem = msg.content.includes("SISTEMA HA CAMBIADO") || msg.content.includes("ESTADO ACTUALIZADO");
+                      const isSystem = msg.content.startsWith("[SISTEMA]");
                       const isStaff = msg.authorId !== null && !isSystem;
                       
                       if (isSystem) {
@@ -576,9 +604,13 @@ export default function AdminDashboard() {
                             animate={{ opacity: 1, y: 0 }}
                             className="flex justify-center my-8"
                           >
-                            <span className="bg-slate-900/60 border border-cyan-500/20 text-[8px] text-cyan-400/80 font-black px-10 py-3 rounded-full uppercase tracking-[0.4em] backdrop-blur-xl shadow-2xl">
-                              {msg.content}
-                            </span>
+                            <div className="relative group/system">
+                              <div className="absolute inset-0 bg-cyan-500/20 blur-xl opacity-0 group-hover/system:opacity-100 transition-opacity" />
+                              <span className="relative z-10 bg-slate-900/80 border border-cyan-500/30 text-[9px] text-cyan-400 font-black px-12 py-3.5 rounded-full uppercase tracking-[0.4em] backdrop-blur-2xl shadow-2xl flex items-center gap-4">
+                                <div className="w-1 h-1 bg-cyan-500 rounded-full animate-pulse" />
+                                {msg.content.replace("[SISTEMA]", "").trim()}
+                              </span>
+                            </div>
                           </motion.div>
                         );
                       }

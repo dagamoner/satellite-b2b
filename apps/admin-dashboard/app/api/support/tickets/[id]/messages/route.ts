@@ -68,9 +68,13 @@ export async function POST(
     console.log("[API_ADMIN_MESSAGES] Message created successfully:", message.id);
 
     // Actualizar timestamp del ticket para que suba en el inbox
+    // Y cambiar estado a IN_PROGRESS si es del staff
     await prisma.supportTicket.update({
       where: { id },
-      data: { updatedAt: new Date() }
+      data: { 
+        updatedAt: new Date(),
+        status: authorId ? "IN_PROGRESS" : undefined // Si hay authorId, es un técnico respondiendo
+      }
     });
 
     return NextResponse.json({ success: true, message });

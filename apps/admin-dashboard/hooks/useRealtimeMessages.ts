@@ -49,8 +49,25 @@ export function useRealtimeMessages(ticketId: string | undefined) {
           table: 'ticket_messages',
           filter: `ticketId=eq.${ticketId}`
         },
-        () => {
-          fetchMessages();
+        (payload) => {
+          const newMsg = payload.new as any;
+          setMessages(prev => {
+            // Evitar duplicados (por ejemplo, si ya se añadió optimísticamente)
+            if (prev.find(m => m.id === newMsg.id)) return prev;
+            
+            return [...prev, {
+              ...newMsg,
+              authorId: newMsg.authorId,
+              createdAt: newMsg.createdAt,
+              // Nota: author info (users) no viene en el payload de Supabase Realtime directo
+              // Pero podemos asumir que si es el usuario actual, ya lo sabemos, o refetch si es necesario.
+              // Por simplicidad en este sistema, refetch es más seguro para traer los joins (users).
+              // Pero intentemos optimizar: si no viene el join, al menos mostramos el contenido.
+            }];
+          });
+          
+          // Refetch opcional si queremos traer la info del usuario (author join)
+          fetchMessages(); 
         }
       )
       .subscribe();
