@@ -95,7 +95,12 @@ model InstallationContract {
 
   // Firmas Digitales (Base64)
   techSignature   String?
+  techName        String?       // Nombre y Apellido del Técnico
+  techDni         String?       // DNI del Técnico
+  techSignedAt    DateTime?     // Fecha y hora de firma del técnico
+  
   clientSignature String?
+  clientSignedAt  DateTime?     // Fecha y hora de firma del cliente
 
   // Registro de Evidencia (Fotos)
   photoCasa       String?      // URL o ID de la foto de la fachada

@@ -80,6 +80,13 @@ interface AntennaFormData {
   photoApp: string;
   photoRack: string;
   cableColor?: string;
+  // Campos de firma detallados
+  techName: string;
+  techDni: string;
+  techSignedAt?: string;
+  clientNameSign: string;
+  clientDniSign: string;
+  clientSignedAt?: string;
 }
 
 export default function AntennaContractForm({ 
@@ -126,6 +133,13 @@ export default function AntennaContractForm({
     photoTest: '',
     photoApp: '',
     photoRack: '',
+    // Inicialización de firmas
+    techName: initialData?.techName || '',
+    techDni: initialData?.techDni || '',
+    techSignedAt: initialData?.techSignedAt ? new Date(initialData.techSignedAt).toLocaleString('es-AR') : '',
+    clientNameSign: initialData?.clientName || '', // Por defecto el del titular
+    clientDniSign: initialData?.clientDni || '',   // Por defecto el del titular
+    clientSignedAt: initialData?.clientSignedAt ? new Date(initialData.clientSignedAt).toLocaleString('es-AR') : '',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -207,6 +221,10 @@ export default function AntennaContractForm({
         photoTest: formData.photoTest,
         photoApp: formData.photoApp,
         photoRack: formData.photoRack,
+        // Datos de firma técnico
+        techName: formData.techName,
+        techDni: formData.techDni,
+        techSignedAt: new Date(),
       });
       onBack();
     } catch (err) {
@@ -237,6 +255,10 @@ export default function AntennaContractForm({
       await updateTicketStatus(ticketId, "COMPLETED", {
         clientSignature: signatureData,
         installedAt: new Date(),
+        clientSignedAt: new Date(),
+        // Asegurar que los datos del firmante cliente se guarden (pueden ser distintos al titular)
+        clientName: formData.clientNameSign,
+        clientDni: formData.clientDniSign,
       });
 
       // 2. Generar PDF
@@ -551,6 +573,30 @@ export default function AntennaContractForm({
               <p className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Visto Bueno / Firma del Técnico</p>
               {ticketStatus === 'TECH_IN_PROGRESS' ? (
                 <>
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="input-group">
+                      <label className="text-[9px] uppercase font-bold text-slate-500">Nombre y Apellido</label>
+                      <input 
+                        type="text" 
+                        id="techName" 
+                        value={formData.techName} 
+                        onChange={handleInputChange} 
+                        placeholder="Nombre del Técnico"
+                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-[10px] outline-none focus:border-blue-500"
+                      />
+                    </div>
+                    <div className="input-group">
+                      <label className="text-[9px] uppercase font-bold text-slate-500">DNI</label>
+                      <input 
+                        type="text" 
+                        id="techDni" 
+                        value={formData.techDni} 
+                        onChange={handleInputChange} 
+                        placeholder="DNI del Técnico"
+                        className="w-full bg-white border border-slate-200 rounded-lg p-2 text-[10px] outline-none focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
                   <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
                     <SignatureCanvas 
                       ref={techSigCanvas}
@@ -561,8 +607,12 @@ export default function AntennaContractForm({
                   <button onClick={() => techSigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma Técnico</button>
                 </>
               ) : (
-                <div className="flex justify-center p-4">
-                  <div className="h-20 w-40 bg-slate-200/50 rounded flex items-center justify-center text-[10px] text-slate-400 font-bold uppercase">INSTALACIÓN AUDITADA</div>
+                <div className="text-center p-4">
+                  <div className="text-[10px] font-bold text-slate-700 mb-1">{formData.techName || 'TÉCNICO AUTORIZADO'}</div>
+                  <div className="text-[9px] text-slate-400 mb-2">DNI: {formData.techDni || 'N/A'}</div>
+                  <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200">
+                    {formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA'}
+                  </div>
                 </div>
               )}
             </div>
@@ -573,12 +623,37 @@ export default function AntennaContractForm({
               
               {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') ? (
                 <>
-                  <p className="text-[10px] mb-4 text-slate-600 leading-relaxed text-center">
-                    Yo, <strong>{formData.razonSocial}</strong>, acepto la instalación realizada y los términos del contrato.
-                  </p>
-                  
                   {ticketStatus === 'SIGNATURE_PENDING' ? (
                     <>
+                      <div className="grid grid-cols-2 gap-4 mb-4">
+                        <div className="input-group">
+                          <label className="text-[9px] uppercase font-bold text-blue-500">Nombre y Apellido</label>
+                          <input 
+                            type="text" 
+                            id="clientNameSign" 
+                            value={formData.clientNameSign} 
+                            onChange={handleInputChange} 
+                            placeholder="Nombre de quien recibe"
+                            className="w-full bg-white border border-blue-100 rounded-lg p-2 text-[10px] outline-none focus:border-blue-500"
+                          />
+                        </div>
+                        <div className="input-group">
+                          <label className="text-[9px] uppercase font-bold text-blue-500">DNI / CUIT</label>
+                          <input 
+                            type="text" 
+                            id="clientDniSign" 
+                            value={formData.clientDniSign} 
+                            onChange={handleInputChange} 
+                            placeholder="DNI del receptor"
+                            className="w-full bg-white border border-blue-100 rounded-lg p-2 text-[10px] outline-none focus:border-blue-500"
+                          />
+                        </div>
+                      </div>
+
+                      <p className="text-[10px] mb-4 text-slate-600 leading-relaxed text-center">
+                        Yo, <strong>{formData.clientNameSign || formData.razonSocial}</strong>, acepto la instalación realizada y los términos del contrato.
+                      </p>
+                      
                       <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
                         <SignatureCanvas 
                           ref={sigCanvas}
@@ -594,8 +669,12 @@ export default function AntennaContractForm({
                       </div>
                     </>
                   ) : (
-                    <div className="flex justify-center p-4">
-                      <div className="h-20 w-40 bg-blue-500/10 rounded flex items-center justify-center text-[10px] text-blue-500 font-bold uppercase tracking-tighter">CONTRATO FIRMADO DIGITALMENTE</div>
+                    <div className="text-center p-4">
+                      <div className="text-[10px] font-bold text-blue-700 mb-1">{formData.clientNameSign || formData.razonSocial}</div>
+                      <div className="text-[9px] text-slate-400 mb-2">DNI: {formData.clientDniSign || formData.cuit}</div>
+                      <div className="h-16 w-32 bg-blue-500/10 rounded mx-auto flex items-center justify-center text-[9px] text-blue-500 font-bold uppercase tracking-tighter border border-dashed border-blue-200">
+                        {formData.clientSignedAt ? `FIRMADO: ${formData.clientSignedAt}` : 'CONTRATO FIRMADO DIGITALMENTE'}
+                      </div>
                     </div>
                   )}
                 </>

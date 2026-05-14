@@ -179,6 +179,10 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
         networkMode: contractData.networkMode,
         observations: contractData.techNotes,
         perfObservations: contractData.perfObservations,
+        techName: contractData.techName,
+        techDni: contractData.techDni,
+        techSignedAt: contractData.techSignedAt,
+        clientSignedAt: contractData.clientSignedAt,
       } : {
         clientName: form.clientName,
         clientEmail: form.clientEmail,
