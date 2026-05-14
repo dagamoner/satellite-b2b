@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 // PATCH /api/contracts/[id] — Actualizar estado, notas o fecha de un contrato (admin)
 export async function PATCH(
-  request: NextRequest,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
@@ -76,7 +76,7 @@ export async function PATCH(
 
 // GET /api/contracts/[id] — Obtener un contrato por ID
 export async function GET(
-  _request: NextRequest,
+  _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {

@@ -5,8 +5,8 @@ import { cookies } from "next/headers";
 export const dynamic = "force-dynamic";
 
 // GET /api/contracts — Listar todos los contratos (admin)
-export async function GET(request: NextRequest) {
-  await await await cookies(); // Force dynamic runtime
+export async function GET(request: Request) {
+  await cookies(); // Force dynamic runtime
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status");

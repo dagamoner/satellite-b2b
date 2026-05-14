@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  await await await cookies(); // Force dynamic runtime
+  await cookies(); // Force dynamic runtime
   try {
     const techs = await db.user.findMany({
       where: { role: "TECH" },

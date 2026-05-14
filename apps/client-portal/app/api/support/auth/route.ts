@@ -9,9 +9,9 @@ export const dynamic = "force-dynamic";
  * Valida la identidad del cliente mediante DNI y Número de Contrato.
  * Esto permite un acceso rápido al soporte técnico.
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    await await cookies();
+    await cookies();
     const { dni, contractNumber } = await request.json();
 
     if (!dni || !contractNumber) {

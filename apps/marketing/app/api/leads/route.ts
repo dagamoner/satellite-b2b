@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "@/lib/prisma";
 import { cookies } from "next/headers";
 
@@ -20,8 +20,8 @@ async function generateTicketNumber() {
   return `TK-${year}-${seq}`;
 }
 
-export async function POST(request: NextRequest) {
-  await await await cookies(); // Force dynamic runtime
+export async function POST(request: Request) {
+  await cookies(); // Force dynamic runtime
   try {
     const { name, email, phone, dni, type, message, planName } = await request.json();
 

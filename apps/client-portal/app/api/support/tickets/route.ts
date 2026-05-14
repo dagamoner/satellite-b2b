@@ -46,7 +46,7 @@ export async function GET() {
  * POST /api/support/tickets
  * Crea un nuevo ticket de soporte.
  */
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const session = await auth();
     const { title, description, category } = await request.json();

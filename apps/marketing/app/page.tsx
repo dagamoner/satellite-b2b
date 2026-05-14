@@ -112,15 +112,19 @@ const SpaceBackground = () => {
       ctx.shadowBlur = 0;
       
       // Línea del tren
-      ctx.beginPath();
-      ctx.moveTo(trainX + trainNodes[0].offsetX, trainY + trainNodes[0].offsetY);
-      ctx.lineTo(
-         trainX + trainNodes[trainNodes.length-1].offsetX, 
-         trainY + trainNodes[trainNodes.length-1].offsetY
-      );
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      const firstNode = trainNodes[0];
+      const lastNode = trainNodes[trainNodes.length - 1];
+      if (firstNode && lastNode) {
+        ctx.beginPath();
+        ctx.moveTo(trainX + firstNode.offsetX, trainY + firstNode.offsetY);
+        ctx.lineTo(
+          trainX + lastNode.offsetX,
+          trainY + lastNode.offsetY
+        );
+        ctx.strokeStyle = 'rgba(6, 182, 212, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
 
       animationFrameId = requestAnimationFrame(render);
     };
