@@ -2,13 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import { prisma } from "@repo/database";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
+  const resend = new Resend(process.env.RESEND_API_KEY || "re_placeholder");
 
   try {
     const { pdfBase64, fileName, clientEmail, clientName } = await request.json();
