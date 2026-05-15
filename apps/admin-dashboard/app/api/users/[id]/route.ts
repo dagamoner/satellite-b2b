@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
-import { auth } from "../../auth";
+import { auth } from "../../../auth";
 
 export async function PATCH(
   req: Request,
