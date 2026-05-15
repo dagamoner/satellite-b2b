@@ -274,17 +274,41 @@ export default function AntennaContractForm({
         clientDni: formData.clientDniSign,
       });
 
-      // 2. Generar PDF
+      // 2. Generar y Enviar PDF
       if (reportRef.current && html2pdf) {
         const element = reportRef.current;
         const opt = {
           margin: 10,
-          filename: `Contrato_${formData.installId}_${formData.razonSocial.toUpperCase()}.pdf`,
+          filename: `Certificado_${formData.installId}_${formData.razonSocial.toUpperCase()}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { scale: 2, useCORS: true },
           jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
         };
-        await html2pdf().set(opt).from(element).save();
+        
+        // Generar el PDF
+        const worker = html2pdf().set(opt).from(element);
+        
+        // 2a. Descarga local para el cliente
+        await worker.save();
+        
+        // 2b. Obtener base64 y enviar por email
+        try {
+          const pdfBase64 = await worker.outputPdf('datauristring');
+          await fetch(`/api/support/tickets/${ticketId}/send-certificate`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pdfBase64,
+              fileName: `Certificado_${formData.installId}.pdf`,
+              clientEmail: formData.email,
+              clientName: formData.razonSocial
+            })
+          });
+          console.log("[EMAIL_AUTO] Certificado enviado a:", formData.email);
+        } catch (emailErr) {
+          console.error("[EMAIL_AUTO_ERROR]", emailErr);
+          // No bloqueamos el flujo si falla el mail
+        }
       }
       
       // WhatsApp Notification
