@@ -153,7 +153,7 @@ function EntryPortalContent() {
       >
         <motion.div variants={itemVariants} className="mb-12">
           <a 
-            href="https://satellite-b2b.vercel.app/" 
+            href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} 
             className="group flex items-center gap-4 text-[10px] font-black uppercase text-slate-500 hover:text-white transition-all tracking-[0.4em]"
           >
             <div className="w-8 h-8 rounded-full bg-slate-900 border border-white/5 flex items-center justify-center group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-all">

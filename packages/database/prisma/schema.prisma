@@ -9,213 +9,137 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-// ─────────────────────────────────────────────
-// ENUMS — Contratos de Instalación
-// ─────────────────────────────────────────────
-
-// En SQLite, Prisma maneja los Enums como Strings con validación en el cliente.
-
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  role      String   @default("TECH") // TECH, ADMIN
-  password  String?  // Hashed password
-  
-  // Relación con contratos de instalación realizados
-  contracts InstallationContract[]
-  // Relación con mensajes de tickets (como autor técnico)
+  id             String                 @id @default(uuid())
+  email          String                 @unique
+  name           String
+  role           String                 @default("TECH")
+  password       String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  contracts      InstallationContract[]
   ticketMessages TicketMessage[]
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
 
-// ─────────────────────────────────────────────
-// MODELO — Contrato de Instalación
-// ─────────────────────────────────────────────
-
 model InstallationContract {
-  id             String        @id @default(uuid())
-
-  // Número de referencia visible para el cliente (ej: MR-2026-0001)
-  contractNumber String        @unique
-
-  status         String        @default("PENDING")
-
-  // Datos del cliente
-  clientName     String        // Nombre completo o Razón Social
-  clientEmail    String
-  clientPhone    String
-  clientDni      String        // DNI o CUIT
-  clientCategory String?       // Hogareño, PYME, Empresa, etc.
-  companyName    String?       // Nombre de empresa (opcional)
-
-  // Datos de instalación detallados
-  address        String        // Dirección completa (concatenada o resumen)
-  street         String?       // Calle
-  houseNumber    String?       // Número
-  city           String?       @default("Por definir") // Localidad
-  province       String?       @default("Por definir") // Provincia
-  zipCode        String?       // C.P.
-  country        String        @default("Argentina")
-
-  // Producto y plan contratado
-  equipmentType  String
-  planType       String
-  monthlyFee     Float?
-
-  // Datos Técnicos de la Instalación (Punto 1)
-  kitSerialNumber String?
-  terminalId      String?
-  antennaModel    String?
-  cableColor      String?
-  hardwareVersion String?
-  antennaLocation String?
-  obstructions    String?
-  obstructionObject String?     // Descripción del objeto que obstruye
-  downloadSpeed   Float?
-  uploadSpeed     Float?
-  latency         Int?
-  networkMode     String?
-  perfObservations String?      // Observaciones específicas de rendimiento
-  
-  // Coordenadas
-  latitude        Float?
-  longitude       Float?
-
-  // Checklist de Validación
-  alturaCheck     Boolean?      @default(false)
-  soporteCheck    Boolean?      @default(false)
-  routerCheck     Boolean?      @default(false)
-  speedCheck      Boolean?      @default(false)
-
-  // Firmas Digitales (Base64)
-  techSignature   String?
-  techName        String?       // Nombre y Apellido del Técnico
-  techDni         String?       // DNI del Técnico
-  techSignedAt    DateTime?     // Fecha y hora de firma del técnico
-  
-  clientSignature String?
-  clientSignedAt  DateTime?     // Fecha y hora de firma del cliente
-
-  // Registro de Evidencia (Fotos)
-  photoCasa       String?      // URL o ID de la foto de la fachada
-  photoAntena     String?      // URL o ID de la foto de la ubicación de la antena
-  photoSoporte    String?      // Foto de Montaje y Soporte
-  photoRouter     String?      // URL o ID de la foto del router instalado
-  photoCable      String?      // URL o ID de la foto del cableado/pasamuros
-  photoTest       String?      // URL o ID de la captura del speedtest
-  photoApp        String?      // Captura de Obstrucciones (App)
-  photoRack       String?      // Foto de Rack Empresarial
-
-  // Vinculación con el técnico
-  technicianId   String?
-  technician     User?         @relation(fields: [technicianId], references: [id])
-
-  // Relación con Tickets de Soporte
-  tickets        SupportTicket[]
-
-  // Notas
-  installationNotes String?    // Observaciones del cliente al enviar el formulario
-  techNotes         String?    // Notas internas del técnico / admin
-
-  // Fechas de instalación
-  scheduledDate  DateTime?     // Fecha acordada para la instalación
-  installedAt    DateTime?     // Fecha real de finalización
-
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
+  id                String          @id @default(uuid())
+  contractNumber    String          @unique
+  status            String          @default("PENDING")
+  clientName        String
+  clientEmail       String
+  clientPhone       String
+  clientDni         String
+  companyName       String?
+  address           String
+  city              String?         @default("Por definir")
+  province          String?         @default("Por definir")
+  country           String          @default("Argentina")
+  equipmentType     String
+  planType          String
+  monthlyFee        Float?
+  kitSerialNumber   String?
+  hardwareVersion   String?
+  antennaLocation   String?
+  obstructions      String?
+  downloadSpeed     Float?
+  uploadSpeed       Float?
+  latency           Int?
+  networkMode       String?
+  techSignature     String?
+  clientSignature   String?
+  photoCasa         String?
+  photoAntena       String?
+  photoRouter       String?
+  photoCable        String?
+  photoTest         String?
+  technicianId      String?
+  installationNotes String?
+  techNotes         String?
+  scheduledDate     DateTime?
+  installedAt       DateTime?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  alturaCheck       Boolean?        @default(false)
+  antennaModel      String?
+  cableColor        String?
+  latitude          Float?
+  longitude         Float?
+  routerCheck       Boolean?        @default(false)
+  soporteCheck      Boolean?        @default(false)
+  speedCheck        Boolean?        @default(false)
+  terminalId        String?
+  photoApp          String?
+  photoRack         String?
+  photoSoporte      String?
+  clientCategory    String?
+  houseNumber       String?
+  street            String?
+  zipCode           String?
+  obstructionObject String?
+  perfObservations  String?
+  clientSignedAt    DateTime?
+  techDni           String?
+  techName          String?
+  techSignedAt      DateTime?
+  technician        User?           @relation(fields: [technicianId], references: [id])
+  tickets           SupportTicket[]
 
   @@map("installation_contracts")
 }
 
-// ─────────────────────────────────────────────
-// MODELOS — Sistema de Tickets
-// ─────────────────────────────────────────────
-
 model SupportTicket {
-  id              String         @id @default(uuid())
-  
-  // Número de ticket visible (ej: TK-0001)
-  ticketNumber    String
-  
-  title           String
-  description     String
-  category        String         // Conectividad, Hardware, Facturación, Otros
-  
-  status          String         @default("OPEN")
-  priority        String         @default("MEDIUM")
-
-  // Vinculación con el contrato original
-  contractId      String
-  contract        InstallationContract @relation(fields: [contractId], references: [id])
-
-  // Hilo de mensajes
-  messages        TicketMessage[]
-
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id           String               @id @default(uuid())
+  ticketNumber String
+  title        String
+  description  String
+  category     String
+  status       String               @default("OPEN")
+  priority     String               @default("MEDIUM")
+  contractId   String
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  contract     InstallationContract @relation(fields: [contractId], references: [id])
+  messages     TicketMessage[]
 
   @@map("support_tickets")
 }
 
 model TicketMessage {
-  id              String         @id @default(uuid())
-  
-  content         String
-  attachments     String?        // Guardaremos como String JSONizado para SQLite
-  
-  // Si null, el mensaje es del cliente (validado por DNI/Contrato)
-  authorId        String?
-  author          User?          @relation(fields: [authorId], references: [id])
-  
-  ticketId        String
-  ticket          SupportTicket  @relation(fields: [ticketId], references: [id])
-
-  createdAt       DateTime       @default(now())
+  id          String        @id @default(uuid())
+  content     String
+  attachments String?
+  authorId    String?
+  ticketId    String
+  createdAt   DateTime      @default(now())
+  author      User?         @relation(fields: [authorId], references: [id])
+  ticket      SupportTicket @relation(fields: [ticketId], references: [id])
 
   @@map("ticket_messages")
 }
 
-// ─────────────────────────────────────────────
-// MODELOS — Activos y Locaciones (existentes)
-// ─────────────────────────────────────────────
-
 model Asset {
-  id              String   @id @default(uuid())
-  name            String   // Ejemplo: "Antena Base Los Andes"
-  technologyType  String   // Ejemplo: "STARLINK_V2", "FIBER_BACKHAUL", "RADIO_LINK"
-  
-  // Campo JSON simplificado para SQLite
-  attributes      String     
-  
-  status          String   @default("ACTIVE")
-  
-  locationId      String
-  location        Location @relation(fields: [locationId], references: [id])
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(uuid())
+  name           String
+  technologyType String
+  attributes     String
+  status         String   @default("ACTIVE")
+  locationId     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  location       Location @relation(fields: [locationId], references: [id])
 }
 
 model Location {
-  id          String   @id @default(uuid())
-  
-  latitude    Float    
-  longitude   Float    
-  
-  address     String?
-  city        String   @default("Mendoza")
-  province    String   @default("Mendoza")
-  country     String   @default("Argentina")
-  
-  assets      Asset[]  
-
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(uuid())
+  latitude  Float
+  longitude Float
+  address   String?
+  city      String   @default("Mendoza")
+  province  String   @default("Mendoza")
+  country   String   @default("Argentina")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  assets    Asset[]
 }
-

@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                 </svg>
               </Link>
               <a 
-                href="https://satellite-b2b.vercel.app/" 
+                href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} 
                 className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-500/50 transition-all active:scale-90"
                 title="Web Principal"
               >

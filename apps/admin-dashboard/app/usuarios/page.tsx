@@ -82,7 +82,7 @@ export default function UsuariosPage() {
             </Link>
             
             <div className="hidden md:flex items-center gap-10">
-              <a href="https://satellite-b2b.vercel.app/" className="text-[10px] font-black text-slate-500 hover:text-cyan-500 uppercase tracking-[0.2em] transition-colors border-r border-white/10 pr-6">Web Principal</a>
+              <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="text-[10px] font-black text-slate-500 hover:text-cyan-500 uppercase tracking-[0.2em] transition-colors border-r border-white/10 pr-6">Web Principal</a>
               <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
               <Link href="/contratos" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Contratos</Link>
               <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>

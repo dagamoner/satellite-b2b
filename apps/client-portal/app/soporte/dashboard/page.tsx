@@ -171,7 +171,7 @@ export default function SupportDashboard() {
           
           <div className="flex items-center gap-10">
             <a 
-              href="https://satellite-b2b.vercel.app/" 
+              href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} 
               className="px-6 py-3 bg-slate-900/50 hover:bg-cyan-500/10 border border-white/5 hover:border-cyan-500/30 text-slate-500 hover:text-cyan-400 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest hidden sm:block"
             >
               Web Principal
