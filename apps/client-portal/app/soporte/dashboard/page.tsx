@@ -281,28 +281,30 @@ export default function SupportDashboard() {
             </div>
 
             {/* Invoices Section */}
-            <Card variant="glass" className="p-10 border-white/5 relative overflow-hidden group shadow-2xl">
-              <h3 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] mb-10">Estado de Facturación</h3>
-              <div className="space-y-6">
-                {mockInvoices.map(inv => (
-                  <div key={inv.id} className="flex items-center justify-between p-6 bg-slate-950/50 rounded-2xl border border-white/5 group/inv hover:border-cyan-500/30 transition-all">
-                    <div>
-                      <p className="text-[9px] font-black text-white uppercase tracking-tight">{inv.id}</p>
-                      <p className="text-[8px] text-slate-600 font-bold uppercase mt-1">{inv.date}</p>
+            {currentContract?.status !== 'LEAD' && (
+              <Card variant="glass" className="p-10 border-white/5 relative overflow-hidden group shadow-2xl">
+                <h3 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] mb-10">Estado de Facturación</h3>
+                <div className="space-y-6">
+                  {mockInvoices.map(inv => (
+                    <div key={inv.id} className="flex items-center justify-between p-6 bg-slate-950/50 rounded-2xl border border-white/5 group/inv hover:border-cyan-500/30 transition-all">
+                      <div>
+                        <p className="text-[9px] font-black text-white uppercase tracking-tight">{inv.id}</p>
+                        <p className="text-[8px] text-slate-600 font-bold uppercase mt-1">{inv.date}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-black text-white tracking-tight">${inv.amount.toLocaleString()}</p>
+                        <span className={`text-[7px] font-black uppercase tracking-widest ${inv.status === 'PAID' ? 'text-emerald-500' : 'text-amber-500 animate-pulse'}`}>
+                          {inv.status === 'PAID' ? 'PAGADO' : 'PENDIENTE'}
+                        </span>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-black text-white tracking-tight">${inv.amount.toLocaleString()}</p>
-                      <span className={`text-[7px] font-black uppercase tracking-widest ${inv.status === 'PAID' ? 'text-emerald-500' : 'text-amber-500 animate-pulse'}`}>
-                        {inv.status === 'PAID' ? 'PAGADO' : 'PENDIENTE'}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <button className="w-full mt-8 py-4 bg-slate-900/50 hover:bg-slate-900 text-slate-500 hover:text-cyan-400 font-black rounded-xl border border-white/5 text-[9px] uppercase tracking-widest transition-all">
-                Ver Historial Completo
-              </button>
-            </Card>
+                  ))}
+                </div>
+                <button className="w-full mt-8 py-4 bg-slate-900/50 hover:bg-slate-900 text-slate-500 hover:text-cyan-400 font-black rounded-xl border border-white/5 text-[9px] uppercase tracking-widest transition-all">
+                  Ver Historial Completo
+                </button>
+              </Card>
+            )}
 
           </motion.aside>
 
@@ -414,7 +416,8 @@ export default function SupportDashboard() {
                               </div>
                               <p className="text-[8px] text-slate-800 font-black uppercase tracking-[0.6em] pr-2">NIVEL: {t.priority}</p>
                             </div>
-                            <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                            <div className="hidden md:flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+                               <span className="text-[10px] font-black text-cyan-500 uppercase tracking-widest">Abrir Chat Técnico</span>
                                <svg className="w-8 h-8 text-cyan-500/30 group-hover:text-cyan-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                             </div>
                           </div>
