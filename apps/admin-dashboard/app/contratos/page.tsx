@@ -7,9 +7,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import AdminPdfButton from "../../components/AdminPdfButton";
 
-// ── Tipos ──────────────────────────────────────────────────────────────────
+const AdminPdfButton = dynamic(() => import("../../components/AdminPdfButton"), { 
+  ssr: false,
+  loading: () => <div className="h-9 w-24 bg-slate-800 animate-pulse rounded-xl" />
+});
 type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
 
 interface Contract {
