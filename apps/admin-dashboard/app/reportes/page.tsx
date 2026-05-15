@@ -148,6 +148,7 @@ export default function ReportesPage() {
             </Link>
             
             <div className="hidden md:flex items-center gap-10">
+              <a href="https://satellite-b2b.vercel.app/" className="text-[10px] font-black text-slate-500 hover:text-cyan-400 uppercase tracking-[0.2em] transition-colors border-r border-white/5 pr-10">Web Principal</a>
               <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
               <Link href="/contratos" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Contratos</Link>
               <Link href="/reportes" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">Inteligencia</Link>
