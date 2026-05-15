@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import UserModal from "./components/UserModal";
+import PasswordModal from "./components/PasswordModal";
 
 interface User {
   id: string;
@@ -19,6 +20,8 @@ export default function UsuariosPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -42,6 +45,11 @@ export default function UsuariosPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleResetPassword = (user: User) => {
+    setSelectedUser(user);
+    setIsPasswordModalOpen(true);
   };
 
   if (status === "loading" || loading) {
@@ -116,7 +124,8 @@ export default function UsuariosPage() {
                   <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Email</th>
                   <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Rol</th>
                   <th className="px-8 py-6 text-left text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Registro</th>
-                  <th className="px-8 py-6 text-right text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Estado</th>
+                  <th className="px-8 py-6 text-center text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Estado</th>
+                  <th className="px-8 py-6 text-right text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -149,11 +158,22 @@ export default function UsuariosPage() {
                         {new Date(user.createdAt).toLocaleDateString()}
                       </span>
                     </td>
-                    <td className="px-8 py-6 text-right">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-8 py-6 text-center">
+                      <div className="flex items-center justify-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
                         <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Activo</span>
                       </div>
+                    </td>
+                    <td className="px-8 py-6 text-right">
+                      <button
+                        onClick={() => handleResetPassword(user)}
+                        className="p-3 bg-slate-800 hover:bg-cyan-600/20 text-slate-400 hover:text-cyan-400 rounded-xl border border-white/5 transition-all active:scale-90 group/btn"
+                        title="Gestionar Clave"
+                      >
+                        <svg className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                        </svg>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -167,6 +187,14 @@ export default function UsuariosPage() {
         <UserModal 
           onClose={() => setIsModalOpen(false)} 
           onSuccess={fetchUsers} 
+        />
+      )}
+
+      {isPasswordModalOpen && selectedUser && (
+        <PasswordModal
+          user={selectedUser}
+          onClose={() => setIsPasswordModalOpen(false)}
+          onSuccess={fetchUsers}
         />
       )}
     </div>
