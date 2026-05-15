@@ -422,10 +422,8 @@ export default function MarketingPage() {
                </Card>
 
                {/* Estándar V4 */}
-               <Card variant="glass" className="p-8 shadow-[0_0_60px_rgba(6,182,212,0.3)] border-cyan-500 transform scale-105 z-20 relative">
-                  <div className="absolute top-6 left-8 bg-blue-900/40 border border-blue-500/30 text-blue-400 px-4 py-1 text-[11px] font-black rounded-lg tracking-widest uppercase z-20 shadow-[0_0_15px_rgba(37,99,235,0.2)]">MÁS POPULAR</div>
-                  
-                  <div className="relative z-10 flex-grow mt-12">
+               <Card variant="glass" className="p-8 flex flex-col relative overflow-hidden group">
+                  <div className="relative z-10 flex-grow mt-4">
                      <div className="flex items-center gap-6 mb-10">
                         <div className="w-24 h-24 rounded-[1.8rem] bg-cyan-500/5 flex items-center justify-center border-2 border-cyan-500 text-cyan-400 shadow-[0_0_40px_rgba(6,182,212,0.4)] shrink-0">
                            <svg className="w-12 h-12 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
