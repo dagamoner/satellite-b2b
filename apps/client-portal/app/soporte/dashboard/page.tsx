@@ -5,6 +5,15 @@ import { useSession, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@repo/ui/card";
 import { useRealtimeContracts } from "../../../hooks/useRealtimeContracts";
+import dynamic from "next/dynamic";
+
+const ClientPdfButton = dynamic(() => import("../../../components/ClientPdfButton"), { ssr: false });
+
+const mockInvoices = [
+  { id: 'INV-2024-005', date: '2024-05-01', amount: 145000, status: 'PAID' },
+  { id: 'INV-2024-006', date: '2024-06-01', amount: 145000, status: 'PENDING' },
+];
+
 
 interface Ticket {
   id: string;
@@ -26,6 +35,25 @@ export default function SupportDashboard() {
   
   const [newTicket, setNewTicket] = useState({ title: "", description: "", category: "Conectividad" });
   const [creating, setCreating] = useState(false);
+  
+  // Simulation for dynamic telemetry
+  const [telemetry, setTelemetry] = useState({
+    latency: 620,
+    signal: -84,
+    uptime: 99.8
+  });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTelemetry(prev => ({
+        latency: prev.latency + (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 5),
+        signal: prev.signal + (Math.random() > 0.5 ? 1 : -1) * 0.1,
+        uptime: 99.8
+      }));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   // --- Realtime Contracts Hook ---
   const { contracts } = useRealtimeContracts();
@@ -168,10 +196,11 @@ export default function SupportDashboard() {
         {/* Telemetry Row */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {[
-            { label: 'Latencia Operativa', value: '620ms', sub: 'GEO Satellite Orbit', color: 'text-cyan-500', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
-            { label: 'Intensidad RX', value: '-84 dBm', sub: 'Nominal Stability', color: 'text-emerald-500', icon: 'M5.05 9.05a7 7 0 019.9 0M1.5 5.5a11 11 0 0115 0m-13.5 10.5h12' },
-            { label: 'Uptime Red', value: '99.8%', sub: 'High Availability', color: 'text-blue-500', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+            { label: 'Latencia Operativa', value: `${telemetry.latency}ms`, sub: 'GEO Satellite Orbit', color: 'text-cyan-500', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+            { label: 'Intensidad RX', value: `${telemetry.signal.toFixed(1)} dBm`, sub: 'Nominal Stability', color: 'text-emerald-500', icon: 'M5.05 9.05a7 7 0 019.9 0M1.5 5.5a11 11 0 0115 0m-13.5 10.5h12' },
+            { label: 'Uptime Red', value: `${telemetry.uptime}%`, sub: 'High Availability', color: 'text-blue-500', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
           ].map((stat, i) => (
+
             <motion.div key={i} variants={itemVariants}>
               <Card variant="glass" className="p-8 border-white/5 group hover:border-white/10" hover={true}>
                 <div className="absolute top-0 right-0 p-6 text-white/5 group-hover:text-cyan-500/10 transition-colors">
@@ -217,12 +246,10 @@ export default function SupportDashboard() {
                     </p>
                   </div>
                 ) : (
-                  <button className="w-full py-5 bg-slate-950/80 hover:bg-slate-900 border border-white/5 text-slate-400 hover:text-white font-black rounded-2xl transition-all text-[10px] uppercase tracking-[0.3em] flex items-center justify-center gap-4 shadow-2xl active:scale-95 group">
-                    <svg className="w-5 h-5 group-hover:text-cyan-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    Descargar Contrato
-                  </button>
+                  <ClientPdfButton contract={currentContract} className="w-full" />
                 )}
               </div>
+
             </Card>
 
             {/* Mission Expansion Card */}
@@ -245,8 +272,32 @@ export default function SupportDashboard() {
                   Adquirir Equipamiento
                 </button>
               </div>
-              <p className="mt-10 text-[9px] text-slate-700 uppercase font-black tracking-widest text-center leading-relaxed opacity-50 italic">La redundancia es clave para la continuidad corporativa.</p>
             </div>
+
+            {/* Invoices Section */}
+            <Card variant="glass" className="p-10 border-white/5 relative overflow-hidden group shadow-2xl">
+              <h3 className="text-[10px] font-black text-slate-600 uppercase tracking-[0.4em] mb-10">Estado de Facturación</h3>
+              <div className="space-y-6">
+                {mockInvoices.map(inv => (
+                  <div key={inv.id} className="flex items-center justify-between p-6 bg-slate-950/50 rounded-2xl border border-white/5 group/inv hover:border-cyan-500/30 transition-all">
+                    <div>
+                      <p className="text-[9px] font-black text-white uppercase tracking-tight">{inv.id}</p>
+                      <p className="text-[8px] text-slate-600 font-bold uppercase mt-1">{inv.date}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-black text-white tracking-tight">${inv.amount.toLocaleString()}</p>
+                      <span className={`text-[7px] font-black uppercase tracking-widest ${inv.status === 'PAID' ? 'text-emerald-500' : 'text-amber-500 animate-pulse'}`}>
+                        {inv.status === 'PAID' ? 'PAGADO' : 'PENDIENTE'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <button className="w-full mt-8 py-4 bg-slate-900/50 hover:bg-slate-900 text-slate-500 hover:text-cyan-400 font-black rounded-xl border border-white/5 text-[9px] uppercase tracking-widest transition-all">
+                Ver Historial Completo
+              </button>
+            </Card>
+
           </motion.aside>
 
           <section className="lg:col-span-2 space-y-12">
