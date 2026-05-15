@@ -82,6 +82,7 @@ export default function UsuariosPage() {
             </Link>
             
             <div className="hidden md:flex items-center gap-10">
+              <a href="https://satellite-b2b.vercel.app/" className="text-[10px] font-black text-slate-500 hover:text-cyan-500 uppercase tracking-[0.2em] transition-colors border-r border-white/10 pr-6">Web Principal</a>
               <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
               <Link href="/contratos" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Contratos</Link>
               <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>
@@ -142,7 +143,18 @@ export default function UsuariosPage() {
                       </div>
                     </td>
                     <td className="px-8 py-6">
-                      <span className="text-xs font-medium text-slate-400">{user.email}</span>
+                      <div className="flex items-center gap-3 group/mail">
+                        <span className="text-xs font-medium text-slate-400">{user.email}</span>
+                        <button 
+                          onClick={() => navigator.clipboard.writeText(user.email)}
+                          className="opacity-0 group-hover/mail:opacity-100 p-1.5 hover:bg-white/5 rounded-lg text-slate-600 hover:text-cyan-400 transition-all"
+                          title="Copiar Email"
+                        >
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                          </svg>
+                        </button>
+                      </div>
                     </td>
                     <td className="px-8 py-6">
                       <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
@@ -167,12 +179,12 @@ export default function UsuariosPage() {
                     <td className="px-8 py-6 text-right">
                       <button
                         onClick={() => handleResetPassword(user)}
-                        className="p-3 bg-slate-800 hover:bg-cyan-600/20 text-slate-400 hover:text-cyan-400 rounded-xl border border-white/5 transition-all active:scale-90 group/btn"
-                        title="Gestionar Clave"
+                        className="inline-flex items-center gap-3 px-5 py-3 bg-slate-900 hover:bg-cyan-600/20 text-slate-400 hover:text-cyan-400 rounded-xl border border-white/5 hover:border-cyan-500/30 transition-all active:scale-95 group/btn shadow-xl"
                       >
-                        <svg className="w-4 h-4 group-hover/btn:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="w-3.5 h-3.5 group-hover/btn:rotate-12 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                         </svg>
+                        <span className="text-[9px] font-black uppercase tracking-[0.2em]">Nueva Clave</span>
                       </button>
                     </td>
                   </tr>
