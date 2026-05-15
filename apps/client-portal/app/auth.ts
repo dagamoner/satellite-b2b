@@ -7,7 +7,7 @@ import bcrypt from "bcryptjs";
 
 const result = NextAuth({
   ...authConfig,
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       id: "technician-credentials",
@@ -19,25 +19,37 @@ const result = NextAuth({
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email as string },
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email as string },
+          });
 
-        if (!user || !user.password || (user.role !== "TECH" && user.role !== "ADMIN")) return null;
+          if (!user || !user.password || (user.role !== "TECH" && user.role !== "ADMIN")) {
+            console.log("AUTH: Technician login failed - user not found or invalid role");
+            return null;
+          }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password as string,
-          user.password
-        );
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password as string,
+            user.password
+          );
 
-        if (!isPasswordValid) return null;
+          if (!isPasswordValid) {
+            console.log("AUTH: Technician login failed - invalid password");
+            return null;
+          }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-        };
+          console.log("AUTH: Technician login successful:", user.email);
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error("AUTH_ERROR: Technician authorize exception:", error);
+          return null;
+        }
       },
     }),
     Credentials({
@@ -48,10 +60,17 @@ const result = NextAuth({
         contractNumber: { label: "N° Contrato", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.dni || !credentials?.contractNumber) return null;
+        console.log("AUTH: Client login attempt:", { 
+          dni: credentials?.dni, 
+          contract: credentials?.contractNumber 
+        });
+
+        if (!credentials?.dni || !credentials?.contractNumber) {
+          console.log("AUTH: Client login failed - missing credentials");
+          return null;
+        }
 
         try {
-          console.log("DEBUG: Attempting database query for DNI:", credentials.dni);
           // Buscamos el contrato que coincida con el DNI del cliente y el número de contrato
           const contract = await prisma.installationContract.findFirst({
             where: {
@@ -61,11 +80,11 @@ const result = NextAuth({
           });
 
           if (!contract) {
-            console.log("DEBUG: No contract found for these credentials.");
+            console.log("AUTH: Client login failed - contract not found for DNI:", credentials.dni);
             return null;
           }
 
-          console.log("DEBUG: Login successful for:", contract.clientName);
+          console.log("AUTH: Client login successful for:", contract.clientName);
           // Para el cliente, el 'user' es el contrato/titular
           return {
             id: contract.id,
@@ -73,10 +92,13 @@ const result = NextAuth({
             email: contract.clientEmail,
             dni: contract.clientDni,
             contractNumber: contract.contractNumber,
+            role: "CLIENT"
           };
         } catch (error) {
-          console.error("CRITICAL PRISMA ERROR:", error);
-          throw new Error("Error de base de datos durante la autenticación.");
+          console.error("AUTH_ERROR: Client authorize critical prisma error:", error);
+          // En NextAuth v5, devolver null es más seguro que lanzar errores genéricos
+          // para evitar que se interprete como un error de configuración del servidor.
+          return null;
         }
       },
     }),

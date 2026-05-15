@@ -91,11 +91,21 @@ function EntryPortalContent() {
         
         loginSchema.parse({ dni: normalizedDni, contractNumber: normalizedContract });
 
-        await signIn("client-credentials", {
+        const result = await signIn("client-credentials", {
           dni: normalizedDni,
           contractNumber: normalizedContract,
-          callbackUrl: "/soporte/dashboard",
+          redirect: false,
         });
+
+        if (result?.error) {
+          if (result.error === "Configuration") {
+            setError("Error de configuración del servidor (verificar AUTH_SECRET)");
+          } else {
+            setError("DNI o Nº de Contrato no válidos");
+          }
+        } else {
+          router.push("/soporte/dashboard");
+        }
       }
     } catch (err: unknown) {
       if (err instanceof z.ZodError) {
