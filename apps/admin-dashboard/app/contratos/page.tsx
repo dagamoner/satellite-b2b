@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import AdminPdfButton from "../../components/AdminPdfButton";
 
 // ── Tipos ──────────────────────────────────────────────────────────────────
 type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
@@ -519,6 +520,9 @@ function ContractModal({
           >
             {savedOk ? "✓ Guardado" : saving ? "Guardando..." : "Guardar Auditoría"}
           </button>
+          <div className="flex-none">
+            <AdminPdfButton contract={contract} />
+          </div>
         </div>
       </div>
     </div>
@@ -744,12 +748,15 @@ export default function ContratosAdminPage() {
                         <StatusBadge status={c.status} />
                       </td>
                       <td className="px-6 py-4">
-                        <button
-                          onClick={() => setSelected(c)}
-                          className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-500/10"
-                        >
-                          Gestionar →
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <AdminPdfButton contract={c} />
+                          <button
+                            onClick={() => setSelected(c)}
+                            className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-500/10"
+                          >
+                            Gestionar →
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))}

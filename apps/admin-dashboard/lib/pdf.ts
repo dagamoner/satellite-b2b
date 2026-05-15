@@ -30,10 +30,12 @@ interface Contract {
   techSignature?: string;
   photoCasa?: string;
   photoAntena?: string;
+  photoSoporte?: string;
   photoRouter?: string;
   photoCable?: string;
   photoTest?: string;
-  photoObstrucciones?: string;
+  photoApp?: string;
+  photoRack?: string;
 }
 
 export const generateContractPDF = async (contract: Contract) => {
@@ -234,11 +236,13 @@ export const generateContractPDF = async (contract: Contract) => {
   // --- Anexo Fotográfico ---
   const photos = [
     { label: "Fachada / Casa", path: contract.photoCasa },
-    { label: "Antena Instalada", path: contract.photoAntena },
+    { label: "Ubicación Antena", path: contract.photoAntena },
+    { label: "Soporte y Montaje", path: contract.photoSoporte },
     { label: "Router y Conexiones", path: contract.photoRouter },
     { label: "Cableado / Ingreso", path: contract.photoCable },
     { label: "Prueba de Velocidad", path: contract.photoTest },
-    { label: "Obstrucciones", path: contract.photoObstrucciones },
+    { label: "Obstrucciones (App)", path: contract.photoApp },
+    { label: "Rack Empresarial", path: contract.photoRack },
   ].filter(p => p.path);
 
   if (photos.length > 0) {
@@ -256,9 +260,9 @@ export const generateContractPDF = async (contract: Contract) => {
       // Obtener URL firmada
       try {
         const res = await fetch(`/api/contracts/photos?path=${encodeURIComponent(p.path!)}`);
-        const { url } = await res.json();
-        if (url) {
-          const img = await loadImage(url);
+        const { signedUrl } = await res.json();
+        if (signedUrl) {
+          const img = await loadImage(signedUrl);
           
           if (photoY > 240) { doc.addPage(); photoY = 25; }
           
