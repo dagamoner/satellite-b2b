@@ -113,17 +113,18 @@ export default function LeadsPage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const coordinates = `${newLat},${newLng}`;
       const res = await fetch("/api/crm/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          clientName: newContactName || newCompanyName,
           companyName: newCompanyName,
           contactName: newContactName,
           email: newEmail,
           phone: newPhone,
           city: newCity,
-          coordinates,
+          latitude: parseFloat(newLat) || null,
+          longitude: parseFloat(newLng) || null,
           estimatedValue: parseFloat(newEstimatedValue),
           planInterest: newPlanInterest,
           notes: newNotes,

@@ -14,6 +14,9 @@ function mapLead(lead: any) {
     email: lead.email,
     phone: lead.phone,
     city: lead.city || "Sin ciudad",
+    coordinates: (lead.latitude != null && lead.longitude != null)
+      ? `${lead.latitude},${lead.longitude}`
+      : "Sin coordenadas",
     status: lead.status,
     estimatedValue: lead.estimatedValue ?? 0,
     planInterest: lead.planInterest || "SIN_PLAN",
