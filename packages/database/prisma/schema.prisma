@@ -20,6 +20,8 @@ model User {
   contracts        InstallationContract[]
   ticketMessages   TicketMessage[]
   internalMessages InternalMessage[]
+  leads            Lead[]
+  activities       ClientActivity[]
 
   @@map("users")
 }
@@ -84,7 +86,9 @@ model InstallationContract {
   techDni           String?
   techName          String?
   techSignedAt      DateTime?
+  accountId         String?
   technician        User?           @relation(fields: [technicianId], references: [id])
+  account           CustomerAccount? @relation(fields: [accountId], references: [id])
   tickets           SupportTicket[]
 
   @@map("installation_contracts")
@@ -154,4 +158,88 @@ model Location {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   assets    Asset[]
+}
+
+model CustomerAccount {
+  id             String                 @id @default(uuid())
+  companyName    String
+  taxId          String                 @unique // CUIT/DNI
+  industry       String?                // Corporativo, Pyme, Minería, Agro, etc.
+  phone          String
+  email          String                 @unique
+  address        String
+  city           String
+  province       String
+  country        String                 @default("Argentina")
+  tier           String                 @default("STANDARD") // GOLD, PLATINUM, ENTERPRISE
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  
+  // Relaciones
+  contracts      InstallationContract[]
+  activities     ClientActivity[]
+  invoices       Invoice[]
+
+  @@map("customer_accounts")
+}
+
+model Lead {
+  id             String           @id @default(uuid())
+  leadNumber     String           @unique // Ex: L-10023
+  clientName     String
+  companyName    String?
+  email          String
+  phone          String
+  source         String           @default("WEB_MARKETING") // WEB_MARKETING, MANUAL, REFERRAL
+  status         String           @default("NEW") // NEW, CONTACTED, FEASIBILITY, WON, LOST
+  latitude       Float?
+  longitude      Float?
+  notes          String?
+  assignedToId   String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  // Relaciones
+  assignedTo     User?            @relation(fields: [assignedToId], references: [id])
+  activities     ClientActivity[]
+
+  @@map("crm_leads")
+}
+
+model ClientActivity {
+  id             String           @id @default(uuid())
+  type           String           // CALL, EMAIL, MEETING, NOTE, NOC_SYSTEM
+  title          String
+  description    String
+  createdAt      DateTime         @default(now())
+  createdById    String
+  accountId      String?
+  leadId         String?
+
+  // Relaciones
+  createdBy      User             @relation(fields: [createdById], references: [id])
+  account        CustomerAccount? @relation(fields: [accountId], references: [id])
+  lead           Lead?            @relation(fields: [leadId], references: [id])
+
+  @@map("crm_activities")
+}
+
+model Invoice {
+  id             String           @id @default(uuid())
+  invoiceNumber  String           @unique
+  amount         Float
+  currency       String           @default("ARS")
+  dueDate        DateTime
+  status         String           @default("UNPAID") // PAID, UNPAID, OVERDUE, VOID
+  paymentMethod  String?
+  paidAt         DateTime?
+  pdfUrl         String?
+  accountId      String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  // Relaciones
+  account        CustomerAccount  @relation(fields: [accountId], references: [id])
+
+  @@map("crm_invoices")
 }

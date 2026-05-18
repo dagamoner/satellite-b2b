@@ -182,12 +182,18 @@ export default function AdminOverview() {
               <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Satellite Operations</p>
             </div>
           </div>
-
           <div className="flex items-center gap-8">
             <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5">
                 <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5">Web Principal</a>
                 <Link href="/tickets" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Soporte</Link>
                 <Link href="/chat" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Chat Staff</Link>
+                {["ADMIN", "SALES"].includes((session?.user as any)?.role) && (
+                  <>
+                    <Link href="/crm/leads" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Leads</Link>
+                    <Link href="/crm/accounts" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Clientes 360</Link>
+                    <Link href="/crm/invoices" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Cobros</Link>
+                  </>
+                )}
                 {(session?.user as any)?.role === "ADMIN" && (
                   <>
                     <Link href="/reportes" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Intelligence</Link>
@@ -199,7 +205,7 @@ export default function AdminOverview() {
           </div>
         </div>
       </nav>
-
+ 
       <main className="max-w-[1600px] mx-auto px-8 py-12 relative z-10">
         <header className="mb-12 flex justify-between items-end">
           <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
@@ -209,13 +215,13 @@ export default function AdminOverview() {
           
           <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="flex gap-4">
              <Link href="/tickets">
-               <button className="bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl shadow-2xl shadow-cyan-500/20 uppercase text-[10px] tracking-widest hover:scale-105 transition-all">Consola de Tickets</button>
+                <button className="bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl shadow-2xl shadow-cyan-500/20 uppercase text-[10px] tracking-widest hover:scale-105 transition-all">Consola de Tickets</button>
              </Link>
           </motion.div>
         </header>
-
+ 
         <QuickMetrics role={(session?.user as any)?.role} />
-
+ 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
            <Card variant="glass" className="lg:col-span-2 p-10 min-h-[400px] border-white/5">
               <div className="flex justify-between items-center mb-10">
@@ -242,7 +248,7 @@ export default function AdminOverview() {
                  </svg>
                  <p className="absolute bottom-8 text-[9px] font-black text-slate-700 uppercase tracking-[0.4em]">Interconectividad Satelital Activa</p>
               </div>
-
+ 
               <div className="grid grid-cols-3 gap-6 mt-10">
                  <div className="p-6 bg-slate-950/50 rounded-2xl border border-white/5">
                     <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-2">Latencia Promedio</p>
@@ -258,8 +264,31 @@ export default function AdminOverview() {
                  </div>
               </div>
            </Card>
-
+ 
            <div className="space-y-8">
+              {["ADMIN", "SALES"].includes((session?.user as any)?.role) && (
+                <Card variant="glass" className="p-10 border-cyan-500/10">
+                  <h3 className="text-cyan-500 font-black text-xs uppercase tracking-widest mb-6">CRM Satelital</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      { name: "Tablero de Leads", path: "/crm/leads", icon: "📋" },
+                      { name: "Clientes 360°", path: "/crm/accounts", icon: "🤝" },
+                      { name: "Facturas y Cobros", path: "/crm/invoices", icon: "💰" },
+                    ].map(mod => (
+                      <Link key={mod.path} href={mod.path} className="group p-5 bg-slate-900/50 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <span className="text-xl">{mod.icon}</span>
+                            <span className="text-[10px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest transition-colors">{mod.name}</span>
+                          </div>
+                          <svg className="w-4 h-4 text-slate-700 group-hover:text-cyan-500 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                          </svg>
+                      </Link>
+                    ))}
+                  </div>
+                </Card>
+              )}
+
               {(session?.user as any)?.role === "ADMIN" && (
                 <Card variant="glass" className="p-10 border-white/5">
                   <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Módulos Críticos</h3>
@@ -282,7 +311,7 @@ export default function AdminOverview() {
                   </div>
                 </Card>
               )}
-
+ 
               <Card variant="glass" className="p-10 border-purple-500/10 relative overflow-hidden group cursor-pointer" onClick={() => { window.location.href='/chat' }}>
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
