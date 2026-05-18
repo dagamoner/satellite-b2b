@@ -162,7 +162,9 @@ model Location {
 
 model CustomerAccount {
   id             String                 @id @default(uuid())
+  accountNumber  String?                @unique // Ex: CTA-10001 (generado automáticamente)
   companyName    String
+  contactName    String?                // Nombre del contacto principal
   taxId          String                 @unique // CUIT/DNI
   industry       String?                // Corporativo, Pyme, Minería, Agro, etc.
   phone          String
@@ -172,6 +174,10 @@ model CustomerAccount {
   province       String
   country        String                 @default("Argentina")
   tier           String                 @default("STANDARD") // GOLD, PLATINUM, ENTERPRISE
+  status         String                 @default("ACTIVE")   // ACTIVE, SUSPENDED, CANCELLED
+  planName       String?                // Plan activo: STARLINK_PRO, STARLINK_CORP, STARLINK_NOC
+  monthlyFee     Float?                 // Abono mensual en ARS
+  activationDate DateTime?              // Fecha de alta
   createdAt      DateTime               @default(now())
   updatedAt      DateTime               @updatedAt
   
@@ -188,12 +194,16 @@ model Lead {
   leadNumber     String           @unique // Ex: L-10023
   clientName     String
   companyName    String?
+  contactName    String?          // Alias / nombre de contacto principal
   email          String
   phone          String
   source         String           @default("WEB_MARKETING") // WEB_MARKETING, MANUAL, REFERRAL
   status         String           @default("NEW") // NEW, CONTACTED, FEASIBILITY, WON, LOST
+  city           String?
   latitude       Float?
   longitude      Float?
+  estimatedValue Float?           @default(0) // Valor estimado del contrato en ARS
+  planInterest   String?          // Plan de interés: STARLINK_PRO, STARLINK_CORP, etc.
   notes          String?
   assignedToId   String?
   createdAt      DateTime         @default(now())

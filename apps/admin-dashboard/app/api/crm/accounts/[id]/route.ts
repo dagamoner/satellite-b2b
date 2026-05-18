@@ -47,3 +47,48 @@ export async function GET(
     return NextResponse.json({ error: "Error al obtener la cuenta del cliente" }, { status: 500 });
   }
 }
+
+// PUT /api/crm/accounts/[id] - Actualizar el Estado u otros datos del Cliente
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await auth();
+  const { id } = await params;
+
+  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json();
+    const { status, companyName, contactName, email, phone, city, planName, monthlyFee } = body;
+
+    const account = await prisma.customerAccount.findUnique({
+      where: { id }
+    });
+
+    if (!account) {
+      return NextResponse.json({ error: "Cuenta no encontrada" }, { status: 404 });
+    }
+
+    const updated = await prisma.customerAccount.update({
+      where: { id },
+      data: {
+        status: status || account.status,
+        companyName: companyName || account.companyName,
+        contactName: contactName || account.contactName,
+        email: email || account.email,
+        phone: phone || account.phone,
+        city: city || account.city,
+        planName: planName || account.planName,
+        monthlyFee: monthlyFee !== undefined ? monthlyFee : account.monthlyFee
+      }
+    });
+
+    return NextResponse.json({ account: updated });
+  } catch (error) {
+    console.error("[PUT /api/crm/accounts/[id]]", error);
+    return NextResponse.json({ error: "Error al actualizar la cuenta del cliente" }, { status: 500 });
+  }
+}

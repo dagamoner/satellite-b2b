@@ -8,9 +8,13 @@ import { Card } from "@repo/ui/card";
 interface Activity {
   id: string;
   type: string;
-  notes: string;
+  notes?: string;
+  description?: string;
   createdAt: string;
-  user: {
+  user?: {
+    name: string;
+  };
+  createdBy?: {
     name: string;
   };
 }
@@ -77,7 +81,7 @@ export default function LeadsPage() {
       const res = await fetch("/api/crm/leads");
       if (res.ok) {
         const data = await res.json();
-        setLeads(data);
+        setLeads(data.leads || []);
       }
     } catch (err) {
       console.error("Error fetching leads:", err);
@@ -156,7 +160,7 @@ export default function LeadsPage() {
         const updated = await res.json();
         fetchLeads();
         if (selectedLead && selectedLead.id === leadId) {
-          setSelectedLead(prev => prev ? { ...prev, status: updated.status } : null);
+          setSelectedLead(prev => prev ? { ...prev, status: updated.lead.status } : null);
         }
       } else {
         alert("Error al actualizar estado del lead");
@@ -195,15 +199,17 @@ export default function LeadsPage() {
         body: JSON.stringify({
           leadId: selectedLead.id,
           type: newActivityType,
-          notes: newActivityNotes,
+          title: newActivityType === "CALL" ? "Llamada registrada" : newActivityType === "EMAIL" ? "Correo registrado" : newActivityType === "MEETING" ? "Reunión registrada" : "Nota comercial",
+          description: newActivityNotes,
         }),
       });
 
       if (res.ok) {
-        const newAct = await res.json();
+        const data = await res.json();
+        const newActObj = data.activity;
         setSelectedLead(prev => prev ? {
           ...prev,
-          activities: [newAct, ...(prev.activities || [])]
+          activities: [newActObj, ...(prev.activities || [])]
         } : null);
         setNewActivityNotes("");
         fetchLeads();
@@ -357,7 +363,7 @@ export default function LeadsPage() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {leadStatuses.map(col => {
               const colLeads = leads.filter(l => l.status === col.key);
-              const colValue = colLeads.reduce((sum, l) => sum + l.estimatedValue, 0);
+              const colValue = colLeads.reduce((sum, l) => sum + (l.estimatedValue || 0), 0);
 
               return (
                 <div key={col.key} className="flex flex-col min-h-[600px] bg-slate-950/20 p-4 rounded-3xl border border-white/5 relative">
@@ -387,14 +393,14 @@ export default function LeadsPage() {
                       >
                         <div className="flex justify-between items-start">
                           <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest">{lead.city}</span>
-                          <span className="text-[9px] font-black text-cyan-500">${lead.estimatedValue.toLocaleString('es-AR')}</span>
+                          <span className="text-[9px] font-black text-cyan-500">${(lead.estimatedValue || 0).toLocaleString('es-AR')}</span>
                         </div>
                         <h4 className="text-white font-black text-sm uppercase tracking-tight group-hover:text-cyan-400 transition-colors leading-snug line-clamp-1">{lead.companyName}</h4>
                         <p className="text-[10px] text-slate-500 font-bold leading-normal truncate">{lead.contactName}</p>
                         
                         {/* Plan Badge */}
                         <div className="flex justify-between items-center border-t border-white/5 pt-3 mt-1">
-                          <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[70%]">{lead.planInterest.replace("_", " ")}</span>
+                          <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest truncate max-w-[70%]">{(lead.planInterest || "").replace("_", " ")}</span>
                           <svg className="w-3.5 h-3.5 text-slate-700 group-hover:text-cyan-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
                           </svg>
@@ -623,9 +629,9 @@ export default function LeadsPage() {
                           </span>
                           <span className="text-slate-600">{new Date(act.createdAt).toLocaleString([], { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
-                        <p className="text-[10px] text-slate-300 font-bold leading-normal">{act.notes}</p>
+                        <p className="text-[10px] text-slate-300 font-bold leading-normal">{act.description || act.notes}</p>
                         <div className="text-[7px] text-slate-600 font-black uppercase tracking-widest">
-                          Registrado por: {act.user?.name || "NOC Staff"}
+                          Registrado por: {act.createdBy?.name || act.user?.name || "NOC Staff"}
                         </div>
                       </div>
                     ))}

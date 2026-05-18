@@ -52,13 +52,14 @@ export default function InvoicesPage() {
       ]);
       if (invRes.ok) {
         const data = await invRes.json();
-        setInvoices(data);
+        setInvoices(data.invoices || []);
       }
       if (accRes.ok) {
         const data = await accRes.json();
-        setAccounts(data);
-        if (data.length > 0) {
-          setSelectedAccountIdForInvoice(data[0].id);
+        const accountsList = data.accounts || [];
+        setAccounts(accountsList);
+        if (accountsList.length > 0) {
+          setSelectedAccountIdForInvoice(accountsList[0].id);
         }
       }
     } catch (err) {
@@ -132,6 +133,7 @@ export default function InvoicesPage() {
         body: JSON.stringify({
           accountId: selectedAccountIdForInvoice,
           amount: grandTotal,
+          dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString() // 15 days from now
         }),
       });
 
@@ -151,10 +153,14 @@ export default function InvoicesPage() {
   // Pay invoice simulation
   const handleSimulatePayment = async (invoiceId: string) => {
     try {
-      const res = await fetch(`/api/crm/invoices/${invoiceId}`, {
-        method: "PUT",
+      const res = await fetch("/api/crm/invoices", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "PAID" }),
+        body: JSON.stringify({
+          action: "PAY_MANUAL",
+          invoiceId,
+          paymentMethod: "TRANSFER"
+        }),
       });
       if (res.ok) {
         fetchInvoicesAndAccounts();

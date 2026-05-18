@@ -13,7 +13,6 @@ interface ClientAccount {
   email: string;
   phone: string;
   city: string;
-  coordinates: string;
   status: "ACTIVE" | "SUSPENDED" | "PROVISIONING";
   planName: string;
   monthlyFee: number;
@@ -37,8 +36,6 @@ export default function AccountsPage() {
   const [newEmail, setNewEmail] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [newCity, setNewCity] = useState("Mendoza");
-  const [newLat, setNewLat] = useState("-32.889");
-  const [newLng, setNewLng] = useState("-68.845");
   const [newPlanName, setNewPlanName] = useState("STARLINK_PRO");
   const [newMonthlyFee, setNewMonthlyFee] = useState("150000");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,7 +50,7 @@ export default function AccountsPage() {
       const res = await fetch("/api/crm/accounts");
       if (res.ok) {
         const data = await res.json();
-        setAccounts(data);
+        setAccounts(data.accounts || []);
       }
     } catch (err) {
       console.error(err);
@@ -85,32 +82,34 @@ export default function AccountsPage() {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const coordinates = `${newLat},${newLng}`;
       const res = await fetch("/api/crm/accounts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           companyName: newCompanyName,
           contactName: newContactName,
+          taxId: `DNI-${Date.now()}`, // placeholder si no se pide DNI
           email: newEmail,
           phone: newPhone,
           city: newCity,
-          coordinates,
+          province: "Mendoza",
+          address: newCity,
           planName: newPlanName,
           monthlyFee: parseFloat(newMonthlyFee),
+          activationDate: new Date().toISOString(),
         }),
       });
 
       if (res.ok) {
         setIsAddOpen(false);
-        // Reset form
         setNewCompanyName("");
         setNewContactName("");
         setNewEmail("");
         setNewPhone("");
         fetchAccounts();
       } else {
-        alert("Error al registrar cliente");
+        const errData = await res.json();
+        alert(errData.error || "Error al registrar cliente");
       }
     } catch (err) {
       console.error(err);
@@ -122,10 +121,10 @@ export default function AccountsPage() {
   const toggleAccountStatus = async (account: ClientAccount) => {
     const nextStatus = account.status === "ACTIVE" ? "SUSPENDED" : "ACTIVE";
     try {
-      const res = await fetch(`/api/crm/accounts/${account.id}`, {
-        method: "PUT",
+      const res = await fetch("/api/crm/accounts", {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: nextStatus }),
+        body: JSON.stringify({ accountId: account.id, status: nextStatus }),
       });
       if (res.ok) {
         fetchAccounts();
@@ -146,14 +145,13 @@ export default function AccountsPage() {
     setTelemetryMetrics(null);
 
     setTimeout(() => {
-      const [lat, lng] = acc.coordinates.split(",").map(Number);
       setTelemetryMetrics({
-        lat: lat || -32.889,
-        lng: lng || -68.845,
-        latency: Math.floor(Math.random() * 12) + 32, // 32ms to 44ms
-        loss: parseFloat((Math.random() * 0.2).toFixed(2)), // 0% to 0.2%
-        download: Math.floor(Math.random() * 80) + 180, // 180mbps to 260mbps
-        upload: Math.floor(Math.random() * 20) + 35 // 35mbps to 55mbps
+        lat: -32.889,
+        lng: -68.845,
+        latency: Math.floor(Math.random() * 12) + 32,
+        loss: parseFloat((Math.random() * 0.2).toFixed(2)),
+        download: Math.floor(Math.random() * 80) + 180,
+        upload: Math.floor(Math.random() * 20) + 35
       });
       setIsTelemetryLoading(false);
     }, 1800);
@@ -374,11 +372,11 @@ export default function AccountsPage() {
                   <div className="grid grid-cols-2 gap-4 py-4 border-y border-white/5 text-[9px] font-bold text-slate-500">
                     <div>
                       <span className="text-[8px] text-slate-600 font-black uppercase tracking-widest block mb-0.5">Plan Contratado</span>
-                      <span className="text-white uppercase tracking-widest">{acc.planName.replace("_", " ")}</span>
+                      <span className="text-white uppercase tracking-widest">{(acc.planName || "").replace("_", " ")}</span>
                     </div>
                     <div>
                       <span className="text-[8px] text-slate-600 font-black uppercase tracking-widest block mb-0.5">Abono Mensual</span>
-                      <span className="text-cyan-400 font-black">${acc.monthlyFee.toLocaleString('es-AR')}</span>
+                      <span className="text-cyan-400 font-black">${(acc.monthlyFee || 0).toLocaleString('es-AR')}</span>
                     </div>
                     <div>
                       <span className="text-[8px] text-slate-600 font-black uppercase tracking-widest block mb-0.5">Ubicación</span>
