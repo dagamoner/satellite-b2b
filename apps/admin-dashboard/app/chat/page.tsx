@@ -23,7 +23,8 @@ export default function ChatStaffPage() {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   
   const isAuthenticated = status === "authenticated";
   const currentUser = session?.user as { name?: string; role?: string; id?: string } | undefined;
@@ -59,10 +60,26 @@ export default function ChatStaffPage() {
     }
   }, [isAuthenticated]);
 
-  // Scroll to bottom on new messages
+  // Scroll to bottom dynamically based on user scroll position
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      
+      // If user is within 200px of the bottom, or if it is the first load, auto-scroll down
+      const isAtBottom = scrollHeight - scrollTop - clientHeight < 200;
+      
+      if (isAtBottom || isInitialLoad) {
+        containerRef.current.scrollTo({
+          top: scrollHeight,
+          behavior: isInitialLoad ? "auto" : "smooth",
+        });
+        
+        if (isInitialLoad && messages.length > 0) {
+          setIsInitialLoad(false);
+        }
+      }
+    }
+  }, [messages, isInitialLoad]);
 
   // Handle message sending
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -84,6 +101,16 @@ export default function ChatStaffPage() {
       if (res.ok) {
         const data = await res.json();
         setMessages((prev) => [...prev, data.message]);
+        
+        // Force an immediate smooth scroll to the bottom when the user sends a message
+        setTimeout(() => {
+          if (containerRef.current) {
+            containerRef.current.scrollTo({
+              top: containerRef.current.scrollHeight,
+              behavior: "smooth"
+            });
+          }
+        }, 50);
       } else {
         setError("Error al enviar el mensaje. Inténtalo de nuevo.");
         setNewMessage(content); // Restore message
@@ -171,11 +198,13 @@ export default function ChatStaffPage() {
             </span>
           </div>
         </header>
-
         {/* Chat Panel Box */}
         <Card variant="glass" className="flex flex-col flex-grow border-white/5 overflow-hidden p-0 relative min-h-[400px]">
           {/* Scrollable Message Box */}
-          <div className="flex-grow overflow-y-auto px-8 py-6 space-y-6 scrollbar-thin scrollbar-track-slate-950/20 scrollbar-thumb-slate-800">
+          <div 
+            ref={containerRef}
+            className="flex-grow overflow-y-auto px-8 py-6 space-y-6 scrollbar-thin"
+          >
             {loading ? (
               <div className="h-full flex items-center justify-center flex-col gap-4 text-cyan-500 font-bold uppercase tracking-widest text-[10px] py-20">
                 <div className="w-8 h-8 border-2 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
@@ -216,7 +245,7 @@ export default function ChatStaffPage() {
                             {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </span>
                         </div>
-
+ 
                         {/* Content bubble */}
                         <div className={`px-5 py-3.5 rounded-3xl text-sm font-medium leading-relaxed ${
                           isOwnMessage
@@ -235,9 +264,8 @@ export default function ChatStaffPage() {
                 })}
               </AnimatePresence>
             )}
-            <div ref={messagesEndRef} />
           </div>
-
+ 
           {/* Footer input form */}
           <div className="p-6 bg-slate-950/70 border-t border-white/5 shrink-0">
             <form onSubmit={handleSendMessage} className="flex gap-4">
@@ -263,7 +291,7 @@ export default function ChatStaffPage() {
                 {sending ? "Enviando..." : "Enviar"}
               </button>
             </form>
-
+ 
             {error && (
               <div className="mt-3 text-red-500 font-bold uppercase tracking-widest text-[8px] text-center">
                 ⚠️ {error}
@@ -272,23 +300,34 @@ export default function ChatStaffPage() {
           </div>
         </Card>
       </main>
-
+ 
       {/* Global CSS scrollbar styling override */}
       <style jsx global>{`
         body { background: #020617; }
+        
+        /* Modern scrollbar styling for webkit browsers */
         .scrollbar-thin::-webkit-scrollbar {
-          width: 6px;
+          width: 8px; /* Slightly wider for ease of clicking/seeing */
         }
         .scrollbar-thin::-webkit-scrollbar-track {
-          background: rgba(15, 23, 42, 0.2);
+          background: rgba(2, 6, 23, 0.6); /* Super dark background for maximum contrast */
           border-radius: 9999px;
         }
         .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: rgba(100, 116, 139, 0.2);
+          background: rgba(148, 163, 184, 0.4); /* Solid slate thumb, clearly visible */
           border-radius: 9999px;
+          border: 2px solid rgba(2, 6, 23, 0.6); /* Inner border for premium styling */
+          transition: all 0.3s ease;
         }
         .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: rgba(100, 116, 139, 0.4);
+          background: rgba(6, 182, 212, 0.8); /* Glows Cyan on hover! */
+          box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        }
+
+        /* Firefox Support */
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(148, 163, 184, 0.4) rgba(2, 6, 23, 0.6);
         }
       `}</style>
     </div>
