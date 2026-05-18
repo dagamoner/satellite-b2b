@@ -301,7 +301,7 @@ export default function AccountsPage() {
               <div>
                 <span className="text-cyan-400 text-[8px] font-black uppercase tracking-[0.5em]">Consola de Telemetría Satelital Activa</span>
                 <h3 className="text-xl font-black text-white uppercase tracking-tight mt-1">{telemetryAccount.companyName}</h3>
-                <span className="text-[9px] font-mono font-black text-slate-500 uppercase tracking-widest mt-1 block">Antena Coordenadas: {telemetryAccount.coordinates}</span>
+                <span className="text-[9px] font-mono font-black text-slate-500 uppercase tracking-widest mt-1 block">Nodo: {telemetryAccount.city} · {telemetryAccount.planName}</span>
               </div>
               <button 
                 onClick={() => setTelemetryAccount(null)}
