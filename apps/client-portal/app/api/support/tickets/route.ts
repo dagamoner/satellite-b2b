@@ -60,6 +60,21 @@ export async function POST(request: Request) {
     let ticketNumber = "";
     
     if (category === "Contrato") {
+      // Buscar si ya existe un ticket de contrato para evitar duplicación
+      const existingTicket = await db.supportTicket.findFirst({
+        where: {
+          contractId,
+          category: "Contrato"
+        },
+        include: {
+          messages: true
+        }
+      });
+
+      if (existingTicket) {
+        return NextResponse.json({ success: true, ticket: existingTicket });
+      }
+
       // 1. Obtener el número del contrato base (la solicitud original)
       const baseContract = await db.installationContract.findUnique({
         where: { id: contractId },

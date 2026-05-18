@@ -187,6 +187,7 @@ export default function AdminOverview() {
             <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5">
                 <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5">Web Principal</a>
                 <Link href="/tickets" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Soporte</Link>
+                <Link href="/chat" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Chat Staff</Link>
                 {(session?.user as any)?.role === "ADMIN" && (
                   <>
                     <Link href="/reportes" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Intelligence</Link>
@@ -282,15 +283,15 @@ export default function AdminOverview() {
                 </Card>
               )}
 
-              <Card variant="glass" className="p-10 border-cyan-500/10 relative overflow-hidden group cursor-pointer" onClick={() => { window.location.href='/tickets' }}>
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <Card variant="glass" className="p-10 border-purple-500/10 relative overflow-hidden group cursor-pointer" onClick={() => { window.location.href='/chat' }}>
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div className="relative z-10">
-                   <p className="text-cyan-500 text-[8px] font-black uppercase tracking-[0.4em] mb-2">Acceso Inmediato</p>
-                   <h3 className="text-white font-black text-lg uppercase tracking-tight mb-4">Chat Operativo</h3>
-                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Entrar a la consola de soporte técnico en tiempo real para gestionar incidentes.</p>
+                   <p className="text-purple-500 text-[8px] font-black uppercase tracking-[0.4em] mb-2">Canal Staff</p>
+                   <h3 className="text-white font-black text-lg uppercase tracking-tight mb-4">Chat Staff Interno</h3>
+                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Comunicación directa y libre entre técnicos y administradores en tiempo real.</p>
                 </div>
               </Card>
-           </div>
+            </div>
         </div>
 
         <footer className="mt-20 py-10 border-t border-white/5 flex justify-between items-center">

@@ -319,22 +319,30 @@ export default function SupportDashboard() {
                 {currentContract?.status === 'LEAD' && (
                   <button 
                     onClick={async () => {
-                      let newTicketId = "";
-                      try {
-                        const response = await fetch("/api/support/tickets", {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            title: "Formalización de Contrato B2B",
-                            description: `Iniciado proceso de edición de contrato maestro para el ID ${currentContract.contractNumber}.`,
-                            category: "Contrato",
-                            contractId: (session?.user as { contractId: string }).contractId
-                          }),
-                        });
-                        const data = await response.json();
-                        if (data.id) newTicketId = data.id;
-                      } catch (err) {
-                        console.error("Log failed, continuing...");
+                      const existingContractTicket = tickets.find(t => t.category === "Contrato");
+                      let newTicketId = existingContractTicket?.id || "";
+
+                      if (!existingContractTicket) {
+                        try {
+                          const response = await fetch("/api/support/tickets", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              title: "Formalización de Contrato B2B",
+                              description: `Iniciado proceso de edición de contrato maestro para el ID ${currentContract.contractNumber}.`,
+                              category: "Contrato",
+                              contractId: (session?.user as { contractId: string }).contractId
+                            }),
+                          });
+                          const data = await response.json();
+                          if (data.ticket?.id) {
+                            newTicketId = data.ticket.id;
+                          } else if (data.id) {
+                            newTicketId = data.id;
+                          }
+                        } catch (err) {
+                          console.error("Log failed, continuing...", err);
+                        }
                       }
 
                       const params = new URLSearchParams({

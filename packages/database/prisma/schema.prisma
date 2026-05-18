@@ -10,15 +10,16 @@ datasource db {
 }
 
 model User {
-  id             String                 @id @default(uuid())
-  email          String                 @unique
-  name           String
-  role           String                 @default("TECH")
-  password       String?
-  createdAt      DateTime               @default(now())
-  updatedAt      DateTime               @updatedAt
-  contracts      InstallationContract[]
-  ticketMessages TicketMessage[]
+  id               String                 @id @default(uuid())
+  email            String                 @unique
+  name             String
+  role             String                 @default("TECH")
+  password         String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+  contracts        InstallationContract[]
+  ticketMessages   TicketMessage[]
+  internalMessages InternalMessage[]
 
   @@map("users")
 }
@@ -117,6 +118,17 @@ model TicketMessage {
   ticket      SupportTicket @relation(fields: [ticketId], references: [id])
 
   @@map("ticket_messages")
+}
+
+model InternalMessage {
+  id        String   @id @default(uuid())
+  content   String
+  senderId  String
+  createdAt DateTime @default(now())
+  
+  sender    User     @relation(fields: [senderId], references: [id])
+
+  @@map("internal_messages")
 }
 
 model Asset {
