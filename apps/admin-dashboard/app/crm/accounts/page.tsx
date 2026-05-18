@@ -502,29 +502,6 @@ export default function AccountsPage() {
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="block text-[9px] font-black text-slate-500 uppercase tracking-widest">Latitud Terminal</label>
-                    <input 
-                      type="text" 
-                      value={newLat}
-                      onChange={e => setNewLat(e.target.value)}
-                      placeholder="-34.615"
-                      className="w-full bg-slate-950 border border-white/5 rounded-2xl px-5 py-4 text-xs text-white font-mono outline-none font-bold focus:border-cyan-500/50 transition-colors"
-                      required
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="block text-[9px] font-black text-slate-500 uppercase tracking-widest">Longitud Terminal</label>
-                    <input 
-                      type="text" 
-                      value={newLng}
-                      onChange={e => setNewLng(e.target.value)}
-                      placeholder="-68.324"
-                      className="w-full bg-slate-950 border border-white/5 rounded-2xl px-5 py-4 text-xs text-white font-mono outline-none font-bold focus:border-cyan-500/50 transition-colors"
-                      required
-                    />
-                  </div>
 
                   <div className="space-y-2">
                     <label className="block text-[9px] font-black text-slate-500 uppercase tracking-widest">Abono Mensual Pactado (ARS)</label>
