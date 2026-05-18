@@ -22,6 +22,7 @@ model User {
   internalMessages InternalMessage[]
   leads            Lead[]
   activities       ClientActivity[]
+  chatRooms        ChatRoomMember[]
 
   @@map("users")
 }
@@ -125,14 +126,40 @@ model TicketMessage {
 }
 
 model InternalMessage {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   content   String
   senderId  String
-  createdAt DateTime @default(now())
-  
-  sender    User     @relation(fields: [senderId], references: [id])
+  roomId    String?   // null = canal general legacy
+  createdAt DateTime  @default(now())
+
+  sender    User      @relation(fields: [senderId], references: [id])
+  room      ChatRoom? @relation(fields: [roomId], references: [id])
 
   @@map("internal_messages")
+}
+
+model ChatRoom {
+  id        String           @id @default(uuid())
+  name      String?          // null en DMs
+  type      String           @default("DIRECT") // GENERAL | DIRECT | GROUP
+  createdAt DateTime         @default(now())
+  members   ChatRoomMember[]
+  messages  InternalMessage[]
+
+  @@map("chat_rooms")
+}
+
+model ChatRoomMember {
+  id        String   @id @default(uuid())
+  roomId    String
+  userId    String
+  joinedAt  DateTime @default(now())
+
+  room      ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([roomId, userId])
+  @@map("chat_room_members")
 }
 
 model Asset {

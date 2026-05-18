@@ -21,13 +21,14 @@
     "turbo": "^2.9.6"
   },
   "optionalDependencies": {
+    "@next/swc-win32-x64-msvc": "16.2.0",
     "@parcel/watcher-linux-x64-glibc": "^2.5.6",
     "@parcel/watcher-linux-x64-musl": "^2.5.6",
     "@parcel/watcher-win32-x64": "^2.5.6",
-    "lightningcss-linux-x64-gnu": "^1.32.0",
-    "lightningcss-linux-x64-musl": "^1.32.0",
     "@tailwindcss/oxide-linux-x64-gnu": "^4.2.2",
-    "@tailwindcss/oxide-linux-x64-musl": "^4.2.2"
+    "@tailwindcss/oxide-linux-x64-musl": "^4.2.2",
+    "lightningcss-linux-x64-gnu": "^1.32.0",
+    "lightningcss-linux-x64-musl": "^1.32.0"
   },
   "engines": {
     "node": ">=18"
