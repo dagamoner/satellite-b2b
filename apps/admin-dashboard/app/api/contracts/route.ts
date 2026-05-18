@@ -30,7 +30,5 @@ export async function GET(request: Request) {
   } catch (error) {
     console.error("[GET /api/contracts]", error);
     return NextResponse.json({ error: "Error al obtener contratos." }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

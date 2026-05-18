@@ -35,8 +35,6 @@ export async function GET() {
   } catch (error) {
     console.error("[INTERNAL_MESSAGES_GET]", error);
     return NextResponse.json({ error: "Error al obtener mensajes internos" }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
 
@@ -79,7 +77,5 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("[INTERNAL_MESSAGES_POST]", error);
     return NextResponse.json({ error: "Error al enviar el mensaje" }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }

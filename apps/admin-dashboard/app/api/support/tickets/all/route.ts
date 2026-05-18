@@ -29,7 +29,5 @@ export async function GET() {
   } catch (error) {
     console.error("[ADMIN_TICKETS_ALL]", error);
     return NextResponse.json({ error: "Error al obtener tickets" }, { status: 500 });
-  } finally {
-    await prisma.$disconnect();
   }
 }
