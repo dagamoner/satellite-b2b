@@ -199,11 +199,18 @@ export default function ChatStaffPage() {
           </div>
         </header>
         {/* Chat Panel Box */}
-        <Card variant="glass" className="flex flex-col flex-grow border-white/5 overflow-hidden p-0 relative min-h-[400px]">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/40 backdrop-blur-xl transition-all duration-500 p-0 flex flex-col flex-grow min-h-[400px] h-[calc(100vh-16rem)] relative z-10 shadow-[0_0_50px_rgba(0,0,0,0.3)]"
+        >
+          {/* Subtle Inner Highlight */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
+
           {/* Scrollable Message Box */}
           <div 
             ref={containerRef}
-            className="flex-grow overflow-y-auto px-8 py-6 space-y-6 scrollbar-thin"
+            className="flex-grow overflow-y-auto px-8 py-6 space-y-6 scrollbar-thin relative z-10"
           >
             {loading ? (
               <div className="h-full flex items-center justify-center flex-col gap-4 text-cyan-500 font-bold uppercase tracking-widest text-[10px] py-20">
@@ -298,36 +305,36 @@ export default function ChatStaffPage() {
               </div>
             )}
           </div>
-        </Card>
+        </motion.div>
       </main>
  
       {/* Global CSS scrollbar styling override */}
       <style jsx global>{`
         body { background: #020617; }
         
-        /* Modern scrollbar styling for webkit browsers */
-        .scrollbar-thin::-webkit-scrollbar {
-          width: 8px; /* Slightly wider for ease of clicking/seeing */
-        }
-        .scrollbar-thin::-webkit-scrollbar-track {
-          background: rgba(2, 6, 23, 0.6); /* Super dark background for maximum contrast */
-          border-radius: 9999px;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb {
-          background: rgba(148, 163, 184, 0.4); /* Solid slate thumb, clearly visible */
-          border-radius: 9999px;
-          border: 2px solid rgba(2, 6, 23, 0.6); /* Inner border for premium styling */
-          transition: all 0.3s ease;
-        }
-        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-          background: rgba(6, 182, 212, 0.8); /* Glows Cyan on hover! */
-          box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+        /* Force scrollbar to show on the message container */
+        .scrollbar-thin {
+          overflow-y: scroll !important;
+          scrollbar-width: auto !important; /* Standard scrollbar width */
+          scrollbar-color: #06b6d4 rgba(15, 23, 42, 0.8) !important;
         }
 
-        /* Firefox Support */
-        .scrollbar-thin {
-          scrollbar-width: thin;
-          scrollbar-color: rgba(148, 163, 184, 0.4) rgba(2, 6, 23, 0.6);
+        /* Webkit scrollbar styles */
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 10px !important; /* Noticeable width */
+          display: block !important;
+        }
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: rgba(15, 23, 42, 0.8) !important; /* Dark solid slate background */
+          border-radius: 8px !important;
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background: rgba(6, 182, 212, 0.5) !important; /* Transparent Cyan by default */
+          border-radius: 8px !important;
+          border: 2px solid rgba(15, 23, 42, 0.8) !important; /* Contrast spacer */
+        }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background: rgba(6, 182, 212, 0.9) !important; /* Super bright glowing Cyan on hover */
         }
       `}</style>
     </div>
