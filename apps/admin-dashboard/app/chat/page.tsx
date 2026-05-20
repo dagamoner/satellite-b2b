@@ -524,29 +524,50 @@ export default function ChatStaffPage() {
 
           {/* Form write panel footer */}
           <footer className="p-6 bg-slate-950/70 border-t border-white/5 shrink-0">
-            <form onSubmit={handleSendMessage} className="flex gap-4">
-              <input
-                type="text"
+            <div className="flex gap-4 items-end">
+              <textarea
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Escribe un mensaje al canal del staff..."
+                onKeyDown={(e) => {
+                  // Solo Enter (sin Shift/Ctrl) NO envía — es salto de línea
+                  // El envío solo ocurre con el botón
+                }}
+                placeholder="Escribe un mensaje... (Enter = nueva línea)"
                 disabled={sending}
-                className="flex-grow bg-slate-900/60 border border-white/5 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-cyan-500/40 text-xs font-semibold transition-all placeholder:text-slate-600 disabled:opacity-50"
+                rows={1}
+                style={{ resize: "none", minHeight: "52px", maxHeight: "160px", overflowY: "auto" }}
+                className="flex-grow bg-slate-900/60 border border-white/5 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-cyan-500/40 text-xs font-semibold transition-all placeholder:text-slate-600 disabled:opacity-50 leading-relaxed"
+                onInput={(e) => {
+                  const el = e.currentTarget;
+                  el.style.height = "auto";
+                  el.style.height = Math.min(el.scrollHeight, 160) + "px";
+                }}
               />
               <button
-                type="submit"
+                type="button"
+                onClick={handleSendMessage as any}
                 disabled={sending || !newMessage.trim()}
-                className={`px-8 py-4 rounded-2xl font-black uppercase text-[9px] tracking-widest transition-all ${
+                title="Enviar mensaje"
+                className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center transition-all active:scale-95 ${
                   !newMessage.trim() || sending
                     ? "bg-slate-900 text-slate-600 border border-white/5 cursor-not-allowed"
                     : currentUser?.role === "ADMIN"
-                      ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 hover:scale-102"
-                      : "bg-purple-500 text-white shadow-lg shadow-purple-500/20 hover:scale-102"
+                      ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/20 hover:bg-cyan-400"
+                      : "bg-purple-500 text-white shadow-lg shadow-purple-500/20 hover:bg-purple-400"
                 }`}
               >
-                {sending ? "Enviando..." : "Enviar"}
+                {sending ? (
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                )}
               </button>
-            </form>
+            </div>
  
             {error && (
               <div className="mt-3 text-red-500 font-bold uppercase tracking-widest text-[8px] text-center">
