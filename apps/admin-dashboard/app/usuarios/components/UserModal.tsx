@@ -6,6 +6,16 @@ interface UserModalProps {
   onSuccess: () => void;
 }
 
+// Definición centralizada de roles
+export const ROLES = [
+  { value: "ADMIN",          label: "Administrador",    color: "bg-cyan-600 text-white shadow-cyan-500/20",      dot: "bg-cyan-400" },
+  { value: "CEO",            label: "CEO",              color: "bg-violet-600 text-white shadow-violet-500/20",   dot: "bg-violet-400" },
+  { value: "TECH",           label: "Especialista Téc.", color: "bg-amber-600/80 text-white shadow-amber-500/20", dot: "bg-amber-400" },
+  { value: "SALES",          label: "Ventas",           color: "bg-emerald-600 text-white shadow-emerald-500/20", dot: "bg-emerald-400" },
+  { value: "MARKETING",      label: "Marketing",        color: "bg-pink-600 text-white shadow-pink-500/20",      dot: "bg-pink-400" },
+  { value: "AGENT",          label: "Agente Oficial",   color: "bg-orange-600 text-white shadow-orange-500/20",  dot: "bg-orange-400" },
+];
+
 export default function UserModal({ onClose, onSuccess }: UserModalProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -29,10 +39,7 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
       });
 
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Error al crear usuario");
-      }
+      if (!res.ok) throw new Error(data.error || "Error al crear usuario");
 
       onSuccess();
       onClose();
@@ -43,10 +50,12 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
     }
   };
 
+  const selectedRole = ROLES.find(r => r.value === formData.role);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" onClick={onClose}>
-      <div 
-        className="bg-[#0f172a] border border-white/10 rounded-[2.5rem] w-full max-w-md overflow-hidden shadow-2xl"
+      <div
+        className="bg-[#0f172a] border border-white/10 rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
         onClick={e => e.stopPropagation()}
       >
         <div className="p-10">
@@ -63,6 +72,7 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Nombre */}
             <div>
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-2 px-1">Nombre Completo</label>
               <input
@@ -75,6 +85,7 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-2 px-1">Correo Electrónico</label>
               <input
@@ -87,6 +98,7 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
               />
             </div>
 
+            {/* Contraseña */}
             <div>
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-2 px-1">Contraseña Inicial</label>
               <input
@@ -99,27 +111,30 @@ export default function UserModal({ onClose, onSuccess }: UserModalProps) {
               />
             </div>
 
+            {/* Selector de Rol */}
             <div>
-              <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-2 px-1">Rol en el Sistema</label>
-              <div className="grid grid-cols-2 gap-3 p-1 bg-slate-950 rounded-2xl border border-white/5">
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, role: "TECH" })}
-                  className={`py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all ${
-                    formData.role === "TECH" ? "bg-slate-800 text-white shadow-lg border border-white/5" : "text-slate-600 hover:text-slate-400"
-                  }`}
-                >
-                  Especialista Técnico
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, role: "ADMIN" })}
-                  className={`py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all ${
-                    formData.role === "ADMIN" ? "bg-cyan-600 text-white shadow-lg shadow-cyan-500/20" : "text-slate-600 hover:text-slate-400"
-                  }`}
-                >
-                  Administrador
-                </button>
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] block mb-3 px-1">
+                Rol en el Sistema
+                {selectedRole && (
+                  <span className="ml-3 normal-case font-bold text-slate-300">— {selectedRole.label}</span>
+                )}
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {ROLES.map(role => (
+                  <button
+                    key={role.value}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, role: role.value })}
+                    className={`py-3 px-2 rounded-xl text-[9px] font-black tracking-widest uppercase transition-all flex items-center justify-center gap-2 ${
+                      formData.role === role.value
+                        ? `${role.color} shadow-lg`
+                        : "bg-slate-900 text-slate-600 hover:text-slate-300 border border-white/5"
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${formData.role === role.value ? "bg-white" : role.dot}`} />
+                    {role.label}
+                  </button>
+                ))}
               </div>
             </div>
 

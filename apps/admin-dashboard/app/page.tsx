@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getRoleConfig } from "../lib/roles";
 import { Card } from "@repo/ui/card";
 
 const containerVariants = {
@@ -207,16 +208,8 @@ export default function AdminOverview() {
               <p className="text-[10px] font-black text-white truncate max-w-[140px]">
                 {session?.user?.name || session?.user?.email || "Operador"}
               </p>
-              <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${
-                (session?.user as any)?.role === "ADMIN"
-                  ? "bg-cyan-500/20 text-cyan-400"
-                  : (session?.user as any)?.role === "TECH"
-                  ? "bg-amber-500/20 text-amber-400"
-                  : (session?.user as any)?.role === "SALES"
-                  ? "bg-emerald-500/20 text-emerald-400"
-                  : "bg-slate-700 text-slate-400"
-              }`}>
-                {(session?.user as any)?.role || "USER"}
+              <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${getRoleConfig((session?.user as any)?.role).navBadgeClass}`}>
+                {getRoleConfig((session?.user as any)?.role).label}
               </span>
             </div>
 

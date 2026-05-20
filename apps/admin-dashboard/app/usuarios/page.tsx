@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import UserModal from "./components/UserModal";
 import PasswordModal from "./components/PasswordModal";
 import EmailModal from "./components/EmailModal";
+import { getRoleConfig } from "../../lib/roles";
 
 interface User {
   id: string;
@@ -151,14 +152,10 @@ export default function UsuariosPage() {
                     <tr key={user.id} className={`group transition-colors ${isActive ? "hover:bg-white/[0.02]" : "opacity-50 hover:opacity-70 bg-slate-950/30"}`}>
                       <td className="px-8 py-6">
                         <div className="flex items-center gap-4">
-                          <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs ${
-                            user.role === "ADMIN" ? "bg-cyan-500/10 text-cyan-500" :
-                            user.role === "TECH"  ? "bg-amber-500/10 text-amber-500" :
-                            "bg-emerald-500/10 text-emerald-500"
-                          }`}>
-                            {user.name.charAt(0)}
-                          </div>
-                          <span className="text-sm font-bold text-white uppercase tracking-tight">{user.name}</span>
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-xs ${getRoleConfig(user.role).avatarClass}`}>
+                          {user.name.charAt(0)}
+                        </div>
+                        <span className="text-sm font-bold text-white uppercase tracking-tight">{user.name}</span>
                         </div>
                       </td>
                       <td className="px-8 py-6">
@@ -170,12 +167,8 @@ export default function UsuariosPage() {
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                          user.role === "ADMIN" ? "bg-cyan-500/10 text-cyan-500 border border-cyan-500/20" :
-                          user.role === "TECH"  ? "bg-amber-500/10 text-amber-500 border border-amber-500/20" :
-                          "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20"
-                        }`}>
-                          {user.role}
+                        <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${getRoleConfig(user.role).badgeClass}`}>
+                          {getRoleConfig(user.role).label}
                         </span>
                       </td>
                       <td className="px-8 py-6">
