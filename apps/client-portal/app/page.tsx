@@ -34,6 +34,22 @@ function EntryPortalContent() {
 
   const { status } = useSession();
 
+  // Dynamic prefix/year states for contract mask
+  const currentYear = new Date().getFullYear();
+  const [selectedPrefix, setSelectedPrefix] = useState("SOL");
+  const [selectedYear, setSelectedYear] = useState(currentYear.toString());
+  const [contractSuffix, setContractSuffix] = useState("");
+
+  // Sync prefix, year, and suffix to contractNumber state
+  useEffect(() => {
+    if (!contractSuffix.trim()) {
+      setContractNumber("");
+      return;
+    }
+    const padded = contractSuffix.trim().padStart(4, "0");
+    setContractNumber(`${selectedPrefix}-${selectedYear}-${padded}`);
+  }, [selectedPrefix, selectedYear, contractSuffix]);
+
   const autoLogin = useCallback(async (dniVal: string, contractVal: string, ticketId?: string | null) => {
     setLoading(true);
     setError("");
@@ -61,7 +77,15 @@ function EntryPortalContent() {
 
       if (pDni && pContract) {
         setDni(pDni);
-        setContractNumber(pContract);
+        // Parse the contract parameter e.g. "SOL-2026-0030" or "MR-2026-0008"
+        const match = pContract.trim().match(/^(SOL|MR|LEAD)[ -](\d{4})[ -](\d{1,6})$/i);
+        if (match && match[1] && match[2] && match[3]) {
+          setSelectedPrefix(match[1].toUpperCase());
+          setSelectedYear(match[2]);
+          setContractSuffix(match[3]);
+        } else {
+          setContractSuffix(pContract);
+        }
         autoLogin(pDni, pContract, pTicket);
       }
     }
@@ -219,13 +243,48 @@ function EntryPortalContent() {
 
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">ID de Contrato</label>
-                    <input
-                      type="text"
-                      value={contractNumber}
-                      onChange={(e) => setContractNumber(e.target.value)}
-                      placeholder="TK-202X-XXXX"
-                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 uppercase shadow-inner"
-                    />
+                    <div className="flex bg-slate-950/50 border border-white/5 rounded-2xl p-1.5 focus-within:border-cyan-500/40 focus-within:bg-slate-900 transition-all shadow-inner items-center">
+                      <div className="flex items-center gap-1 pl-4 pr-3 py-3 border-r border-white/5 bg-slate-900/40 rounded-xl select-none">
+                        {/* Prefijo */}
+                        <select
+                          value={selectedPrefix}
+                          onChange={(e) => setSelectedPrefix(e.target.value)}
+                          className="bg-transparent border-none text-cyan-500 font-extrabold text-xs uppercase outline-none cursor-pointer appearance-none text-center focus:ring-0 focus:outline-none"
+                        >
+                          <option value="SOL" className="bg-slate-950 text-cyan-400 font-bold">SOL</option>
+                          <option value="MR" className="bg-slate-950 text-cyan-400 font-bold">MR</option>
+                        </select>
+                        
+                        <span className="text-slate-700 font-black text-xs px-0.5">-</span>
+
+                        {/* Año */}
+                        <select
+                          value={selectedYear}
+                          onChange={(e) => setSelectedYear(e.target.value)}
+                          className="bg-transparent border-none text-cyan-500 font-extrabold text-xs outline-none cursor-pointer appearance-none text-center focus:ring-0 focus:outline-none"
+                        >
+                          {Array.from({ length: 5 }, (_, i) => (currentYear - 2 + i).toString()).map((yr) => (
+                            <option key={yr} value={yr} className="bg-slate-950 text-cyan-400 font-bold">{yr}</option>
+                          ))}
+                        </select>
+                        
+                        <span className="text-slate-700 font-black text-xs px-0.5">-</span>
+                      </div>
+
+                      {/* Input del Número de Contrato */}
+                      <input
+                        type="text"
+                        value={contractSuffix}
+                        onChange={(e) => {
+                          // Solo permitir números
+                          const val = e.target.value.replace(/\D/g, "");
+                          setContractSuffix(val);
+                        }}
+                        placeholder="Nº de Contrato (ej: 30 o 0030)"
+                        maxLength={6}
+                        className="flex-grow bg-transparent border-none text-white font-bold outline-none px-5 py-3.5 text-xs placeholder:text-slate-800 tracking-wider"
+                      />
+                    </div>
                   </div>
                 </motion.div>
               ) : (
