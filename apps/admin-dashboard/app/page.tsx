@@ -201,6 +201,25 @@ export default function AdminOverview() {
                   </>
                 )}
             </div>
+
+            {/* Usuario activo + Rol */}
+            <div className="flex flex-col items-end gap-1 border-l border-white/5 pl-6">
+              <p className="text-[10px] font-black text-white truncate max-w-[140px]">
+                {session?.user?.name || session?.user?.email || "Operador"}
+              </p>
+              <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${
+                (session?.user as any)?.role === "ADMIN"
+                  ? "bg-cyan-500/20 text-cyan-400"
+                  : (session?.user as any)?.role === "TECH"
+                  ? "bg-amber-500/20 text-amber-400"
+                  : (session?.user as any)?.role === "SALES"
+                  ? "bg-emerald-500/20 text-emerald-400"
+                  : "bg-slate-700 text-slate-400"
+              }`}>
+                {(session?.user as any)?.role || "USER"}
+              </span>
+            </div>
+
             <button onClick={() => signOut()} className="text-[9px] font-black text-red-500/50 hover:text-red-500 uppercase tracking-widest border border-red-500/10 px-4 py-2 rounded-xl transition-all">Desconectar</button>
           </div>
         </div>
