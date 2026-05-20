@@ -317,7 +317,7 @@ export default function AdminOverview() {
                 <div className="relative z-10">
                    <p className="text-purple-500 text-[8px] font-black uppercase tracking-[0.4em] mb-2">Canal Staff</p>
                    <h3 className="text-white font-black text-lg uppercase tracking-tight mb-4">Chat Staff Interno</h3>
-                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Comunicación directa y libre entre técnicos y administradores en tiempo real.</p>
+                   <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-relaxed">Comunicación interpersonal entre todos los colaboradores del Staff en todos sus roles.</p>
                 </div>
               </Card>
             </div>

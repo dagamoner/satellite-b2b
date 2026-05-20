@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import { auth } from "../../../auth";
+import { checkRole } from "../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -32,11 +33,8 @@ function mapAccount(acc: any) {
 
 // GET /api/crm/accounts - Listar todas las cuentas de cliente
 export async function GET(request: Request) {
-  const session = await auth();
-
-  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES"]);
+  if (error) return error;
 
   try {
     const { searchParams } = new URL(request.url);
@@ -77,11 +75,8 @@ export async function GET(request: Request) {
 
 // POST /api/crm/accounts - Crear nueva cuenta de cliente
 export async function POST(request: Request) {
-  const session = await auth();
-
-  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES"]);
+  if (error) return error;
 
   try {
     const body = await request.json();
@@ -147,11 +142,8 @@ export async function POST(request: Request) {
 
 // PATCH /api/crm/accounts - Actualizar estado o datos de una cuenta
 export async function PATCH(request: Request) {
-  const session = await auth();
-
-  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES"]);
+  if (error) return error;
 
   try {
     const body = await request.json();

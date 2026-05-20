@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import { checkRole } from "../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -12,7 +13,8 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 export async function GET(request: NextRequest) {
   try {
-    await cookies();
+    const { authorized, error: rbacError } = await checkRole(["ADMIN", "SALES", "TECH"]);
+    if (rbacError) return rbacError;
     const { searchParams } = new URL(request.url);
     const path = searchParams.get("path");
 

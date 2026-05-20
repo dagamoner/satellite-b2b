@@ -2,16 +2,14 @@ import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
 import { auth } from "../../../auth";
+import { checkRole } from "../../../../lib/rbac";
 
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-
-  if (!session || (session.user as any).role !== "ADMIN") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { authorized, error } = await checkRole(["ADMIN"]);
+  if (error) return error;
 
   try {
     const { id } = await params;

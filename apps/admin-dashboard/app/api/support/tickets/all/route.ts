@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import { cookies } from "next/headers";
+import { checkRole } from "../../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -9,9 +10,19 @@ export const dynamic = "force-dynamic";
  * Retorna todos los tickets del sistema para el Dashboard Admin
  */
 export async function GET() {
-  await await await cookies(); // Force dynamic runtime
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
+  if (error) return error;
+
+  const role = (session.user as any).role;
+  const userId = (session.user as any).id;
+
   try {
     const tickets = await prisma.supportTicket.findMany({
+      where: role === "TECH" ? {
+        contract: {
+          technicianId: userId
+        }
+      } : undefined,
       include: {
         contract: {
           select: {

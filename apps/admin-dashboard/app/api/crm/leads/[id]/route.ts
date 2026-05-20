@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import { auth } from "../../../../auth";
+import { checkRole } from "../../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -9,12 +10,10 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  const { id } = await params;
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES"]);
+  if (error) return error;
 
-  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { id } = await params;
 
   try {
     const body = await request.json();
@@ -166,12 +165,10 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  const { id } = await params;
+  const { authorized, error, session } = await checkRole(["ADMIN"]);
+  if (error) return error;
 
-  if (!session || (session.user as any).role !== "ADMIN") {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { id } = await params;
 
   try {
     // Eliminar actividades asociadas primero

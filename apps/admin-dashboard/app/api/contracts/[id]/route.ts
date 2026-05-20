@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma as db } from "@repo/database";
 import { cookies } from "next/headers";
+import { checkRole } from "../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -10,9 +11,20 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await cookies();
+    const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
+    if (error) return error;
+
     const { id } = await params;
     const body = await request.json();
+
+    const existingContract = await db.installationContract.findUnique({ where: { id } });
+    if (!existingContract) {
+      return NextResponse.json({ error: "Contrato no encontrado." }, { status: 404 });
+    }
+
+    if ((session.user as any).role === "TECH" && existingContract.technicianId !== (session.user as any).id) {
+      return NextResponse.json({ error: "No tienes permiso para modificar este contrato." }, { status: 403 });
+    }
 
     const { 
       status, 
@@ -68,9 +80,6 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, contract: updated });
   } catch (error: any) {
-    if (error?.code === "P2025") {
-      return NextResponse.json({ error: "Contrato no encontrado." }, { status: 404 });
-    }
     console.error("[PATCH /api/contracts/[id]]", error);
     return NextResponse.json({ error: "Error al actualizar el contrato." }, { status: 500 });
   }
@@ -82,7 +91,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await cookies();
+    const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
+    if (error) return error;
+
     const { id } = await params;
     const contract = await db.installationContract.findUnique({
       where: { id },
@@ -90,6 +101,10 @@ export async function GET(
 
     if (!contract) {
       return NextResponse.json({ error: "Contrato no encontrado." }, { status: 404 });
+    }
+
+    if ((session.user as any).role === "TECH" && contract.technicianId !== (session.user as any).id) {
+      return NextResponse.json({ error: "No tienes permiso para ver este contrato." }, { status: 403 });
     }
 
     return NextResponse.json({ contract });

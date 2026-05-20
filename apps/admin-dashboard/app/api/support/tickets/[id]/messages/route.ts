@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import { cookies } from "next/headers";
+import { checkRole } from "../../../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,21 @@ export async function GET(
   const { id } = await params;
 
   try {
-    await cookies();
+    const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
+    if (error) return error;
+
+    const ticket = await prisma.supportTicket.findUnique({
+      where: { id },
+      include: { contract: { select: { technicianId: true } } }
+    });
+
+    if (!ticket) {
+      return NextResponse.json({ error: "Ticket no encontrado" }, { status: 404 });
+    }
+
+    if ((session.user as any).role === "TECH" && ticket.contract.technicianId !== (session.user as any).id) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+    }
     const messages = await prisma.ticketMessage.findMany({
       where: { ticketId: id },
       orderBy: { createdAt: "asc" },
@@ -43,7 +58,21 @@ export async function POST(
   const { id } = await params;
 
   try {
-    await cookies();
+    const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
+    if (error) return error;
+
+    const ticket = await prisma.supportTicket.findUnique({
+      where: { id },
+      include: { contract: { select: { technicianId: true } } }
+    });
+
+    if (!ticket) {
+      return NextResponse.json({ error: "Ticket no encontrado" }, { status: 404 });
+    }
+
+    if ((session.user as any).role === "TECH" && ticket.contract.technicianId !== (session.user as any).id) {
+      return NextResponse.json({ error: "No autorizado" }, { status: 403 });
+    }
     const { content, attachments, authorId } = await request.json();
     console.log("[API_ADMIN_MESSAGES] POST request received:", { ticketId: id, content, authorId });
 

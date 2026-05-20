@@ -2,13 +2,11 @@ import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
 import { auth } from "../../auth";
+import { checkRole } from "../../../lib/rbac";
 
 export async function GET() {
-  const session = await auth();
-
-  if (!session || (session.user as any).role !== "ADMIN") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { authorized, error } = await checkRole(["ADMIN"]);
+  if (error) return error;
 
   try {
     const users = await prisma.user.findMany({
@@ -32,11 +30,8 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const session = await auth();
-
-  if (!session || (session.user as any).role !== "ADMIN") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const { authorized, error } = await checkRole(["ADMIN"]);
+  if (error) return error;
 
   try {
     const body = await req.json();

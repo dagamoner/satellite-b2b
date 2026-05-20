@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import { auth } from "../../../auth";
+import { checkRole } from "../../../../lib/rbac";
 
 export const dynamic = "force-dynamic";
 
 // POST /api/crm/activities - Registrar una nueva actividad de contacto
 export async function POST(request: Request) {
-  const session = await auth();
-
-  if (!session || !["ADMIN", "SALES"].includes((session.user as any).role)) {
-    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
-  }
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES"]);
+  if (error) return error;
 
   try {
     const body = await request.json();
