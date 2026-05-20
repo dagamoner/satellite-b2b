@@ -1,41 +1,64 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
-import { auth } from "../../../auth";
 import { checkRole } from "../../../../lib/rbac";
 
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { authorized, error } = await checkRole(["ADMIN"]);
+  const { error } = await checkRole(["ADMIN"]);
   if (error) return error;
 
   try {
     const { id } = await params;
     const body = await req.json();
-    const { password } = body;
+    const { password, email, active } = body;
 
-    if (!password) {
-      return NextResponse.json({ error: "Missing password" }, { status: 400 });
+    const updateData: any = {};
+
+    if (password) {
+      updateData.password = await bcrypt.hash(password, 10);
+    }
+    if (email) {
+      updateData.email = email;
+    }
+    if (typeof active === "boolean") {
+      updateData.active = active;
     }
 
-    // Hash new password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (Object.keys(updateData).length === 0) {
+      return NextResponse.json({ error: "No fields to update" }, { status: 400 });
+    }
 
     const user = await prisma.user.update({
       where: { id },
-      data: {
-        password: hashedPassword,
-      },
+      data: updateData,
     });
 
-    return NextResponse.json({ 
-      message: "Password updated successfully",
-      user: { id: user.id, email: user.email } 
+    return NextResponse.json({
+      message: "User updated successfully",
+      user: { id: user.id, email: user.email },
     });
-  } catch (error) {
-    console.error("[USER_PATCH]", error);
+  } catch (err) {
+    console.error("[USER_PATCH]", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { error } = await checkRole(["ADMIN"]);
+  if (error) return error;
+
+  try {
+    const { id } = await params;
+    await prisma.user.delete({ where: { id } });
+    return NextResponse.json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.error("[USER_DELETE]", err);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
