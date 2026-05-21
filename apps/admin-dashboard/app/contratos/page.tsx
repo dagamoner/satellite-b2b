@@ -6,7 +6,7 @@ import { useRealtimeContracts } from "../../hooks/useRealtimeContracts";
 import Link from "next/link";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const AdminPdfButton = dynamic(() => import("../../components/AdminPdfButton"), { 
   ssr: false,
@@ -598,6 +598,7 @@ function ContractModal({
 
 // ── Página Admin ───────────────────────────────────────────────────────────
 export default function ContratosAdminPage() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [filterTechId, setFilterTechId] = useState<string>("ALL");
   const [filterStatus, setFilterStatus] = useState<string>("ALL");
@@ -611,12 +612,12 @@ export default function ContratosAdminPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      redirect("/");
+      router.push("/");
     }
     if (status === "authenticated" && !["ADMIN", "TECH"].includes((session?.user as any)?.role)) {
-      redirect("/");
+      router.push("/");
     }
-  }, [status, session]);
+  }, [status, session, router]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

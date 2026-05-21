@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
@@ -13,6 +13,7 @@ import { Card } from "@repo/ui/card";
 const COLORS = ["#06b6d4", "#f59e0b", "#10b981", "#8b5cf6", "#ec4899", "#ef4444"];
 
 export default function ReportesPage() {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const [metrics, setMetrics] = useState<any>(null);
   const [loadingMetrics, setLoadingMetrics] = useState(true);
@@ -51,12 +52,12 @@ export default function ReportesPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      redirect("/");
+      router.push("/");
     }
     if (status === "authenticated" && (session?.user as { role?: string })?.role !== "ADMIN") {
-      redirect("/");
+      router.push("/");
     }
-  }, [status, session]);
+  }, [status, session, router]);
 
   if (status === "loading") return (
     <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-6">
