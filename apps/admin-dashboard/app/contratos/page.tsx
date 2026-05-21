@@ -137,6 +137,52 @@ function ContractModal({
   });
 
   const sigCanvas = useRef<SignatureCanvas>(null);
+  const [isTechDigitallySigned, setIsTechDigitallySigned] = useState(false);
+
+  const handleTechDigitalSignToggle = (checked: boolean) => {
+    setIsTechDigitallySigned(checked);
+    const canvasElement = sigCanvas.current?.getCanvas();
+    const ctx = canvasElement?.getContext("2d");
+    if (checked) {
+      if (canvasElement && ctx) {
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(10, 10, canvasElement.width - 20, canvasElement.height - 20);
+        
+        ctx.fillStyle = "#10b981";
+        ctx.beginPath();
+        ctx.arc(40, 50, 15, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(33, 50);
+        ctx.lineTo(38, 55);
+        ctx.lineTo(47, 45);
+        ctx.stroke();
+        
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 12px sans-serif";
+        ctx.fillText("FIRMADO DIGITALMENTE", 70, 46);
+        
+        const signerName = session?.user?.name || "Técnico de MR Technology";
+        ctx.fillStyle = "#2563eb";
+        ctx.font = "italic bold 18px Georgia";
+        ctx.fillText(signerName, 70, 80);
+        
+        const dateTime = new Date().toLocaleString("es-AR");
+        ctx.fillStyle = "#64748b";
+        ctx.font = "9px monospace";
+        ctx.fillText(`FECHA Y HORA: ${dateTime}`, 70, 110);
+        ctx.fillText("AUTENTICADO POR SATELLITE B2B PLATFORM", 70, 125);
+      }
+    } else {
+      sigCanvas.current?.clear();
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
     const file = e.target.files?.[0];
@@ -171,7 +217,9 @@ function ContractModal({
           networkMode,
           perfObservations,
           ...photos,
-          techSignature: sigCanvas.current?.isEmpty() ? (contract.techSignature || undefined) : sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png"),
+          techSignature: isTechDigitallySigned
+            ? sigCanvas.current?.getCanvas().toDataURL("image/png")
+            : (sigCanvas.current?.isEmpty() ? (contract.techSignature || undefined) : sigCanvas.current?.getTrimmedCanvas().toDataURL("image/png")),
           ...(status === "COMPLETED" ? { installedAt: new Date().toISOString() } : {}),
         }),
       });
@@ -408,9 +456,20 @@ function ContractModal({
 
               {/* Firma del Técnico */}
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-6">04. Firma del Técnico</h3>
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500">04. Firma del Técnico</h3>
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-slate-400 hover:text-slate-300 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={isTechDigitallySigned}
+                      onChange={(e) => handleTechDigitalSignToggle(e.target.checked)}
+                      className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 focus:ring-offset-slate-900"
+                    />
+                    <span className="text-xs font-bold">Firmar</span>
+                  </label>
+                </div>
                 <div className="space-y-4">
-                  <div className="bg-white rounded-xl overflow-hidden shadow-inner border border-slate-700">
+                  <div className={`bg-white rounded-xl overflow-hidden shadow-inner border border-slate-700 ${isTechDigitallySigned ? "pointer-events-none opacity-90" : ""}`}>
                     <SignatureCanvas 
                       ref={sigCanvas}
                       penColor="#0f172a"
@@ -420,7 +479,10 @@ function ContractModal({
                   <div className="flex justify-between items-center">
                     <p className="text-[9px] text-slate-500 italic">Al firmar, usted confirma que la instalación cumple con los estándares de calidad de MR Technology.</p>
                     <button 
-                      onClick={() => sigCanvas.current?.clear()}
+                      onClick={() => {
+                        setIsTechDigitallySigned(false);
+                        sigCanvas.current?.clear();
+                      }}
                       className="text-[10px] font-bold text-red-400 hover:text-red-300 uppercase tracking-widest"
                     >
                       Limpiar Firma

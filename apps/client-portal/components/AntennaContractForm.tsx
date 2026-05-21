@@ -153,6 +153,99 @@ export default function AntennaContractForm({
   const reportRef = useRef<HTMLDivElement>(null);
   const sigCanvas = useRef<SignatureCanvas>(null);
 
+  const [isTechDigitallySigned, setIsTechDigitallySigned] = useState(false);
+  const [isClientDigitallySigned, setIsClientDigitallySigned] = useState(false);
+
+  const handleTechDigitalSignToggle = (checked: boolean) => {
+    setIsTechDigitallySigned(checked);
+    const canvasElement = techSigCanvas.current?.getCanvas();
+    const ctx = canvasElement?.getContext("2d");
+    if (checked) {
+      if (canvasElement && ctx) {
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(5, 5, canvasElement.width - 10, canvasElement.height - 10);
+        
+        ctx.fillStyle = "#10b981";
+        ctx.beginPath();
+        ctx.arc(25, 30, 10, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(20, 30);
+        ctx.lineTo(24, 34);
+        ctx.lineTo(30, 26);
+        ctx.stroke();
+        
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 9px sans-serif";
+        ctx.fillText("FIRMADO DIGITALMENTE", 45, 27);
+        
+        const signerName = formData.techName || "Técnico de MR Technology";
+        ctx.fillStyle = "#2563eb";
+        ctx.font = "italic bold 12px Georgia";
+        ctx.fillText(signerName, 45, 50);
+        
+        const dateTime = new Date().toLocaleString("es-AR");
+        ctx.fillStyle = "#64748b";
+        ctx.font = "7px monospace";
+        ctx.fillText(`FECHA Y HORA: ${dateTime}`, 45, 70);
+        ctx.fillText("AUTENTICADO POR SATELLITE B2B", 45, 80);
+      }
+    } else {
+      techSigCanvas.current?.clear();
+    }
+  };
+
+  const handleClientDigitalSignToggle = (checked: boolean) => {
+    setIsClientDigitallySigned(checked);
+    const canvasElement = sigCanvas.current?.getCanvas();
+    const ctx = canvasElement?.getContext("2d");
+    if (checked) {
+      if (canvasElement && ctx) {
+        ctx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        
+        ctx.strokeStyle = "#cbd5e1";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(5, 5, canvasElement.width - 10, canvasElement.height - 10);
+        
+        ctx.fillStyle = "#10b981";
+        ctx.beginPath();
+        ctx.arc(25, 30, 10, 0, 2 * Math.PI);
+        ctx.fill();
+        
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(20, 30);
+        ctx.lineTo(24, 34);
+        ctx.lineTo(30, 26);
+        ctx.stroke();
+        
+        ctx.fillStyle = "#0f172a";
+        ctx.font = "bold 9px sans-serif";
+        ctx.fillText("FIRMADO DIGITALMENTE", 45, 27);
+        
+        const signerName = formData.clientNameSign || formData.razonSocial || "Cliente de MR Technology";
+        ctx.fillStyle = "#2563eb";
+        ctx.font = "italic bold 12px Georgia";
+        ctx.fillText(signerName, 45, 50);
+        
+        const dateTime = new Date().toLocaleString("es-AR");
+        ctx.fillStyle = "#64748b";
+        ctx.font = "7px monospace";
+        ctx.fillText(`FECHA Y HORA: ${dateTime}`, 45, 70);
+        ctx.fillText("AUTENTICADO POR SATELLITE B2B", 45, 80);
+      }
+    } else {
+      sigCanvas.current?.clear();
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
@@ -204,7 +297,7 @@ export default function AntennaContractForm({
       alert("El técnico debe confirmar los datos de instalación tildando el checkbox.");
       return;
     }
-    if (techSigCanvas.current?.isEmpty()) {
+    if (!isTechDigitallySigned && techSigCanvas.current?.isEmpty()) {
       alert("Por favor, estampe su firma de técnico.");
       return;
     }
@@ -226,7 +319,9 @@ export default function AntennaContractForm({
         obstructionObject: formData.obstructionObject,
         perfObservations: formData.perfObservations,
         // Firmas
-        techSignature: techSigCanvas.current?.toDataURL(),
+        techSignature: isTechDigitallySigned
+          ? techSigCanvas.current?.getCanvas().toDataURL("image/png")
+          : techSigCanvas.current?.toDataURL(),
         // Enviar Fotos
         photoAntena: formData.photoAntena,
         photoSoporte: formData.photoSoporte,
@@ -253,7 +348,7 @@ export default function AntennaContractForm({
       alert("Debe aceptar los términos para continuar.");
       return;
     }
-    if (sigCanvas.current?.isEmpty()) {
+    if (!isClientDigitallySigned && sigCanvas.current?.isEmpty()) {
       alert("Por favor, estampe su firma holográfica.");
       return;
     }
@@ -262,7 +357,9 @@ export default function AntennaContractForm({
     setShowFinalModal(true);
 
     try {
-      const signatureData = sigCanvas.current?.getTrimmedCanvas().toDataURL('image/png');
+      const signatureData = isClientDigitallySigned
+        ? sigCanvas.current?.getCanvas().toDataURL("image/png")
+        : sigCanvas.current?.getTrimmedCanvas().toDataURL('image/png');
 
       // 1. Finalizar Contrato en DB
       await updateTicketStatus(ticketId, "COMPLETED", {
@@ -607,7 +704,20 @@ export default function AntennaContractForm({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Firma del Técnico */}
             <div className="signature-box border rounded-2xl p-6 bg-slate-50/50">
-              <p className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-widest text-center">Visto Bueno / Firma del Técnico</p>
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Visto Bueno / Firma del Técnico</p>
+                {ticketStatus === 'TECH_IN_PROGRESS' && (
+                  <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
+                    <input
+                      type="checkbox"
+                      checked={isTechDigitallySigned}
+                      onChange={(e) => handleTechDigitalSignToggle(e.target.checked)}
+                      className="w-3.5 h-3.5 rounded border-slate-300 bg-white text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-[10px] font-bold">Firmar</span>
+                  </label>
+                )}
+              </div>
               {ticketStatus === 'TECH_IN_PROGRESS' ? (
                 <>
                   <div className="grid grid-cols-2 gap-4 mb-4">
@@ -634,14 +744,22 @@ export default function AntennaContractForm({
                       />
                     </div>
                   </div>
-                  <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
+                  <div className={`sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner ${isTechDigitallySigned ? "pointer-events-none opacity-90" : ""}`}>
                     <SignatureCanvas 
                       ref={techSigCanvas}
                       penColor='#0f172a'
                       canvasProps={{width: 300, height: 150, className: 'sigCanvas'}}
                     />
                   </div>
-                  <button onClick={() => techSigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma Técnico</button>
+                  <button 
+                    onClick={() => {
+                      setIsTechDigitallySigned(false);
+                      techSigCanvas.current?.clear();
+                    }}
+                    className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto"
+                  >
+                    Limpiar Firma Técnico
+                  </button>
                   <div className="mt-4 flex items-center gap-3 justify-center">
                     <input type="checkbox" id="techAccept" checked={isTechAccepted} onChange={(e) => setIsTechAccepted(e.target.checked)} className="w-4 h-4" />
                     <label htmlFor="techAccept" className="normal-case font-medium text-[10px] text-slate-700">Confirmo los datos técnicos.</label>
@@ -660,7 +778,20 @@ export default function AntennaContractForm({
 
             {/* Firma del Cliente */}
             <div className="signature-box border rounded-2xl p-6 bg-blue-50/30 border-blue-100">
-              <p className="text-[10px] font-black uppercase text-blue-500 mb-4 tracking-widest text-center">Firma de Aceptación del Cliente</p>
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Firma de Aceptación del Cliente</p>
+                {ticketStatus === 'SIGNATURE_PENDING' && (
+                  <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
+                    <input
+                      type="checkbox"
+                      checked={isClientDigitallySigned}
+                      onChange={(e) => handleClientDigitalSignToggle(e.target.checked)}
+                      className="w-3.5 h-3.5 rounded border-blue-300 bg-white text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-[10px] font-bold text-blue-600">Firmar</span>
+                  </label>
+                )}
+              </div>
               
               {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') ? (
                 <>
@@ -695,14 +826,22 @@ export default function AntennaContractForm({
                         Yo, <strong>{formData.clientNameSign || formData.razonSocial}</strong>, acepto la instalación realizada y los términos del contrato.
                       </p>
                       
-                      <div className="sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner">
+                      <div className={`sig-canvas-container bg-white border rounded-xl overflow-hidden shadow-inner ${isClientDigitallySigned ? "pointer-events-none opacity-90" : ""}`}>
                         <SignatureCanvas 
                           ref={sigCanvas}
                           penColor='#0f172a'
                           canvasProps={{width: 300, height: 150, className: 'sigCanvas'}}
                         />
                       </div>
-                      <button onClick={() => sigCanvas.current?.clear()} className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto">Limpiar Firma</button>
+                      <button 
+                        onClick={() => {
+                          setIsClientDigitallySigned(false);
+                          sigCanvas.current?.clear();
+                        }}
+                        className="text-[9px] uppercase font-bold text-red-500 mt-2 block mx-auto"
+                      >
+                        Limpiar Firma
+                      </button>
                       
                       <div className="mt-4 flex items-center gap-3 justify-center">
                         <input type="checkbox" id="accept" checked={isAccepted} onChange={(e) => setIsAccepted(e.target.checked)} className="w-4 h-4" />
