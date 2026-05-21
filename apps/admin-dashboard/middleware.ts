@@ -10,16 +10,11 @@ export default auth((req: any) => {
     return NextResponse.redirect(new URL("/", req.nextUrl));
   }
 
-  // Si está logueado y trata de ir a la página de login, redirigir al dashboard
-  if (isLoggedIn && pathname === "/") {
-    return NextResponse.redirect(new URL("/tickets", req.nextUrl));
-  }
-
   return NextResponse.next();
 });
 
 export const config = {
-  // Excluir rutas de API, archivos estáticos y la página de login del middleware
+  // Excluir rutas de API, archivos estáticos y favicon del middleware
   matcher: [
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
