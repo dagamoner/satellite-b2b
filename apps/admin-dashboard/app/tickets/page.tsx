@@ -327,7 +327,7 @@ export default function AdminDashboard() {
         <div className="p-6 border-b border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent">
           <div className="flex items-center gap-3 mb-6 justify-between">
             <div className="flex items-center gap-3">
-              <Link 
+              <a 
                 href="/" 
                 className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90"
                 title="Volver al Dashboard"
@@ -335,7 +335,7 @@ export default function AdminDashboard() {
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
                 </svg>
-              </Link>
+              </a>
               <a 
                 href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} 
                 className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-cyan-400 hover:border-cyan-500/50 transition-all active:scale-90"
@@ -658,12 +658,6 @@ export default function AdminDashboard() {
                       rows={1}
                       value={reply}
                       onChange={e => setReply(e.target.value)}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          handleSendReply();
-                        }
-                      }}
                     />
                     <button 
                       onClick={handleSendReply}

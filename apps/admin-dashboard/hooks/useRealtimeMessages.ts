@@ -14,30 +14,71 @@ export function useRealtimeMessages(ticketId: string | undefined) {
 
   const fetchMessages = async () => {
     if (!ticketId) return;
-    const { data, error } = await supabase
-      .from('ticket_messages')
-      .select('*, users(name, role)')
-      .eq('ticketId', ticketId)
-      .order('createdAt', { ascending: true });
     
-    if (error) {
-      console.error("[useRealtimeMessages] Error fetching messages:", error);
-    }
+    try {
+      console.log(`[useRealtimeMessages] Fetching messages for ticket ${ticketId} from backend API...`);
+      const response = await fetch(`/api/support/tickets/${ticketId}/messages`);
+      
+      if (!response.ok) {
+        throw new Error(`API error status: ${response.status}`);
+      }
+      
+      const apiData = await response.json();
+      console.log("[useRealtimeMessages] API messages success! Messages count:", apiData?.messages?.length || 0);
+      
+      if (apiData && apiData.messages) {
+        const mapped: Message[] = apiData.messages.map((m: any) => {
+          const authorInfo = m.author || m.users;
+          return {
+            ...m,
+            authorId: m.authorId,
+            createdAt: m.createdAt || m.created_at,
+            author: authorInfo ? { name: authorInfo.name, role: authorInfo.role } : undefined
+          };
+        });
+        setMessages(mapped);
+        return;
+      }
+      
+      throw new Error("No messages in API response");
+    } catch (err) {
+      console.warn("[useRealtimeMessages] API fetch failed, trying client-side Supabase fallback:", err);
+      try {
+        const { data, error } = await supabase
+          .from('ticket_messages')
+          .select('*, users(name, role)')
+          .eq('ticketId', ticketId)
+          .order('createdAt', { ascending: true });
+        
+        if (error) {
+          console.error("[useRealtimeMessages] Supabase fallback error:", error);
+          throw error;
+        }
 
-    if (data) {
-      const mapped: Message[] = data.map((m: any) => ({
-        ...m,
-        authorId: m.authorId,
-        createdAt: m.createdAt,
-        author: m.users ? { name: m.users.name, role: m.users.role } : undefined
-      }));
-      setMessages(mapped);
+        if (data) {
+          const mapped: Message[] = data.map((m: any) => ({
+            ...m,
+            authorId: m.authorId,
+            createdAt: m.createdAt,
+            author: m.users ? { name: m.users.name, role: m.users.role } : undefined
+          }));
+          setMessages(mapped);
+        }
+      } catch (fallbackErr) {
+        console.error("[useRealtimeMessages] Both API and Supabase queries failed:", fallbackErr);
+      }
     }
   };
 
   useEffect(() => {
     if (!ticketId) return;
     fetchMessages();
+
+    // Polling fallback cada 15 segundos para el chat activo
+    const intervalId = setInterval(() => {
+      console.log(`[useRealtimeMessages] Polling messages for ticket ${ticketId}...`);
+      fetchMessages();
+    }, 15000);
 
     const channel = supabase
       .channel(`ticket-messages-${ticketId}`)
@@ -50,29 +91,27 @@ export function useRealtimeMessages(ticketId: string | undefined) {
           filter: `ticketId=eq.${ticketId}`
         },
         (payload) => {
+          console.log("[useRealtimeMessages] Realtime new message event! Updating messages...");
           const newMsg = payload.new as any;
           setMessages(prev => {
-            // Evitar duplicados (por ejemplo, si ya se añadió optimísticamente)
             if (prev.find(m => m.id === newMsg.id)) return prev;
             
+            const authorInfo = newMsg.author || newMsg.users;
             return [...prev, {
               ...newMsg,
               authorId: newMsg.authorId,
-              createdAt: newMsg.createdAt,
-              // Nota: author info (users) no viene en el payload de Supabase Realtime directo
-              // Pero podemos asumir que si es el usuario actual, ya lo sabemos, o refetch si es necesario.
-              // Por simplicidad en este sistema, refetch es más seguro para traer los joins (users).
-              // Pero intentemos optimizar: si no viene el join, al menos mostramos el contenido.
+              createdAt: newMsg.createdAt || newMsg.created_at,
+              author: authorInfo ? { name: authorInfo.name, role: authorInfo.role } : undefined
             }];
           });
           
-          // Refetch opcional si queremos traer la info del usuario (author join)
-          fetchMessages(); 
+          fetchMessages(); // Traer datos frescos (como la relación author/users)
         }
       )
       .subscribe();
 
     return () => {
+      clearInterval(intervalId);
       supabase.removeChannel(channel);
     };
   }, [ticketId]);

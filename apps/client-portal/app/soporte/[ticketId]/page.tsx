@@ -323,12 +323,6 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
                   placeholder="Transmitir reporte o consulta técnica..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
                 />
 
                 <button 

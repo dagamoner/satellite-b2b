@@ -298,11 +298,11 @@ export default function LeadsPage() {
           <p className="text-slate-500 text-[11px] font-black uppercase tracking-widest leading-relaxed mb-6">
             Este módulo CRM está reservado exclusivamente para la administración comercial y marketing corporativo.
           </p>
-          <Link href="/">
+          <a href="/">
             <button className="bg-slate-900 border border-white/5 hover:border-cyan-500/30 text-white font-black px-8 py-3 rounded-xl uppercase text-[10px] tracking-widest transition-all">
               Volver al NOC Dashboard
             </button>
-          </Link>
+          </a>
         </Card>
       </main>
     );
@@ -320,9 +320,18 @@ export default function LeadsPage() {
       <nav className="border-b border-white/5 bg-slate-950/40 backdrop-blur-3xl sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto px-8 h-24 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <Link href="/" className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-black">
+            <a 
+              href="/" 
+              className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90 mr-2"
+              title="Volver al Dashboard"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+              </svg>
+            </a>
+            <a href="/" className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-black">
               MR
-            </Link>
+            </a>
             <div>
               <p className="text-white font-black text-sm uppercase tracking-tighter">CRM Satelital Nativo</p>
               <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Comercial & Marketing</p>
@@ -331,10 +340,10 @@ export default function LeadsPage() {
 
           <div className="flex items-center gap-8">
             <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5">
-              <Link href="/" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Volver al NOC</Link>
-              <Link href="/crm/leads" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-cyan-400 bg-white/5 rounded-lg border border-white/5 transition-colors">Leads Kanban</Link>
-              <Link href="/crm/accounts" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Clientes 360</Link>
-              <Link href="/crm/invoices" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Cobros</Link>
+              <a href="/" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Volver al NOC</a>
+              <a href="/crm/leads" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-cyan-400 bg-white/5 rounded-lg border border-white/5 transition-colors">Leads Kanban</a>
+              <a href="/crm/accounts" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Clientes 360</a>
+              <a href="/crm/invoices" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Cobros</a>
             </div>
             <button onClick={() => signOut()} className="text-[9px] font-black text-red-500/50 hover:text-red-500 uppercase tracking-widest border border-red-500/10 px-4 py-2 rounded-xl transition-all">Desconectar</button>
           </div>

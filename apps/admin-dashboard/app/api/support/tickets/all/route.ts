@@ -28,6 +28,7 @@ export async function GET() {
           select: {
             id: true,
             clientName: true,
+            contractNumber: true,
           }
         },
       },

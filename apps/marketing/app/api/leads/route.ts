@@ -68,11 +68,52 @@ export async function POST(request: Request) {
       }
     });
 
+    // 3. Crear el Lead comercial en el CRM (crm_leads)
+    const leadCount = await db.lead.count();
+    const leadNumber = `L-${10000 + leadCount + 1}`;
+
+    // Buscar un usuario administrador para asociar el lead y la actividad comercial
+    const adminUser = await db.user.findFirst({
+      where: { role: "ADMIN" }
+    });
+
+    const lead = await db.lead.create({
+      data: {
+        leadNumber,
+        clientName: name,
+        companyName: name,
+        contactName: name,
+        email,
+        phone: phone || "Sin especificar",
+        city: "Por definir",
+        source: "WEB_MARKETING",
+        status: "NEW",
+        estimatedValue: 150000, // Presupuesto inicial estimado estándar
+        planInterest: planName || "POR_DEFINIR",
+        notes: `Solicitud de antena vía web. Tipo: ${type}. DNI: ${dni}. Mensaje: ${message || "Sin mensaje"}`,
+        assignedToId: adminUser?.id || null,
+      }
+    });
+
+    // Registrar la actividad inicial de creación (crm_activities)
+    if (adminUser) {
+      await db.clientActivity.create({
+        data: {
+          type: "NOTE",
+          title: "Lead creado (Web)",
+          description: `Nuevo lead registrado desde la Landing Page. Plan de interés: ${planName || type}.`,
+          createdById: adminUser.id,
+          leadId: lead.id,
+        }
+      });
+    }
+
     return NextResponse.json({ 
       success: true, 
       contractNumber: contract.contractNumber,
       clientDni: contract.clientDni,
-      ticketId: ticket.id
+      ticketId: ticket.id,
+      leadId: lead.id
     });
 
   } catch (error: any) {
