@@ -3,8 +3,10 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@repo/database";
 import bcrypt from "bcryptjs";
+import { authConfig } from "../auth.config";
 
 const result = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       name: "Credentials",
@@ -51,29 +53,6 @@ const result = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.role = (user as { role?: string }).role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        const user = session.user as { role?: string; id?: string };
-        user.role = token.role as string;
-        user.id = token.sub as string;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/", // Redirect to home/login if not authenticated
-  },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
 });
 
 export const handlers = result.handlers;
