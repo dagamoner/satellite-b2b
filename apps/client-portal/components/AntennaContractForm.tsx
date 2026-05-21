@@ -46,6 +46,14 @@ interface AntennaContractFormProps {
     techDni?: string | null;
     techSignedAt?: Date | string | null;
     clientSignedAt?: Date | string | null;
+    techSignature?: string | null;
+    clientSignature?: string | null;
+    photoAntena?: string | null;
+    photoSoporte?: string | null;
+    photoRouter?: string | null;
+    photoTest?: string | null;
+    photoApp?: string | null;
+    photoRack?: string | null;
   };
 }
 
@@ -85,6 +93,8 @@ interface AntennaFormData {
   photoRack: string;
   cableColor?: string;
   // Campos de firma detallados
+  techSignature?: string;
+  clientSignature?: string;
   techName: string;
   techDni: string;
   techSignedAt?: string;
@@ -131,13 +141,15 @@ export default function AntennaContractForm({
     observations: initialData?.observations || '',
     perfObservations: initialData?.perfObservations || '',
     // Photos
-    photoAntena: '',
-    photoSoporte: '',
-    photoRouter: '',
-    photoTest: '',
-    photoApp: '',
-    photoRack: '',
+    photoAntena: initialData?.photoAntena || '',
+    photoSoporte: initialData?.photoSoporte || '',
+    photoRouter: initialData?.photoRouter || '',
+    photoTest: initialData?.photoTest || '',
+    photoApp: initialData?.photoApp || '',
+    photoRack: initialData?.photoRack || '',
     // Inicialización de firmas
+    techSignature: initialData?.techSignature || '',
+    clientSignature: initialData?.clientSignature || '',
     techName: initialData?.techName || '',
     techDni: initialData?.techDni || '',
     techSignedAt: initialData?.techSignedAt ? new Date(initialData.techSignedAt).toLocaleString('es-AR') : '',
@@ -697,6 +709,32 @@ export default function AntennaContractForm({
           </div>
         </div>
 
+        {/* SECTION 3.5: PHOTO EVIDENCE (Read-only for SIGNATURE_PENDING or COMPLETED) */}
+        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') && (
+          <div className="doc-section">
+            <div className="section-header">03.5. Evidencias Fotográficas de la Instalación</div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+              {[
+                { id: 'photoAntena', label: 'Antena (Panorámica)' },
+                { id: 'photoSoporte', label: 'Montaje y Soporte' },
+                { id: 'photoRouter', label: 'Router/Switch Interior' },
+                { id: 'photoTest', label: 'Test de Velocidad' },
+                { id: 'photoApp', label: 'Obstrucciones (App)' },
+                { id: 'photoRack', label: 'Rack Empresarial' }
+              ].map((item) => {
+                const photoSrc = formData[item.id as keyof typeof formData];
+                if (!photoSrc) return null;
+                return (
+                  <div key={item.id} className="border border-slate-200 rounded-2xl p-4 text-center bg-slate-50/50">
+                    <div className="text-[10px] font-black uppercase text-slate-500 mb-2">{item.label}</div>
+                    <img src={photoSrc as string} className="h-24 w-full object-cover rounded-lg shadow-sm" alt={item.label} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* SECTION 4: HOLOGRAPHIC SIGNATURES */}
         <div className="doc-section">
           <div className="section-header">04. Conformidad y Firmas</div>
@@ -769,9 +807,15 @@ export default function AntennaContractForm({
                 <div className="text-center p-4">
                   <div className="text-[10px] font-bold text-slate-700 mb-1">{formData.techName || 'TÉCNICO AUTORIZADO'}</div>
                   <div className="text-[9px] text-slate-400 mb-2">DNI: {formData.techDni || 'N/A'}</div>
-                  <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200">
-                    {formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA'}
-                  </div>
+                  {formData.techSignature ? (
+                    <div className="h-20 w-40 bg-slate-100 rounded mx-auto flex items-center justify-center border border-slate-200 overflow-hidden p-1">
+                      <img src={formData.techSignature} className="max-h-full max-w-full object-contain" alt="Firma Técnico" />
+                    </div>
+                  ) : (
+                    <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200">
+                      {formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA'}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -852,9 +896,15 @@ export default function AntennaContractForm({
                     <div className="text-center p-4">
                       <div className="text-[10px] font-bold text-blue-700 mb-1">{formData.clientNameSign || formData.razonSocial}</div>
                       <div className="text-[9px] text-slate-400 mb-2">DNI: {formData.clientDniSign || formData.cuit}</div>
-                      <div className="h-16 w-32 bg-blue-500/10 rounded mx-auto flex items-center justify-center text-[9px] text-blue-500 font-bold uppercase tracking-tighter border border-dashed border-blue-200">
-                        {formData.clientSignedAt ? `FIRMADO: ${formData.clientSignedAt}` : 'CONTRATO FIRMADO DIGITALMENTE'}
-                      </div>
+                      {formData.clientSignature ? (
+                        <div className="h-20 w-40 bg-blue-500/5 rounded mx-auto flex items-center justify-center border border-blue-200 overflow-hidden p-1">
+                          <img src={formData.clientSignature} className="max-h-full max-w-full object-contain" alt="Firma Cliente" />
+                        </div>
+                      ) : (
+                        <div className="h-16 w-32 bg-blue-500/10 rounded mx-auto flex items-center justify-center text-[9px] text-blue-500 font-bold uppercase tracking-tighter border border-dashed border-blue-200">
+                          {formData.clientSignedAt ? `FIRMADO: ${formData.clientSignedAt}` : 'CONTRATO FIRMADO DIGITALMENTE'}
+                        </div>
+                      )}
                     </div>
                   )}
                 </>

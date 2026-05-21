@@ -28,17 +28,7 @@ export async function GET(
     const ticket = await prisma.supportTicket.findUnique({
       where: { id },
       include: {
-        contract: {
-          select: {
-            clientDni: true,
-            clientName: true,
-            clientEmail: true,
-            clientPhone: true,
-            planType: true,
-            contractNumber: true,
-            status: true,
-          }
-        }
+        contract: true
       }
     });
 

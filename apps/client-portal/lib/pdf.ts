@@ -257,13 +257,19 @@ export const generateContractPDF = async (contract: Contract) => {
     for (let i = 0; i < photos.length; i++) {
       const p = photos[i];
       if (!p) continue;
-      // Obtener URL firmada
       try {
-        const res = await fetch(`/api/contracts/photos?path=${encodeURIComponent(p.path!)}`);
-        const { signedUrl } = await res.json();
-        if (signedUrl) {
-          const img = await loadImage(signedUrl);
-          
+        let img;
+        if (p.path!.startsWith("data:")) {
+          img = await loadImage(p.path!);
+        } else {
+          const res = await fetch(`/api/contracts/photos?path=${encodeURIComponent(p.path!)}`);
+          const { signedUrl } = await res.json();
+          if (signedUrl) {
+            img = await loadImage(signedUrl);
+          }
+        }
+
+        if (img) {
           if (photoY > 240) { doc.addPage(); photoY = 25; }
           
           doc.setTextColor(51, 65, 85);

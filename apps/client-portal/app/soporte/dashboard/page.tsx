@@ -245,14 +245,26 @@ export default function SupportDashboard() {
                 </div>
               </div>
               <div className="mt-12 pt-10 border-t border-white/5">
-                {currentContract?.status === 'LEAD' ? (
+                {currentContract?.status === 'COMPLETED' ? (
+                  <ClientPdfButton contract={currentContract} className="w-full" />
+                ) : currentContract?.status === 'SIGNATURE_PENDING' ? (
+                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-amber-500/20 text-center">
+                    <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest leading-relaxed">
+                      ✍️ Esperando firma del cliente
+                    </p>
+                  </div>
+                ) : currentContract?.status === 'IN_PROGRESS' || currentContract?.status === 'APPROVED' ? (
+                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-cyan-500/20 text-center">
+                    <p className="text-[9px] font-black text-cyan-500 uppercase tracking-widest leading-relaxed">
+                      🔧 Instalación técnica en proceso
+                    </p>
+                  </div>
+                ) : (
                   <div className="bg-slate-950/50 p-6 rounded-2xl border border-white/5 text-center">
                     <p className="text-[9px] font-black text-slate-600 uppercase tracking-widest leading-relaxed">
                       Requiere completar formalización para acceso total a servicios.
                     </p>
                   </div>
-                ) : (
-                  <ClientPdfButton contract={currentContract} className="w-full" />
                 )}
               </div>
 
@@ -316,7 +328,7 @@ export default function SupportDashboard() {
                 <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Soporte Técnico en Tiempo Real</p>
               </div>
               <div className="flex items-center gap-6">
-                {currentContract?.status === 'LEAD' && (
+                {['LEAD', 'SIGNATURE_PENDING'].includes(currentContract?.status) && (
                   <button 
                     onClick={async () => {
                       const existingContractTicket = tickets.find(t => t.category === "Contrato");
@@ -417,10 +429,18 @@ export default function SupportDashboard() {
                             <div className="text-left md:text-right space-y-3">
                               <div className={`inline-flex items-center gap-3 text-[8px] font-black px-6 py-2.5 rounded-full border uppercase tracking-[0.3em] shadow-2xl ${
                                 t.status === 'OPEN' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 shadow-amber-500/5' : 
-                                t.status === 'IN_PROGRESS' ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400' :
-                                'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                                t.status === 'CONTRACT_INITIATED' ? 'bg-blue-500/10 border-blue-500/30 text-blue-400' :
+                                (t.status === 'TECH_IN_PROGRESS' || t.status === 'IN_PROGRESS') ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-400 shadow-cyan-500/5' :
+                                t.status === 'SIGNATURE_PENDING' ? 'bg-amber-500/10 border-amber-500/30 text-amber-500 shadow-amber-500/5' :
+                                t.status === 'COMPLETED' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400 shadow-emerald-500/5' :
+                                'bg-slate-500/10 border-slate-500/30 text-slate-400'
                               }`}>
-                                {t.status === 'OPEN' ? "ABIERTO" : t.status === 'IN_PROGRESS' ? "EN PROCESO" : "COMPLETADO"}
+                                {t.status === 'OPEN' ? "ABIERTO" : 
+                                 t.status === 'CONTRACT_INITIATED' ? "INICIADO" :
+                                 (t.status === 'TECH_IN_PROGRESS' || t.status === 'IN_PROGRESS') ? "EN PROCESO" :
+                                 t.status === 'SIGNATURE_PENDING' ? "FIRMA PENDIENTE" :
+                                 t.status === 'COMPLETED' ? "COMPLETADO" :
+                                 t.status}
                               </div>
                               <p className="text-[8px] text-slate-800 font-black uppercase tracking-[0.6em] pr-2">NIVEL: {t.priority}</p>
                             </div>

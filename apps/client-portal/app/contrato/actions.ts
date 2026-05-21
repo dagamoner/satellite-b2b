@@ -68,12 +68,18 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
 
     // 3. Si hay datos de contrato, actualizarlos
     if (contractData) {
+      const mappedContractStatus = 
+        status === "TECH_IN_PROGRESS" ? "IN_PROGRESS" :
+        status === "SIGNATURE_PENDING" ? "SIGNATURE_PENDING" :
+        status === "COMPLETED" ? "COMPLETED" :
+        status === "CONTRACT_INITIATED" ? "APPROVED" :
+        undefined;
+
       await prisma.installationContract.update({
         where: { id: ticket.contractId },
         data: {
           ...contractData,
-          // Si el ticket se marca como COMPLETED, el contrato también
-          status: status === "COMPLETED" ? "COMPLETED" : undefined
+          status: mappedContractStatus !== undefined ? mappedContractStatus : undefined
         }
       });
     }

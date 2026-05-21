@@ -12,7 +12,7 @@ const AdminPdfButton = dynamic(() => import("../../components/AdminPdfButton"), 
   ssr: false,
   loading: () => <div className="h-9 w-24 bg-slate-800 animate-pulse rounded-xl" />
 });
-type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED";
+type ContractStatus = "LEAD" | "PENDING" | "APPROVED" | "IN_PROGRESS" | "COMPLETED" | "REJECTED" | "CANCELLED" | "SIGNATURE_PENDING";
 
 interface Contract {
   id: string;
@@ -58,13 +58,14 @@ interface Contract {
 
 // ── Config de estados ──────────────────────────────────────────────────────
 const STATUS_CONFIG: Record<ContractStatus, { label: string; color: string; dot: string }> = {
-  LEAD:        { label: "Lead (Web)",     color: "bg-purple-500/15 text-purple-400 border-purple-500/30",  dot: "bg-purple-400" },
-  PENDING:     { label: "Pendiente",      color: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",  dot: "bg-yellow-400" },
-  APPROVED:    { label: "Aprobado",       color: "bg-blue-500/15 text-blue-400 border-blue-500/30",        dot: "bg-blue-400"   },
-  IN_PROGRESS: { label: "En Proceso",     color: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30",  dot: "bg-indigo-400" },
-  COMPLETED:   { label: "Completado",     color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", dot: "bg-emerald-400" },
-  REJECTED:    { label: "Inspeccionado",  color: "bg-orange-500/15 text-orange-400 border-orange-500/30",  dot: "bg-orange-400"  },
-  CANCELLED:   { label: "Cancelado",      color: "bg-red-500/15 text-red-400 border-red-500/30",            dot: "bg-red-400"    },
+  LEAD:              { label: "Lead (Web)",     color: "bg-purple-500/15 text-purple-400 border-purple-500/30",  dot: "bg-purple-400" },
+  PENDING:           { label: "Pendiente",      color: "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",  dot: "bg-yellow-400" },
+  APPROVED:          { label: "Aprobado",       color: "bg-blue-500/15 text-blue-400 border-blue-500/30",        dot: "bg-blue-400"   },
+  IN_PROGRESS:       { label: "En Proceso",     color: "bg-indigo-500/15 text-indigo-400 border-indigo-500/30",  dot: "bg-indigo-400" },
+  SIGNATURE_PENDING: { label: "Firma Pendiente", color: "bg-amber-500/15 text-amber-400 border-amber-500/30",   dot: "bg-amber-400" },
+  COMPLETED:         { label: "Completado",     color: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30", dot: "bg-emerald-400" },
+  REJECTED:          { label: "Inspeccionado",  color: "bg-orange-500/15 text-orange-400 border-orange-500/30",  dot: "bg-orange-400"  },
+  CANCELLED:         { label: "Cancelado",      color: "bg-red-500/15 text-red-400 border-red-500/30",            dot: "bg-red-400"    },
 };
 
 const EQUIPMENT_LABELS: Record<string, string> = {
@@ -279,6 +280,7 @@ function ContractModal({
                         <option value="PENDING">⏳ Pendiente de Revisión</option>
                         <option value="APPROVED">✅ Aprobado para Instalación</option>
                         <option value="IN_PROGRESS">🔧 Instalación en Curso</option>
+                        <option value="SIGNATURE_PENDING">✍️ Firma Pendiente</option>
                         <option value="COMPLETED">✅ Instalación Completada</option>
                         <option value="REJECTED">❌ Rechazado (Mala Instalación)</option>
                         <option value="CANCELLED">🚫 Cancelado</option>

@@ -78,6 +78,40 @@ export async function PATCH(
       },
     });
 
+    // Sincronizar el estado del ticket relacionado si el estado del contrato cambió
+    if (status && status !== existingContract.status) {
+      const mappedTicketStatus = 
+        status === "COMPLETED" ? "COMPLETED" :
+        (status === "IN_PROGRESS" || status === "APPROVED") ? "TECH_IN_PROGRESS" :
+        status === "SIGNATURE_PENDING" ? "SIGNATURE_PENDING" :
+        status === "PENDING" ? "CONTRACT_INITIATED" :
+        undefined;
+
+      if (mappedTicketStatus) {
+        const tickets = await db.supportTicket.findMany({
+          where: { contractId: id },
+        });
+
+        for (const t of tickets) {
+          await db.supportTicket.update({
+            where: { id: t.id },
+            data: { 
+              status: mappedTicketStatus,
+              updatedAt: new Date()
+            }
+          });
+
+          await db.ticketMessage.create({
+            data: {
+              ticketId: t.id,
+              content: `EL SISTEMA HA CAMBIADO EL ESTADO A: ${mappedTicketStatus.replace('_', ' ')}`,
+              authorId: null, // Sistema
+            }
+          });
+        }
+      }
+    }
+
     return NextResponse.json({ success: true, contract: updated });
   } catch (error: any) {
     console.error("[PATCH /api/contracts/[id]]", error);
