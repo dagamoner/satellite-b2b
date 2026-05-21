@@ -252,6 +252,16 @@ export default function AccountsPage() {
       <nav className="border-b border-white/5 bg-slate-950/40 backdrop-blur-3xl sticky top-0 z-50">
         <div className="max-w-[1600px] mx-auto px-8 h-24 flex items-center justify-between">
           <div className="flex items-center gap-6">
+            <a 
+              href="/" 
+              onClick={(e) => { e.preventDefault(); window.location.href = "/"; }}
+              className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90 mr-2"
+              title="Volver al Dashboard"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+              </svg>
+            </a>
             <Link href="/" className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-black">
               MR
             </Link>

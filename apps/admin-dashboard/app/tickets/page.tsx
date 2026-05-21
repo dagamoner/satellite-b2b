@@ -329,6 +329,7 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-3">
               <a 
                 href="/" 
+                onClick={(e) => { e.preventDefault(); window.location.href = "/"; }}
                 className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90"
                 title="Volver al Dashboard"
               >
