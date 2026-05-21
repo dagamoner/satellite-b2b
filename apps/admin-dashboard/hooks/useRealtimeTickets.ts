@@ -14,6 +14,7 @@ export interface Ticket {
   description: string;
   createdAt: string;
   contract: {
+    id: string;
     clientName: string;
     contractNumber: string;
   }
@@ -60,6 +61,7 @@ export function useRealtimeTickets() {
           .select(`
             *,
             contract:installation_contracts (
+              id,
               clientName,
               contractNumber
             )

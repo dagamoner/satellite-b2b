@@ -535,6 +535,16 @@ export default function AdminDashboard() {
                   ))}
                 </div>
 
+                {selectedTicket.contract?.id && selectedTicket.contract.id !== "N/A" && (
+                  <Link href={`/contratos?id=${selectedTicket.contract.id}`}>
+                    <button 
+                      className="text-[10px] font-black px-8 py-4 rounded-[1.8rem] transition-all shadow-2xl tracking-[0.3em] uppercase border bg-blue-600/20 text-blue-400 border-blue-500/30 hover:bg-blue-600 hover:text-white shadow-blue-500/10 hover:scale-105 active:scale-95"
+                    >
+                      Gestionar Contrato 🛰️
+                    </button>
+                  </Link>
+                )}
+
                 <button 
                   onClick={() => updateTicketStatus(selectedTicket.status === 'CLOSED' ? 'OPEN' : 'CLOSED')}
                   className={`text-[10px] font-black px-10 py-4 rounded-[1.8rem] transition-all shadow-2xl tracking-[0.3em] uppercase border relative overflow-hidden group ${

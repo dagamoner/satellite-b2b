@@ -112,6 +112,8 @@ function ContractModal({
   const [saving, setSaving] = useState(false);
   const [savedOk, setSavedOk] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
+  const { data: session } = useSession();
+  const isTech = (session?.user as any)?.role === "TECH";
 
   // Estados técnicos editables
   const [kitSerialNumber, setKitSerialNumber] = useState(contract.kitSerialNumber || "");
@@ -239,7 +241,8 @@ function ContractModal({
                       <select
                         value={technicianId}
                         onChange={(e) => setTechnicianId(e.target.value)}
-                        className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                        disabled={isTech}
+                        className={`w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all ${isTech ? "opacity-60 cursor-not-allowed" : ""}`}
                       >
                         <option value="NONE">⚠️ Sin asignar</option>
                         {technicians.map((t) => (
@@ -507,14 +510,14 @@ function ContractModal({
 
         {/* Footer Modal Acciones */}
         <div className="mt-10 pt-6 border-t border-slate-800 flex gap-4">
-           {status !== "REJECTED" && (
-              <button 
-                onClick={() => setStatus("REJECTED")}
-                className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold px-6 py-4 rounded-2xl transition-all grow text-sm"
-              >
-                Rechazar por mala instalación
-              </button>
-           )}
+            {!isTech && status !== "REJECTED" && (
+               <button 
+                 onClick={() => setStatus("REJECTED")}
+                 className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold px-6 py-4 rounded-2xl transition-all grow text-sm"
+               >
+                 Rechazar por mala instalación
+               </button>
+            )}
            <button
             onClick={save}
             disabled={saving || savedOk}
@@ -548,10 +551,25 @@ export default function ContratosAdminPage() {
     if (status === "unauthenticated") {
       redirect("/");
     }
-    if (status === "authenticated" && (session?.user as any)?.role !== "ADMIN") {
+    if (status === "authenticated" && !["ADMIN", "TECH"].includes((session?.user as any)?.role)) {
       redirect("/");
     }
   }, [status, session]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const contractId = params.get("id");
+      if (contractId && contracts.length > 0) {
+        const found = (contracts as Contract[]).find((c) => c.id === contractId);
+        if (found) {
+          setSelected(found);
+          const newUrl = window.location.pathname;
+          window.history.replaceState({ path: newUrl }, "", newUrl);
+        }
+      }
+    }
+  }, [contracts]);
 
   if (status === "loading") {
     return (
@@ -605,7 +623,17 @@ export default function ContratosAdminPage() {
       {/* Unified Navbar */}
       <nav className="border-b border-white/5 bg-slate-950/50 backdrop-blur-3xl sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-          <div className="flex items-center gap-12">
+          <div className="flex items-center gap-6">
+            <Link 
+              href="/"
+              className="w-8 h-8 bg-slate-900 border border-white/5 rounded-lg flex items-center justify-center text-slate-500 hover:text-white hover:border-cyan-500/50 transition-all active:scale-90"
+              title="Volver al Dashboard"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" />
+              </svg>
+            </Link>
+
             <Link href="/" className="flex items-center gap-4 group">
               <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center font-black text-white shadow-lg group-hover:scale-110 transition-transform">MR</div>
               <div className="flex flex-col">
@@ -614,12 +642,19 @@ export default function ContratosAdminPage() {
               </div>
             </Link>
             
-            <div className="hidden md:flex items-center gap-10">
+            <div className="hidden md:flex items-center gap-10 ml-6">
               <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="text-[10px] font-black text-slate-500 hover:text-cyan-400 uppercase tracking-[0.2em] transition-colors border-r border-white/5 pr-10">Web Principal</a>
               <Link href="/tickets" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Tickets</Link>
-              <Link href="/contratos" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">Contratos</Link>
-              <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>
-              <Link href="/usuarios" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Equipo</Link>
+              <Link href="/chat" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Chat Staff</Link>
+              <Link href="/contratos" className="text-[10px] font-black text-white uppercase tracking-[0.2em] transition-colors border-b-2 border-cyan-500 pb-1">
+                {(session?.user as any)?.role === "TECH" ? "Mis Contratos" : "Contratos"}
+              </Link>
+              {(session?.user as any)?.role === "ADMIN" && (
+                <>
+                  <Link href="/reportes" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Inteligencia</Link>
+                  <Link href="/usuarios" className="text-[10px] font-black text-slate-500 hover:text-white uppercase tracking-[0.2em] transition-colors">Equipo</Link>
+                </>
+              )}
             </div>
           </div>
 
@@ -651,14 +686,20 @@ export default function ContratosAdminPage() {
             <h1 className="text-4xl font-black text-white uppercase tracking-tighter mb-2">Contratos de <span className="text-cyan-500">Instalación</span></h1>
             <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">{contracts.length} REGISTROS ACTIVOS EN SISTEMA</p>
           </div>
-          <select 
-            value={filterTechId}
-            onChange={(e) => setFilterTechId(e.target.value)}
-            className="bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest focus:outline-none focus:border-cyan-500/50 transition-all cursor-pointer"
-          >
-            <option value="ALL">TODOS LOS TÉCNICOS</option>
-            {technicians.map(t => <option key={t.id} value={t.id}>{t.name.toUpperCase()}</option>)}
-          </select>
+          {(session?.user as any)?.role === "ADMIN" ? (
+            <select 
+              value={filterTechId}
+              onChange={(e) => setFilterTechId(e.target.value)}
+              className="bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-widest focus:outline-none focus:border-cyan-500/50 transition-all cursor-pointer"
+            >
+              <option value="ALL">TODOS LOS TÉCNICOS</option>
+              {technicians.map(t => <option key={t.id} value={t.id}>{t.name.toUpperCase()}</option>)}
+            </select>
+          ) : (
+            <div className="bg-slate-900/50 border border-white/5 rounded-xl px-4 py-3 text-[10px] font-black text-cyan-500 uppercase tracking-widest">
+              TÉCNICO: {session?.user?.name?.toUpperCase()}
+            </div>
+          )}
         </header>
 
         {/* Métricas */}

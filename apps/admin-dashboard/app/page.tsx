@@ -188,6 +188,11 @@ export default function AdminOverview() {
                 <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5">Web Principal</a>
                 <Link href="/tickets" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Soporte</Link>
                 <Link href="/chat" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Chat Staff</Link>
+                {["ADMIN", "TECH"].includes((session?.user as any)?.role) && (
+                  <Link href="/contratos" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">
+                    {(session?.user as any)?.role === "TECH" ? "Mis Contratos" : "Contratos"}
+                  </Link>
+                )}
                 {["ADMIN", "SALES"].includes((session?.user as any)?.role) && (
                   <>
                     <Link href="/crm/leads" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Leads</Link>
@@ -226,6 +231,13 @@ export default function AdminOverview() {
           </motion.div>
           
           <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="flex gap-4">
+             {["ADMIN", "TECH"].includes((session?.user as any)?.role) && (
+                <Link href="/contratos">
+                   <button className="bg-slate-900/50 text-white border border-white/10 hover:border-cyan-500/30 font-black px-8 py-4 rounded-2xl shadow-2xl uppercase text-[10px] tracking-widest hover:scale-105 transition-all">
+                     {(session?.user as any)?.role === "TECH" ? "Mis Contratos" : "Gestión de Contratos"}
+                   </button>
+                </Link>
+             )}
              <Link href="/tickets">
                 <button className="bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl shadow-2xl shadow-cyan-500/20 uppercase text-[10px] tracking-widest hover:scale-105 transition-all">Consola de Tickets</button>
              </Link>
@@ -309,6 +321,27 @@ export default function AdminOverview() {
                       { name: "Gestión de Contratos", path: "/contratos", icon: "📄" },
                       { name: "Panel de Reportes", path: "/reportes", icon: "📊" },
                       { name: "Directorio de Staff", path: "/usuarios", icon: "👥" },
+                    ].map(mod => (
+                      <Link key={mod.path} href={mod.path} className="group p-5 bg-slate-900/50 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all flex items-center justify-between">
+                          <div className="flex items-center gap-4">
+                            <span className="text-xl">{mod.icon}</span>
+                            <span className="text-[10px] font-black text-slate-400 group-hover:text-white uppercase tracking-widest transition-colors">{mod.name}</span>
+                          </div>
+                          <svg className="w-4 h-4 text-slate-700 group-hover:text-cyan-500 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
+                          </svg>
+                      </Link>
+                    ))}
+                  </div>
+                </Card>
+              )}
+
+              {(session?.user as any)?.role === "TECH" && (
+                <Card variant="glass" className="p-10 border-white/5">
+                  <h3 className="text-white font-black text-sm uppercase tracking-widest mb-6">Módulos de Trabajo</h3>
+                  <div className="grid grid-cols-1 gap-4">
+                    {[
+                      { name: "Mis Contratos Asignados", path: "/contratos", icon: "🛰️" },
                     ].map(mod => (
                       <Link key={mod.path} href={mod.path} className="group p-5 bg-slate-900/50 border border-white/5 rounded-2xl hover:border-cyan-500/30 transition-all flex items-center justify-between">
                           <div className="flex items-center gap-4">

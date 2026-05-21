@@ -29,7 +29,7 @@ export async function GET(request: Request) {
       where,
       include: {
         technician: {
-          select: { name: true, email: true }
+          select: { id: true, name: true, email: true }
         }
       },
       orderBy: { createdAt: "desc" },
