@@ -3,6 +3,8 @@
 import React, { useState, useRef } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import { updateTicketStatus } from "@/app/contrato/actions";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 // html2pdf debe cargarse dinámicamente en el cliente
 let html2pdf: any; // Se mantiene any por simplicidad con la librería externa
@@ -111,6 +113,10 @@ export default function AntennaContractForm({
   onBack,
   initialData 
 }: AntennaContractFormProps) {
+  const { data: session } = useSession();
+  const searchParams = useSearchParams();
+  const userRole = (session?.user as any)?.role || "CLIENT";
+  const isClientUser = userRole === "CLIENT" || (!session && !!searchParams?.get("p_dni"));
   
   const [formData, setFormData] = useState<AntennaFormData>({
     installDate: new Date().toLocaleDateString('es-AR'),
@@ -587,11 +593,11 @@ export default function AntennaContractForm({
           <div className="form-grid">
             <div className="input-field">
               <label>Número de Serie (KIT/Dish)</label>
-              <input id="serialKit" value={formData.serialKit} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: KIT-000000" />
+              <input id="serialKit" value={formData.serialKit} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: KIT-000000" />
             </div>
             <div className="input-field">
               <label>Tipo de Antena</label>
-              <select id="antennaModel" value={formData.antennaModel} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+              <select id="antennaModel" value={formData.antennaModel} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'}>
                 <option value="MINI X">MINI X</option>
                 <option value="STANDAR V4">STANDAR V4</option>
                 <option value="ITINERANTE">ITINERANTE</option>
@@ -599,11 +605,11 @@ export default function AntennaContractForm({
             </div>
             <div className="input-field">
               <label>Ubicación de Antena</label>
-              <input id="antennaLocation" value={formData.antennaLocation} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Terraza, Mástil" />
+              <input id="antennaLocation" value={formData.antennaLocation} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Terraza, Mástil" />
             </div>
             <div className="input-field">
               <label>Obstrucciones</label>
-              <select id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+              <select id="obstructions" value={formData.obstructions} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'}>
                 <option value="Ninguna 0%">Ninguna 0%</option>
                 <option value="Minima <1%">Mínima &lt;1%</option>
                 <option value="Moderada 1-5%">Moderada 1-5%</option>
@@ -615,7 +621,7 @@ export default function AntennaContractForm({
             {formData.obstructions === 'Objeto' && (
               <div className="input-field full-row animate-in fade-in slide-in-from-top-2">
                 <label>Descripción del Objeto Obstructor</label>
-                <input id="obstructionObject" value={formData.obstructionObject} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Árbol, Chimenea, Edificio..." />
+                <input id="obstructionObject" value={formData.obstructionObject} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="Ej: Árbol, Chimenea, Edificio..." />
               </div>
             )}
           </div>
@@ -626,7 +632,7 @@ export default function AntennaContractForm({
               id="observations" 
               value={formData.observations} 
               onChange={(e) => handleInputChange(e)} 
-              disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
+              disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'}
               className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
               rows={3}
               placeholder="Notas generales de la instalación..."
@@ -634,7 +640,7 @@ export default function AntennaContractForm({
           </div>
 
           {/* PHOTO EVIDENCE (Only for Technician) */}
-          {ticketStatus === 'TECH_IN_PROGRESS' && (
+          {ticketStatus === 'TECH_IN_PROGRESS' && !isClientUser && (
             <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-6">
               {[
                 { id: 'photoAntena', label: 'Antena (Panorámica)' },
@@ -674,19 +680,19 @@ export default function AntennaContractForm({
           <div className="form-grid">
             <div className="input-field">
               <label>Bajada (Mbps)</label>
-              <input id="downloadSpeed" value={formData.downloadSpeed} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0.0" />
+              <input id="downloadSpeed" value={formData.downloadSpeed} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0.0" />
             </div>
             <div className="input-field">
               <label>Subida (Mbps)</label>
-              <input id="uploadSpeed" value={formData.uploadSpeed} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0.0" />
+              <input id="uploadSpeed" value={formData.uploadSpeed} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0.0" />
             </div>
             <div className="input-field">
               <label>Latencia (ms)</label>
-              <input id="latency" value={formData.latency} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0" />
+              <input id="latency" value={formData.latency} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'} placeholder="0" />
             </div>
             <div className="input-field">
               <label>Modo de Red</label>
-              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={ticketStatus !== 'TECH_IN_PROGRESS'}>
+              <select id="networkMode" value={formData.networkMode} onChange={handleInputChange} disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'}>
                 <option value="Router Starlink">Router Starlink</option>
                 <option value="Switch Starlink">Switch Starlink</option>
                 <option value="Router + Switch Starlink">Router + Switch Starlink</option>
@@ -701,7 +707,7 @@ export default function AntennaContractForm({
               id="perfObservations" 
               value={formData.perfObservations} 
               onChange={(e) => handleInputChange(e)} 
-              disabled={ticketStatus !== 'TECH_IN_PROGRESS'}
+              disabled={isClientUser || ticketStatus !== 'TECH_IN_PROGRESS'}
               className="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl p-4 text-xs font-medium focus:border-blue-500 transition-all outline-none"
               rows={3}
               placeholder="Notas sobre la estabilidad, velocidad, latencia, etc..."
@@ -710,7 +716,7 @@ export default function AntennaContractForm({
         </div>
 
         {/* SECTION 3.5: PHOTO EVIDENCE (Read-only for SIGNATURE_PENDING or COMPLETED) */}
-        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') && (
+        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED' || (ticketStatus === 'TECH_IN_PROGRESS' && isClientUser)) && (
           <div className="doc-section">
             <div className="section-header">03.5. Evidencias Fotográficas de la Instalación</div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
@@ -744,7 +750,7 @@ export default function AntennaContractForm({
             <div className="signature-box border rounded-2xl p-6 bg-slate-50/50">
               <div className="flex justify-between items-center mb-4">
                 <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Visto Bueno / Firma del Técnico</p>
-                {ticketStatus === 'TECH_IN_PROGRESS' && (
+                {ticketStatus === 'TECH_IN_PROGRESS' && !isClientUser && (
                   <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
                     <input
                       type="checkbox"
@@ -756,7 +762,7 @@ export default function AntennaContractForm({
                   </label>
                 )}
               </div>
-              {ticketStatus === 'TECH_IN_PROGRESS' ? (
+              {ticketStatus === 'TECH_IN_PROGRESS' && !isClientUser ? (
                 <>
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="input-group">
@@ -812,8 +818,8 @@ export default function AntennaContractForm({
                       <img src={formData.techSignature} className="max-h-full max-w-full object-contain" alt="Firma Técnico" />
                     </div>
                   ) : (
-                    <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200">
-                      {formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA'}
+                    <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200 text-center px-2">
+                      {ticketStatus === 'TECH_IN_PROGRESS' ? 'INSTALACIÓN EN CURSO / FIRMA PENDIENTE' : (formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA')}
                     </div>
                   )}
                 </div>
@@ -933,7 +939,7 @@ export default function AntennaContractForm({
           <button className="btn-action" onClick={handleClientDataConfirm}>Confirmar Mis Datos</button>
         )}
         
-        {ticketStatus === 'TECH_IN_PROGRESS' && (
+        {ticketStatus === 'TECH_IN_PROGRESS' && !isClientUser && (
           <button className="btn-action" onClick={handleTechFinalize}>Finalizar Instalación (Técnico)</button>
         )}
         
