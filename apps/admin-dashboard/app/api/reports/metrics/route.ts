@@ -6,8 +6,11 @@ import { checkRole } from "../../../../lib/rbac";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const { authorized, error } = await checkRole(["ADMIN", "SALES"]);
+  const { authorized, error, session } = await checkRole(["ADMIN", "SALES", "TECH"]);
   if (error) return error;
+
+  const userRole = (session?.user as any)?.role;
+  const isTech = userRole === "TECH";
   
   try {
     // 1. Sales Metrics
@@ -94,7 +97,15 @@ export async function GET() {
     }));
 
     return NextResponse.json({
-      sales: {
+      sales: isTech ? {
+        totalContracts: 0,
+        leadsCount: 0,
+        completedCount: 0,
+        inProgressCount: 0,
+        approvedCount: 0,
+        conversionRate: "0.0",
+        totalRevenue: 0
+      } : {
         totalContracts,
         leadsCount,
         completedCount,
@@ -110,8 +121,8 @@ export async function GET() {
         closed: closedTickets,
         completionRate: totalTickets > 0 ? ((closedTickets / totalTickets) * 100).toFixed(1) : 0
       },
-      technicians: techKPIs,
-      plans: plansMetrics
+      technicians: isTech ? [] : techKPIs,
+      plans: isTech ? [] : plansMetrics
     });
 
   } catch (error) {

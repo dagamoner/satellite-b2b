@@ -32,7 +32,7 @@ const QuickMetrics = ({ role }: { role?: string }) => {
       .catch(console.error);
   }, []);
 
-  if (!metrics) return (
+  if (!metrics || metrics.error || !metrics.sales || !metrics.tickets || !metrics.technicians) return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
       {[1, 2, 3, 4].map(i => (
         <div key={i} className="h-32 bg-slate-900/50 animate-pulse rounded-3xl" />
@@ -65,7 +65,7 @@ const QuickMetrics = ({ role }: { role?: string }) => {
             <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Canales NOC</span>
             <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" />
           </div>
-          <p className="text-2xl font-black text-white mt-4">{metrics.tickets.open + metrics.tickets.inProgress}</p>
+          <p className="text-2xl font-black text-white mt-4">{(metrics.tickets.open || 0) + (metrics.tickets.inProgress || 0)}</p>
           <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Soporte Activo</p>
         </Card>
       </Link>
@@ -77,7 +77,7 @@ const QuickMetrics = ({ role }: { role?: string }) => {
               <span className="text-[9px] font-black text-slate-600 uppercase tracking-widest">Revenue</span>
               <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
             </div>
-            <p className="text-2xl font-black text-white mt-4">${metrics.sales.totalRevenue.toLocaleString()}</p>
+            <p className="text-2xl font-black text-white mt-4">${(metrics.sales.totalRevenue || 0).toLocaleString()}</p>
             <p className="text-[8px] text-slate-500 font-black uppercase tracking-widest mt-1">Mensual estimado</p>
           </Card>
         </Link>
