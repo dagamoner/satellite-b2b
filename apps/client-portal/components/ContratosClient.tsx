@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import AntennaContractForm from "./AntennaContractForm";
 import { getTicketInfo } from "../app/contrato/actions";
 
@@ -36,6 +36,7 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   const [realStatus, setRealStatus] = useState<string | null>(null);
   const [contractData, setContractData] = useState<any>(null);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   // Auto-fill effect from URL params
   useEffect(() => {
@@ -80,14 +81,13 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   const pTicket = searchParams.get("p_ticket"); 
   const finalInstallId = pContract || nextInstallId;
 
-
   return (
     <AntennaContractForm 
       agents={agents}
       nextInstallId={finalInstallId}
       ticketId={pTicket || ""} 
       ticketStatus={realStatus || (pTicket ? "CONTRACT_INITIATED" : "OPEN")}
-      onBack={() => window.history.back()}
+      onBack={() => router.push('/soporte/dashboard')}
       initialData={contractData ? {
         clientName: contractData.clientName,
         clientEmail: contractData.clientEmail,
