@@ -38,7 +38,7 @@ interface Contract {
   photoRack?: string;
 }
 
-export const generateContractPDF = async (contract: Contract) => {
+export const generateContractPDF = async (contract: Contract, returnBase64: boolean = false) => {
   // Carga dinámica de librerías (solo en el cliente)
   const [ { default: jsPDFConstructor }, { default: autoTable } ] = await Promise.all([
     import("jspdf"),
@@ -300,6 +300,10 @@ export const generateContractPDF = async (contract: Contract) => {
   doc.setFontSize(8);
   doc.setTextColor(150, 150, 150);
   doc.text(`Documento generado electrónicamente el ${new Date().toLocaleString()} | ID: ${contract.id}`, pageWidth / 2, footerY, { align: "center" });
+
+  if (returnBase64) {
+    return doc.output('datauristring');
+  }
 
   doc.save(`Contrato_${contract.contractNumber}_Auditoria.pdf`);
 };

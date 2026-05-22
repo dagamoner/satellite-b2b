@@ -201,7 +201,7 @@ export default function AntennaContractForm({
         
         ctx.fillStyle = "#0f172a";
         ctx.font = "bold 9px sans-serif";
-        ctx.fillText("FIRMADO DIGITALMENTE", 45, 27);
+        ctx.fillText("FIRMA DIGITAL - TÉCNICO", 45, 27);
         
         const signerName = formData.techName || "Técnico de MR Technology";
         ctx.fillStyle = "#2563eb";
@@ -246,7 +246,7 @@ export default function AntennaContractForm({
         
         ctx.fillStyle = "#0f172a";
         ctx.font = "bold 9px sans-serif";
-        ctx.fillText("FIRMADO DIGITALMENTE", 45, 27);
+        ctx.fillText("FIRMA DIGITAL - CLIENTE", 45, 27);
         
         const signerName = formData.clientNameSign || formData.razonSocial || "Cliente de MR Technology";
         ctx.fillStyle = "#2563eb";
@@ -388,56 +388,19 @@ export default function AntennaContractForm({
         clientName: formData.clientNameSign,
         clientDni: formData.clientDniSign,
       });
-
-      // 2. Generar y Enviar PDF
-      if (reportRef.current && html2pdf) {
-        const element = reportRef.current;
-        const opt = {
-          margin: 10,
-          filename: `Certificado_${formData.installId}_${formData.razonSocial.toUpperCase()}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-        };
-        
-        // Generar el PDF
-        const worker = html2pdf().set(opt).from(element);
-        
-        // 2a. Descarga local para el cliente
-        await worker.save();
-        
-        // 2b. Obtener base64 y enviar por email
-        try {
-          const pdfBase64 = await worker.outputPdf('datauristring');
-          await fetch(`/api/support/tickets/${ticketId}/send-certificate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pdfBase64,
-              fileName: `Certificado_${formData.installId}.pdf`,
-              clientEmail: formData.email,
-              clientName: formData.razonSocial
-            })
-          });
-          console.log("[EMAIL_AUTO] Certificado enviado a:", formData.email);
-        } catch (emailErr) {
-          console.error("[EMAIL_AUTO_ERROR]", emailErr);
-          // No bloqueamos el flujo si falla el mail
-        }
-      }
       
-      // WhatsApp Notification
-      sendWhatsApp();
-      
+      // Removed PDF generation and WhatsApp redirection to avoid UI freezes.
+      // The user can download the PDF from the dashboard.
       setTimeout(() => {
         setShowFinalModal(false);
         setIsExporting(false);
         onBack();
-      }, 3000);
+      }, 2000);
     } catch (err) {
       console.error(err);
       setIsExporting(false);
       setShowFinalModal(false);
+      alert("Ocurrió un error al intentar completar el contrato.");
     }
   };
 
