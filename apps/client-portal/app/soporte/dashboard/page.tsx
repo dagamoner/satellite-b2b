@@ -350,7 +350,7 @@ export default function SupportDashboard() {
                 <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Soporte Técnico en Tiempo Real</p>
               </div>
               <div className="flex items-center gap-6">
-                {(['LEAD', 'SIGNATURE_PENDING'].includes(currentContract?.status) || (currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature)) && (
+                {(['LEAD', 'OPEN', 'CONTRACT_INITIATED', 'SIGNATURE_PENDING'].includes(currentContract?.status) || (currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature)) && (
                   <button 
                     onClick={async () => {
                       const existingContractTicket = tickets.find(t => t.category === "Contrato");
