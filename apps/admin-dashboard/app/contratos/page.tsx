@@ -199,11 +199,15 @@ function ContractModal({
   const save = async () => {
     setSaving(true);
     try {
+      // Auto-advance status to SIGNATURE_PENDING if the tech just signed it
+      const hasSignature = isTechDigitallySigned || (!sigCanvas.current?.isEmpty() && sigCanvas.current) || contract.techSignature;
+      const finalStatus = (hasSignature && status === "IN_PROGRESS") ? "SIGNATURE_PENDING" : status;
+
       const res = await fetch(`/api/contracts/${contract.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          status,
+          status: finalStatus,
           technicianId,
           techNotes,
           scheduledDate: scheduledDate || undefined,
