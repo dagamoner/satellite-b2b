@@ -252,7 +252,7 @@ function ContractModal({
 
         {/* Tab Content */}
         <div className="space-y-6">
-          {activeTab === "general" && (
+          <div className={activeTab === "general" ? "block space-y-6" : "hidden"}>
             <>
               {/* Datos del cliente */}
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
@@ -324,9 +324,9 @@ function ContractModal({
                 </div>
               </div>
             </>
-          )}
+          </div>
 
-          {activeTab === "tecnico" && (
+          <div className={activeTab === "tecnico" ? "block space-y-6" : "hidden"}>
             <div className="space-y-6">
               {/* Detalles Técnicos Starlink */}
               <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
@@ -456,43 +456,6 @@ function ContractModal({
                 </div>
               </div>
 
-              {/* Firma del Técnico */}
-              <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500">04. Firma del Técnico</h3>
-                  <label className="flex items-center gap-2 cursor-pointer select-none text-slate-400 hover:text-slate-300 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={isTechDigitallySigned}
-                      onChange={(e) => handleTechDigitalSignToggle(e.target.checked)}
-                      className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 focus:ring-offset-slate-900"
-                    />
-                    <span className="text-xs font-bold">Firmar</span>
-                  </label>
-                </div>
-                <div className="space-y-4">
-                  <div className={`bg-white rounded-xl overflow-hidden shadow-inner border border-slate-700 ${isTechDigitallySigned ? "pointer-events-none opacity-90" : ""}`}>
-                    <SignatureCanvas 
-                      ref={sigCanvas}
-                      penColor="#0f172a"
-                      canvasProps={{ width: 500, height: 200, className: "w-full cursor-crosshair" }}
-                    />
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <p className="text-[9px] text-slate-500 italic">Al firmar, usted confirma que la instalación cumple con los estándares de calidad de MR Technology.</p>
-                    <button 
-                      onClick={() => {
-                        setIsTechDigitallySigned(false);
-                        sigCanvas.current?.clear();
-                      }}
-                      className="text-[10px] font-bold text-red-400 hover:text-red-300 uppercase tracking-widest"
-                    >
-                      Limpiar Firma
-                    </button>
-                  </div>
-                </div>
-              </div>
-
               {/* Botón de navegación */}
               <div className="pt-4">
                 <button 
@@ -503,9 +466,9 @@ function ContractModal({
                 </button>
               </div>
             </div>
-          )}
+          </div>
 
-          {activeTab === "evidencias" && (
+          <div className={activeTab === "evidencias" ? "block space-y-8" : "hidden"}>
             <div className="space-y-8">
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {[
@@ -549,6 +512,43 @@ function ContractModal({
                 })}
               </div>
                 
+              {/* Firma del Técnico */}
+              <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500">04. Conformidad y Firmas</h3>
+                  <label className="flex items-center gap-2 cursor-pointer select-none text-slate-400 hover:text-slate-300 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={isTechDigitallySigned}
+                      onChange={(e) => handleTechDigitalSignToggle(e.target.checked)}
+                      className="w-4 h-4 rounded border-slate-700 bg-slate-900 text-blue-500 focus:ring-blue-500 focus:ring-offset-slate-900"
+                    />
+                    <span className="text-xs font-bold">Firmar</span>
+                  </label>
+                </div>
+                <div className="space-y-4">
+                  <div className={`bg-white rounded-xl overflow-hidden shadow-inner border border-slate-700 ${isTechDigitallySigned ? "pointer-events-none opacity-90" : ""}`}>
+                    <SignatureCanvas 
+                      ref={sigCanvas}
+                      penColor="#0f172a"
+                      canvasProps={{ width: 500, height: 200, className: "w-full cursor-crosshair" }}
+                    />
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="text-[9px] text-slate-500 italic">Al firmar, usted confirma que la instalación cumple con los estándares de calidad de MR Technology.</p>
+                    <button 
+                      onClick={() => {
+                        setIsTechDigitallySigned(false);
+                        sigCanvas.current?.clear();
+                      }}
+                      className="text-[10px] font-bold text-red-400 hover:text-red-300 uppercase tracking-widest"
+                    >
+                      Limpiar Firma
+                    </button>
+                  </div>
+                </div>
+              </div>
+
               {/* Botón Guardar Final */}
               <div className="mt-8 pt-8 border-t border-slate-800">
                 <button
@@ -569,7 +569,7 @@ function ContractModal({
                 </button>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Footer Modal Acciones */}
