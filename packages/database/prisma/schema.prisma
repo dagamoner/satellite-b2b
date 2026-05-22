@@ -92,6 +92,9 @@ model InstallationContract {
   account           CustomerAccount? @relation(fields: [accountId], references: [id])
   tickets           SupportTicket[]
 
+  cbu               String?
+  rubro             String?
+
   @@map("installation_contracts")
 }
 
@@ -235,6 +238,10 @@ model Lead {
   assignedToId   String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
+
+  clientCategory String?
+  cbu            String?
+  rubro          String?
 
   // Relaciones
   assignedTo     User?            @relation(fields: [assignedToId], references: [id])

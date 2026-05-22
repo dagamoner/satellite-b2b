@@ -19,6 +19,9 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     phone: "",
     dni: "",
     message: "",
+    cbu: "",
+    clientCategory: "HOGAREÑO",
+    rubro: "COMERCIAL",
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -215,7 +218,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <form onSubmit={handleSubmit} className="space-y-8 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Nombre y Apellido</label>
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Nombre Completo / Razón Social / Nombre de fantasía</label>
                       <input 
                         type="text" 
                         required
@@ -226,7 +229,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       />
                     </div>
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">DNI / CUIT Titular</label>
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">CUIT / CUIL</label>
                       <input 
                         type="text" 
                         required
@@ -235,6 +238,55 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         placeholder="20345678901"
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
                       />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">CBU</label>
+                      <input 
+                        type="text" 
+                        value={formData.cbu}
+                        onChange={e => setFormData({...formData, cbu: e.target.value})}
+                        placeholder="0000000000000000000000"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Categoría</label>
+                      <select 
+                        value={formData.clientCategory}
+                        onChange={e => setFormData({...formData, clientCategory: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
+                      >
+                        <option value="HOGAREÑO">HOGAREÑO</option>
+                        <option value="HOGAREÑO RESIDENCIAL">HOGAREÑO RESIDENCIAL</option>
+                        <option value="LOCAL COMERCIAL">LOCAL COMERCIAL</option>
+                        <option value="LOCAL">LOCAL</option>
+                        <option value="GASTRONOMICO">GASTRONOMICO</option>
+                        <option value="PYMES">PYMES</option>
+                        <option value="EMPRESAS">EMPRESAS</option>
+                        <option value="BODEGAS">BODEGAS</option>
+                        <option value="HOTELES">HOTELES</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Rubro</label>
+                      <select 
+                        value={formData.rubro}
+                        onChange={e => setFormData({...formData, rubro: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
+                      >
+                        <option value="GASTRONOMICO">GASTRONOMICO</option>
+                        <option value="HOTELERO">HOTELERO</option>
+                        <option value="COMERCIAL">COMERCIAL</option>
+                        <option value="EMPRESARIAL">EMPRESARIAL</option>
+                        <option value="INDUSTRIAL">INDUSTRIAL</option>
+                        <option value="RETAIL">RETAIL</option>
+                      </select>
                     </div>
                   </div>
 

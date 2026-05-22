@@ -67,7 +67,10 @@ export async function PATCH(
       photoRouter,
       photoTest,
       photoApp,
-      photoRack
+      photoRack,
+      cbu,
+      clientCategory,
+      rubro
     } = body;
 
     const updated = await db.installationContract.update({
@@ -95,6 +98,9 @@ export async function PATCH(
         ...(photoApp && { photoApp }),
         ...(photoRack && { photoRack }),
         ...(body.techSignature && { techSignature: body.techSignature }),
+        ...(cbu !== undefined && { cbu }),
+        ...(clientCategory !== undefined && { clientCategory }),
+        ...(rubro !== undefined && { rubro }),
       },
     });
 

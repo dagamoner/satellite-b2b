@@ -25,7 +25,9 @@ interface AntennaContractFormProps {
     clientEmail?: string;
     clientDni?: string;
     clientPhone?: string;
+    cbu?: string;
     clientCategory?: string;
+    rubro?: string;
     planType?: string;
     street?: string;
     houseNumber?: string;
@@ -67,7 +69,9 @@ interface AntennaFormData {
   cuit: string;
   email: string;
   phone: string;
+  cbu: string;
   category: string;
+  rubro: string;
   direccion: string;
   street: string;
   houseNumber: string;
@@ -125,7 +129,9 @@ export default function AntennaContractForm({
     cuit: initialData?.clientDni || '',
     email: initialData?.clientEmail || '',
     phone: initialData?.clientPhone || '',
-    category: initialData?.clientCategory || 'Hogareño',
+    cbu: initialData?.cbu || '',
+    category: initialData?.clientCategory || 'HOGAREÑO',
+    rubro: initialData?.rubro || 'COMERCIAL',
     direccion: '',
     street: initialData?.street || '',
     houseNumber: initialData?.houseNumber || '',
@@ -292,7 +298,9 @@ export default function AntennaContractForm({
         clientEmail: formData.email,
         clientPhone: formData.phone,
         clientDni: formData.cuit,
+        cbu: formData.cbu,
         clientCategory: formData.category,
+        rubro: formData.rubro,
         street: formData.street,
         houseNumber: formData.houseNumber,
         city: formData.ciudad,
@@ -493,11 +501,11 @@ export default function AntennaContractForm({
           <div className="section-header">01. Información del Titular</div>
           <div className="form-grid">
             <div className="input-field full-row">
-              <label>Nombre / Razón Social</label>
+              <label>Nombre Completo / Razón Social / Nombre de fantasía</label>
               <input id="razonSocial" value={formData.razonSocial} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field">
-              <label>DNI / CUIT</label>
+              <label>CUIT / CUIL</label>
               <input id="cuit" value={formData.cuit} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field">
@@ -509,15 +517,32 @@ export default function AntennaContractForm({
               <input id="email" type="email" value={formData.email} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
             </div>
             <div className="input-field">
+              <label>CBU</label>
+              <input id="cbu" value={formData.cbu} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} />
+            </div>
+            <div className="input-field">
               <label>Categoría</label>
               <select id="category" value={formData.category} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
-                <option value="Hogareño">Hogareño</option>
-                <option value="Hogareño residencial">Hogareño residencial</option>
-                <option value="Local comercial">Local comercial</option>
-                <option value="Local gastronómico">Local gastronómico</option>
-                <option value="PYME">PYME</option>
-                <option value="Empresa">Empresa</option>
-                <option value="Bodega">Bodega</option>
+                <option value="HOGAREÑO">HOGAREÑO</option>
+                <option value="HOGAREÑO RESIDENCIAL">HOGAREÑO RESIDENCIAL</option>
+                <option value="LOCAL COMERCIAL">LOCAL COMERCIAL</option>
+                <option value="LOCAL">LOCAL</option>
+                <option value="GASTRONOMICO">GASTRONOMICO</option>
+                <option value="PYMES">PYMES</option>
+                <option value="EMPRESAS">EMPRESAS</option>
+                <option value="BODEGAS">BODEGAS</option>
+                <option value="HOTELES">HOTELES</option>
+              </select>
+            </div>
+            <div className="input-field">
+              <label>Rubro</label>
+              <select id="rubro" value={formData.rubro} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="GASTRONOMICO">GASTRONOMICO</option>
+                <option value="HOTELERO">HOTELERO</option>
+                <option value="COMERCIAL">COMERCIAL</option>
+                <option value="EMPRESARIAL">EMPRESARIAL</option>
+                <option value="INDUSTRIAL">INDUSTRIAL</option>
+                <option value="RETAIL">RETAIL</option>
               </select>
             </div>
             

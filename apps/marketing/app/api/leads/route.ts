@@ -23,7 +23,7 @@ async function generateTicketNumber() {
 export async function POST(request: Request) {
   await cookies(); // Force dynamic runtime
   try {
-    const { name, email, phone, dni, type, message, planName } = await request.json();
+    const { name, email, phone, dni, type, message, planName, cbu, clientCategory, rubro } = await request.json();
 
     if (!name || !email || !dni || !type) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
@@ -47,6 +47,9 @@ export async function POST(request: Request) {
         city: "Por definir",
         province: "Por definir",
         installationNotes: `Interés inicial: ${type}. Mensaje: ${message}`,
+        cbu,
+        clientCategory,
+        rubro,
       }
     });
 
@@ -92,6 +95,9 @@ export async function POST(request: Request) {
         planInterest: planName || "POR_DEFINIR",
         notes: `Solicitud de antena vía web. Tipo: ${type}. DNI: ${dni}. Mensaje: ${message || "Sin mensaje"}`,
         assignedToId: adminUser?.id || null,
+        cbu,
+        clientCategory,
+        rubro,
       }
     });
 
