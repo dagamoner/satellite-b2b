@@ -819,7 +819,7 @@ export default function AntennaContractForm({
                     </div>
                   ) : (
                     <div className="h-16 w-32 bg-slate-100 rounded mx-auto flex items-center justify-center text-[9px] text-slate-400 font-bold uppercase border border-dashed border-slate-200 text-center px-2">
-                      {ticketStatus === 'TECH_IN_PROGRESS' ? 'INSTALACIÓN EN CURSO / FIRMA PENDIENTE' : (formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'INSTALACIÓN AUDITADA')}
+                      {ticketStatus === 'TECH_IN_PROGRESS' ? 'INSTALACIÓN EN CURSO / FIRMA PENDIENTE' : (formData.techSignedAt ? `FIRMADO: ${formData.techSignedAt}` : 'FIRMA DEL TÉCNICO NO REGISTRADA')}
                     </div>
                   )}
                 </div>
@@ -830,7 +830,7 @@ export default function AntennaContractForm({
             <div className="signature-box border rounded-2xl p-6 bg-blue-50/30 border-blue-100">
               <div className="flex justify-between items-center mb-4">
                 <p className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Firma de Aceptación del Cliente</p>
-                {ticketStatus === 'SIGNATURE_PENDING' && (
+                {(ticketStatus === 'SIGNATURE_PENDING' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
                   <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
                     <input
                       type="checkbox"
@@ -845,7 +845,7 @@ export default function AntennaContractForm({
               
               {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') ? (
                 <>
-                  {ticketStatus === 'SIGNATURE_PENDING' ? (
+                  {(ticketStatus === 'SIGNATURE_PENDING' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) ? (
                     <>
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div className="input-group">
@@ -908,7 +908,7 @@ export default function AntennaContractForm({
                         </div>
                       ) : (
                         <div className="h-16 w-32 bg-blue-500/10 rounded mx-auto flex items-center justify-center text-[9px] text-blue-500 font-bold uppercase tracking-tighter border border-dashed border-blue-200">
-                          {formData.clientSignedAt ? `FIRMADO: ${formData.clientSignedAt}` : 'CONTRATO FIRMADO DIGITALMENTE'}
+                          {formData.clientSignedAt ? `FIRMADO: ${formData.clientSignedAt}` : 'FIRMA DEL CLIENTE PENDIENTE'}
                         </div>
                       )}
                     </div>
@@ -943,11 +943,11 @@ export default function AntennaContractForm({
           <button className="btn-action" onClick={handleTechFinalize}>Finalizar Instalación (Técnico)</button>
         )}
         
-        {ticketStatus === 'SIGNATURE_PENDING' && (
+        {(ticketStatus === 'SIGNATURE_PENDING' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
           <button className="btn-action" onClick={handleFinalSign}>Acepto y Firmar Contrato</button>
         )}
 
-        {ticketStatus === 'COMPLETED' && (
+        {ticketStatus === 'COMPLETED' && formData.clientSignature && formData.techSignature && (
           <button className="btn-action" onClick={() => window.print()}>Imprimir / Descargar PDF</button>
         )}
       </div>

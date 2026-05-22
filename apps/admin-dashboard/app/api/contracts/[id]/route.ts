@@ -26,6 +26,26 @@ export async function PATCH(
       return NextResponse.json({ error: "No tienes permiso para modificar este contrato." }, { status: 403 });
     }
 
+    // Validar firmas antes de permitir transiciones de estado
+    if (body.status === "COMPLETED") {
+      if (!existingContract.techSignature || !existingContract.clientSignature) {
+        return NextResponse.json(
+          { error: "No se puede marcar como COMPLETADO sin las firmas del técnico y del cliente." },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (body.status === "SIGNATURE_PENDING") {
+      const hasTechSignature = existingContract.techSignature || body.techSignature;
+      if (!hasTechSignature) {
+        return NextResponse.json(
+          { error: "No se puede pasar a FIRMA PENDIENTE sin la firma del técnico." },
+          { status: 400 }
+        );
+      }
+    }
+
     const { 
       status, 
       techNotes, 

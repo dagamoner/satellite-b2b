@@ -245,8 +245,30 @@ export default function SupportDashboard() {
                 </div>
               </div>
               <div className="mt-12 pt-10 border-t border-white/5">
-                {currentContract?.status === 'COMPLETED' ? (
+                {currentContract?.status === 'COMPLETED' && currentContract?.clientSignature && currentContract?.techSignature ? (
                   <ClientPdfButton contract={currentContract} className="w-full" />
+                ) : currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature ? (
+                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-amber-500/30 text-center space-y-4">
+                    <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest leading-relaxed">
+                      ⚠️ Contrato incompleto: falta la firma del cliente
+                    </p>
+                    <button
+                      onClick={() => {
+                        const params = new URLSearchParams({
+                          p_contract: currentContract.contractNumber,
+                          p_name: currentContract.clientName,
+                          p_dni: currentContract.clientDni,
+                          p_email: currentContract.clientEmail,
+                          p_phone: currentContract.clientPhone,
+                          p_plan: currentContract.planType,
+                        });
+                        router.push(`/contrato?${params.toString()}`);
+                      }}
+                      className="px-6 py-3 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-black rounded-xl border border-amber-500/30 text-[9px] uppercase tracking-widest transition-all"
+                    >
+                      Ir a Firmar
+                    </button>
+                  </div>
                 ) : currentContract?.status === 'SIGNATURE_PENDING' ? (
                   <div className="bg-slate-950/50 p-6 rounded-2xl border border-amber-500/20 text-center">
                     <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest leading-relaxed">
@@ -328,7 +350,7 @@ export default function SupportDashboard() {
                 <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Soporte Técnico en Tiempo Real</p>
               </div>
               <div className="flex items-center gap-6">
-                {['LEAD', 'SIGNATURE_PENDING'].includes(currentContract?.status) && (
+                {(['LEAD', 'SIGNATURE_PENDING'].includes(currentContract?.status) || (currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature)) && (
                   <button 
                     onClick={async () => {
                       const existingContractTicket = tickets.find(t => t.category === "Contrato");

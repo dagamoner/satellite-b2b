@@ -55,6 +55,27 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
 
     if (!ticket) throw new Error("No se encontró una solicitud activa para vincular estos datos.");
 
+    // Validar firmas antes de transición de estado
+    if (status === 'COMPLETED' && !contractData?.clientSignature) {
+      const currentContract = await prisma.installationContract.findUnique({
+        where: { id: ticket.contractId },
+        select: { clientSignature: true }
+      });
+      if (!currentContract?.clientSignature) {
+        throw new Error('No se puede completar el contrato sin la firma del cliente.');
+      }
+    }
+
+    if (status === 'SIGNATURE_PENDING' && !contractData?.techSignature) {
+      const currentContract = await prisma.installationContract.findUnique({
+        where: { id: ticket.contractId },
+        select: { techSignature: true }
+      });
+      if (!currentContract?.techSignature) {
+        throw new Error('No se puede pasar a firma pendiente sin la firma del técnico.');
+      }
+    }
+
     const effectiveTicketId = ticket.id;
 
     // 2. Actualizar el estado del Ticket
