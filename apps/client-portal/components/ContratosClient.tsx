@@ -81,6 +81,10 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
   const pTicket = searchParams.get("p_ticket"); 
   const finalInstallId = pContract || nextInstallId;
 
+  if (pTicket && !realStatus) {
+    return <div className="min-h-screen bg-[#020617] flex items-center justify-center text-blue-500 font-black animate-pulse">CARGANDO FORMULARIO...</div>;
+  }
+
   return (
     <AntennaContractForm 
       agents={agents}
