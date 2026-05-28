@@ -58,6 +58,12 @@ interface AntennaContractFormProps {
     photoTest?: string | null;
     photoApp?: string | null;
     photoRack?: string | null;
+    equipmentPrice?: number | null;
+    equipmentPaymentMethod?: string | null;
+    installationType?: string | null;
+    installationPrice?: number | null;
+    installationPaymentMethod?: string | null;
+    monthlyFee?: number | null;
   };
 }
 
