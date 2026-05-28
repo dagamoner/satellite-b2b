@@ -218,7 +218,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <form onSubmit={handleSubmit} className="space-y-8 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Nombre Completo / Razón Social / Nombre de fantasía</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo / Razón Social / Nombre de fantasía</label>
                       <input 
                         type="text" 
                         required
@@ -229,7 +229,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       />
                     </div>
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">CUIT / CUIL</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
                       <input 
                         type="text" 
                         required
@@ -243,7 +243,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">CBU</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CBU</label>
                       <input 
                         type="text" 
                         value={formData.cbu}
@@ -253,7 +253,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       />
                     </div>
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Categoría</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Categoría</label>
                       <select 
                         value={formData.clientCategory}
                         onChange={e => setFormData({...formData, clientCategory: e.target.value})}
@@ -274,7 +274,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Rubro</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Rubro</label>
                       <select 
                         value={formData.rubro}
                         onChange={e => setFormData({...formData, rubro: e.target.value})}
@@ -292,7 +292,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Email de Contacto</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Email de Contacto</label>
                       <input 
                         type="email" 
                         required
@@ -303,7 +303,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       />
                     </div>
                     <div className="space-y-4">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Teléfono Móvil</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Teléfono Móvil</label>
                       <input 
                         type="tel" 
                         required
@@ -330,7 +330,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                   )}
 
                   <div className="space-y-4">
-                    <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.25em] ml-1">Observaciones / Detalles</label>
+                    <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Observaciones / Detalles</label>
                     <textarea 
                       rows={4}
                       value={formData.message}
