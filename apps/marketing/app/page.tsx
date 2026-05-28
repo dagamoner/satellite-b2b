@@ -389,7 +389,7 @@ export default function MarketingPage() {
                         <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-slate-400 mb-10 leading-relaxed text-sm font-light">
+                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Diseño y dinámica.
                      </p>
                      
@@ -460,7 +460,7 @@ export default function MarketingPage() {
                         <svg className="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-slate-200 mb-10 leading-relaxed text-sm font-light">
+                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Prioridad Satelital, diseño y robustez.
                      </p>
                      
@@ -517,7 +517,7 @@ export default function MarketingPage() {
                         <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-slate-400 mb-10 leading-relaxed text-sm font-light">
+                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Diseño portátil, ideal para sectores rurales.
                      </p>
                      
