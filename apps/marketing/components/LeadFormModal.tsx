@@ -71,6 +71,22 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         setLocalities([]);
         return;
       }
+
+      // Máscara / prefijo de celular según provincia
+      let phonePrefix = "+549";
+      if (formData.province === "Mendoza") phonePrefix = "+549261";
+      else if (formData.province === "San Juan") phonePrefix = "+549264";
+      else if (formData.province === "San Luis") phonePrefix = "+549266";
+
+      setFormData(prev => {
+        // Solo sobrescribimos si estaba vacío o si contenía un prefijo automático anterior sin más números
+        const currentPhone = prev.phone.trim();
+        if (!currentPhone || currentPhone === "+549" || currentPhone === "+549261" || currentPhone === "+549264" || currentPhone === "+549266") {
+          return { ...prev, phone: phonePrefix };
+        }
+        return prev;
+      });
+      
       
       // Si tenemos las localidades de esta provincia de forma local (ej: Mendoza, San Juan, San Luis)
       // las cargamos instantáneamente y salimos, ahorrando la llamada a la API.
