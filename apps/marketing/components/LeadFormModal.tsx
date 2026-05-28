@@ -31,6 +31,9 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     street: "",
     houseNumber: "",
     zipCode: "",
+    installationPrice: "A Convenir",
+    planName: planInfo?.title || "Plan Full Estándar V4",
+    antennaModel: "Starlink Standard (V3/V4)",
   });
   const [localities, setLocalities] = useState<string[]>([]);
   const [loadingLocalities, setLoadingLocalities] = useState(false);
@@ -159,7 +162,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
           ...formData,
           dni: normalizedDni,
           type: planInfo.type,
-          planName: planInfo.title,
+          // override planName directly from the form dropdown, not planInfo
         }),
       });
 
@@ -425,6 +428,60 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         placeholder="+54 9..."
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Plan Seleccionado</label>
+                      <select 
+                        required
+                        value={formData.planName}
+                        onChange={e => setFormData({...formData, planName: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
+                      >
+                        <option value="Plan Full Estándar V4">Plan Full Estándar V4</option>
+                        <option value="Relevamiento IT - Planes Empresariales">Relevamiento IT - Empresarial</option>
+                        <option value="Plan B2B Corporativo">Plan B2B Corporativo</option>
+                        <option value="Plan B2B Pyme">Plan B2B Pyme</option>
+                        <option value="Starlink Roam (Itinerante)">Starlink Roam (Itinerante)</option>
+                        <option value="Starlink Marítimo / Movilidad">Starlink Marítimo / Movilidad</option>
+                        <option value="A Convenir / Otros">A Convenir / Otros</option>
+                      </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Antena</label>
+                      <select 
+                        required
+                        value={formData.antennaModel}
+                        onChange={e => setFormData({...formData, antennaModel: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
+                      >
+                        <option value="Starlink Standard (V3/V4)">Starlink Standard (V3/V4)</option>
+                        <option value="Starlink Standard Actuated (V2)">Starlink Standard Actuated (V2)</option>
+                        <option value="Starlink High Performance (Empresarial)">Starlink High Performance (Empresarial)</option>
+                        <option value="Starlink Flat High Performance">Starlink Flat High Performance</option>
+                        <option value="Starlink Mini">Starlink Mini</option>
+                        <option value="A definir">A definir / Sin Antena</option>
+                      </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Instalación</label>
+                      <select 
+                        required
+                        value={formData.installationPrice}
+                        onChange={e => setFormData({...formData, installationPrice: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
+                      >
+                        <option value="A Convenir">A Convenir</option>
+                        <option value="Bonificado (100% OFF)">Bonificado (100% OFF)</option>
+                        <option value="$ 50.000">$ 50.000</option>
+                        <option value="$ 100.000">$ 100.000</option>
+                        <option value="$ 150.000">$ 150.000</option>
+                        <option value="$ 250.000">$ 250.000</option>
+                        <option value="$ 350.000">$ 350.000</option>
+                        <option value="$ 500.000">$ 500.000</option>
+                      </select>
                     </div>
                   </div>
 

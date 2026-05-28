@@ -23,13 +23,22 @@ async function generateTicketNumber() {
 export async function POST(request: Request) {
   await cookies(); // Force dynamic runtime
   try {
-    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro, province, city, otherCity, street, houseNumber, zipCode } = await request.json();
+    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro, province, city, otherCity, street, houseNumber, zipCode, installationPrice, antennaModel } = await request.json();
 
     if (!name || !email || !dni || !type || !province || !street) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
     }
     
     const finalCity = city === "Otra localidad" ? otherCity : city;
+    
+    // Extraer números del importe o null
+    let parsedPrice = null;
+    if (installationPrice && installationPrice.includes("$")) {
+      const nums = installationPrice.replace(/\D/g, "");
+      if (nums) parsedPrice = parseFloat(nums);
+    } else if (installationPrice === "Bonificado (100% OFF)") {
+      parsedPrice = 0;
+    }
 
     const contractNumber = await generateLeadNumber();
     const ticketNumber = contractNumber; // Unificamos los números para trazabilidad absoluta
@@ -46,13 +55,15 @@ export async function POST(request: Request) {
         clientDni: dni,
         equipmentType: type === "HARDWARE" ? "SOLICITUD_HARDWARE" : "PENDIENTE",
         planType: planName || "POR_DEFINIR",
+        antennaModel: antennaModel || "POR_DEFINIR",
+        installationPrice: parsedPrice,
         address: `${street} ${houseNumber}`.trim(),
         city: finalCity,
         province: province,
         street,
         houseNumber,
         zipCode,
-        installationNotes: `Interés inicial: ${type}. Nombre Fantasía: ${nombreFantasia || "N/A"}. Mensaje: ${message}`,
+        installationNotes: `Interés inicial: ${type}. Nombre Fantasía: ${nombreFantasia || "N/A"}. Antena: ${antennaModel}. Instalación: ${installationPrice}. Mensaje: ${message}`,
         cbu,
         clientCategory,
         rubro,
@@ -97,9 +108,9 @@ export async function POST(request: Request) {
         city: finalCity,
         source: "WEB_MARKETING",
         status: "NEW",
-        estimatedValue: 150000, // Presupuesto inicial estimado estándar
-        planInterest: planName || "POR_DEFINIR",
-        notes: `Solicitud de antena vía web. Tipo: ${type}. DNI: ${dni}. Mensaje: ${message || "Sin mensaje"}`,
+        estimatedValue: parsedPrice || 150000,
+        planInterest: planName,
+        notes: `Antena: ${antennaModel}. Instalación: ${installationPrice}. Mensaje: ${message}. Solicitud de antena vía web. Tipo: ${type}. DNI: ${dni}. Mensaje: ${message || "Sin mensaje"}`,
         assignedToId: adminUser?.id || null,
         cbu,
         clientCategory,
