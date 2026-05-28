@@ -269,17 +269,27 @@ export default function SupportDashboard() {
                       Ir a Firmar
                     </button>
                   </div>
-                ) : currentContract?.status === 'SIGNATURE_PENDING' ? (
-                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-amber-500/20 text-center">
-                    <p className="text-[9px] font-black text-amber-500 uppercase tracking-widest leading-relaxed">
-                      ✍️ Esperando firma del cliente
+                ) : (currentContract?.status === 'SIGNATURE_PENDING' || currentContract?.status === 'IN_PROGRESS') ? (
+                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-cyan-500/30 text-center space-y-4 shadow-lg shadow-cyan-500/5">
+                    <p className="text-[9px] font-black text-cyan-400 uppercase tracking-widest leading-relaxed">
+                      {currentContract?.status === 'SIGNATURE_PENDING' ? '✍️ Esperando tu firma para finalizar' : '🔧 Instalación en proceso / Pendiente Firma'}
                     </p>
-                  </div>
-                ) : currentContract?.status === 'IN_PROGRESS' ? (
-                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-cyan-500/20 text-center">
-                    <p className="text-[9px] font-black text-cyan-500 uppercase tracking-widest leading-relaxed">
-                      🔧 Instalación técnica en proceso
-                    </p>
+                    <button
+                      onClick={() => {
+                        const params = new URLSearchParams({
+                          p_contract: currentContract.contractNumber,
+                          p_name: currentContract.clientName,
+                          p_dni: currentContract.clientDni,
+                          p_email: currentContract.clientEmail,
+                          p_phone: currentContract.clientPhone,
+                          p_plan: currentContract.planType,
+                        });
+                        router.push(`/contrato?${params.toString()}`);
+                      }}
+                      className="w-full px-6 py-3 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 font-black rounded-xl border border-cyan-500/30 text-[9px] uppercase tracking-widest transition-all shadow-inner"
+                    >
+                      Ver y Firmar Contrato
+                    </button>
                   </div>
                 ) : currentContract?.status === 'APPROVED' ? (
                   <div className="bg-slate-950/50 p-6 rounded-2xl border border-blue-500/20 text-center">
@@ -356,7 +366,7 @@ export default function SupportDashboard() {
                 <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Soporte Técnico en Tiempo Real</p>
               </div>
               <div className="flex items-center gap-6">
-                {(['LEAD', 'OPEN', 'CONTRACT_INITIATED', 'SIGNATURE_PENDING', 'APPROVED'].includes(currentContract?.status) || (currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature)) && (
+                {(['LEAD', 'OPEN', 'CONTRACT_INITIATED', 'SIGNATURE_PENDING', 'APPROVED', 'IN_PROGRESS'].includes(currentContract?.status) || (currentContract?.status === 'COMPLETED' && !currentContract?.clientSignature)) && (
                   <button 
                     onClick={async () => {
                       const existingContractTicket = tickets.find(t => t.category === "Contrato");
