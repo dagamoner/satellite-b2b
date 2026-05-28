@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Button } from "@repo/ui/button";
+import { HARDCODED_LOCALIDADES } from "../lib/localidades";
 
 interface LeadFormModalProps {
   isOpen: boolean;
@@ -70,6 +71,18 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         setLocalities([]);
         return;
       }
+      
+      // Si tenemos las localidades de esta provincia de forma local (ej: Mendoza, San Juan, San Luis)
+      // las cargamos instantáneamente y salimos, ahorrando la llamada a la API.
+      if (HARDCODED_LOCALIDADES[formData.province]) {
+        const names = [...HARDCODED_LOCALIDADES[formData.province]!, "Otra localidad"];
+        setLocalities(names);
+        if (names.length > 0 && !names.includes(formData.city)) {
+          setFormData(prev => ({ ...prev, city: names[0] || "" }));
+        }
+        return;
+      }
+
       setLoadingLocalities(true);
       try {
         const res = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(formData.province)}&campos=nombre&max=2000`);
