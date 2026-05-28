@@ -14,6 +14,13 @@ interface Contract {
   address: string;
   city: string;
   province: string;
+  zipCode?: string;
+  cbu?: string;
+  rubro?: string;
+  clientCategory?: string;
+  antennaModel?: string;
+  installationPrice?: number | string;
+  installationNotes?: string | null;
   equipmentType: string;
   planType: string;
   monthlyFee?: string | number;
@@ -108,15 +115,27 @@ export const generateContractPDF = async (contract: Contract) => {
   doc.line(15, currentY, pageWidth - 15, currentY);
   currentY += 10;
 
+  let nombreFantasia = "-";
+  if (contract.installationNotes) {
+    const match = contract.installationNotes.match(/Nombre Fantasía:\s*(.+?)\./);
+    if (match && match[1]) {
+      nombreFantasia = match[1];
+    }
+  }
+
   autoTable(doc, {
     startY: currentY,
     theme: "plain",
     body: [
-      ["Nombre / Razón Social:", contract.clientName],
+      ["Nombre Completo:", contract.clientName],
       ["DNI / CUIT:", contract.clientDni],
       ["Email:", contract.clientEmail],
       ["Teléfono:", contract.clientPhone],
-      ["Empresa:", contract.companyName || "-"],
+      ["Empresa (Razón Social):", contract.companyName || "-"],
+      ["Nombre de Fantasía:", nombreFantasia],
+      ["Categoría:", contract.clientCategory || "-"],
+      ["Rubro:", contract.rubro || "-"],
+      ["CBU:", contract.cbu || "-"],
     ],
     columnStyles: {
       0: { fontStyle: "bold", cellWidth: 50 },
@@ -140,6 +159,7 @@ export const generateContractPDF = async (contract: Contract) => {
       ["Dirección:", contract.address],
       ["Ciudad:", contract.city],
       ["Provincia:", contract.province],
+      ["Código Postal:", contract.zipCode || "-"],
     ],
     columnStyles: {
       0: { fontStyle: "bold", cellWidth: 50 },
@@ -160,8 +180,9 @@ export const generateContractPDF = async (contract: Contract) => {
     startY: currentY,
     theme: "plain",
     body: [
-      ["Equipo:", EQUIPMENT_LABELS[contract.equipmentType] || contract.equipmentType],
       ["Plan de Datos:", PLAN_LABELS[contract.planType] || contract.planType],
+      ["Antena Seleccionada:", contract.antennaModel || EQUIPMENT_LABELS[contract.equipmentType] || contract.equipmentType],
+      ["Instalación / Importe:", contract.installationPrice !== undefined && contract.installationPrice !== null ? `$${Number(contract.installationPrice).toLocaleString("es-AR")}` : "A convenir"],
       ["Abono Mensual:", contract.monthlyFee ? `$${Number(contract.monthlyFee).toLocaleString("es-AR")}` : "A convenir"],
       ["Fecha de Solicitud:", new Date(contract.createdAt).toLocaleDateString("es-AR")],
     ],

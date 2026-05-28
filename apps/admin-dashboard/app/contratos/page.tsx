@@ -34,6 +34,11 @@ interface Contract {
   scheduledDate: string | null;
   installedAt: string | null;
   createdAt: string;
+  zipCode?: string;
+  cbu?: string;
+  rubro?: string;
+  clientCategory?: string;
+  installationPrice?: number;
   // Nuevos campos técnicos
   kitSerialNumber?: string;
   antennaModel?: string;
