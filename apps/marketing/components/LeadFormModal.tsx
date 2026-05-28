@@ -127,6 +127,12 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     e.preventDefault();
     setLoading(true);
 
+    if (!formData.email.includes("@")) {
+      alert("Por favor, introduzca una dirección de correo electrónico válida que contenga el símbolo '@'.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const normalizedDni = formData.dni.replace(/\D/g, "");
 
@@ -385,10 +391,12 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       <input 
                         type="email" 
                         required
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                        title="El correo debe contener el símbolo '@' y un dominio válido (ej. correo@empresa.com)"
                         value={formData.email}
                         onChange={e => setFormData({...formData, email: e.target.value})}
                         placeholder="correo@empresa.com"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl invalid:border-red-500/50"
                       />
                     </div>
                     <div className="space-y-4">
