@@ -198,11 +198,9 @@ function EntryPortalContent() {
               className="relative mb-8 group"
             >
               <div className="absolute inset-0 bg-cyan-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
-              <div className="w-24 h-24 bg-slate-900 border border-white/10 rounded-[2.5rem] flex items-center justify-center relative shadow-inner overflow-hidden">
+              <div className="w-40 h-40 md:w-48 md:h-48 bg-slate-900 border border-white/10 rounded-[2.5rem] flex items-center justify-center relative shadow-inner overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent" />
-                <svg className="w-10 h-10 text-cyan-500 relative z-10 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                <img src="/logo.jpg" alt="MR Technology" className="w-full h-full object-contain relative z-10 p-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
               </div>
             </motion.div>
             
