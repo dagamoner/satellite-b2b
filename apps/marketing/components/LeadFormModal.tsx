@@ -31,9 +31,9 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     street: "",
     houseNumber: "",
     zipCode: "",
-    installationPrice: "A Convenir",
-    planName: planInfo?.title || "Plan Full Estándar V4",
-    antennaModel: "Starlink Standard (V3/V4)",
+    installationPrice: "",
+    planName: "",
+    antennaModel: "",
   });
   const [localities, setLocalities] = useState<string[]>([]);
   const [loadingLocalities, setLoadingLocalities] = useState(false);
@@ -49,6 +49,63 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
   const [generatedNumber, setGeneratedNumber] = useState("");
 
   const isSpecialPlan = planInfo?.title === "Plan Full Estándar V4" || planInfo?.title === "Relevamiento IT - Planes Empresariales";
+
+  // Dynamic dropdown logic
+  const ANTENA_OPTIONS = [
+    { value: "Mini X", label: "Antena Mini X - $300.000 + IVA (o 3 cuotas de $100.000)" },
+    { value: "Estándar V4", label: "Antena Estándar V4 - $500.000 + IVA (o 3 cuotas de $166.666)" },
+    { value: "Itinerante", label: "Antena Itinerante - $300.000 + IVA (o 3 cuotas de $100.000)" },
+    { value: "A Definir", label: "A definir / Otro" }
+  ];
+
+  const getPlanOptions = (antena: string) => {
+    if (antena === "Mini X") return [
+      { value: "Plan Básico Mini", label: "Plan Básico Mini - $90.000 + IVA / mes" }
+    ];
+    if (antena === "Estándar V4") return [
+      { value: "Plan Básico Estándar V4", label: "Plan Básico Estándar V4 - $120.000 + IVA / mes" },
+      { value: "Plan Full Estándar V4", label: "Plan Full Estándar V4 - $200.000 + IVA / mes" }
+    ];
+    if (antena === "Itinerante") return [
+      { value: "Plan Itinerante / Roam", label: "Plan Itinerante / Roam - A Convenir" }
+    ];
+    return [
+      { value: "A Convenir", label: "A Convenir / Otros" }
+    ];
+  };
+
+  const getInstallationOptions = (antena: string) => {
+    if (antena === "Mini X") return [
+      { value: "Mini - Contado: $150.000 + IVA", label: "Instalación Mini: $150.000 + IVA (Efectivo)" },
+      { value: "Mini - 3 cuotas de $60.000 + IVA", label: "Instalación Mini: 3 cuotas de $60.000 + IVA" }
+    ];
+    if (antena === "Estándar V4") return [
+      { value: "V4 Premium - Contado: $200.000 + IVA", label: "Instalación V4 Premium: $200.000 + IVA (Efectivo)" },
+      { value: "V4 Premium - 3 cuotas de $80.000 + IVA", label: "Instalación V4 Premium: 3 cuotas de $80.000 + IVA" }
+    ];
+    if (antena === "Itinerante") return [
+      { value: "Sin Instalación", label: "Sin Instalación" },
+      { value: "A Convenir", label: "Instalación a Convenir" }
+    ];
+    return [
+      { value: "A Convenir", label: "A Convenir" },
+      { value: "Bonificado (100% OFF)", label: "Bonificado (100% OFF)" }
+    ];
+  };
+
+  // When Antenna changes, auto-select the first Plan and Installation Option
+  const handleAntennaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedAntena = e.target.value;
+    const firstPlan = getPlanOptions(selectedAntena)[0]?.value || "";
+    const firstInstallation = getInstallationOptions(selectedAntena)[0]?.value || "";
+    
+    setFormData({
+      ...formData,
+      antennaModel: selectedAntena,
+      planName: firstPlan,
+      installationPrice: firstInstallation
+    });
+  };
 
   useEffect(() => {
     const handlePopState = (e: PopStateEvent) => {
@@ -433,54 +490,47 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Plan Seleccionado</label>
-                      <select 
-                        required
-                        value={formData.planName}
-                        onChange={e => setFormData({...formData, planName: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
-                      >
-                        <option value="Plan Full Estándar V4">Plan Full Estándar V4</option>
-                        <option value="Relevamiento IT - Planes Empresariales">Relevamiento IT - Empresarial</option>
-                        <option value="Plan B2B Corporativo">Plan B2B Corporativo</option>
-                        <option value="Plan B2B Pyme">Plan B2B Pyme</option>
-                        <option value="Starlink Roam (Itinerante)">Starlink Roam (Itinerante)</option>
-                        <option value="Starlink Marítimo / Movilidad">Starlink Marítimo / Movilidad</option>
-                        <option value="A Convenir / Otros">A Convenir / Otros</option>
-                      </select>
-                    </div>
-                    <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Antena</label>
                       <select 
                         required
                         value={formData.antennaModel}
-                        onChange={e => setFormData({...formData, antennaModel: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
+                        onChange={handleAntennaChange}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
                       >
-                        <option value="Starlink Standard (V3/V4)">Starlink Standard (V3/V4)</option>
-                        <option value="Starlink Standard Actuated (V2)">Starlink Standard Actuated (V2)</option>
-                        <option value="Starlink High Performance (Empresarial)">Starlink High Performance (Empresarial)</option>
-                        <option value="Starlink Flat High Performance">Starlink Flat High Performance</option>
-                        <option value="Starlink Mini">Starlink Mini</option>
-                        <option value="A definir">A definir / Sin Antena</option>
+                        <option value="" disabled>Seleccionar Antena...</option>
+                        {ANTENA_OPTIONS.map(opt => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Plan Seleccionado</label>
+                      <select 
+                        required
+                        disabled={!formData.antennaModel}
+                        value={formData.planName}
+                        onChange={e => setFormData({...formData, planName: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px] disabled:opacity-50"
+                      >
+                        {!formData.antennaModel && <option value="" disabled>Primero seleccione antena...</option>}
+                        {formData.antennaModel && getPlanOptions(formData.antennaModel).map(opt => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
                       </select>
                     </div>
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Instalación</label>
                       <select 
                         required
+                        disabled={!formData.antennaModel}
                         value={formData.installationPrice}
                         onChange={e => setFormData({...formData, installationPrice: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-xs"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px] disabled:opacity-50"
                       >
-                        <option value="A Convenir">A Convenir</option>
-                        <option value="Bonificado (100% OFF)">Bonificado (100% OFF)</option>
-                        <option value="$ 50.000">$ 50.000</option>
-                        <option value="$ 100.000">$ 100.000</option>
-                        <option value="$ 150.000">$ 150.000</option>
-                        <option value="$ 250.000">$ 250.000</option>
-                        <option value="$ 350.000">$ 350.000</option>
-                        <option value="$ 500.000">$ 500.000</option>
+                        {!formData.antennaModel && <option value="" disabled>Primero seleccione antena...</option>}
+                        {formData.antennaModel && getInstallationOptions(formData.antennaModel).map(opt => (
+                          <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
