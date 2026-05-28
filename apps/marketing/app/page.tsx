@@ -215,7 +215,7 @@ export default function MarketingPage() {
           >
              <div className="relative shrink-0">
                <div className="absolute inset-0 bg-blue-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
-               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg transition-all duration-500 ${scrolled ? "w-12 h-12 md:w-16 md:h-16" : "w-16 h-16 md:w-32 md:h-32"}`} />
+               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg transition-all duration-500 ${scrolled ? "w-16 h-16 md:w-20 md:h-20" : "w-24 h-24 md:w-48 md:h-48"}`} />
              </div>
              <div className="flex flex-col gap-2">
                <div className={`flex gap-4 text-slate-400 transition-opacity duration-500 ${scrolled ? "opacity-0 h-0 overflow-hidden" : "opacity-100"}`}>
