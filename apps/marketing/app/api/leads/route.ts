@@ -23,7 +23,7 @@ async function generateTicketNumber() {
 export async function POST(request: Request) {
   await cookies(); // Force dynamic runtime
   try {
-    const { name, email, phone, dni, type, message, planName, cbu, clientCategory, rubro } = await request.json();
+    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro } = await request.json();
 
     if (!name || !email || !dni || !type) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
@@ -38,6 +38,7 @@ export async function POST(request: Request) {
         contractNumber,
         status: "LEAD",
         clientName: name,
+        companyName: razonSocial || undefined,
         clientEmail: email,
         clientPhone: phone || "Sin especificar",
         clientDni: dni,
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
         address: "Pendiente de definición comercial",
         city: "Por definir",
         province: "Por definir",
-        installationNotes: `Interés inicial: ${type}. Mensaje: ${message}`,
+        installationNotes: `Interés inicial: ${type}. Nombre Fantasía: ${nombreFantasia || "N/A"}. Mensaje: ${message}`,
         cbu,
         clientCategory,
         rubro,
@@ -84,8 +85,8 @@ export async function POST(request: Request) {
       data: {
         leadNumber,
         clientName: name,
-        companyName: name,
-        contactName: name,
+        companyName: razonSocial || name,
+        contactName: nombreFantasia || name,
         email,
         phone: phone || "Sin especificar",
         city: "Por definir",

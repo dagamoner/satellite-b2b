@@ -15,6 +15,8 @@ interface LeadFormModalProps {
 export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormModalProps) {
   const [formData, setFormData] = useState({
     name: "",
+    razonSocial: "",
+    nombreFantasia: "",
     email: "",
     phone: "",
     dni: "",
@@ -218,7 +220,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <form onSubmit={handleSubmit} className="space-y-8 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo / Razón Social / Nombre de fantasía</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo</label>
                       <input 
                         type="text" 
                         required
@@ -237,6 +239,29 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         onChange={e => setFormData({...formData, dni: e.target.value})}
                         placeholder="20345678901"
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Razón Social</label>
+                      <input 
+                        type="text" 
+                        value={formData.razonSocial}
+                        onChange={e => setFormData({...formData, razonSocial: e.target.value})}
+                        placeholder="Empresa S.A."
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre de Fantasía</label>
+                      <input 
+                        type="text" 
+                        value={formData.nombreFantasia}
+                        onChange={e => setFormData({...formData, nombreFantasia: e.target.value})}
+                        placeholder="Mi Negocio"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
                   </div>
