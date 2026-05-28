@@ -125,9 +125,8 @@ export default function AdminOverview() {
         <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-md relative z-10">
           <Card variant="glass" className="p-10" hover={false}>
             <motion.div variants={itemVariants} className="flex flex-col items-center mb-10 text-center">
-              <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2.5rem] flex items-center justify-center relative shadow-2xl overflow-hidden mb-6 group border border-white/10 bg-slate-900">
-                <div className="absolute inset-0 bg-cyan-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
-                <img src="/logo_mr_tech.png?v=2" alt="MR Technology" className="w-full h-full object-contain relative z-10 p-2 drop-shadow-2xl" />
+              <div className="mb-8">
+                <h2 className="text-xl md:text-2xl font-bold text-cyan-400 tracking-widest uppercase drop-shadow-md">PORTAL NOC</h2>
               </div>
               <h1 className="text-3xl font-extrabold text-white tracking-tight mb-2 mt-2">Satellite NOC</h1>
               <p className="text-slate-500 font-black text-[10px] uppercase tracking-[0.3em]">Centro de Operaciones</p>
