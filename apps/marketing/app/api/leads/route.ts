@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY || "re_dummy_key");
 
 export const dynamic = "force-dynamic";
 
@@ -129,6 +132,35 @@ export async function POST(request: Request) {
           leadId: lead.id,
         }
       });
+    }
+
+    // 4. Enviar email al cliente con el número de seguimiento
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: "Portal B2B <onboarding@resend.dev>", // Cambiar por un dominio verificado en produccin
+          to: email,
+          subject: `Solicitud Recibida - ${contract.contractNumber}`,
+          html: `
+            <div style="font-family: sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
+              <h2 style="color: #06b6d4;">Solicitud de Servicio Recibida</h2>
+              <p>Hola <strong>${name}</strong>,</p>
+              <p>Hemos recibido correctamente tu solicitud de servicio para el plan <strong>${planName || type}</strong>.</p>
+              <p>Tu nmero de seguimiento y de solicitud es:</p>
+              <div style="background-color: #f8fafc; padding: 15px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                <span style="font-size: 24px; font-weight: bold; color: #0f172a; font-family: monospace;">${contract.contractNumber}</span>
+              </div>
+              <p>Un representante técnico se contactará a la brevedad al teléfono proporcionado (${phone}) o a este mismo correo electrónico.</p>
+              <br/>
+              <p style="font-size: 12px; color: #64748b;">Este es un mensaje automático del Portal B2B. Por favor no respondas a este correo.</p>
+            </div>
+          `,
+        });
+      } catch (emailError) {
+        console.error("[RESEND_ERROR] No se pudo enviar el correo:", emailError);
+      }
+    } else {
+      console.warn("No RESEND_API_KEY provided. Skipping email to", email);
     }
 
     return NextResponse.json({ 

@@ -11,16 +11,17 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "@repo/database": "*",
     "@repo/ui": "*",
     "@repo/validation": "*",
-    "@prisma/client": "^6.2.1",
     "browser-image-compression": "^2.0.2",
     "jspdf": "^4.2.1",
     "next": "16.2.0",
     "react": "19.2.5",
     "react-dom": "19.2.5",
-    "react-signature-canvas": "^1.1.0-alpha.2"
+    "react-signature-canvas": "^1.1.0-alpha.2",
+    "resend": "^6.12.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.1.7",
