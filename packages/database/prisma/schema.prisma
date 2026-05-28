@@ -41,6 +41,11 @@ model InstallationContract {
   province          String?         @default("Por definir")
   country           String          @default("Argentina")
   equipmentType     String
+  equipmentPrice    Float?
+  equipmentPaymentMethod String?
+  installationType  String?
+  installationPrice Float?
+  installationPaymentMethod String?
   planType          String
   monthlyFee        Float?
   kitSerialNumber   String?

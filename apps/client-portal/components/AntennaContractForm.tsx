@@ -107,6 +107,14 @@ interface AntennaFormData {
   clientNameSign: string;
   clientDniSign: string;
   clientSignedAt?: string;
+
+  // Campos Comerciales
+  equipmentPrice?: string;
+  equipmentPaymentMethod?: string;
+  installationType?: string;
+  installationPrice?: string;
+  installationPaymentMethod?: string;
+  monthlyFee?: string;
 }
 
 export default function AntennaContractForm({ 
@@ -168,6 +176,13 @@ export default function AntennaContractForm({
     clientNameSign: initialData?.clientName || '', // Por defecto el del titular
     clientDniSign: initialData?.clientDni || '',   // Por defecto el del titular
     clientSignedAt: initialData?.clientSignedAt ? new Date(initialData.clientSignedAt).toLocaleString('es-AR') : '',
+    // Comerciales
+    equipmentPrice: initialData?.equipmentPrice?.toString() || '300000',
+    equipmentPaymentMethod: initialData?.equipmentPaymentMethod || 'Efectivo',
+    installationType: initialData?.installationType || 'MINI',
+    installationPrice: initialData?.installationPrice?.toString() || '150000',
+    installationPaymentMethod: initialData?.installationPaymentMethod || 'Efectivo',
+    monthlyFee: initialData?.monthlyFee?.toString() || '90000',
   });
 
   const [isExporting, setIsExporting] = useState(false);
@@ -307,6 +322,13 @@ export default function AntennaContractForm({
         province: formData.provincia,
         zipCode: formData.zipCode,
         address: `${formData.street} ${formData.houseNumber}, ${formData.ciudad}, ${formData.provincia}`,
+        // Comerciales
+        equipmentPrice: parseFloat(formData.equipmentPrice || '0'),
+        equipmentPaymentMethod: formData.equipmentPaymentMethod,
+        installationType: formData.installationType,
+        installationPrice: parseFloat(formData.installationPrice || '0'),
+        installationPaymentMethod: formData.installationPaymentMethod,
+        monthlyFee: parseFloat(formData.monthlyFee || '0'),
       });
       onBack(); // Vuelve al chat o refresca
     } catch (err) {
@@ -344,6 +366,13 @@ export default function AntennaContractForm({
         techNotes: formData.observations,
         obstructionObject: formData.obstructionObject,
         perfObservations: formData.perfObservations,
+        // Comerciales
+        equipmentPrice: parseFloat(formData.equipmentPrice || '0'),
+        equipmentPaymentMethod: formData.equipmentPaymentMethod,
+        installationType: formData.installationType,
+        installationPrice: parseFloat(formData.installationPrice || '0'),
+        installationPaymentMethod: formData.installationPaymentMethod,
+        monthlyFee: parseFloat(formData.monthlyFee || '0'),
         // Firmas
         techSignature: isTechDigitallySigned
           ? techSigCanvas.current?.getCanvas().toDataURL("image/png")
@@ -729,9 +758,93 @@ export default function AntennaContractForm({
           </div>
         )}
 
-        {/* SECTION 4: HOLOGRAPHIC SIGNATURES */}
+        {/* SECTION 4: COMERCIAL */}
         <div className="doc-section">
-          <div className="section-header">04. Conformidad y Firmas</div>
+          <div className="section-header">04. Información Comercial</div>
+          <div className="form-grid">
+            <div className="input-field">
+              <label>Tipo de Antena</label>
+              <select id="antennaModel" value={formData.antennaModel} onChange={(e) => {
+                const val = e.target.value;
+                setFormData(prev => ({
+                  ...prev, 
+                  antennaModel: val, 
+                  equipmentPrice: val === 'MINI X' ? '300000' : val === 'STANDAR V4' ? '400000' : '500000'
+                }));
+              }} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="MINI X">MINI X</option>
+                <option value="STANDAR V4">STANDAR V4</option>
+                <option value="ITINERANTE">ITINERANTE</option>
+              </select>
+            </div>
+            <div className="input-field">
+              <label>Importe Antena ($)</label>
+              <input id="equipmentPrice" value={formData.equipmentPrice} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="300000" />
+            </div>
+            <div className="input-field">
+              <label>Forma de Pago (Antena)</label>
+              <select id="equipmentPaymentMethod" value={formData.equipmentPaymentMethod} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="Efectivo">Efectivo</option>
+                <option value="3 cuotas">3 cuotas</option>
+                <option value="6 cuotas">6 cuotas</option>
+              </select>
+            </div>
+            
+            <div className="input-field">
+              <label>Tipo de Instalación</label>
+              <select id="installationType" value={formData.installationType} onChange={(e) => {
+                const val = e.target.value;
+                setFormData(prev => ({
+                  ...prev, 
+                  installationType: val, 
+                  installationPrice: val === 'MINI' ? '150000' : '250000'
+                }));
+              }} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="MINI">MINI</option>
+                <option value="PREMIUM">PREMIUM</option>
+              </select>
+            </div>
+            <div className="input-field">
+              <label>Importe Instalación ($)</label>
+              <input id="installationPrice" value={formData.installationPrice} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="150000" />
+            </div>
+            <div className="input-field">
+              <label>Forma de Pago (Instalación)</label>
+              <select id="installationPaymentMethod" value={formData.installationPaymentMethod} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="Efectivo">Efectivo</option>
+                <option value="3 cuotas">3 cuotas</option>
+                <option value="6 cuotas">6 cuotas</option>
+              </select>
+            </div>
+
+            <div className="input-field">
+              <label>Tipo de Plan</label>
+              <select id="hardwareType" value={formData.hardwareType} onChange={(e) => {
+                const val = e.target.value;
+                let fee = '90000';
+                if (val === 'ESTANDAR V4') fee = '120000';
+                if (val === 'FULL V4') fee = '200000';
+                setFormData(prev => ({
+                  ...prev, 
+                  hardwareType: val, 
+                  monthlyFee: fee
+                }));
+              }} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)}>
+                <option value="BASICO MINI">BASICO MINI</option>
+                <option value="ESTANDAR V4">ESTANDAR V4</option>
+                <option value="FULL V4">FULL V4</option>
+              </select>
+            </div>
+            <div className="input-field">
+              <label>Importe Plan Mensual ($)</label>
+              <input id="monthlyFee" value={formData.monthlyFee} onChange={handleInputChange} disabled={!['CONTRACT_INITIATED', 'OPEN', 'LEAD'].includes(ticketStatus)} placeholder="90000" />
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 5: HOLOGRAPHIC SIGNATURES */}
+        <div className="doc-section">
+          <div className="section-header">05. Conformidad y Firmas</div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             {/* Firma del Técnico */}
