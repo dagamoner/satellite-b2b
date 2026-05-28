@@ -23,11 +23,13 @@ async function generateTicketNumber() {
 export async function POST(request: Request) {
   await cookies(); // Force dynamic runtime
   try {
-    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro } = await request.json();
+    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro, province, city, otherCity, street, houseNumber, zipCode } = await request.json();
 
-    if (!name || !email || !dni || !type) {
+    if (!name || !email || !dni || !type || !province || !street) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
     }
+    
+    const finalCity = city === "Otra localidad" ? otherCity : city;
 
     const contractNumber = await generateLeadNumber();
     const ticketNumber = contractNumber; // Unificamos los números para trazabilidad absoluta
@@ -44,9 +46,12 @@ export async function POST(request: Request) {
         clientDni: dni,
         equipmentType: type === "HARDWARE" ? "SOLICITUD_HARDWARE" : "PENDIENTE",
         planType: planName || "POR_DEFINIR",
-        address: "Pendiente de definición comercial",
-        city: "Por definir",
-        province: "Por definir",
+        address: `${street} ${houseNumber}`.trim(),
+        city: finalCity,
+        province: province,
+        street,
+        houseNumber,
+        zipCode,
         installationNotes: `Interés inicial: ${type}. Nombre Fantasía: ${nombreFantasia || "N/A"}. Mensaje: ${message}`,
         cbu,
         clientCategory,
@@ -89,7 +94,7 @@ export async function POST(request: Request) {
         contactName: nombreFantasia || name,
         email,
         phone: phone || "Sin especificar",
-        city: "Por definir",
+        city: finalCity,
         source: "WEB_MARKETING",
         status: "NEW",
         estimatedValue: 150000, // Presupuesto inicial estimado estándar

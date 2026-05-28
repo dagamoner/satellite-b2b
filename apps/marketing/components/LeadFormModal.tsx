@@ -24,7 +24,22 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     cbu: "",
     clientCategory: "HOGAREÑO",
     rubro: "COMERCIAL",
+    province: "",
+    city: "",
+    otherCity: "",
+    street: "",
+    houseNumber: "",
+    zipCode: "",
   });
+  const [localities, setLocalities] = useState<string[]>([]);
+  const [loadingLocalities, setLoadingLocalities] = useState(false);
+  
+  const PROVINCIAS = [
+    "Buenos Aires", "Ciudad Autónoma de Buenos Aires", "Catamarca", "Chaco", "Chubut", 
+    "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", 
+    "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", 
+    "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
+  ];
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [generatedNumber, setGeneratedNumber] = useState("");
@@ -48,6 +63,42 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
       window.removeEventListener("popstate", handlePopState);
     };
   }, [isOpen, success, onClose]);
+
+  useEffect(() => {
+    const fetchLocalities = async () => {
+      if (!formData.province) {
+        setLocalities([]);
+        return;
+      }
+      setLoadingLocalities(true);
+      try {
+        const res = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(formData.province)}&campos=nombre&max=2000`);
+        if (res.ok) {
+          const data = await res.json();
+          let names = data.localidades.map((l: any) => l.nombre) as string[];
+          // Quitar duplicados y ordenar
+          names = Array.from(new Set(names)).sort((a, b) => a.localeCompare(b));
+          names.push("Otra localidad");
+          setLocalities(names);
+          // Auto-seleccionar la primera opción si la ciudad actual no está en la lista
+          if (names.length > 0 && !names.includes(formData.city)) {
+            setFormData(prev => ({ ...prev, city: names[0] || "" }));
+          }
+        }
+      } catch (error) {
+        console.error("Error al cargar localidades", error);
+        setLocalities(["Otra localidad"]);
+      } finally {
+        setLoadingLocalities(false);
+      }
+    };
+    
+    // Solo un debounce muy básico
+    const timeoutId = setTimeout(() => {
+      fetchLocalities();
+    }, 300);
+    return () => clearTimeout(timeoutId);
+  }, [formData.province]);
 
   const handleManualClose = () => {
     if (window.history.state && window.history.state.leadModalIdx) {
@@ -336,6 +387,92 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         onChange={e => setFormData({...formData, phone: e.target.value})}
                         placeholder="+54 9..."
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Provincia</label>
+                      <select 
+                        required
+                        value={formData.province}
+                        onChange={e => setFormData({...formData, province: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
+                      >
+                        <option value="" disabled>Seleccionar Provincia</option>
+                        {PROVINCIAS.map(p => (
+                          <option key={p} value={p}>{p}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">
+                        Localidad {loadingLocalities && <span className="text-cyan-500 ml-2 animate-pulse text-[10px]">Cargando...</span>}
+                      </label>
+                      <select 
+                        required
+                        value={formData.city}
+                        onChange={e => setFormData({...formData, city: e.target.value})}
+                        disabled={!formData.province || loadingLocalities}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none disabled:opacity-50"
+                      >
+                        <option value="" disabled>Seleccionar Localidad</option>
+                        {localities.map(c => (
+                          <option key={c} value={c}>{c}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {formData.city === "Otra localidad" && (
+                    <div className="grid grid-cols-1 gap-10 animate-in slide-in-from-top-2">
+                      <div className="space-y-4">
+                        <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Especifique Localidad</label>
+                        <input 
+                          type="text" 
+                          required
+                          value={formData.otherCity}
+                          onChange={e => setFormData({...formData, otherCity: e.target.value})}
+                          placeholder="Ingrese el nombre de su localidad"
+                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="space-y-4 md:col-span-1">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Dirección (Calle)</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.street}
+                        onChange={e => setFormData({...formData, street: e.target.value})}
+                        placeholder="Av. San Martín"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Número</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.houseNumber}
+                        onChange={e => setFormData({...formData, houseNumber: e.target.value})}
+                        placeholder="1234"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">C.P.</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.zipCode}
+                        onChange={e => setFormData({...formData, zipCode: e.target.value})}
+                        placeholder="M5500"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
                       />
                     </div>
                   </div>
