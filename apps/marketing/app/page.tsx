@@ -403,9 +403,9 @@ export default function MarketingPage() {
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
+                              <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.1em] mb-2">3 Cuotas Sin Interés</p>
                               <div className="flex items-baseline gap-1 justify-end">
-                                 <span className="text-2xl font-bold text-blue-500">$120.000</span>
+                                 <span className="text-2xl font-bold text-blue-500">$100.000</span>
                               </div>
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
@@ -474,9 +474,9 @@ export default function MarketingPage() {
                               <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
+                              <p className="text-[9px] text-cyan-500 font-bold uppercase tracking-[0.1em] mb-2">3 Cuotas Sin Interés</p>
                               <div className="flex items-baseline gap-1 justify-end">
-                                 <span className="text-2xl font-bold text-cyan-400">$200.000</span>
+                                 <span className="text-2xl font-bold text-cyan-400">$166.666</span>
                               </div>
                               <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
@@ -531,9 +531,9 @@ export default function MarketingPage() {
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
                            <div className="text-right">
-                              <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">O 3 Cuotas</p>
+                              <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.1em] mb-2">3 Cuotas Sin Interés</p>
                               <div className="flex items-baseline gap-1 justify-end">
-                                 <span className="text-2xl font-bold text-green-500">$120.000</span>
+                                 <span className="text-2xl font-bold text-green-500">$100.000</span>
                               </div>
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
