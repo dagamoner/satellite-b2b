@@ -212,8 +212,8 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500">
-      <div className="w-full max-w-7xl bg-slate-900/40 border border-white/10 rounded-[4rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-[750px] transition-all duration-700">
+    <div className="fixed inset-0 z-[100] p-4 md:p-8 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto flex flex-col items-center">
+      <div className="w-full max-w-7xl my-auto bg-slate-900/40 border border-white/10 rounded-[2rem] md:rounded-[4rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-fit transition-all duration-700">
         {/* Glow Effects */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-50" />
         <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
