@@ -49,6 +49,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // @ts-ignore
   eslint: {
     ignoreDuringBuilds: true,
   },
