@@ -90,7 +90,7 @@ function ContratosPageContent({ agents, nextInstallId }: ContratosClientProps) {
       agents={agents}
       nextInstallId={finalInstallId}
       ticketId={pTicket || ""} 
-      ticketStatus={realStatus || (pTicket ? "CONTRACT_INITIATED" : "OPEN")}
+      ticketStatus={(contractData?.status === 'APPROVED' || contractData?.status === 'COMPLETED') ? contractData.status : (realStatus || (pTicket ? "CONTRACT_INITIATED" : "OPEN"))}
       onBack={() => router.push('/soporte/dashboard')}
       initialData={contractData ? {
         clientName: contractData.clientName,
