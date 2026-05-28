@@ -87,8 +87,8 @@ const PLAN_LABELS: Record<string, string> = {
 };
 
 // ── Componente Badge ───────────────────────────────────────────────────────
-function StatusBadge({ status }: { status: ContractStatus }) {
-  const cfg = STATUS_CONFIG[status];
+function StatusBadge({ status }: { status: ContractStatus | string }) {
+  const cfg = STATUS_CONFIG[status as ContractStatus] || { label: status || "DESCONOCIDO", color: "bg-slate-500/15 text-slate-400 border-slate-500/30", dot: "bg-slate-400" };
   return (
     <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border ${cfg.color}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
@@ -849,8 +849,8 @@ export default function ContratosAdminPage() {
                         </div>
                       </td>
                       <td className="px-6 py-4 hidden md:table-cell">
-                        <p className="text-slate-300 text-sm">{EQUIPMENT_LABELS[c.equipmentType]}</p>
-                        <p className="text-slate-500 text-xs">{PLAN_LABELS[c.planType]}</p>
+                        <p className="text-slate-300 text-sm">{EQUIPMENT_LABELS[c.equipmentType] || c.equipmentType || "N/A"}</p>
+                        <p className="text-slate-500 text-xs">{PLAN_LABELS[c.planType] || c.planType || "N/A"}</p>
                       </td>
                       <td className="px-6 py-4 hidden lg:table-cell">
                         <p className="text-slate-400 text-sm">
