@@ -818,7 +818,7 @@ export default function AntennaContractForm({
             <div className="signature-box border rounded-2xl p-6 bg-blue-50/30 border-blue-100">
               <div className="flex justify-between items-center mb-4">
                 <p className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Firma de Aceptación del Cliente</p>
-                {(ticketStatus === 'SIGNATURE_PENDING' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
+                {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
                   <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
                     <input
                       type="checkbox"
@@ -831,9 +831,9 @@ export default function AntennaContractForm({
                 )}
               </div>
               
-              {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'COMPLETED') ? (
+              {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || ticketStatus === 'COMPLETED') ? (
                 <>
-                  {(ticketStatus === 'SIGNATURE_PENDING' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) ? (
+                  {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) ? (
                     <>
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div className="input-group">
