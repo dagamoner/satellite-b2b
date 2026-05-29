@@ -201,7 +201,7 @@ function ContractModal({
     }
   };
 
-  const save = async (forcedStatus?: string) => {
+  const save = async (forcedStatus?: ContractStatus) => {
     setSaving(true);
     try {
       // Auto-advance status to SIGNATURE_PENDING if the tech just signed it
