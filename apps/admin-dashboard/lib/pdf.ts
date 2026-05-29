@@ -128,9 +128,9 @@ export const generateContractPDF = async (contract: Contract) => {
     theme: "plain",
     body: [
       ["Nombre Completo:", contract.clientName],
-      ["DNI / CUIT:", contract.clientDni],
+      ["DNI / CUIT / CUIL:", contract.clientDni],
       ["Email:", contract.clientEmail],
-      ["Teléfono:", contract.clientPhone],
+      ["Teléfono:", contract.clientPhone || "-"],
       ["Empresa (Razón Social):", contract.companyName || "-"],
       ["Nombre de Fantasía:", nombreFantasia],
       ["Categoría:", contract.clientCategory || "-"],
@@ -195,7 +195,7 @@ export const generateContractPDF = async (contract: Contract) => {
   currentY = doc.lastAutoTable.finalY + 10;
 
   // --- Sección Técnica (Si tiene datos) ---
-  if (contract.downloadSpeed || contract.kitSerialNumber) {
+  if (contract.kitSerialNumber || contract.antennaModel || contract.techSignature || contract.perfObservations || contract.downloadSpeed !== undefined) {
      doc.setFontSize(14);
      doc.setFont("helvetica", "bold");
      doc.text("INFORME TÉCNICO DE INSTALACIÓN", 15, currentY + 10);
@@ -209,12 +209,14 @@ export const generateContractPDF = async (contract: Contract) => {
        head: [["Parámetro", "Valor Registrado"]],
        body: [
          ["Número de Serie Kit:", contract.kitSerialNumber || "N/A"],
-         ["Versión Hardware:", contract.hardwareVersion || "N/A"],
+         ["Tipo de Antena:", contract.antennaModel || "N/A"],
          ["Ubicación Antena:", contract.antennaLocation || "N/A"],
+         ["Obstrucciones:", contract.obstructions || "N/A"],
          ["Velocidad de Bajada:", `${contract.downloadSpeed || 0} Mbps`],
          ["Velocidad de Subida:", `${contract.uploadSpeed || 0} Mbps`],
          ["Latencia:", `${contract.latency || 0} ms`],
          ["Modo de Red:", contract.networkMode || "N/A"],
+         ["Observaciones:", contract.perfObservations || "N/A"],
          ["Técnico Responsable:", contract.technician?.name || "No asignado"],
        ],
        styles: { fontSize: 9 },
@@ -287,18 +289,18 @@ export const generateContractPDF = async (contract: Contract) => {
           
           if (photoY > 240) { doc.addPage(); photoY = 25; }
           
+          // Renderizar en 2 columnas
+          const xPos = (i % 2 === 0) ? 15 : 110;
           doc.setTextColor(51, 65, 85);
           doc.setFontSize(10);
           doc.setFont("helvetica", "bold");
-          doc.text(p.label, 15, photoY - 5);
+          doc.text(p.label, xPos, photoY - 5);
           
           // Mantener proporción
           const imgRatio = img.height / img.width;
           const imgWidth = 85; 
           const imgHeight = imgWidth * imgRatio;
           
-          // Renderizar en 2 columnas
-          const xPos = (i % 2 === 0) ? 15 : 110;
           doc.addImage(img, "JPEG", xPos, photoY, imgWidth, Math.min(imgHeight, 60));
           
           if (i % 2 !== 0 || i === photos.length - 1) {
