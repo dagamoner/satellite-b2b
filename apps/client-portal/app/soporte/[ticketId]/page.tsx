@@ -23,6 +23,7 @@ interface Ticket {
   title: string;
   status: string;
   priority: string;
+  category?: string;
   contract?: any;
 }
 
@@ -134,10 +135,13 @@ export default function TicketChatPage({ params }: { params: Promise<{ ticketId:
     );
   }
 
-  const showContractForm = ticket?.status === "CONTRACT_INITIATED" || 
-                         ticket?.status === "TECH_IN_PROGRESS" || 
-                         ticket?.status === "SIGNATURE_PENDING" ||
-                         ticket?.status === "COMPLETED";
+  const isContractTicket = ticket?.ticketNumber?.includes("-C-") || ticket?.category === "Contrato";
+  const showContractForm = isContractTicket && (
+    ticket?.status === "CONTRACT_INITIATED" || 
+    ticket?.status === "TECH_IN_PROGRESS" || 
+    ticket?.status === "SIGNATURE_PENDING" ||
+    ticket?.status === "COMPLETED"
+  );
 
   if (showContractForm && ticket) {
     return (

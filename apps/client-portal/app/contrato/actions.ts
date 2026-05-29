@@ -114,6 +114,31 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
       }
     });
 
+    // 5. Cerrar ticket padre si es un contrato formalizado
+    if (status === "COMPLETED") {
+      const parentTicketNumber = ticket.ticketNumber.split('-C-')[0];
+      if (parentTicketNumber && parentTicketNumber !== ticket.ticketNumber) {
+        const parentTicket = await prisma.supportTicket.findFirst({
+          where: { ticketNumber: parentTicketNumber }
+        });
+        
+        if (parentTicket && parentTicket.status !== "COMPLETED") {
+          await prisma.supportTicket.update({
+            where: { id: parentTicket.id },
+            data: { status: "COMPLETED", updatedAt: new Date() }
+          });
+          
+          await prisma.ticketMessage.create({
+            data: {
+              ticketId: parentTicket.id,
+              content: `EL SISTEMA HA CERRADO EL TICKET AUTOMÁTICAMENTE (Contrato Formalizado en ${ticket.ticketNumber})`,
+              authorId: null,
+            }
+          });
+        }
+      }
+    }
+
     return { success: true };
   } catch (error: any) {
     console.error("[UPDATE_TICKET_STATUS_ERROR]", error);

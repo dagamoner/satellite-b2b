@@ -440,10 +440,14 @@ export default function SupportDashboard() {
                     <motion.div 
                       key={t.id}
                       variants={itemVariants}
-                      onClick={() => router.push(`/soporte/${t.id}`)}
-                      className="group"
+                      onClick={() => {
+                        if (t.status !== 'COMPLETED') {
+                          router.push(`/soporte/${t.id}`);
+                        }
+                      }}
+                      className={`group ${t.status === 'COMPLETED' ? 'opacity-80' : ''}`}
                     >
-                      <Card variant="glass" className="p-8 border-white/5 group-hover:border-cyan-500/30 transition-all cursor-pointer overflow-hidden relative" hover={true}>
+                      <Card variant="glass" className={`p-8 border-white/5 transition-all overflow-hidden relative ${t.status === 'COMPLETED' ? 'cursor-default' : 'group-hover:border-cyan-500/30 cursor-pointer'}`} hover={t.status !== 'COMPLETED'}>
                         <div className="absolute inset-y-0 left-0 w-1.5 bg-slate-900 group-hover:bg-cyan-500 transition-all" />
                         
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pl-4">
