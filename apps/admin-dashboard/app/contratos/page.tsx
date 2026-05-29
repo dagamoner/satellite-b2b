@@ -569,7 +569,7 @@ function ContractModal({
               {/* Botón Guardar Final */}
               <div className="mt-8 pt-8 border-t border-slate-800">
                 <button
-                  onClick={save}
+                  onClick={() => save()}
                   disabled={saving}
                   className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black py-5 rounded-2xl transition-all shadow-xl disabled:opacity-50 flex items-center justify-center gap-3 text-lg tracking-widest uppercase"
                 >
