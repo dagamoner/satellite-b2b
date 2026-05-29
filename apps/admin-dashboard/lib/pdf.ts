@@ -43,6 +43,8 @@ interface Contract {
   photoTest?: string;
   photoApp?: string;
   photoRack?: string;
+  obstructions?: string;
+  perfObservations?: string;
 }
 
 export const generateContractPDF = async (contract: Contract) => {
