@@ -201,12 +201,13 @@ function ContractModal({
     }
   };
 
-  const save = async () => {
+  const save = async (forcedStatus?: string) => {
     setSaving(true);
     try {
       // Auto-advance status to SIGNATURE_PENDING if the tech just signed it
       const hasSignature = isTechDigitallySigned || (!sigCanvas.current?.isEmpty() && sigCanvas.current) || contract.techSignature;
-      const finalStatus = (hasSignature && status === "IN_PROGRESS") ? "SIGNATURE_PENDING" : status;
+      let finalStatus = (hasSignature && status === "IN_PROGRESS") ? "SIGNATURE_PENDING" : status;
+      if (forcedStatus) finalStatus = forcedStatus;
 
       const res = await fetch(`/api/contracts/${contract.id}`, {
         method: "PATCH",
@@ -324,10 +325,17 @@ function ContractModal({
                   </div>
                   <div className="pt-4">
                     <button 
-                      onClick={() => setActiveTab("tecnico")}
-                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2"
+                      onClick={() => {
+                        if (!isTech) {
+                          save();
+                        } else {
+                          setActiveTab("tecnico");
+                        }
+                      }}
+                      disabled={saving}
+                      className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-60"
                     >
-                      Comenzar Auditoría Técnica 🛰️
+                      {saving ? "Derivando al técnico..." : "Comenzar Auditoría Técnica 🛰️"}
                     </button>
                   </div>
                 </div>
@@ -585,19 +593,16 @@ function ContractModal({
         <div className="mt-10 pt-6 border-t border-slate-800 flex gap-4">
             {!isTech && status !== "REJECTED" && (
                <button 
-                 onClick={() => setStatus("REJECTED")}
-                 className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold px-6 py-4 rounded-2xl transition-all grow text-sm"
+                 onClick={() => {
+                   setStatus("REJECTED");
+                   save("REJECTED");
+                 }}
+                 disabled={saving}
+                 className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/30 font-bold px-6 py-4 rounded-2xl transition-all grow text-sm disabled:opacity-50"
                >
-                 Rechazar por mala instalación
+                 {saving ? "Procesando rechazo..." : "Rechazar por mala instalación"}
                </button>
             )}
-           <button
-            onClick={save}
-            disabled={saving || savedOk}
-            className="bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white font-extrabold px-8 py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 grow-0 min-w-44 shadow-lg shadow-blue-500/20"
-          >
-            {savedOk ? "✓ Guardado" : saving ? "Guardando..." : "Guardar Auditoría"}
-          </button>
           <div className="flex-none">
             <AdminPdfButton contract={contract} />
           </div>
