@@ -117,9 +117,23 @@ function ContractModal({
   );
   const [saving, setSaving] = useState(false);
   const [savedOk, setSavedOk] = useState(false);
-  const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias" | "historial">(() => contract.status === "COMPLETED" ? "historial" : "general");
+  const [historyTickets, setHistoryTickets] = useState<any[]>([]);
   const { data: session } = useSession();
   const isTech = (session?.user as any)?.role === "TECH" || (session?.user as any)?.role === "TECHNICIAN";
+
+  useEffect(() => {
+    if (activeTab === "historial") {
+      fetch(`/api/contracts/${contract.id}/history`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.tickets) {
+            setHistoryTickets(data.tickets);
+          }
+        })
+        .catch(console.error);
+    }
+  }, [activeTab, contract.id]);
 
   useEffect(() => {
     if (isTech && activeTab === "tecnico" && status === "APPROVED") {
@@ -264,6 +278,9 @@ function ContractModal({
           <button onClick={() => setActiveTab("general")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "general" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>01. General</button>
           <button onClick={() => setActiveTab("tecnico")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "tecnico" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>02. Auditoría Técnica</button>
           <button onClick={() => setActiveTab("evidencias")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "evidencias" ? "text-blue-400 border-b-2 border-blue-500 bg-blue-500/5" : "text-slate-500 hover:text-slate-300"}`}>03. Evidencias</button>
+          {contract.status === "COMPLETED" && (
+            <button onClick={() => setActiveTab("historial")} className={`flex-1 min-w-[120px] px-4 py-4 text-[10px] font-bold uppercase tracking-widest transition-all ${activeTab === "historial" ? "text-emerald-400 border-b-2 border-emerald-500 bg-emerald-500/5" : "text-slate-500 hover:text-slate-300"}`}>04. Historial</button>
+          )}
         </div>
 
         {/* Tab Content */}
@@ -593,6 +610,30 @@ function ContractModal({
               </div>
             </div>
           </div>
+          <div className={activeTab === "historial" ? "block space-y-6" : "hidden"}>
+            <div className="bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6">
+              <h3 className="text-xs uppercase tracking-widest font-bold text-slate-500 mb-6">Historial del Contrato</h3>
+              {historyTickets.length === 0 ? (
+                <div className="text-sm text-slate-400 text-center py-8">Cargando historial o sin registros...</div>
+              ) : (
+                <div className="space-y-6">
+                  {historyTickets.map((t: any) => (
+                    <div key={t.id} className="space-y-4">
+                      {t.messages.map((m: any) => (
+                        <div key={m.id} className="bg-slate-900 border border-slate-700 rounded-xl p-4">
+                          <div className="text-[10px] text-slate-500 font-bold mb-2 uppercase tracking-wider flex justify-between">
+                            <span>{new Date(m.createdAt).toLocaleString("es-AR")}</span>
+                            <span>{m.authorId ? "Usuario" : "Sistema"}</span>
+                          </div>
+                          <div className="text-sm text-slate-300">{m.content}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* Footer Modal Acciones */}
@@ -883,7 +924,7 @@ export default function ContratosAdminPage() {
                             onClick={() => setSelected(c)}
                             className="text-sm font-semibold text-blue-400 hover:text-blue-300 transition-colors px-3 py-1.5 rounded-lg hover:bg-blue-500/10"
                           >
-                            Gestionar →
+                            {c.status === "COMPLETED" ? "Historial →" : "Gestionar →"}
                           </button>
                         </div>
                       </td>
