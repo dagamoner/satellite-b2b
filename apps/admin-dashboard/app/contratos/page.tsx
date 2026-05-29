@@ -722,7 +722,8 @@ export default function ContratosAdminPage() {
     const matchesSearch = search
       ? c.clientName.toLowerCase().includes(search.toLowerCase()) ||
         c.contractNumber.toLowerCase().includes(search.toLowerCase()) ||
-        c.clientEmail.toLowerCase().includes(search.toLowerCase())
+        c.clientEmail.toLowerCase().includes(search.toLowerCase()) ||
+        (c.clientDni && c.clientDni.toLowerCase().includes(search.toLowerCase()))
       : true;
 
     const matchesStatus = filterStatus === "ALL" || c.status === filterStatus;

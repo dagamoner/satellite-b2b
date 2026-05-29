@@ -120,6 +120,65 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
       });
     }
 
+    // 5. Automatizaciones post-completado (Crear cuenta en CRM y actualizar Lead)
+    if (status === "COMPLETED") {
+      const completedContract = await prisma.installationContract.findUnique({
+        where: { id: ticket.contractId }
+      });
+
+      if (completedContract) {
+        // a. Pasar cualquier Lead que coincida con el email a GANADO
+        if (completedContract.clientEmail) {
+          await prisma.lead.updateMany({
+            where: { email: completedContract.clientEmail },
+            data: { status: "WON" }
+          });
+        }
+
+        // b. Crear cuenta de cliente si no existe y vincularla
+        if (!completedContract.accountId) {
+          let account = await prisma.customerAccount.findFirst({
+            where: {
+              OR: [
+                { email: completedContract.clientEmail },
+                { taxId: completedContract.clientDni }
+              ]
+            }
+          });
+
+          if (!account) {
+            const count = await prisma.customerAccount.count();
+            const accountNumber = `CTA-${10000 + count + 1}`;
+
+            account = await prisma.customerAccount.create({
+              data: {
+                accountNumber,
+                companyName: completedContract.companyName || completedContract.clientName,
+                contactName: completedContract.clientName,
+                taxId: completedContract.clientDni || "0",
+                phone: completedContract.clientPhone || "No provisto",
+                email: completedContract.clientEmail,
+                address: completedContract.address || "Dirección no provista",
+                city: completedContract.city || "Mendoza",
+                province: completedContract.province || "Mendoza",
+                country: completedContract.country || "Argentina",
+                tier: "STANDARD",
+                status: "ACTIVE",
+                planName: completedContract.planType,
+                monthlyFee: completedContract.monthlyFee || 0,
+                activationDate: new Date(),
+              }
+            });
+          }
+
+          await prisma.installationContract.update({
+            where: { id: ticket.contractId },
+            data: { accountId: account.id }
+          });
+        }
+      }
+    }
+
     return { success: true };
   } catch (error: any) {
     console.error("[UPDATE_TICKET_STATUS_ERROR]", error);
