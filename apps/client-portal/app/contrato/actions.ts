@@ -78,16 +78,31 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
 
     const effectiveTicketId = ticket.id;
 
-    // 2. Actualizar el estado del Ticket
-    await prisma.supportTicket.update({
-      where: { id: effectiveTicketId },
-      data: { 
-        status,
-        updatedAt: new Date()
-      }
+    // 2. Encontrar todos los tickets asociados a este contrato
+    const relatedTickets = await prisma.supportTicket.findMany({
+      where: { contractId: ticket.contractId }
     });
 
-    // 3. Si hay datos de contrato, actualizarlos
+    // 3. Actualizar el estado de TODOS los tickets relacionados
+    for (const t of relatedTickets) {
+      await prisma.supportTicket.update({
+        where: { id: t.id },
+        data: { 
+          status,
+          updatedAt: new Date()
+        }
+      });
+
+      await prisma.ticketMessage.create({
+        data: {
+          ticketId: t.id,
+          content: `EL SISTEMA HA CAMBIADO EL ESTADO A: ${status.replace('_', ' ')}`,
+          authorId: null, // Sistema
+        }
+      });
+    }
+
+    // 4. Si hay datos de contrato, actualizarlos
     if (contractData) {
       const mappedContractStatus = 
         status === "TECH_IN_PROGRESS" ? "IN_PROGRESS" :
@@ -103,40 +118,6 @@ export async function updateTicketStatus(ticketId: string, status: string, contr
           status: mappedContractStatus !== undefined ? mappedContractStatus : undefined
         }
       });
-    }
-
-    // 4. Agregar mensaje de sistema al hilo del ticket
-    await prisma.ticketMessage.create({
-      data: {
-        ticketId: effectiveTicketId,
-        content: `EL SISTEMA HA CAMBIADO EL ESTADO A: ${status.replace('_', ' ')}`,
-        authorId: null, // Sistema
-      }
-    });
-
-    // 5. Cerrar ticket padre si es un contrato formalizado
-    if (status === "COMPLETED") {
-      const parentTicketNumber = ticket.ticketNumber.split('-C-')[0];
-      if (parentTicketNumber && parentTicketNumber !== ticket.ticketNumber) {
-        const parentTicket = await prisma.supportTicket.findFirst({
-          where: { ticketNumber: parentTicketNumber }
-        });
-        
-        if (parentTicket && parentTicket.status !== "COMPLETED") {
-          await prisma.supportTicket.update({
-            where: { id: parentTicket.id },
-            data: { status: "COMPLETED", updatedAt: new Date() }
-          });
-          
-          await prisma.ticketMessage.create({
-            data: {
-              ticketId: parentTicket.id,
-              content: `EL SISTEMA HA CERRADO EL TICKET AUTOMÁTICAMENTE (Contrato Formalizado en ${ticket.ticketNumber})`,
-              authorId: null,
-            }
-          });
-        }
-      }
     }
 
     return { success: true };
