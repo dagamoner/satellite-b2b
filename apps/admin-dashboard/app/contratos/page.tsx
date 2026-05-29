@@ -119,7 +119,13 @@ function ContractModal({
   const [savedOk, setSavedOk] = useState(false);
   const [activeTab, setActiveTab] = useState<"general" | "tecnico" | "evidencias">("general");
   const { data: session } = useSession();
-  const isTech = (session?.user as any)?.role === "TECH";
+  const isTech = (session?.user as any)?.role === "TECH" || (session?.user as any)?.role === "TECHNICIAN";
+
+  useEffect(() => {
+    if (isTech && activeTab === "tecnico" && status === "APPROVED") {
+      setStatus("IN_PROGRESS");
+    }
+  }, [isTech, activeTab, status]);
 
   // Estados técnicos editables
   const [kitSerialNumber, setKitSerialNumber] = useState(contract.kitSerialNumber || "");
