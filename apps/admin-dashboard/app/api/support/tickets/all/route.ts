@@ -17,6 +17,40 @@ export async function GET() {
   const userId = (session.user as any).id;
 
   try {
+    // ---- VERIFICACIÓN AUTOMÁTICA DE 5 DÍAS DE INACTIVIDAD ----
+    const fiveDaysAgo = new Date();
+    fiveDaysAgo.setDate(fiveDaysAgo.getDate() - 5);
+
+    const inactiveTickets = await prisma.supportTicket.findMany({
+      where: {
+        updatedAt: { lt: fiveDaysAgo },
+        status: { notIn: ["CLOSED", "RESOLVED"] },
+        priority: { not: "CRITICAL" }
+      },
+      select: { id: true }
+    });
+
+    if (inactiveTickets.length > 0) {
+      const inactiveIds = inactiveTickets.map(t => t.id);
+      
+      await prisma.supportTicket.updateMany({
+        where: { id: { in: inactiveIds } },
+        data: { priority: "CRITICAL", updatedAt: new Date() }
+      });
+
+      // Crear mensaje de sistema para cada ticket actualizado
+      const systemMessages = inactiveIds.map(id => ({
+        ticketId: id,
+        content: `⚠️ EL SISTEMA HA CAMBIADO LA PRIORIDAD A: CRITICAL (Por inactividad de 5 días)`,
+        authorId: null,
+      }));
+      
+      await prisma.ticketMessage.createMany({
+        data: systemMessages
+      });
+    }
+    // -----------------------------------------------------------
+
     const tickets = await prisma.supportTicket.findMany({
       where: role === "TECH" ? {
         contract: {
