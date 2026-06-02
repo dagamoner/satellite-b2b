@@ -22,6 +22,7 @@ export const authConfig = {
   providers: [], // Providers are empty here, they will be added in app/auth.ts
   session: {
     strategy: "jwt",
+    maxAge: 2 * 60 * 60, // 2 hours
   },
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
 } satisfies NextAuthConfig;
