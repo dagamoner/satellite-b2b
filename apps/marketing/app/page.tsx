@@ -206,8 +206,8 @@ export default function MarketingPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-[#020617]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-1" : "bg-transparent py-6"}`}>
-        <div className={`max-w-7xl mx-auto px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-20 md:h-24" : "h-32 md:h-44"}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-[#020617]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-1" : "bg-transparent py-3 md:py-6"}`}>
+        <div className={`max-w-7xl mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-16 md:h-24" : "h-20 md:h-44"}`}>
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -215,7 +215,7 @@ export default function MarketingPage() {
           >
              <div className="relative shrink-0">
                <div className="absolute inset-0 bg-blue-500 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity" />
-               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg object-contain transition-all duration-500 ${scrolled ? "w-16 h-16 md:w-20 md:h-20" : "w-24 h-24 md:w-[140px] md:h-[140px]"}`} />
+               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg object-contain transition-all duration-500 ${scrolled ? "w-12 h-12 md:w-20 md:h-20" : "w-16 h-16 md:w-[140px] md:h-[140px]"}`} />
              </div>
              <div className="flex flex-col gap-2">
                <div className={`flex gap-4 text-slate-400 transition-opacity duration-500 ${scrolled ? "opacity-0 h-0 overflow-hidden" : "opacity-100"}`}>
@@ -258,14 +258,14 @@ export default function MarketingPage() {
           >
              <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"} className="group">
                 <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
-                   <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
-                   <span className={`text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
+                   <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
                 </div>
              </Link>
-             <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"} className="group">
-                <div className="flex-col items-center gap-1 transition-all duration-500 hover:scale-110 hidden sm:flex">
-                   <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-12" : "h-16 md:h-24"}`} />
-                   <span className={`text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
+             <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"} className="group hidden sm:block">
+                <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+                   <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </Link>
           </motion.div>
@@ -286,33 +286,33 @@ export default function MarketingPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full flex flex-col items-center"
         >
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-8 max-w-6xl leading-[1.1] text-white">
+          <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white">
             Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-3xl md:text-5xl lg:text-6xl">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-xl md:text-5xl lg:text-6xl mt-2 block">
               y en el lugar que tu empresa se encuentre, sin limites geográficos.
             </span>
           </h1>
-          <p className="text-xl text-slate-300 max-w-3xl mb-12 leading-relaxed font-light">
+          <p className="text-base md:text-xl text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-light px-4 md:px-0">
             Alta velocidad estable. Hardware revolucionario desde <strong className="text-white font-bold">$300.000</strong> con abonos desde <strong className="text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
           </p>
 
-          <div className="flex flex-col lg:flex-row flex-wrap justify-center gap-5 w-full max-w-5xl mx-auto">
-            <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"}>
-              <Button size="lg" variant="premium" className="group flex gap-3">
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-5 w-full max-w-5xl mx-auto px-4 md:px-0">
+            <Link href={process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL || "#"} className="w-full sm:w-auto">
+              <Button size="lg" variant="premium" className="w-full group flex justify-center gap-3">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 Portal B2B Clientes
               </Button>
             </Link>
 
-            <a href="#antenas">
-              <Button size="lg" variant="glow" className="group flex gap-3">
+            <a href="#antenas" className="w-full sm:w-auto">
+              <Button size="lg" variant="glow" className="w-full group flex justify-center gap-3">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                 Comprar Hardware
               </Button>
             </a>
 
-            <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"}>
-              <Button size="lg" variant="outline" className="group flex gap-3">
+            <Link href={process.env.NEXT_PUBLIC_ADMIN_DASHBOARD_URL || "#"} className="w-full sm:w-auto">
+              <Button size="lg" variant="outline" className="w-full group flex justify-center gap-3">
                 <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                  Soporte / Centro Técnico
               </Button>

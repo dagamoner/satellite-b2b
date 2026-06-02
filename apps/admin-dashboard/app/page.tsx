@@ -177,71 +177,72 @@ export default function AdminOverview() {
       </div>
 
       <nav className="border-b border-white/5 bg-slate-950/40 backdrop-blur-3xl sticky top-0 z-50">
-        <div className="max-w-[1600px] mx-auto px-8 h-24 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-black">MR</div>
+        <div className="max-w-[1600px] mx-auto px-4 md:px-8 py-3 md:h-24 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0">
+          <div className="flex items-center gap-4 md:gap-6 shrink-0">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center text-white font-black text-xs md:text-base">MR</div>
             <div>
-              <p className="text-white font-black text-sm uppercase tracking-tighter">Command Center</p>
-              <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Satellite Operations</p>
+              <p className="text-white font-black text-xs md:text-sm uppercase tracking-tighter">Command Center</p>
+              <p className="text-[7px] md:text-[9px] text-slate-500 font-black uppercase tracking-[0.3em]">Satellite Operations</p>
             </div>
           </div>
-          <div className="flex items-center gap-8">
-            <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5">
-                <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5">Web Principal</a>
-                <Link href="/tickets" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Soporte</Link>
-                <Link href="/chat" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Chat Staff</Link>
+          
+          <div className="flex items-center gap-4 md:gap-8 overflow-x-auto no-scrollbar pb-1 md:pb-0 w-full md:w-auto">
+            <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5 shrink-0">
+                <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5 whitespace-nowrap">Web Principal</a>
+                <Link href="/tickets" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Soporte</Link>
+                <Link href="/chat" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Chat Staff</Link>
                 {["ADMIN", "TECH"].includes((session?.user as any)?.role) && (
-                  <Link href="/contratos" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">
+                  <Link href="/contratos" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">
                     {(session?.user as any)?.role === "TECH" ? "Mis Contratos" : "Contratos"}
                   </Link>
                 )}
                 {["ADMIN", "SALES"].includes((session?.user as any)?.role) && (
                   <>
-                    <Link href="/crm/leads" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Leads</Link>
-                    <Link href="/crm/accounts" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Clientes 360</Link>
-                    <Link href="/crm/invoices" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors">Cobros</Link>
+                    <Link href="/crm/leads" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors whitespace-nowrap">Leads</Link>
+                    <Link href="/crm/accounts" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors whitespace-nowrap">Clientes 360</Link>
+                    <Link href="/crm/invoices" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors whitespace-nowrap">Cobros</Link>
                   </>
                 )}
                 {(session?.user as any)?.role === "ADMIN" && (
                   <>
-                    <Link href="/reportes" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Intelligence</Link>
-                    <Link href="/usuarios" className="px-4 py-2 text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors">Equipo</Link>
+                    <Link href="/reportes" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Intelligence</Link>
+                    <Link href="/usuarios" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Equipo</Link>
                   </>
                 )}
             </div>
 
             {/* Usuario activo + Rol */}
-            <div className="flex flex-col items-end gap-1 border-l border-white/5 pl-6">
-              <p className="text-[10px] font-black text-white truncate max-w-[140px]">
+            <div className="flex flex-col items-end md:items-start gap-1 border-l border-white/5 pl-4 md:pl-6 shrink-0">
+              <p className="text-[9px] md:text-[10px] font-black text-white truncate max-w-[100px] md:max-w-[140px]">
                 {session?.user?.name || session?.user?.email || "Operador"}
               </p>
-              <span className={`text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${getRoleConfig((session?.user as any)?.role).navBadgeClass}`}>
+              <span className={`text-[7px] md:text-[8px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full ${getRoleConfig((session?.user as any)?.role).navBadgeClass}`}>
                 {getRoleConfig((session?.user as any)?.role).label}
               </span>
             </div>
 
-            <button onClick={() => signOut()} className="text-[9px] font-black text-red-500/50 hover:text-red-500 uppercase tracking-widest border border-red-500/10 px-4 py-2 rounded-xl transition-all">Desconectar</button>
+            <button onClick={() => signOut()} className="text-[8px] md:text-[9px] font-black text-red-500/50 hover:text-red-500 uppercase tracking-widest border border-red-500/10 px-3 md:px-4 py-2 rounded-xl transition-all shrink-0">Desconectar</button>
           </div>
         </div>
       </nav>
  
-      <main className="max-w-[1600px] mx-auto px-8 py-12 relative z-10">
-        <header className="mb-12 flex justify-between items-end">
+      <main className="max-w-[1600px] mx-auto px-4 md:px-8 py-8 md:py-12 relative z-10">
+        <header className="mb-8 md:mb-12 flex flex-col md:flex-row md:justify-between md:items-end gap-6 md:gap-0">
           <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-            <p className="text-cyan-500 text-[10px] font-black uppercase tracking-[0.5em] mb-3">Resumen de Operaciones</p>
-            <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">NOC Overview</h1>
+            <p className="text-cyan-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.5em] mb-2 md:mb-3">Resumen de Operaciones</p>
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">NOC Overview</h1>
           </motion.div>
           
-          <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="flex gap-4">
+          <motion.div initial={{ x: 20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="flex flex-col sm:flex-row gap-3 md:gap-4">
              {["ADMIN", "TECH"].includes((session?.user as any)?.role) && (
-                <Link href="/contratos">
-                   <button className="bg-slate-900/50 text-white border border-white/10 hover:border-cyan-500/30 font-black px-8 py-4 rounded-2xl shadow-2xl uppercase text-[10px] tracking-widest hover:scale-105 transition-all">
+                <Link href="/contratos" className="w-full sm:w-auto">
+                   <button className="w-full bg-slate-900/50 text-white border border-white/10 hover:border-cyan-500/30 font-black px-6 md:px-8 py-3 md:py-4 rounded-2xl shadow-xl uppercase text-[9px] md:text-[10px] tracking-widest hover:scale-105 transition-all">
                      {(session?.user as any)?.role === "TECH" ? "Mis Contratos" : "Gestión de Contratos"}
                    </button>
                 </Link>
              )}
-             <Link href="/tickets">
-                <button className="bg-cyan-500 text-white font-black px-8 py-4 rounded-2xl shadow-2xl shadow-cyan-500/20 uppercase text-[10px] tracking-widest hover:scale-105 transition-all">Consola de Tickets</button>
+             <Link href="/tickets" className="w-full sm:w-auto">
+                <button className="w-full bg-cyan-500 text-white font-black px-6 md:px-8 py-3 md:py-4 rounded-2xl shadow-xl shadow-cyan-500/20 uppercase text-[9px] md:text-[10px] tracking-widest hover:scale-105 transition-all">Consola de Tickets</button>
              </Link>
           </motion.div>
         </header>
@@ -275,18 +276,18 @@ export default function AdminOverview() {
                  <p className="absolute bottom-8 text-[9px] font-black text-slate-700 uppercase tracking-[0.4em]">Interconectividad Satelital Activa</p>
               </div>
  
-              <div className="grid grid-cols-3 gap-6 mt-10">
-                 <div className="p-6 bg-slate-950/50 rounded-2xl border border-white/5">
-                    <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-2">Latencia Promedio</p>
-                    <p className="text-xl font-black text-white">42ms</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-10">
+                 <div className="p-4 md:p-6 bg-slate-950/50 rounded-2xl border border-white/5">
+                    <p className="text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">Latencia Promedio</p>
+                    <p className="text-lg md:text-xl font-black text-white">42ms</p>
                  </div>
-                 <div className="p-6 bg-slate-950/50 rounded-2xl border border-white/5">
-                    <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-2">Uptime Mensual</p>
-                    <p className="text-xl font-black text-emerald-500">99.98%</p>
+                 <div className="p-4 md:p-6 bg-slate-950/50 rounded-2xl border border-white/5">
+                    <p className="text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">Uptime Mensual</p>
+                    <p className="text-lg md:text-xl font-black text-emerald-500">99.98%</p>
                  </div>
-                 <div className="p-6 bg-slate-950/50 rounded-2xl border border-white/5">
-                    <p className="text-[8px] font-black text-slate-600 uppercase tracking-widest mb-2">Tráfico (24h)</p>
-                    <p className="text-xl font-black text-white">1.2 TB</p>
+                 <div className="p-4 md:p-6 bg-slate-950/50 rounded-2xl border border-white/5">
+                    <p className="text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">Tráfico (24h)</p>
+                    <p className="text-lg md:text-xl font-black text-white">1.2 TB</p>
                  </div>
               </div>
            </Card>
