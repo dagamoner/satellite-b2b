@@ -471,7 +471,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="grid grid-cols-1 gap-10">
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Email de Contacto</label>
                       <input 
@@ -483,17 +483,6 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         onChange={e => setFormData({...formData, email: e.target.value})}
                         placeholder="correo@empresa.com"
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl invalid:border-red-500/50"
-                      />
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Teléfono Móvil</label>
-                      <input 
-                        type="tel" 
-                        required
-                        value={formData.phone}
-                        onChange={e => setFormData({...formData, phone: e.target.value})}
-                        placeholder="+54 9..."
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
                   </div>
@@ -594,6 +583,20 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       </div>
                     </div>
                   )}
+
+                  <div className="grid grid-cols-1 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Teléfono Móvil</label>
+                      <input 
+                        type="tel" 
+                        required
+                        value={formData.phone}
+                        onChange={e => setFormData({...formData, phone: e.target.value})}
+                        placeholder="+54 9..."
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-4 md:col-span-1">
