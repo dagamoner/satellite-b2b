@@ -256,18 +256,18 @@ export default function MarketingPage() {
             animate={{ opacity: 1, x: 0 }}
             className="flex gap-4 items-center"
           >
-             <Link href={"https://clientes.mrtechnology.it.com"} className="group">
+             <a href={"https://clientes.mrtechnology.it.com"} className="group">
                 <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
                    <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
                    <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
                 </div>
-             </Link>
-             <Link href={"https://admin.mrtechnology.it.com"} className="group hidden sm:block">
+             </a>
+             <a href={"https://admin.mrtechnology.it.com"} className="group hidden sm:block">
                 <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
                    <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
                    <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
-             </Link>
+             </a>
           </motion.div>
         </div>
       </nav>
@@ -297,12 +297,12 @@ export default function MarketingPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-5 w-full max-w-5xl mx-auto px-4 md:px-0">
-            <Link href={"https://clientes.mrtechnology.it.com"} className="w-full sm:w-auto">
+            <a href={"https://clientes.mrtechnology.it.com"} className="w-full sm:w-auto">
               <Button size="lg" variant="premium" className="w-full group flex justify-center gap-3">
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 Portal B2B Clientes
               </Button>
-            </Link>
+            </a>
 
             <a href="#antenas" className="w-full sm:w-auto">
               <Button size="lg" variant="glow" className="w-full group flex justify-center gap-3">
@@ -311,12 +311,12 @@ export default function MarketingPage() {
               </Button>
             </a>
 
-            <Link href={"https://admin.mrtechnology.it.com"} className="w-full sm:w-auto">
+            <a href={"https://admin.mrtechnology.it.com"} className="w-full sm:w-auto">
               <Button size="lg" variant="outline" className="w-full group flex justify-center gap-3">
                 <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                  Soporte / Centro Técnico
               </Button>
-            </Link>
+            </a>
           </div>
         </motion.div>
 
