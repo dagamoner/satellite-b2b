@@ -8,6 +8,16 @@
     --glass-border: rgba(255, 255, 255, 0.1);
   }
 
+  /* Dark mode select global style */
+  select, select option {
+    background-color: #020617; /* slate-950 */
+    color: #f8fafc; /* slate-50 */
+  }
+  
+  select:focus {
+    outline: 2px solid rgba(6, 182, 212, 0.5);
+  }
+
   /* Custom Premium Scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
