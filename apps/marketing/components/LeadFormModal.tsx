@@ -148,31 +148,41 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
       });
       
       
-      // Si tenemos las localidades de esta provincia de forma local (ej: Mendoza, San Juan, San Luis)
-      // las cargamos instantáneamente y salimos, ahorrando la llamada a la API.
-      if (HARDCODED_LOCALIDADES[formData.province]) {
-        const names = [...HARDCODED_LOCALIDADES[formData.province]!, "Otra localidad"];
+      setLoadingLocalities(true);
+      let baseNames: string[] = [];
+
+      try {
+        if (HARDCODED_LOCALIDADES[formData.province]) {
+          baseNames = [...HARDCODED_LOCALIDADES[formData.province]!];
+        } else {
+          const res = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(formData.province)}&campos=nombre&max=2000`);
+          if (res.ok) {
+            const data = await res.json();
+            baseNames = data.localidades.map((l: any) => l.nombre) as string[];
+          }
+        }
+
+        // Fetch custom locations from our DB
+        try {
+          const customRes = await fetch(`/api/locations?provincia=${encodeURIComponent(formData.province)}`);
+          if (customRes.ok) {
+            const customData = await customRes.json();
+            if (customData.localidades && Array.isArray(customData.localidades)) {
+              baseNames = [...baseNames, ...customData.localidades];
+            }
+          }
+        } catch (dbErr) {
+          console.error("Error fetching custom locations", dbErr);
+        }
+
+        // Quitar duplicados y ordenar
+        let names = Array.from(new Set(baseNames)).sort((a, b) => a.localeCompare(b));
+        names.push("Otra localidad");
         setLocalities(names);
+        
+        // Auto-seleccionar la primera opción si la ciudad actual no está en la lista
         if (names.length > 0 && !names.includes(formData.city)) {
           setFormData(prev => ({ ...prev, city: names[0] || "" }));
-        }
-        return;
-      }
-
-      setLoadingLocalities(true);
-      try {
-        const res = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(formData.province)}&campos=nombre&max=2000`);
-        if (res.ok) {
-          const data = await res.json();
-          let names = data.localidades.map((l: any) => l.nombre) as string[];
-          // Quitar duplicados y ordenar
-          names = Array.from(new Set(names)).sort((a, b) => a.localeCompare(b));
-          names.push("Otra localidad");
-          setLocalities(names);
-          // Auto-seleccionar la primera opción si la ciudad actual no está en la lista
-          if (names.length > 0 && !names.includes(formData.city)) {
-            setFormData(prev => ({ ...prev, city: names[0] || "" }));
-          }
         }
       } catch (error) {
         console.error("Error al cargar localidades", error);

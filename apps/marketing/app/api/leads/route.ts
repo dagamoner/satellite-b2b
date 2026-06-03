@@ -33,6 +33,27 @@ export async function POST(request: Request) {
     }
     
     const finalCity = city === "Otra localidad" ? otherCity : city;
+
+    // Guardar la nueva localidad si es personalizada
+    if (city === "Otra localidad" && otherCity && province) {
+      try {
+        await db.customLocation.upsert({
+          where: {
+            province_city: {
+              province,
+              city: otherCity.trim()
+            }
+          },
+          update: {},
+          create: {
+            province,
+            city: otherCity.trim()
+          }
+        });
+      } catch (locErr) {
+        console.error("Error al guardar la localidad personalizada:", locErr);
+      }
+    }
     
     // Extraer números del importe o null
     let parsedPrice = null;

@@ -292,3 +292,13 @@ model Invoice {
 
   @@map("crm_invoices")
 }
+
+model CustomLocation {
+  id        String   @id @default(uuid())
+  province  String
+  city      String
+  createdAt DateTime @default(now())
+
+  @@unique([province, city])
+  @@map("custom_locations")
+}
