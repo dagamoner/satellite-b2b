@@ -154,7 +154,7 @@ export default function AdminOverview() {
 
             <motion.div variants={itemVariants} className="mt-8 pt-8 border-t border-slate-800/50 flex justify-center">
               <a 
-                href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} 
+                href={"https://www.mrtechnology.it.com"} 
                 className="text-[10px] font-black text-slate-500 hover:text-cyan-500 transition-colors uppercase tracking-[0.2em] flex items-center gap-2"
               >
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -188,7 +188,7 @@ export default function AdminOverview() {
           
           <div className="flex items-center gap-4 md:gap-8 overflow-x-auto no-scrollbar pb-1 md:pb-0 w-full md:w-auto">
             <div className="flex gap-1 bg-slate-900/50 p-1 rounded-xl border border-white/5 shrink-0">
-                <a href={process.env.NEXT_PUBLIC_LANDING_PAGE_URL || "https://satellite-b2b.vercel.app/"} className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5 whitespace-nowrap">Web Principal</a>
+                <a href={"https://www.mrtechnology.it.com"} className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-cyan-500 transition-colors border-r border-white/5 whitespace-nowrap">Web Principal</a>
                 <Link href="/tickets" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Soporte</Link>
                 <Link href="/chat" className="px-3 md:px-4 py-2 text-[8px] md:text-[9px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-colors whitespace-nowrap">Chat Staff</Link>
                 {["ADMIN", "TECH"].includes((session?.user as any)?.role) && (
