@@ -402,7 +402,7 @@ export default function MarketingPage() {
         >
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-slate-900 dark:text-white">
             Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-xl md:text-5xl lg:text-6xl mt-2 block">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 via-cyan-600 to-indigo-700 dark:from-blue-400 dark:via-cyan-300 dark:to-indigo-400 animate-gradient drop-shadow-2xl text-xl md:text-5xl lg:text-6xl mt-2 block">
               y en el lugar que tu empresa se encuentre, sin limites geográficos.
             </span>
           </h1>
@@ -466,7 +466,7 @@ export default function MarketingPage() {
                    />
                 </div>
                 <h4 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight drop-shadow-md">{stat.val}</h4>
-                <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">{stat.label}</p>
+                <p className="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-widest">{stat.label}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -539,7 +539,7 @@ export default function MarketingPage() {
                <Card variant="glass" className="p-8 flex flex-col relative overflow-hidden group">
                   <div className="relative z-10 flex-grow mt-4">
                      <div className="flex items-center gap-6 mb-10">
-                        <div className="w-24 h-24 rounded-[1.8rem] bg-cyan-500/5 flex items-center justify-center border-2 border-cyan-500 text-cyan-400 shadow-[0_0_40px_rgba(6,182,212,0.4)] shrink-0">
+                        <div className="w-24 h-24 rounded-[1.8rem] bg-cyan-500/5 flex items-center justify-center border-2 border-cyan-500 text-cyan-700 dark:text-cyan-400 shadow-[0_0_40px_rgba(6,182,212,0.4)] shrink-0">
                            <svg className="w-12 h-12 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                               <rect x="4" y="6" width="16" height="5" rx="1" />
                               <rect x="4" y="14" width="16" height="5" rx="1" />
@@ -549,7 +549,7 @@ export default function MarketingPage() {
                         </div>
                         <div className="flex flex-col">
                            <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Antena Estándar V4</h3>
-                           <span className="text-cyan-400 text-lg mt-1 font-medium">+ Router WiFi 6</span>
+                           <span className="text-cyan-700 dark:text-cyan-400 text-lg mt-1 font-medium">+ Router WiFi 6</span>
                         </div>
                      </div>
 
@@ -557,7 +557,7 @@ export default function MarketingPage() {
                         {["WiFi 6", "Alta Potencia", "Estable"].map((tag, i) => (
                            <div key={i} className="bg-black/60 border border-cyan-900/50 px-4 py-2 rounded-xl flex items-center gap-3">
                               <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-[0_0_5px_cyan]" />
-                              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-widest">{tag}</span>
+                              <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">{tag}</span>
                            </div>
                         ))}
                      </div>
@@ -571,7 +571,7 @@ export default function MarketingPage() {
                             className="h-full bg-cyan-500 shadow-[0_0_25px_rgba(6,182,212,0.8)]" 
                            />
                         </div>
-                        <svg className="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        <svg className="w-7 h-7 text-cyan-700 dark:text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
                      <p className="text-slate-800 dark:text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
@@ -590,7 +590,7 @@ export default function MarketingPage() {
                            <div className="text-right">
                               <p className="text-[9px] text-cyan-500 font-bold uppercase tracking-[0.1em] mb-2">3 Cuotas Sin Interés</p>
                               <div className="flex items-baseline gap-1 justify-end">
-                                 <span className="text-2xl font-bold text-cyan-400">$166.666</span>
+                                 <span className="text-2xl font-bold text-cyan-700 dark:text-cyan-400">$166.666</span>
                               </div>
                               <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA</p>
                            </div>
@@ -684,7 +684,7 @@ export default function MarketingPage() {
                <div className="flex-1 w-full grid sm:grid-cols-2 gap-6">
                   <div className="bg-[#020617]/50 rounded-2xl p-6 border border-yellow-600/30 hover:border-yellow-500 transition-colors">
                      <p className="text-yellow-400 font-bold mb-1">Instalación Mini</p>
-                     <p className="text-xs text-slate-400 mb-6">Personal calificado, certificado y profesional</p>
+                     <p className="text-xs text-slate-600 dark:text-slate-400 mb-6">Personal calificado, certificado y profesional</p>
                      <div className="flex flex-col gap-3 mt-auto">
                         <div className="flex justify-between items-baseline border-b border-yellow-900/50 pb-3">
                            <span className="text-xs text-yellow-600/80 font-bold">IMPORTE</span>
@@ -698,7 +698,7 @@ export default function MarketingPage() {
                   </div>
                   <div className="bg-[#020617]/50 rounded-2xl p-6 border border-yellow-600/30 hover:border-yellow-500 transition-colors">
                      <p className="text-yellow-400 font-bold mb-1">Estándar V4 Premium</p>
-                     <p className="text-xs text-slate-400 mb-6">Personal calificado, certificado y profesional</p>
+                     <p className="text-xs text-slate-600 dark:text-slate-400 mb-6">Personal calificado, certificado y profesional</p>
                      <div className="flex flex-col gap-3 mt-auto">
                         <div className="flex justify-between items-baseline border-b border-yellow-900/50 pb-3">
                            <span className="text-xs text-yellow-600/80 font-bold">IMPORTE</span>
@@ -730,11 +730,11 @@ export default function MarketingPage() {
                <div className="mb-6 h-1 w-10 bg-blue-900 rounded-full group-hover:w-16 transition-all group-hover:bg-blue-500" />
                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
                <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">$90.000</p>
-               <p className="text-xs text-slate-400 mb-8">+ IVA</p>
+               <p className="text-xs text-slate-600 dark:text-slate-400 mb-8">+ IVA</p>
                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-4 mb-10 flex-grow font-medium">
                   {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      <svg className="w-5 h-5 text-slate-900 dark:text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                       {item}
                     </li>
                   ))}
@@ -750,16 +750,16 @@ export default function MarketingPage() {
 
             {/* Plan Básico Estándar V4 */}
             <Card variant="glass" className="p-8 flex flex-col shadow-[0_0_40px_rgba(37,99,235,0.25)] border-blue-500 transform lg:-translate-y-4 hover:-translate-y-6 transition-transform relative">
-               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.8)]">RECOMENDADO</div>
+               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-slate-900 dark:text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.8)]">RECOMENDADO</div>
                <h4 className="text-2xl font-bold text-blue-400 mb-2 mt-2">Plan Básico Estándar V4</h4>
                <div className="mb-6 h-1 w-12 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.8)]" />
                <p className="text-xs text-blue-600 dark:text-blue-300 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
                <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight drop-shadow-md">$120.000</p>
-               <p className="text-xs text-slate-500 dark:text-blue-200/50 mb-8">+ IVA</p>
+               <p className="text-xs text-slate-500 dark:text-blue-800/60 dark:text-blue-200/50 mb-8">+ IVA</p>
                <ul className="text-sm text-slate-700 dark:text-slate-200 space-y-4 mb-10 flex-grow font-medium">
                   {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                      <svg className="w-5 h-5 text-slate-900 dark:text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                       {item}
                     </li>
                   ))}
@@ -775,17 +775,17 @@ export default function MarketingPage() {
 
             {/* Plan Full Estándar V4 */}
             <Card variant="glass" className="p-8 flex flex-col border-cyan-500 group">
-               <h4 className="text-2xl font-bold text-cyan-400 mb-2">Plan Full Estándar V4</h4>
+               <h4 className="text-2xl font-bold text-cyan-700 dark:text-cyan-400 mb-2">Plan Full Estándar V4</h4>
                <div className="mb-6 h-1 w-10 bg-cyan-900 rounded-full group-hover:w-16 transition-all group-hover:bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
                <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
                <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">$200.000</p>
-               <p className="text-xs text-cyan-400/50 mb-8">+ IVA</p>
+               <p className="text-xs text-cyan-700 dark:text-cyan-400/50 mb-8">+ IVA</p>
                <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-4 mb-10 flex-grow font-medium">
-                  <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Servicio Mensual</li>
-                  <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Soporte remoto ilimitado</li>
-                  <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Consultoría y Asesoramiento MR</li>
-                  <li className="flex items-start gap-3 text-cyan-300 font-bold"><svg className="w-5 h-5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>1 Visita Presencial Mensual</li>
-                  <li className="flex items-start gap-3 text-cyan-300 font-bold"><svg className="w-5 h-5 text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Mantenimiento Preventivo y Activo</li>
+                  <li className="flex items-start gap-3 text-slate-900 dark:text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Servicio Mensual</li>
+                  <li className="flex items-start gap-3 text-slate-900 dark:text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Soporte remoto ilimitado</li>
+                  <li className="flex items-start gap-3 text-slate-900 dark:text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Consultoría y Asesoramiento MR</li>
+                  <li className="flex items-start gap-3 text-cyan-700 dark:text-cyan-300 font-bold"><svg className="w-5 h-5 text-cyan-700 dark:text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>1 Visita Presencial Mensual</li>
+                  <li className="flex items-start gap-3 text-cyan-700 dark:text-cyan-300 font-bold"><svg className="w-5 h-5 text-cyan-700 dark:text-cyan-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Mantenimiento Preventivo y Activo</li>
                </ul>
                 <Button 
                   variant="glow" 
@@ -799,27 +799,27 @@ export default function MarketingPage() {
 
          {/* Ideal Para Section */}
          <div className="mt-24 border-t border-slate-300/80 dark:border-slate-800/80 pt-16 text-center max-w-5xl mx-auto">
-             <h3 className="text-2xl font-bold text-white mb-10 tracking-widest uppercase">Ideal Para</h3>
+             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-10 tracking-widest uppercase">Ideal Para</h3>
              <div className="flex flex-wrap justify-center gap-6 md:gap-12">
                  <div className="flex flex-col items-center group">
                     <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🍷</span></div>
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Bodegas</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Bodegas</span>
                  </div>
                  <div className="flex flex-col items-center group">
                     <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🏨</span></div>
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Hoteles</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Hoteles</span>
                  </div>
                  <div className="flex flex-col items-center group">
                     <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🏢</span></div>
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Empresariales</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Empresariales</span>
                  </div>
                  <div className="flex flex-col items-center group">
                     <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🍽️</span></div>
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest text-center max-w-[120px]">Polos<br/>Gastronómicos</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest text-center max-w-[120px]">Polos<br/>Gastronómicos</span>
                  </div>
                  <div className="flex flex-col items-center group">
                     <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">📡</span></div>
-                    <span className="text-xs font-bold text-slate-300 uppercase tracking-widest text-center max-w-[200px]">Proyectos<br/>Itinerantes Rurales</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest text-center max-w-[200px]">Proyectos<br/>Itinerantes Rurales</span>
                  </div>
              </div>
          </div>
@@ -828,7 +828,7 @@ export default function MarketingPage() {
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay" />
             <div className="relative z-10 flex-1 drop-shadow-md">
                <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Planes Empresariales</h3>
-               <p className="text-slate-200 max-w-4xl leading-relaxed text-lg font-light">Para proyectos a gran escala y corporaciones pesadas. Requerimos efectuar un relevamiento inicial exhaustivo para diseñar el mapa topológico que decanta exactamente en las directrices y cantidad de GB que demanda su exclusividad.</p>
+               <p className="text-slate-800 dark:text-slate-200 max-w-4xl leading-relaxed text-lg font-light">Para proyectos a gran escala y corporaciones pesadas. Requerimos efectuar un relevamiento inicial exhaustivo para diseñar el mapa topológico que decanta exactamente en las directrices y cantidad de GB que demanda su exclusividad.</p>
             </div>
             <div className="relative z-10 shrink-0 w-full md:w-auto">
                <Button 
@@ -848,7 +848,7 @@ export default function MarketingPage() {
             <div className="text-center mb-20 drop-shadow-lg">
                <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">El Diferencial MR</h2>
                <h3 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">Consultoría y Actividades IT Hard & Soft</h3>
-               <p className="text-slate-200 max-w-2xl mx-auto text-xl font-light">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
+               <p className="text-slate-800 dark:text-slate-200 max-w-2xl mx-auto text-xl font-light">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
             </div>
 
             <motion.div 
@@ -900,8 +900,8 @@ export default function MarketingPage() {
                     <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
                        <img src={`/icon_${service.icon}.png`} alt={service.title} className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(var(--${service.color}-shadow),0.4)]`} />
                     </div>
-                    <h4 className="text-2xl font-bold text-white mb-6 drop-shadow-sm">{service.title}</h4>
-                    <ul className="text-slate-300 text-sm space-y-4 font-medium">
+                    <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 drop-shadow-sm">{service.title}</h4>
+                    <ul className="text-slate-700 dark:text-slate-300 text-sm space-y-4 font-medium">
                        {service.items.map((item, j) => (
                          <li key={j} className="flex items-start gap-3">
                            <span className={`text-${service.color}-400 block shrink-0 drop-shadow-sm`}>•</span> 
@@ -929,7 +929,7 @@ export default function MarketingPage() {
             </div>
             <div className="flex flex-col items-center gap-3 group cursor-pointer">
                <img src="/footer_ia.png" className="h-14 md:h-16 w-auto rounded-xl opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-slate-800 group-hover:border-cyan-500/50 shadow-lg object-contain" alt="Inteligencia Artificial" />
-               <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 group-hover:text-cyan-400 transition-colors font-medium">Inteligencia Artificial</span>
+               <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 group-hover:text-cyan-700 dark:text-cyan-400 transition-colors font-medium">Inteligencia Artificial</span>
             </div>
             <div className="flex flex-col items-center gap-3 group cursor-pointer">
                <img src="/footer_informatica.png" className="h-14 md:h-16 w-auto rounded-xl opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-slate-800 group-hover:border-indigo-500/50 shadow-lg object-contain" alt="Informática" />
@@ -948,9 +948,9 @@ export default function MarketingPage() {
                <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 group-hover:text-emerald-400 transition-colors font-medium">Alianzas Estratégicas</span>
             </div>
          </div>
-         <p className="tracking-[0.3em] mb-4 text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
+         <p className="tracking-[0.3em] mb-4 text-slate-900 dark:text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
          <p className="tracking-[0.2em] mb-8 text-blue-400 font-bold text-sm uppercase drop-shadow-sm">Partner Tecnológico Starlink B2B</p>
-         <p className="mb-12 max-w-xl mx-auto font-light text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
+         <p className="mb-12 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
          <div className="flex justify-center gap-10 text-sm mb-16 font-semibold">
             <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
             <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
