@@ -27,10 +27,10 @@ export function Card({
   const baseStyles = "relative overflow-hidden rounded-[2rem] border transition-all duration-500"
   
   const variants = {
-    default: "bg-slate-900/50 border-white/10",
-    glass: "bg-slate-950/40 backdrop-blur-xl border-white/10",
-    glow: "bg-slate-900/50 border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.05)]",
-    accent: "bg-gradient-to-br from-slate-900 to-slate-950 border-cyan-500/30",
+    default: "bg-white/50 dark:bg-slate-900/50 border-slate-200 dark:border-white/10",
+    glass: "bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border-slate-200 dark:border-white/10",
+    glow: "bg-white/50 dark:bg-slate-900/50 border-cyan-500/20 shadow-[0_0_30px_rgba(6,182,212,0.05)]",
+    accent: "bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-950 border-cyan-500/30",
   }
 
   const hoverStyles = hover ? "hover:border-cyan-500/40 hover:shadow-[0_0_40px_rgba(6,182,212,0.1)] hover:-translate-y-1" : ""

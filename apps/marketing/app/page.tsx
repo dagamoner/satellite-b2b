@@ -824,8 +824,8 @@ export default function MarketingPage() {
              </div>
          </div>
 
-         <div className="mt-16 bg-gradient-to-br from-blue-900/60 via-slate-900/80 to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay" />
+         <div className="mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 dark:opacity-20 mix-blend-overlay" />
             <div className="relative z-10 flex-1 drop-shadow-md">
                <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Planes Empresariales</h3>
                <p className="text-slate-800 dark:text-slate-200 max-w-4xl leading-relaxed text-lg font-light">Para proyectos a gran escala y corporaciones pesadas. Requerimos efectuar un relevamiento inicial exhaustivo para diseñar el mapa topológico que decanta exactamente en las directrices y cantidad de GB que demanda su exclusividad.</p>
@@ -843,7 +843,7 @@ export default function MarketingPage() {
       </section>
 
       {/* IT Consulting Services */}
-      <section id="consultoria" className="relative z-10 py-32 bg-[#020617]/50 backdrop-blur-xl border-t border-slate-800 px-6">
+      <section id="consultoria" className="relative z-10 py-32 bg-white/50 dark:bg-[#020617]/50 backdrop-blur-xl border-t border-slate-300 dark:border-slate-800 px-6">
          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-20 drop-shadow-lg">
                <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">El Diferencial MR</h2>
@@ -916,7 +916,7 @@ export default function MarketingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-white/5 text-center text-slate-500">
+      <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
          <div className="flex flex-wrap justify-center items-center gap-y-10 gap-x-8 md:gap-x-12 mb-16 relative z-10">
             <div className="flex flex-col items-center gap-3 group cursor-pointer">
