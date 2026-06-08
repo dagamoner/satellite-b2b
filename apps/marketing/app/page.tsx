@@ -234,7 +234,7 @@ export default function MarketingPage() {
                       logoGlow === 'consultoria' ? '#a855f7' :
                       logoGlow === 'portal-clientes' ? '#3b82f6' :
                       logoGlow === 'portal-admin' ? '#6366f1' :
-                      'transparent',
+                      'rgba(59,130,246,0)',
                     boxShadow: 
                       logoGlow === 'antenas' ? '0 0 40px rgba(59,130,246,0.95)' :
                       logoGlow === 'planes' ? '0 0 40px rgba(20,184,166,0.95)' :
