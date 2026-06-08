@@ -288,10 +288,16 @@ export default function MarketingPage() {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * (index + 1) }}
-                className="group flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ 
+                  scale: 0.94,
+                  y: 1,
+                  filter: `drop-shadow(0 0 15px ${id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7'}) brightness(1.2)`
+                }}
+                className="group flex flex-col items-center gap-1 cursor-pointer"
               >
                 <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-14" : "h-24 md:h-28"}`} />
-                <span className={`text-[9px] font-bold uppercase tracking-widest transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"} ${id === 'antenas' ? 'text-blue-400/80' : id === 'planes' ? 'text-teal-400/80' : 'text-purple-400/80'}`}>
+                <span className={`text-[13px] font-black uppercase tracking-widest transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"} ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'}`}>
                   {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
                 </span>
               </motion.a>
@@ -303,18 +309,36 @@ export default function MarketingPage() {
             animate={{ opacity: 1, x: 0 }}
             className="flex gap-4 items-center"
           >
-             <a href={"https://clientes.mrtechnology.it.com"} className="group">
-                <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+             <motion.a 
+                href={"https://clientes.mrtechnology.it.com"} 
+                className="group"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ 
+                  scale: 0.94,
+                  y: 1,
+                  filter: "drop-shadow(0 0 15px #3b82f6) brightness(1.2)"
+                }}
+             >
+                <div className="flex flex-col items-center gap-1">
                    <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
-                   <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-blue-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
+                   <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-blue-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
                 </div>
-             </a>
-             <a href={"https://admin.mrtechnology.it.com"} className="group hidden sm:block">
-                <div className="flex flex-col items-center gap-1 transition-all duration-500 hover:scale-110">
+             </motion.a>
+             <motion.a 
+                href={"https://admin.mrtechnology.it.com"} 
+                className="group hidden sm:block"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ 
+                  scale: 0.94,
+                  y: 1,
+                  filter: "drop-shadow(0 0 15px #6366f1) brightness(1.2)"
+                }}
+             >
+                <div className="flex flex-col items-center gap-1">
                    <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
-                   <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-indigo-400/80 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
+                   <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-indigo-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
-             </a>
+             </motion.a>
           </motion.div>
         </div>
       </nav>
