@@ -333,10 +333,12 @@ export default function MarketingPage() {
                 <div className="relative">
                   <motion.div 
                     className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                    animate={{
-                      opacity: logoGlow === id ? 0.85 : 0,
+                    style={{
                       backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7',
                       boxShadow: id === 'antenas' ? '0 0 30px rgba(59,130,246,0.85)' : id === 'planes' ? '0 0 30px rgba(20,184,166,0.85)' : '0 0 30px rgba(168,85,247,0.85)',
+                    }}
+                    animate={{
+                      opacity: logoGlow === id ? 0.85 : 0,
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -371,10 +373,12 @@ export default function MarketingPage() {
                    <div className="relative">
                      <motion.div 
                        className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                       animate={{
-                         opacity: logoGlow === 'portal-clientes' ? 0.85 : 0,
+                       style={{
                          backgroundColor: '#3b82f6',
                          boxShadow: '0 0 30px rgba(59,130,246,0.85)',
+                       }}
+                       animate={{
+                         opacity: logoGlow === 'portal-clientes' ? 0.85 : 0,
                        }}
                        transition={{ duration: 0.3 }}
                      />
@@ -400,10 +404,12 @@ export default function MarketingPage() {
                    <div className="relative">
                      <motion.div 
                        className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                       animate={{
-                         opacity: logoGlow === 'portal-admin' ? 0.85 : 0,
+                       style={{
                          backgroundColor: '#6366f1',
                          boxShadow: '0 0 30px rgba(99,102,241,0.85)',
+                       }}
+                       animate={{
+                         opacity: logoGlow === 'portal-admin' ? 0.85 : 0,
                        }}
                        transition={{ duration: 0.3 }}
                      />
