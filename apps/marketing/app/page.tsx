@@ -330,7 +330,18 @@ export default function MarketingPage() {
                 onClick={() => setLogoGlow(id)}
                 className="group flex flex-col items-center gap-1 cursor-pointer"
               >
-                <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-14" : "h-24 md:h-28"}`} />
+                <div className="relative">
+                  <motion.div 
+                    className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
+                    animate={{
+                      opacity: logoGlow === id ? 0.85 : 0,
+                      backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7',
+                      boxShadow: id === 'antenas' ? '0 0 30px rgba(59,130,246,0.85)' : id === 'planes' ? '0 0 30px rgba(20,184,166,0.85)' : '0 0 30px rgba(168,85,247,0.85)',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain relative z-10 transition-all duration-500 ${scrolled ? "h-14" : "h-24 md:h-28"}`} />
+                </div>
                 <span className={`text-[13px] font-black uppercase tracking-widest transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"} ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'}`}>
                   {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
                 </span>
@@ -357,7 +368,18 @@ export default function MarketingPage() {
                 onClick={() => setLogoGlow('portal-clientes')}
              >
                 <div className="flex flex-col items-center gap-1">
-                   <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   <div className="relative">
+                     <motion.div 
+                       className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
+                       animate={{
+                         opacity: logoGlow === 'portal-clientes' ? 0.85 : 0,
+                         backgroundColor: '#3b82f6',
+                         boxShadow: '0 0 30px rgba(59,130,246,0.85)',
+                       }}
+                       transition={{ duration: 0.3 }}
+                     />
+                     <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain relative z-10 drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   </div>
                    <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-blue-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
                 </div>
              </motion.a>
@@ -375,7 +397,18 @@ export default function MarketingPage() {
                 onClick={() => setLogoGlow('portal-admin')}
              >
                 <div className="flex flex-col items-center gap-1">
-                   <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   <div className="relative">
+                     <motion.div 
+                       className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
+                       animate={{
+                         opacity: logoGlow === 'portal-admin' ? 0.85 : 0,
+                         backgroundColor: '#6366f1',
+                         boxShadow: '0 0 30px rgba(99,102,241,0.85)',
+                       }}
+                       transition={{ duration: 0.3 }}
+                     />
+                     <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain relative z-10 drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
+                   </div>
                    <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-indigo-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </motion.a>
