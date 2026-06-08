@@ -434,7 +434,7 @@ export default function MarketingPage() {
                     className="w-full h-full object-contain" 
                    />
                 </div>
-                <h4 className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tight drop-shadow-md">{stat.val}</h4>
+                <h4 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2 tracking-tight drop-shadow-md">{stat.val}</h4>
                 <p className="text-xs md:text-sm font-semibold text-slate-400 uppercase tracking-widest">{stat.label}</p>
               </motion.div>
             ))}
@@ -442,10 +442,10 @@ export default function MarketingPage() {
       </section>
 
       {/* Hardware Section */}
-      <section id="antenas" className="relative z-10 py-24 bg-[#020617]/40 backdrop-blur-xl border-y border-slate-800/80 px-6">
+      <section id="antenas" className="relative z-10 py-24 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-6">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-white drop-shadow-xl">Ingeniería en Hardware Satelital</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold mb-16 text-center text-slate-900 dark:text-white drop-shadow-xl">Ingeniería en Hardware Satelital</h2>
             <div className="grid md:grid-cols-3 gap-8">
                {/* Mini X */}
                <Card variant="glass" className="p-8 flex flex-col relative overflow-hidden">
@@ -455,8 +455,8 @@ export default function MarketingPage() {
                            <svg className="w-10 h-10 drop-shadow-[0_0_8px_rgba(37,99,235,0.8)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
                         </div>
                         <div className="flex flex-col">
-                           <h3 className="text-3xl font-bold text-white tracking-tight">Antena Mini X</h3>
-                           <span className="text-slate-500 text-base mt-1 font-medium">Compacta · Potente · Portátil</span>
+                           <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Antena Mini X</h3>
+                           <span className="text-slate-600 dark:text-slate-500 text-base mt-1 font-medium">Compacta · Potente · Portátil</span>
                         </div>
                      </div>
 
@@ -472,16 +472,16 @@ export default function MarketingPage() {
                         <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
+                     <p className="text-slate-800 dark:text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Diseño y dinámica.
                      </p>
                      
                      <div className="bg-black/40 rounded-[2rem] p-6 border border-slate-800/50 mb-2">
-                        <div className="flex justify-between items-end mb-6 border-b border-slate-800/80 pb-6">
+                        <div className="flex justify-between items-end mb-6 border-b border-slate-300/80 dark:border-slate-800/80 pb-6">
                            <div>
                               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-4xl font-black text-white">$300.000</span>
+                                 <span className="text-4xl font-black text-slate-900 dark:text-white">$300.000</span>
                               </div>
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
@@ -517,7 +517,7 @@ export default function MarketingPage() {
                            </svg>
                         </div>
                         <div className="flex flex-col">
-                           <h3 className="text-3xl font-bold text-white tracking-tight">Antena Estándar V4</h3>
+                           <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Antena Estándar V4</h3>
                            <span className="text-cyan-400 text-lg mt-1 font-medium">+ Router WiFi 6</span>
                         </div>
                      </div>
@@ -543,7 +543,7 @@ export default function MarketingPage() {
                         <svg className="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
+                     <p className="text-slate-800 dark:text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Prioridad Satelital, diseño y robustez.
                      </p>
                      
@@ -552,7 +552,7 @@ export default function MarketingPage() {
                            <div>
                               <p className="text-[10px] text-cyan-500 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-4xl font-black text-white">$500.000</span>
+                                 <span className="text-4xl font-black text-slate-900 dark:text-white">$500.000</span>
                               </div>
                               <p className="text-[9px] text-cyan-500/50 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
@@ -583,8 +583,8 @@ export default function MarketingPage() {
                            <svg className="w-10 h-10 drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
                         <div className="flex flex-col">
-                           <h3 className="text-3xl font-bold text-white tracking-tight">Antena Itinerante</h3>
-                           <span className="text-slate-500 text-base mt-1 font-medium">Conexión en movimiento</span>
+                           <h3 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Antena Itinerante</h3>
+                           <span className="text-slate-600 dark:text-slate-500 text-base mt-1 font-medium">Conexión en movimiento</span>
                         </div>
                      </div>
 
@@ -600,16 +600,16 @@ export default function MarketingPage() {
                         <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                      </div>
 
-                     <p className="text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
+                     <p className="text-slate-800 dark:text-white mb-10 leading-relaxed text-base md:text-lg font-medium drop-shadow-md">
                         Servicio asincrónico hasta 300M Reales SATELITALES. Diseño portátil, ideal para sectores rurales.
                      </p>
                      
                      <div className="bg-black/40 rounded-[2rem] p-6 border border-slate-800/50 mb-2 mt-auto">
-                        <div className="flex justify-between items-end mb-6 border-b border-slate-800/80 pb-6">
+                        <div className="flex justify-between items-end mb-6 border-b border-slate-300/80 dark:border-slate-800/80 pb-6">
                            <div>
                               <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mb-2">Importe</p>
                               <div className="flex items-baseline gap-1">
-                                 <span className="text-4xl font-black text-white">$300.000</span>
+                                 <span className="text-4xl font-black text-slate-900 dark:text-white">$300.000</span>
                               </div>
                               <p className="text-[9px] text-slate-600 uppercase mt-1 tracking-wider">+ IVA (Efectivo)</p>
                            </div>
@@ -657,7 +657,7 @@ export default function MarketingPage() {
                      <div className="flex flex-col gap-3 mt-auto">
                         <div className="flex justify-between items-baseline border-b border-yellow-900/50 pb-3">
                            <span className="text-xs text-yellow-600/80 font-bold">IMPORTE</span>
-                           <span className="text-2xl font-black text-white">$150.000<span className="text-[10px] text-yellow-600/80 ml-1 font-normal uppercase">+ IVA<br/>(Efectivo)</span></span>
+                           <span className="text-2xl font-black text-slate-900 dark:text-white">$150.000<span className="text-[10px] text-yellow-600/80 ml-1 font-normal uppercase">+ IVA<br/>(Efectivo)</span></span>
                         </div>
                         <div className="flex justify-between items-baseline">
                            <span className="text-xs text-yellow-600/80 font-bold">O 3 CUOTAS</span>
@@ -671,7 +671,7 @@ export default function MarketingPage() {
                      <div className="flex flex-col gap-3 mt-auto">
                         <div className="flex justify-between items-baseline border-b border-yellow-900/50 pb-3">
                            <span className="text-xs text-yellow-600/80 font-bold">IMPORTE</span>
-                           <span className="text-2xl font-black text-white">$200.000<span className="text-[10px] text-yellow-600/80 ml-1 font-normal uppercase">+ IVA<br/>(Efectivo)</span></span>
+                           <span className="text-2xl font-black text-slate-900 dark:text-white">$200.000<span className="text-[10px] text-yellow-600/80 ml-1 font-normal uppercase">+ IVA<br/>(Efectivo)</span></span>
                         </div>
                         <div className="flex justify-between items-baseline">
                            <span className="text-xs text-yellow-600/80 font-bold">O 3 CUOTAS</span>
@@ -688,19 +688,19 @@ export default function MarketingPage() {
       <section id="planes" className="relative z-10 py-32 px-6 max-w-7xl mx-auto">
          <div className="text-center mb-20 drop-shadow-lg">
             <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">Planes de Servicio Mensual</h2>
-            <h3 className="text-4xl md:text-6xl font-extrabold mb-6 text-white tracking-tight">Planes MR Technology</h3>
-            <p className="text-slate-300 max-w-2xl mx-auto text-xl font-light">Internet diseñado para cada necesidad y rubro. Respaldado con consultoría especializada en IT, mantención y monitoreo contínuo de su red.</p>
+            <h3 className="text-4xl md:text-6xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">Planes MR Technology</h3>
+            <p className="text-slate-700 dark:text-slate-300 max-w-2xl mx-auto text-xl font-light">Internet diseñado para cada necesidad y rubro. Respaldado con consultoría especializada en IT, mantención y monitoreo contínuo de su red.</p>
          </div>
 
          <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
             {/* Plan Básico Mini */}
             <Card variant="glass" className="p-8 flex flex-col group">
-               <h4 className="text-2xl font-bold text-blue-300 mb-2">Plan Básico Mini</h4>
+               <h4 className="text-2xl font-bold text-blue-600 dark:text-blue-300 mb-2">Plan Básico Mini</h4>
                <div className="mb-6 h-1 w-10 bg-blue-900 rounded-full group-hover:w-16 transition-all group-hover:bg-blue-500" />
                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
-               <p className="text-5xl font-black text-white mb-2 tracking-tight">$90.000</p>
+               <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">$90.000</p>
                <p className="text-xs text-slate-400 mb-8">+ IVA</p>
-               <ul className="text-sm text-slate-300 space-y-4 mb-10 flex-grow font-medium">
+               <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-4 mb-10 flex-grow font-medium">
                   {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
@@ -722,10 +722,10 @@ export default function MarketingPage() {
                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-4 py-1.5 text-xs font-black rounded-full tracking-widest uppercase shadow-[0_0_15px_rgba(37,99,235,0.8)]">RECOMENDADO</div>
                <h4 className="text-2xl font-bold text-blue-400 mb-2 mt-2">Plan Básico Estándar V4</h4>
                <div className="mb-6 h-1 w-12 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.8)]" />
-               <p className="text-xs text-blue-300 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
-               <p className="text-5xl font-black text-white mb-2 tracking-tight drop-shadow-md">$120.000</p>
-               <p className="text-xs text-blue-200/50 mb-8">+ IVA</p>
-               <ul className="text-sm text-slate-200 space-y-4 mb-10 flex-grow font-medium">
+               <p className="text-xs text-blue-600 dark:text-blue-300 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
+               <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight drop-shadow-md">$120.000</p>
+               <p className="text-xs text-slate-500 dark:text-blue-200/50 mb-8">+ IVA</p>
+               <ul className="text-sm text-slate-700 dark:text-slate-200 space-y-4 mb-10 flex-grow font-medium">
                   {["Servicio Mensual", "Soporte remoto ilimitado", "Consultoría y Asesoramiento MR"].map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <svg className="w-5 h-5 text-white shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
@@ -747,9 +747,9 @@ export default function MarketingPage() {
                <h4 className="text-2xl font-bold text-cyan-400 mb-2">Plan Full Estándar V4</h4>
                <div className="mb-6 h-1 w-10 bg-cyan-900 rounded-full group-hover:w-16 transition-all group-hover:bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
                <p className="text-xs text-cyan-500 font-bold uppercase tracking-wider mb-1">IMPORTE Mensual</p>
-               <p className="text-5xl font-black text-white mb-2 tracking-tight">$200.000</p>
+               <p className="text-5xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">$200.000</p>
                <p className="text-xs text-cyan-400/50 mb-8">+ IVA</p>
-               <ul className="text-sm text-slate-300 space-y-4 mb-10 flex-grow font-medium">
+               <ul className="text-sm text-slate-700 dark:text-slate-300 space-y-4 mb-10 flex-grow font-medium">
                   <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Servicio Mensual</li>
                   <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Soporte remoto ilimitado</li>
                   <li className="flex items-start gap-3 text-white"><svg className="w-5 h-5 text-cyan-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>Consultoría y Asesoramiento MR</li>
@@ -767,7 +767,7 @@ export default function MarketingPage() {
          </div>
 
          {/* Ideal Para Section */}
-         <div className="mt-24 border-t border-slate-800/80 pt-16 text-center max-w-5xl mx-auto">
+         <div className="mt-24 border-t border-slate-300/80 dark:border-slate-800/80 pt-16 text-center max-w-5xl mx-auto">
              <h3 className="text-2xl font-bold text-white mb-10 tracking-widest uppercase">Ideal Para</h3>
              <div className="flex flex-wrap justify-center gap-6 md:gap-12">
                  <div className="flex flex-col items-center group">
@@ -796,7 +796,7 @@ export default function MarketingPage() {
          <div className="mt-16 bg-gradient-to-br from-blue-900/60 via-slate-900/80 to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-overlay" />
             <div className="relative z-10 flex-1 drop-shadow-md">
-               <h3 className="text-3xl md:text-4xl font-black text-white mb-4">Planes Empresariales</h3>
+               <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Planes Empresariales</h3>
                <p className="text-slate-200 max-w-4xl leading-relaxed text-lg font-light">Para proyectos a gran escala y corporaciones pesadas. Requerimos efectuar un relevamiento inicial exhaustivo para diseñar el mapa topológico que decanta exactamente en las directrices y cantidad de GB que demanda su exclusividad.</p>
             </div>
             <div className="relative z-10 shrink-0 w-full md:w-auto">
@@ -816,7 +816,7 @@ export default function MarketingPage() {
          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-20 drop-shadow-lg">
                <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">El Diferencial MR</h2>
-               <h3 className="text-4xl md:text-5xl font-extrabold mb-6 text-white tracking-tight">Consultoría y Actividades IT Hard & Soft</h3>
+               <h3 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">Consultoría y Actividades IT Hard & Soft</h3>
                <p className="text-slate-200 max-w-2xl mx-auto text-xl font-light">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
             </div>
 
