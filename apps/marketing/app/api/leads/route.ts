@@ -198,7 +198,7 @@ export async function POST(request: Request) {
           resend.emails.send({
             from: fromSystem,
             to: adminEmails,
-            subject: `🚨 NUEVO LEAD B2B: ${planName || type} - ${name}`,
+            subject: `Nuevo Lead B2B: ${planName || type} - ${name}`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #10b981; background-color: #ffffff;">
                 <h2 style="color: #047857; margin-top: 0;">¡Nuevo Lead desde la Web!</h2>
@@ -226,7 +226,7 @@ export async function POST(request: Request) {
           resend.emails.send({
             from: fromSystem,
             to: techEmails,
-            subject: `🛠️ PRE-AVISO TÉCNICO: Posible Instalación en ${finalCity}`,
+            subject: `Pre-aviso tecnico: Posible instalacion en ${finalCity}`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #0ea5e9; background-color: #ffffff;">
                 <h2 style="color: #0369a1; margin-top: 0;">Pre-Aviso de Instalación / Relevamiento</h2>
