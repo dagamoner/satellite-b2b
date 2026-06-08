@@ -170,6 +170,7 @@ export default function MarketingPage() {
   const [scrolled, setScrolled] = useState(false);
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [logoGlow, setLogoGlow] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -223,6 +224,27 @@ export default function MarketingPage() {
             className="flex items-center gap-6 group cursor-pointer mt-2 md:mt-0"
           >
              <div className="relative shrink-0">
+                <motion.div 
+                  className="absolute -inset-2.5 rounded-xl blur-2xl pointer-events-none"
+                  animate={{
+                    opacity: logoGlow ? 0.95 : 0,
+                    backgroundColor: 
+                      logoGlow === 'antenas' ? '#3b82f6' :
+                      logoGlow === 'planes' ? '#14b8a6' :
+                      logoGlow === 'consultoria' ? '#a855f7' :
+                      logoGlow === 'portal-clientes' ? '#3b82f6' :
+                      logoGlow === 'portal-admin' ? '#6366f1' :
+                      'transparent',
+                    boxShadow: 
+                      logoGlow === 'antenas' ? '0 0 40px rgba(59,130,246,0.95)' :
+                      logoGlow === 'planes' ? '0 0 40px rgba(20,184,166,0.95)' :
+                      logoGlow === 'consultoria' ? '0 0 40px rgba(168,85,247,0.95)' :
+                      logoGlow === 'portal-clientes' ? '0 0 40px rgba(59,130,246,0.95)' :
+                      logoGlow === 'portal-admin' ? '0 0 40px rgba(99,102,241,0.95)' :
+                      'none'
+                  }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                />
                <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl blur-2xl opacity-0 group-hover:opacity-95 transition-all duration-500 pointer-events-none" />
                <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg object-contain transition-all duration-500 ${scrolled ? "w-16 h-16 md:w-24 md:h-24" : "w-20 h-20 md:w-[180px] md:h-[180px]"}`} />
              </div>
@@ -303,6 +325,9 @@ export default function MarketingPage() {
                   y: 1,
                   filter: `drop-shadow(0 0 15px ${id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7'}) brightness(1.2)`
                 }}
+                onMouseEnter={() => setLogoGlow(id)}
+                onMouseLeave={() => setLogoGlow(null)}
+                onClick={() => setLogoGlow(id)}
                 className="group flex flex-col items-center gap-1 cursor-pointer"
               >
                 <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain transition-all duration-500 ${scrolled ? "h-14" : "h-24 md:h-28"}`} />
@@ -327,6 +352,9 @@ export default function MarketingPage() {
                   y: 1,
                   filter: "drop-shadow(0 0 15px #3b82f6) brightness(1.2)"
                 }}
+                onMouseEnter={() => setLogoGlow('portal-clientes')}
+                onMouseLeave={() => setLogoGlow(null)}
+                onClick={() => setLogoGlow('portal-clientes')}
              >
                 <div className="flex flex-col items-center gap-1">
                    <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
@@ -342,6 +370,9 @@ export default function MarketingPage() {
                   y: 1,
                   filter: "drop-shadow(0 0 15px #6366f1) brightness(1.2)"
                 }}
+                onMouseEnter={() => setLogoGlow('portal-admin')}
+                onMouseLeave={() => setLogoGlow(null)}
+                onClick={() => setLogoGlow('portal-admin')}
              >
                 <div className="flex flex-col items-center gap-1">
                    <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
