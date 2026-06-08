@@ -192,30 +192,18 @@ function EntryPortalContent() {
         <Card variant="glass" className="p-12 border-white/5 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
           
-          <div className="flex flex-col items-center mb-12 text-center">
+          <div className="flex flex-col items-center mb-10 text-center">
             <motion.div 
               variants={itemVariants}
-              className="relative mb-8 group"
+              className="relative mb-6 group"
             >
-              <div className="absolute inset-0 bg-cyan-500 blur-3xl opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
-              <div className="w-40 h-40 md:w-48 md:h-48 bg-slate-900 border border-white/10 rounded-[2.5rem] flex items-center justify-center relative shadow-inner overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent" />
-                <img src="/logo.jpg" alt="MR Technology" className="w-full h-full object-contain relative z-10 p-2 drop-shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
-              </div>
+              <div className="absolute inset-0 bg-cyan-500 blur-3xl opacity-15 group-hover:opacity-35 transition-opacity animate-pulse" />
+              <img 
+                src="/Logo%20portal.png" 
+                alt="Portal B2B Clientes" 
+                className="w-64 md:w-72 h-auto object-contain relative z-10 drop-shadow-[0_0_25px_rgba(6,182,212,0.45)]" 
+              />
             </motion.div>
-            
-            <motion.h1 
-              variants={itemVariants}
-              className="text-5xl font-black text-white tracking-tighter mb-4 uppercase leading-none"
-            >
-              Portal <span className="text-cyan-500">B2B</span>
-            </motion.h1>
-            <motion.p 
-              variants={itemVariants}
-              className="text-slate-500 font-bold text-[10px] uppercase tracking-[0.5em]"
-            >
-              Centro de Operaciones Corporativas
-            </motion.p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-8">

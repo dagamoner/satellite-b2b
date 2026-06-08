@@ -449,27 +449,60 @@ export default function MarketingPage() {
             Alta velocidad estable. Hardware revolucionario desde <strong className="text-slate-900 dark:text-white font-bold">$300.000</strong> con abonos desde <strong className="text-slate-900 dark:text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
           </p>
 
-          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-5 w-full max-w-5xl mx-auto px-4 md:px-0">
-            <a href={"https://clientes.mrtechnology.it.com"} className="w-full sm:w-auto">
-              <Button size="lg" variant="premium" className="w-full group flex justify-center gap-3">
-                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                Portal B2B Clientes
-              </Button>
-            </a>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl mx-auto px-4 md:px-0 mt-8 relative z-10 justify-center">
+            {/* Card 1: Portal B2B Clientes */}
+            <motion.a
+              href="https://clientes.mrtechnology.it.com"
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#020617] hover:border-cyan-500/60 shadow-lg hover:shadow-[0_0_35px_rgba(6,182,212,0.45)] dark:hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] transition-all duration-300 flex flex-col justify-center items-center cursor-pointer w-full max-w-xs mx-auto aspect-[1.5]"
+            >
+              <img
+                src="/logo_portal_b2b.png"
+                alt="Logo Portal B2B"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              {/* Glossy sheen reflection */}
+              <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-1000 ease-out group-hover:translate-x-[120%]" />
+              {/* Color overlay hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            </motion.a>
 
-            <a href="#antenas" className="w-full sm:w-auto">
-              <Button size="lg" variant="glow" className="w-full group flex justify-center gap-3">
-                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                Comprar Hardware
-              </Button>
-            </a>
+            {/* Card 2: Comprar Hardware */}
+            <motion.a
+              href="#antenas"
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#020617] hover:border-blue-500/60 shadow-lg hover:shadow-[0_0_35px_rgba(37,99,235,0.45)] dark:hover:shadow-[0_0_50px_rgba(37,99,235,0.6)] transition-all duration-300 flex flex-col justify-center items-center cursor-pointer w-full max-w-xs mx-auto aspect-[1.5]"
+            >
+              <img
+                src="/comprar_hardware.png"
+                alt="Comprar Hardware"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              {/* Glossy sheen reflection */}
+              <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-1000 ease-out group-hover:translate-x-[120%]" />
+              {/* Color overlay hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            </motion.a>
 
-            <a href={"https://admin.mrtechnology.it.com"} className="w-full sm:w-auto">
-              <Button size="lg" variant="outline" className="w-full group flex justify-center gap-3">
-                <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                 Soporte / Centro Técnico
-              </Button>
-            </a>
+            {/* Card 3: Soporte Técnico */}
+            <motion.a
+              href="https://admin.mrtechnology.it.com"
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-[#020617] hover:border-pink-500/60 shadow-lg hover:shadow-[0_0_35px_rgba(236,72,153,0.45)] dark:hover:shadow-[0_0_50px_rgba(236,72,153,0.6)] transition-all duration-300 flex flex-col justify-center items-center cursor-pointer w-full max-w-xs mx-auto aspect-[1.5]"
+            >
+              <img
+                src="/soporte_tecnico.png"
+                alt="Soporte Técnico"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              {/* Glossy sheen reflection */}
+              <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-1000 ease-out group-hover:translate-x-[120%]" />
+              {/* Color overlay hover effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            </motion.a>
           </div>
         </motion.div>
 
