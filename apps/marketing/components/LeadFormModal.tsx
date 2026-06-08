@@ -279,8 +279,8 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
   };
 
   return (
-    <div className="fixed inset-0 z-[100] p-4 md:p-8 bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto flex flex-col items-center">
-      <div className="w-full max-w-7xl my-auto bg-slate-900/40 border border-white/10 rounded-[2rem] md:rounded-[4rem] shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-fit transition-all duration-700">
+    <div className="fixed inset-0 z-[100] p-4 md:p-8 bg-white/60 dark:bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto flex flex-col items-center text-slate-900 dark:text-slate-50 transition-colors duration-500">
+      <div className="w-full max-w-7xl my-auto bg-white/80 dark:bg-slate-900/40 border border-black/10 dark:border-white/10 rounded-[2rem] md:rounded-[4rem] shadow-2xl dark:shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-fit transition-all duration-700">
         {/* Glow Effects */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-50" />
         <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
@@ -313,13 +313,13 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         ) : (
           <>
             <div className="flex flex-col lg:flex-row min-h-[600px]">
-              <div className="lg:w-[35%] bg-slate-950/40 p-8 md:p-12 border-r border-white/5 flex flex-col justify-between relative overflow-hidden">
+              <div className="lg:w-[35%] bg-slate-100/50 dark:bg-slate-950/40 p-8 md:p-12 border-r border-black/5 dark:border-white/5 flex flex-col justify-between relative overflow-hidden">
                 <div className="relative z-10">
                   <div className="mb-8">
                     <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20 mb-6 inline-block">
                       {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'Configuración de Enlace'}
                     </span>
-                    <h2 className="text-3xl font-black text-white uppercase tracking-tight leading-tight mb-8">
+                    <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight mb-8">
                       {planInfo.title}
                     </h2>
                     <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-blue-600 mb-10 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)]" />
@@ -342,7 +342,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       </div>
                       <div>
                         <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Prioridad</p>
-                        <p className="text-white font-bold text-sm">ALTA - B2B Directo</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">ALTA - B2B Directo</p>
                       </div>
                     </div>
                   </div>
@@ -358,16 +358,16 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
               </div>
 
               {/* Right Panel: Form */}
-              <div className="lg:w-[65%] p-10 md:p-20 bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
+              <div className="lg:w-[65%] p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-16">
                   <div>
-                    <h3 className="text-xl font-black text-white uppercase tracking-[0.3em] leading-none mb-3">Datos de la Solicitud</h3>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">Datos de la Solicitud</h3>
                     <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
                   </div>
                   <button 
                     type="button"
                     onClick={handleManualClose}
-                    className="w-12 h-12 bg-white/5 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 rounded-2xl flex items-center justify-center text-slate-500 transition-all border border-white/10 group active:scale-90"
+                    className="w-12 h-12 bg-black/5 dark:bg-white/5 hover:bg-red-500/20 hover:text-red-500 dark:hover:text-red-400 hover:border-red-500/30 rounded-2xl flex items-center justify-center text-slate-500 transition-all border border-black/10 dark:border-white/10 group active:scale-90"
                   >
                     <svg className="w-6 h-6 transition-transform group-hover:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
@@ -376,25 +376,25 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <form onSubmit={handleSubmit} className="space-y-8 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo</label>
+                      <label className="text-xs md:text-sm font-black text-slate-700 dark:text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo</label>
                       <input 
                         type="text" 
                         required
                         value={formData.name}
                         onChange={e => setFormData({...formData, name: e.target.value})}
                         placeholder="Juan Pérez"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-bold shadow-2xl"
                       />
                     </div>
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
+                      <label className="text-xs md:text-sm font-black text-slate-700 dark:text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
                       <input 
                         type="text" 
                         required
                         value={formData.dni}
                         onChange={e => setFormData({...formData, dni: e.target.value})}
                         placeholder="20345678901"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-mono font-bold shadow-2xl"
                       />
                     </div>
                   </div>

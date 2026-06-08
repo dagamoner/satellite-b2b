@@ -4,6 +4,9 @@ import { Card } from "@repo/ui/card";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LeadFormModal from "../components/LeadFormModal";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { SunnySkyBackground } from "../components/SunnySkyBackground";
+import { useTheme } from "next-themes";
 
 const SpaceBackground = () => {
   useEffect(() => {
@@ -165,6 +168,12 @@ export default function MarketingPage() {
     setIsLeadModalOpen(true);
   };
   const [scrolled, setScrolled] = useState(false);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -175,10 +184,10 @@ export default function MarketingPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#020617] text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative">
+    <main className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative transition-colors duration-500">
       
-      {/* Nuestro interactivo fondo del espacio */}
-      <SpaceBackground />
+      {/* Nuestro interactivo fondo del espacio o cielo */}
+      {mounted && theme === "light" ? <SunnySkyBackground /> : <SpaceBackground />}
 
       {/* Sello de Agua - Logo MR Technology */}
       <motion.div
@@ -206,7 +215,7 @@ export default function MarketingPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-[#020617]/85 backdrop-blur-2xl border-b border-white/10 shadow-2xl py-1" : "bg-transparent py-3 md:py-6"}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-white/80 dark:bg-[#020617]/85 backdrop-blur-2xl border-b border-black/10 dark:border-white/10 shadow-2xl py-1" : "bg-transparent py-3 md:py-6"}`}>
         <div className={`max-w-7xl mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-20 md:h-28" : "h-24 md:h-52"}`}>
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -339,6 +348,9 @@ export default function MarketingPage() {
                    <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-indigo-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
                 </div>
              </motion.a>
+             <div className="ml-2 border-l border-black/20 dark:border-white/20 pl-4">
+               <ThemeToggle />
+             </div>
           </motion.div>
         </div>
       </nav>
@@ -357,14 +369,14 @@ export default function MarketingPage() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full flex flex-col items-center"
         >
-          <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white">
+          <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-slate-900 dark:text-white">
             Internet SATÉLITAL Rapido & Confiable junto a Starlink<br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400 animate-gradient drop-shadow-2xl text-xl md:text-5xl lg:text-6xl mt-2 block">
               y en el lugar que tu empresa se encuentre, sin limites geográficos.
             </span>
           </h1>
-          <p className="text-base md:text-xl text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-light px-4 md:px-0">
-            Alta velocidad estable. Hardware revolucionario desde <strong className="text-white font-bold">$300.000</strong> con abonos desde <strong className="text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
+          <p className="text-base md:text-xl text-slate-700 dark:text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-light px-4 md:px-0">
+            Alta velocidad estable. Hardware revolucionario desde <strong className="text-slate-900 dark:text-white font-bold">$300.000</strong> con abonos desde <strong className="text-slate-900 dark:text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
           </p>
 
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-5 w-full max-w-5xl mx-auto px-4 md:px-0">
