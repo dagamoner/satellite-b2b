@@ -161,8 +161,12 @@ export async function POST(request: Request) {
         const fromClient = "MR Technology <no-reply@mrtechnology.it.com>";
         const fromSystem = "Sistema B2B <alertas@mrtechnology.it.com>";
         
-        const adminEmail = process.env.ADMIN_EMAIL || "ventas@mrtechnology.it.com";
-        const techEmail = process.env.TECH_EMAIL || "soporte@mrtechnology.it.com";
+        const adminEmailRaw = process.env.ADMIN_EMAIL || "ventas@mrtechnology.it.com";
+        const techEmailRaw = process.env.TECH_EMAIL || "soporte@mrtechnology.it.com";
+
+        // Soportar múltiples correos separados por coma
+        const adminEmails = adminEmailRaw.split(',').map(e => e.trim());
+        const techEmails = techEmailRaw.split(',').map(e => e.trim());
 
         await Promise.all([
           // 4.1 Email al Cliente
@@ -193,7 +197,7 @@ export async function POST(request: Request) {
           // 4.2 Email a Administrativos (Ventas)
           resend.emails.send({
             from: fromSystem,
-            to: adminEmail,
+            to: adminEmails,
             subject: `🚨 NUEVO LEAD B2B: ${planName || type} - ${name}`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #10b981; background-color: #ffffff;">
@@ -221,7 +225,7 @@ export async function POST(request: Request) {
           // 4.3 Email a Técnicos (Aviso de Instalación)
           resend.emails.send({
             from: fromSystem,
-            to: techEmail,
+            to: techEmails,
             subject: `🛠️ PRE-AVISO TÉCNICO: Posible Instalación en ${finalCity}`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #0ea5e9; background-color: #ffffff;">
