@@ -355,10 +355,20 @@ export default function AntennaContractForm({
       alert("Por favor, estampe su firma de técnico.");
       return;
     }
+
+    const hasClientSignature = isClientDigitallySigned || (sigCanvas.current && !sigCanvas.current.isEmpty());
+
+    if (hasClientSignature && !isAccepted) {
+      alert("El cliente ha firmado, pero debe tildar 'Acepto los términos y condiciones'.");
+      return;
+    }
+
     try {
       setIsExporting(true);
-      // Actualizar ticket a SIGNATURE_PENDING y guardar datos técnicos
-      await updateTicketStatus(ticketId, "SIGNATURE_PENDING", {
+      
+      const targetStatus = (hasClientSignature && isAccepted) ? "COMPLETED" : "SIGNATURE_PENDING";
+      
+      const payload: any = {
         terminalId: formData.terminalId,
         kitSerialNumber: formData.serialKit,
         antennaModel: formData.antennaModel,
@@ -394,7 +404,19 @@ export default function AntennaContractForm({
         techName: formData.techName,
         techDni: formData.techDni,
         techSignedAt: new Date(),
-      });
+      };
+
+      if (hasClientSignature && isAccepted) {
+         payload.clientSignature = isClientDigitallySigned
+          ? sigCanvas.current?.getCanvas().toDataURL("image/png")
+          : sigCanvas.current?.getTrimmedCanvas().toDataURL('image/png');
+         payload.installedAt = new Date();
+         payload.clientSignedAt = new Date();
+         payload.clientName = formData.clientNameSign || formData.razonSocial;
+         payload.clientDni = formData.clientDniSign || formData.cuit;
+      }
+
+      await updateTicketStatus(ticketId, targetStatus, payload);
       onBack();
     } catch (err) {
       alert("Error al guardar datos técnicos");
@@ -937,7 +959,7 @@ export default function AntennaContractForm({
             <div className="signature-box border rounded-2xl p-6 bg-blue-50/30 border-blue-100">
               <div className="flex justify-between items-center mb-4">
                 <p className="text-[10px] font-black uppercase text-blue-500 tracking-widest">Firma de Aceptación del Cliente</p>
-                {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
+                {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || ticketStatus === 'TECH_IN_PROGRESS' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
                   <label className="flex items-center gap-1.5 cursor-pointer select-none text-slate-500 hover:text-slate-800">
                     <input
                       type="checkbox"
@@ -950,9 +972,9 @@ export default function AntennaContractForm({
                 )}
               </div>
               
-              {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || ticketStatus === 'COMPLETED') ? (
+              {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || ticketStatus === 'COMPLETED' || ticketStatus === 'TECH_IN_PROGRESS') ? (
                 <>
-                  {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) ? (
+                  {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || ticketStatus === 'TECH_IN_PROGRESS' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) ? (
                     <>
                       <div className="grid grid-cols-2 gap-4 mb-4">
                         <div className="input-group">
