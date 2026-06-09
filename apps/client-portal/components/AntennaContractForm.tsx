@@ -1069,10 +1069,10 @@ export default function AntennaContractForm({
         )}
         
         {ticketStatus === 'TECH_IN_PROGRESS' && !isClientUser && (
-          <button className="btn-action" onClick={handleTechFinalize}>Finalizar Instalación (Técnico)</button>
+          <button className="btn-action" onClick={handleTechFinalize}>Guardar y Finalizar</button>
         )}
         
-        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
+        {(ticketStatus === 'SIGNATURE_PENDING' || ticketStatus === 'APPROVED' || (ticketStatus === 'TECH_IN_PROGRESS' && isClientUser) || (ticketStatus === 'COMPLETED' && !formData.clientSignature)) && (
           <button className="btn-action" onClick={handleFinalSign}>Acepto y Firmar Contrato</button>
         )}
 
