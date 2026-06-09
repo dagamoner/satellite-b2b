@@ -152,12 +152,21 @@ export const generateContractPDF = async (contract: Contract, returnBase64: bool
   doc.line(15, currentY, pageWidth - 15, currentY);
   currentY += 10;
 
+  let cityStr = contract.city || "";
+  let deptoStr = "-";
+  const deptoMatch = cityStr.match(/\(Depto: (.+)\)/);
+  if (deptoMatch) {
+    deptoStr = deptoMatch[1] || "-";
+    cityStr = cityStr.replace(/\(Depto: .+\)/, "").trim();
+  }
+
   autoTable(doc, {
     startY: currentY,
     theme: "plain",
     body: [
       ["Dirección:", contract.address],
-      ["Ciudad:", contract.city],
+      ["Localidad:", cityStr],
+      ["Departamento:", deptoStr],
       ["Provincia:", contract.province],
       ["Código Postal:", contract.zipCode || "-"],
     ],
