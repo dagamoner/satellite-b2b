@@ -219,6 +219,12 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
       return;
     }
 
+    if (formData.cbu && formData.cbu.length !== 22) {
+      alert("El CBU ingresado es inválido. Debe contener exactamente 22 números.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const normalizedDni = formData.dni.replace(/\D/g, "");
 
@@ -428,10 +434,19 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       <input 
                         type="text" 
                         value={formData.cbu}
-                        onChange={e => setFormData({...formData, cbu: e.target.value})}
+                        onChange={e => setFormData({...formData, cbu: e.target.value.replace(/\D/g, "")})}
                         placeholder="0000000000000000000000"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                        className={`w-full bg-black/40 border ${formData.cbu.length > 0 && formData.cbu.length !== 22 ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10' : 'border-white/5 focus:border-cyan-500/50 focus:ring-cyan-500/5'} text-white rounded-2xl px-8 py-5 focus:ring-8 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl`}
                       />
+                      {formData.cbu.length > 0 && formData.cbu.length < 22 && (
+                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ Faltan {22 - formData.cbu.length} números para los 22 requeridos.</p>
+                      )}
+                      {formData.cbu.length > 22 && (
+                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ Sobran {formData.cbu.length - 22} números. Un CBU tiene exactamente 22.</p>
+                      )}
+                      {formData.cbu.length === 22 && (
+                        <p className="text-emerald-400 text-[10px] uppercase font-bold ml-2">✅ CBU Correcto (22 dígitos).</p>
+                      )}
                     </div>
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Categoría</label>
