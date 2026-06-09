@@ -4,6 +4,7 @@ import { Card } from "@repo/ui/card";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LeadFormModal from "../components/LeadFormModal";
+import CoverageSearch from "../components/CoverageSearch";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
@@ -448,6 +449,8 @@ export default function MarketingPage() {
           <p className="text-base md:text-xl text-slate-700 dark:text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-light px-4 md:px-0">
             Alta velocidad estable. Hardware revolucionario desde <strong className="text-slate-900 dark:text-white font-bold">$300.000</strong> con abonos desde <strong className="text-slate-900 dark:text-white font-bold">$90.000</strong>. Respaldado por el mejor servicio técnico presencial en Mendoza.
           </p>
+
+          <CoverageSearch onCoverageConfirmed={(address) => openLeadModal("INFO", "Consulta por Cobertura", `Solicito información para instalación satelital en la dirección validada: ${address}`)} />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl mx-auto px-4 md:px-0 mt-8 relative z-10 justify-center">
             {/* Card 1: Portal B2B Clientes */}
