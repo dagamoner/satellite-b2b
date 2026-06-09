@@ -495,10 +495,19 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                         title="El correo debe contener el símbolo '@' y un dominio válido (ej. correo@empresa.com)"
                         value={formData.email}
-                        onChange={e => setFormData({...formData, email: e.target.value})}
+                        onChange={e => setFormData({...formData, email: e.target.value.trim()})}
                         placeholder="correo@empresa.com"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl invalid:border-red-500/50"
+                        className={`w-full bg-black/40 border ${formData.email.length > 0 && !/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10' : 'border-white/5 focus:border-cyan-500/50 focus:ring-cyan-500/5'} text-white rounded-2xl px-8 py-5 focus:ring-8 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl`}
                       />
+                      {formData.email.length > 0 && !formData.email.includes("@") && (
+                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ El correo debe contener el símbolo '@'.</p>
+                      )}
+                      {formData.email.length > 0 && formData.email.includes("@") && !/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) && (
+                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ El correo parece estar incompleto (ej. falta el .com o el dominio).</p>
+                      )}
+                      {/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) && (
+                        <p className="text-emerald-400 text-[10px] uppercase font-bold ml-2">✅ Email válido.</p>
+                      )}
                     </div>
                   </div>
 
