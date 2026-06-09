@@ -26,6 +26,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     clientCategory: "HOGAREÑO",
     rubro: "COMERCIAL",
     province: "",
+    departamento: "",
     city: "",
     otherCity: "",
     street: "",
@@ -44,6 +45,23 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
     "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", 
     "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
   ];
+
+  const DEPARTAMENTOS: Record<string, string[]> = {
+    "Mendoza": ["Ciudad de Mendoza (Capital)", "Godoy Cruz", "Guaymallén", "Las Heras", "Lavalle", "Luján de Cuyo", "Maipú", "Junín", "La Paz", "Rivadavia", "San Martín", "Santa Rosa", "San Carlos", "Tunuyán", "Tupungato", "General Alvear", "Malargüe", "San Rafael"],
+    "San Juan": ["25 de Mayo", "9 de Julio", "Albardón", "Angaco", "Calingasta", "Capital", "Caucete", "Chimbas", "Iglesia", "Jáchal", "Pocito", "Rawson", "Rivadavia", "San Martín", "Santa Lucía", "Sarmiento", "Ullum", "Valle Fértil", "Zonda"],
+    "San Luis": [
+      "Ayacucho: San Francisco del Monte de Oro",
+      "Belgrano: Los Manantiales",
+      "Chacabuco: Concarán",
+      "Coronel Pringles: La Toma",
+      "General Pedernera: Villa Mercedes",
+      "Gobernador Dupuy: Buena Esperanza",
+      "Juan Martín de Pueyrredón: San Luis (Capital)",
+      "Junín: Santa Rosa del Conlara",
+      "Libertador General San Martín: San Martín"
+    ]
+  };
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [generatedNumber, setGeneratedNumber] = useState("");
@@ -141,10 +159,16 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
       setFormData(prev => {
         // Solo sobrescribimos si estaba vacío o si contenía un prefijo automático anterior sin más números
         const currentPhone = prev.phone.trim();
+        let newPhone = currentPhone;
         if (!currentPhone || currentPhone === "+549" || currentPhone === "+549261" || currentPhone === "+549264" || currentPhone === "+549266") {
-          return { ...prev, phone: phonePrefix };
+          newPhone = phonePrefix;
         }
-        return prev;
+
+        // Resetear departamento si cambió la provincia y auto-seleccionar el primero si hay
+        const deptos = DEPARTAMENTOS[formData.province] || [];
+        const newDepto = deptos.length > 0 ? (deptos[0] || "") : "";
+
+        return { ...prev, phone: newPhone, departamento: prev.province === formData.province ? prev.departamento : newDepto };
       });
       
       
@@ -558,20 +582,49 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Provincia</label>
                       <select 
                         required
                         value={formData.province}
-                        onChange={e => setFormData({...formData, province: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
+                        onChange={e => {
+                          const prov = e.target.value;
+                          const deptos = DEPARTAMENTOS[prov] || [];
+                          setFormData({...formData, province: prov, departamento: deptos.length > 0 ? (deptos[0] || "") : ""});
+                        }}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
                       >
                         <option value="" disabled>Seleccionar Provincia</option>
                         {PROVINCIAS.map(p => (
                           <option key={p} value={p}>{p}</option>
                         ))}
                       </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Departamento</label>
+                      {DEPARTAMENTOS[formData.province] ? (
+                        <select 
+                          required
+                          value={formData.departamento}
+                          onChange={e => setFormData({...formData, departamento: e.target.value})}
+                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
+                        >
+                          <option value="" disabled>Seleccionar Depto</option>
+                          {(DEPARTAMENTOS[formData.province] || []).map(d => (
+                            <option key={d} value={d}>{d}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input 
+                          type="text" 
+                          required
+                          value={formData.departamento}
+                          onChange={e => setFormData({...formData, departamento: e.target.value})}
+                          placeholder="Ingrese su departamento"
+                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl text-[11px]"
+                        />
+                      )}
                     </div>
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">
@@ -582,7 +635,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         value={formData.city}
                         onChange={e => setFormData({...formData, city: e.target.value})}
                         disabled={!formData.province || loadingLocalities}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none disabled:opacity-50"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none disabled:opacity-50 text-[11px]"
                       >
                         <option value="" disabled>Seleccionar Localidad</option>
                         {localities.map(c => (

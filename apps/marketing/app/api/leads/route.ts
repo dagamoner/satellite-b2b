@@ -26,13 +26,15 @@ async function generateTicketNumber() {
 export async function POST(request: Request) {
   await cookies(); // Force dynamic runtime
   try {
-    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro, province, city, otherCity, street, houseNumber, zipCode, installationPrice, antennaModel } = await request.json();
+    const { name, razonSocial, nombreFantasia, email, phone, dni, type, message, planName, cbu, clientCategory, rubro, province, departamento, city, otherCity, street, houseNumber, zipCode, installationPrice, antennaModel } = await request.json();
 
     if (!name || !email || !dni || !type || !province || !street) {
       return NextResponse.json({ error: "Faltan datos obligatorios" }, { status: 400 });
     }
-    
-    const finalCity = city === "Otra localidad" ? otherCity : city;
+    let finalCity = city === "Otra localidad" ? otherCity : city;
+    if (departamento) {
+      finalCity = `${finalCity} (Depto: ${departamento})`;
+    }
 
     // Guardar la nueva localidad si es personalizada
     if (city === "Otra localidad" && otherCity && province) {
