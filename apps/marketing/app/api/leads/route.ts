@@ -190,6 +190,10 @@ export async function POST(request: Request) {
                   <span style="font-size: 28px; font-weight: bold; color: #0284c7; font-family: monospace;">${contract.contractNumber}</span>
                 </div>
                 <p style="font-size: 16px; line-height: 1.5;">Un representante técnico de nuestro equipo se contactará a la brevedad al teléfono proporcionado (${phone}) o a este mismo correo electrónico para coordinar los siguientes pasos y realizar el relevamiento técnico si corresponde.</p>
+                <p style="font-size: 16px; line-height: 1.5; margin-top: 20px;">Podés realizar el seguimiento de tu instalación y acceder a tu documentación en cualquier momento desde nuestro <strong>Portal de Clientes</strong> utilizando tu DNI y tu número de solicitud:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                  <a href="${process.env.NEXT_PUBLIC_PORTAL_URL || 'https://satellite-b2b-client-portal.vercel.app'}" style="background-color: #0284c7; color: white; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 6px; font-size: 16px;">Acceder al Portal de Clientes</a>
+                </div>
                 <br/>
                 <p style="font-size: 12px; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 20px;">Este es un mensaje automático del Portal B2B de MR Technology. Por favor no respondas a este correo.</p>
               </div>
