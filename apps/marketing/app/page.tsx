@@ -815,7 +815,7 @@ export default function MarketingPage() {
                   ))}
                </ul>
                 <Button 
-                  variant="outline"
+                  variant="glow"
                   onClick={() => openLeadModal("PLAN", "Plan Básico Mini", "Adquisición del plan mensual básico mini.")}
                   className="w-full"
                 >
@@ -840,7 +840,7 @@ export default function MarketingPage() {
                   ))}
                </ul>
                 <Button 
-                  variant="premium"
+                  variant="glow"
                   onClick={() => openLeadModal("PLAN", "Plan Básico Estándar V4", "Suscripción mensual Básico Estándar V4.")}
                   className="w-full text-lg"
                 >

@@ -21,9 +21,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     const variants = {
       default: "bg-cyan-600 text-white shadow-lg shadow-cyan-500/20 hover:bg-cyan-500",
-      outline: "border-2 border-slate-700 bg-transparent hover:border-cyan-500/50 hover:bg-slate-900/50 text-white",
-      secondary: "bg-slate-800 text-slate-100 hover:bg-slate-700 border border-white/5",
-      ghost: "hover:bg-slate-900/50 hover:text-cyan-400 text-slate-400",
+      outline: "border-2 border-slate-300 dark:border-slate-700 bg-transparent hover:border-cyan-500/50 hover:bg-slate-100 dark:hover:bg-slate-900/50 text-slate-900 dark:text-white",
+      secondary: "bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-white/5",
+      ghost: "hover:bg-slate-100 dark:hover:bg-slate-900/50 hover:text-cyan-600 dark:hover:text-cyan-400 text-slate-600 dark:text-slate-400",
       premium: "bg-gradient-to-r from-cyan-600 to-blue-700 text-white shadow-xl shadow-cyan-500/20 hover:from-cyan-500 hover:to-blue-600 border border-white/10",
       glow: "bg-cyan-500 text-white shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:bg-cyan-400",
     }
