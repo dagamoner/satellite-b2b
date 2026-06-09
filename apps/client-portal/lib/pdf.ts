@@ -302,18 +302,19 @@ export const generateContractPDF = async (contract: Contract, returnBase64: bool
         if (img) {
           if (photoY > 240) { doc.addPage(); photoY = 25; }
           
+          // Renderizar en 2 columnas
+          const xPos = (i % 2 === 0) ? 15 : 110;
+
           doc.setTextColor(51, 65, 85);
           doc.setFontSize(10);
           doc.setFont("helvetica", "bold");
-          doc.text(p.label, 15, photoY - 5);
+          doc.text(p.label, xPos, photoY - 5);
           
           // Mantener proporción
           const imgRatio = img.height / img.width;
           const imgWidth = 85; 
           const imgHeight = imgWidth * imgRatio;
           
-          // Renderizar en 2 columnas
-          const xPos = (i % 2 === 0) ? 15 : 110;
           doc.addImage(img, "JPEG", xPos, photoY, imgWidth, Math.min(imgHeight, 60));
           
           if (i % 2 !== 0 || i === photos.length - 1) {

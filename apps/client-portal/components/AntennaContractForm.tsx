@@ -6,6 +6,10 @@ import { updateTicketStatus } from "@/app/contrato/actions";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
+import dynamic from 'next/dynamic';
+
+const PdfEmailSender = dynamic(() => import('./PdfEmailSender'), { ssr: false });
+
 // html2pdf debe cargarse dinámicamente en el cliente
 let html2pdf: any; // Se mantiene any por simplicidad con la librería externa
 if (typeof window !== 'undefined') {
@@ -196,6 +200,7 @@ export default function AntennaContractForm({
   const [isAccepted, setIsAccepted] = useState(false);
   const [isTechAccepted, setIsTechAccepted] = useState(false);
   const reportRef = useRef<HTMLDivElement>(null);
+  const [isCompletedEmailTrigger, setIsCompletedEmailTrigger] = useState(false);
   const sigCanvas = useRef<SignatureCanvas>(null);
 
   const [isTechDigitallySigned, setIsTechDigitallySigned] = useState(false);
@@ -417,6 +422,11 @@ export default function AntennaContractForm({
       }
 
       await updateTicketStatus(ticketId, targetStatus, payload);
+      
+      if (targetStatus === "COMPLETED") {
+        setIsCompletedEmailTrigger(true);
+      }
+      
       onBack();
     } catch (err) {
       alert("Error al guardar datos técnicos");
@@ -444,7 +454,6 @@ export default function AntennaContractForm({
         ? sigCanvas.current?.getCanvas().toDataURL("image/png")
         : sigCanvas.current?.getTrimmedCanvas().toDataURL('image/png');
 
-      // 1. Finalizar Contrato en DB
       await updateTicketStatus(ticketId, "COMPLETED", {
         clientSignature: signatureData,
         installedAt: new Date(),
@@ -453,6 +462,9 @@ export default function AntennaContractForm({
         clientName: formData.clientNameSign,
         clientDni: formData.clientDniSign,
       });
+      
+      setIsCompletedEmailTrigger(true);
+
       
       // Removed PDF generation and WhatsApp redirection to avoid UI freezes.
       // The user can download the PDF from the dashboard.
@@ -490,6 +502,7 @@ export default function AntennaContractForm({
 
   return (
     <div className="main-wrapper">
+      <PdfEmailSender ticketId={ticketId} shouldSend={isCompletedEmailTrigger} />
       <style jsx>{`
         .main-wrapper { background: #0f172a; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; font-family: 'Inter', sans-serif; }
         .document-page { background: white; width: 100%; max-width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5); border-radius: 4px; position: relative; color: #1e293b; }
