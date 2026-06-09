@@ -269,28 +269,7 @@ export default function SupportDashboard() {
                       Ir a Firmar
                     </button>
                   </div>
-                ) : (currentContract?.status === 'SIGNATURE_PENDING' || currentContract?.status === 'IN_PROGRESS') ? (
-                  <div className="bg-slate-950/50 p-6 rounded-2xl border border-cyan-500/30 text-center space-y-4 shadow-lg shadow-cyan-500/5">
-                    <p className="text-[9px] font-black text-cyan-400 uppercase tracking-widest leading-relaxed">
-                      {currentContract?.status === 'SIGNATURE_PENDING' ? '✍️ Esperando tu firma para finalizar' : '🔧 Instalación en proceso / Pendiente Firma'}
-                    </p>
-                    <button
-                      onClick={() => {
-                        const params = new URLSearchParams({
-                          p_contract: currentContract.contractNumber,
-                          p_name: currentContract.clientName,
-                          p_dni: currentContract.clientDni,
-                          p_email: currentContract.clientEmail,
-                          p_phone: currentContract.clientPhone,
-                          p_plan: currentContract.planType,
-                        });
-                        router.push(`/contrato?${params.toString()}`);
-                      }}
-                      className="w-full px-6 py-3 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 font-black rounded-xl border border-cyan-500/30 text-[9px] uppercase tracking-widest transition-all shadow-inner"
-                    >
-                      Ver y Firmar Contrato
-                    </button>
-                  </div>
+
                 ) : currentContract?.status === 'APPROVED' ? (
                   <div className="bg-slate-950/50 p-6 rounded-2xl border border-blue-500/20 text-center">
                     <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest leading-relaxed">
