@@ -16,10 +16,14 @@ export async function POST(
       return NextResponse.json({ error: "No PDF data provided" }, { status: 400 });
     }
 
+    const adminEmailRaw = process.env.ADMIN_EMAIL || "administracion@mrtechnology.it.com";
+    const adminEmails = adminEmailRaw.split(',').map(e => e.trim());
+
     // 1. Enviar el email con el adjunto
     const { data, error } = await resend.emails.send({
-      from: "MR Technology <onboarding@resend.dev>", // Cambiar por dominio verificado luego
+      from: "MR Technology <no-reply@mrtechnology.it.com>",
       to: [clientEmail],
+      bcc: adminEmails,
       subject: "Certificado de Instalación Exitosa - MR Technology",
       html: `
         <div style="font-family: sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto;">
