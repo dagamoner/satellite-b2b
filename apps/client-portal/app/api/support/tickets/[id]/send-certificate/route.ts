@@ -25,6 +25,7 @@ export async function POST(
       to: [clientEmail],
       bcc: adminEmails,
       subject: "Certificado de Instalación Exitosa - MR Technology",
+      text: `¡Instalación Finalizada con Éxito!\n\nEstimado/a ${clientName},\n\nNos complace informarle que la instalación de su servicio ha sido completada y auditada correctamente.\n\nAdjunto a este correo encontrará su Certificado de Instalación y Auditoría Técnica.\n\nGracias por confiar en MR Technology.`,
       html: `
         <div style="font-family: sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #2563eb;">¡Instalación Finalizada con Éxito!</h2>

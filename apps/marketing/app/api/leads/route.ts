@@ -176,6 +176,7 @@ export async function POST(request: Request) {
             from: fromClient,
             to: email,
             subject: `Solicitud Recibida - ${contract.contractNumber}`,
+            text: `Hola ${name},\n\nHemos recibido correctamente tu solicitud de servicio para el plan/hardware: ${planName || type}.\n\nTu número de seguimiento es: ${contract.contractNumber}\n\nPodés realizar el seguimiento accediendo al Portal de Clientes.\n\nUn representante técnico se contactará a la brevedad.\n\nMR Technology`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;">
                 <div style="text-align: center; margin-bottom: 20px;">
@@ -205,6 +206,7 @@ export async function POST(request: Request) {
             from: fromSystem,
             to: adminEmails,
             subject: `Nuevo Lead B2B: ${planName || type} - ${name}`,
+            text: `¡Nuevo Lead desde la Web!\n\nCliente: ${name}\nDNI/CUIT: ${dni}\nEmpresa: ${razonSocial || nombreFantasia || "N/A"}\nTeléfono: ${phone}\nEmail: ${email}\nPlan: ${planName || type}\nLocalidad: ${finalCity}, ${province}\n\nMensaje: ${message || "Sin mensaje"}\n\nN° Contrato CRM: ${contract.contractNumber}`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #10b981; background-color: #ffffff;">
                 <h2 style="color: #047857; margin-top: 0;">¡Nuevo Lead desde la Web!</h2>
@@ -233,6 +235,7 @@ export async function POST(request: Request) {
             from: fromSystem,
             to: techEmails,
             subject: `Pre-aviso tecnico: Posible instalacion en ${finalCity}`,
+            text: `Pre-Aviso de Instalación\n\nTicket N°: ${ticket.ticketNumber}\nZona: ${finalCity}, ${province}\nDirección: ${street} ${houseNumber}\nHardware: ${antennaModel || "Por definir"}\nPlan: ${planName || type}\n\nEsperar confirmación de administración antes de despachar equipos.`,
             html: `
               <div style="font-family: Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 12px; border-top: 5px solid #0ea5e9; background-color: #ffffff;">
                 <h2 style="color: #0369a1; margin-top: 0;">Pre-Aviso de Instalación / Relevamiento</h2>
