@@ -31,7 +31,9 @@ export default function ReportesPage() {
   });
 
   const [downloadingInstall, setDownloadingInstall] = useState(false);
+  const [downloadingInstallPDF, setDownloadingInstallPDF] = useState(false);
   const [downloadingTickets, setDownloadingTickets] = useState(false);
+  const [downloadingTicketsPDF, setDownloadingTicketsPDF] = useState(false);
 
   useEffect(() => {
     const fetchMetrics = async () => {
@@ -107,6 +109,86 @@ export default function ReportesPage() {
       console.error(error);
     } finally {
       setDownloadingTickets(false);
+    }
+  };
+
+  const handleDownloadInstallationsPDF = async () => {
+    setDownloadingInstallPDF(true);
+    try {
+      const { default: jsPDF } = await import("jspdf");
+      const { default: autoTable } = await import("jspdf-autotable");
+      
+      const params = new URLSearchParams({...installFilters, format: "json"} as any);
+      const response = await fetch(`/api/reports/installations?${params.toString()}`);
+      if (response.ok) {
+        const { headers, rows } = await response.json();
+        
+        const doc = new jsPDF("landscape");
+        
+        doc.setFontSize(18);
+        doc.setTextColor(6, 182, 212); // Cyan
+        doc.text("MR Technology - Reporte Operativo", 14, 20);
+        
+        doc.setFontSize(10);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`Fecha de emision: ${new Date().toLocaleDateString()}`, 14, 28);
+        
+        autoTable(doc, {
+          startY: 35,
+          head: [headers],
+          body: rows,
+          theme: 'grid',
+          styles: { fontSize: 6, cellPadding: 2 },
+          headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] },
+          alternateRowStyles: { fillColor: [248, 250, 252] },
+        });
+        
+        doc.save(`reporte-instalaciones-${new Date().toISOString().split('T')[0]}.pdf`);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDownloadingInstallPDF(false);
+    }
+  };
+
+  const handleDownloadTicketsPDF = async () => {
+    setDownloadingTicketsPDF(true);
+    try {
+      const { default: jsPDF } = await import("jspdf");
+      const { default: autoTable } = await import("jspdf-autotable");
+      
+      const params = new URLSearchParams({...ticketFilters, format: "json"} as any);
+      const response = await fetch(`/api/reports/tickets?${params.toString()}`);
+      if (response.ok) {
+        const { headers, rows } = await response.json();
+        
+        const doc = new jsPDF("landscape");
+        
+        doc.setFontSize(18);
+        doc.setTextColor(245, 158, 11); // Amber
+        doc.text("MR Technology - Reporte de Tickets", 14, 20);
+        
+        doc.setFontSize(10);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`Fecha de emision: ${new Date().toLocaleDateString()}`, 14, 28);
+        
+        autoTable(doc, {
+          startY: 35,
+          head: [headers],
+          body: rows,
+          theme: 'grid',
+          styles: { fontSize: 6, cellPadding: 2 },
+          headStyles: { fillColor: [15, 23, 42], textColor: [255, 255, 255] },
+          alternateRowStyles: { fillColor: [255, 251, 235] },
+        });
+        
+        doc.save(`reporte-tickets-${new Date().toISOString().split('T')[0]}.pdf`);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setDownloadingTicketsPDF(false);
     }
   };
 
@@ -453,20 +535,36 @@ export default function ReportesPage() {
                 </select>
               </div>
 
-              <button 
-                onClick={handleDownloadInstallations}
-                disabled={downloadingInstall}
-                className="w-full mt-6 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black py-6 rounded-3xl transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-4 uppercase tracking-[0.4em] text-[10px]"
-              >
-                {downloadingInstall ? (
-                  <div className="w-5 h-5 border-3 border-slate-900 border-t-transparent animate-spin rounded-full" />
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    Exportar DATA.CSV
-                  </>
-                )}
-              </button>
+              <div className="flex gap-4 mt-6">
+                <button 
+                  onClick={handleDownloadInstallations}
+                  disabled={downloadingInstall || downloadingInstallPDF}
+                  className="flex-1 bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black py-4 rounded-3xl transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-[10px]"
+                >
+                  {downloadingInstall ? (
+                    <div className="w-5 h-5 border-3 border-slate-900 border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                      CSV
+                    </>
+                  )}
+                </button>
+                <button 
+                  onClick={handleDownloadInstallationsPDF}
+                  disabled={downloadingInstall || downloadingInstallPDF}
+                  className="flex-1 bg-slate-900 hover:bg-cyan-600 border border-cyan-500/30 text-cyan-500 hover:text-white font-black py-4 rounded-3xl transition-all shadow-xl active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-[10px]"
+                >
+                  {downloadingInstallPDF ? (
+                    <div className="w-5 h-5 border-3 border-cyan-500 border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 9h1.5m1.5 0H12m-3 3h3m-3 3h3" /></svg>
+                      PDF
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </Card>
 
@@ -535,20 +633,36 @@ export default function ReportesPage() {
                 </div>
               </div>
 
-              <button 
-                onClick={handleDownloadTickets}
-                disabled={downloadingTickets}
-                className="w-full mt-6 bg-slate-900 hover:bg-slate-800 text-amber-500 font-black py-6 rounded-3xl transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-4 uppercase tracking-[0.4em] text-[10px] border border-amber-500/30"
-              >
-                {downloadingTickets ? (
-                  <div className="w-5 h-5 border-3 border-amber-500 border-t-transparent animate-spin rounded-full" />
-                ) : (
-                  <>
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                    Exportar TICKETS.CSV
-                  </>
-                )}
-              </button>
+              <div className="flex gap-4 mt-6">
+                <button 
+                  onClick={handleDownloadTickets}
+                  disabled={downloadingTickets || downloadingTicketsPDF}
+                  className="flex-1 bg-slate-900 hover:bg-slate-800 text-amber-500 font-black py-4 rounded-3xl transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-[10px] border border-amber-500/30"
+                >
+                  {downloadingTickets ? (
+                    <div className="w-5 h-5 border-3 border-amber-500 border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                      CSV
+                    </>
+                  )}
+                </button>
+                <button 
+                  onClick={handleDownloadTicketsPDF}
+                  disabled={downloadingTickets || downloadingTicketsPDF}
+                  className="flex-1 bg-slate-900 hover:bg-amber-600 border border-amber-500/30 text-amber-500 hover:text-slate-900 font-black py-4 rounded-3xl transition-all shadow-2xl active:scale-95 flex items-center justify-center gap-3 uppercase tracking-widest text-[10px]"
+                >
+                  {downloadingTicketsPDF ? (
+                    <div className="w-5 h-5 border-3 border-amber-500 border-t-transparent animate-spin rounded-full" />
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 9h1.5m1.5 0H12m-3 3h3m-3 3h3" /></svg>
+                      PDF
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </Card>
         </div>

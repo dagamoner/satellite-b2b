@@ -77,6 +77,12 @@ export async function GET(req: NextRequest) {
       t.description
     ]);
 
+    const format = searchParams.get("format");
+
+    if (format === "json") {
+      return NextResponse.json({ headers, rows });
+    }
+
     const csvContent = [
       headers.join(","),
       ...rows.map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(","))
