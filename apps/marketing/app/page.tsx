@@ -997,46 +997,64 @@ export default function MarketingPage() {
 
 
       {/* Planes Section */}
-      <section id="planes" className="relative z-10 py-32 px-6 max-w-7xl mx-auto">
+      <section id="planes" className="relative z-10 pt-4 pb-32 px-6 max-w-7xl mx-auto">
 
          {/* Ideal Para Section */}
-         <div className="mt-24 border-t border-slate-300/80 dark:border-slate-800/80 pt-16 text-center max-w-5xl mx-auto">
-             <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-10 tracking-widest uppercase">Ideal Para</h3>
-             <div className="flex flex-wrap justify-center gap-6 md:gap-12">
-                 <div className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🍷</span></div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Bodegas</span>
-                 </div>
-                 <div className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🏨</span></div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Hoteles</span>
-                 </div>
-                 <div className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🏢</span></div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest">Empresariales</span>
-                 </div>
-                 <div className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">🍽️</span></div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest text-center max-w-[120px]">Polos<br/>Gastronómicos</span>
-                 </div>
-                 <div className="flex flex-col items-center group">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-600/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform"><span className="text-2xl">📡</span></div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-widest text-center max-w-[200px]">Proyectos<br/>Itinerantes Rurales</span>
-                 </div>
+         <div className="mt-0 pt-2 text-center max-w-6xl mx-auto">
+             <img src="/ideal.png" alt="Ideal Para" className="w-full max-w-2xl mx-auto h-auto object-contain mb-4 border-none bg-transparent drop-shadow-2xl" style={{ maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)' }} />
+             <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-3 md:gap-6">
+                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0 }} className="flex flex-col items-center group relative cursor-pointer">
+                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
+                    <img src="/ideal bodegas.png" alt="Bodegas" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                 </motion.div>
+                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 0.2 }} className="flex flex-col items-center group relative cursor-pointer">
+                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
+                    <img src="/ideal hoteles.png" alt="Hoteles" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                 </motion.div>
+                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4.2, ease: "easeInOut", delay: 0.4 }} className="flex flex-col items-center group relative cursor-pointer">
+                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
+                    <img src="/ideal empresariales.png" alt="Empresariales" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                 </motion.div>
+                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.8, ease: "easeInOut", delay: 0.1 }} className="flex flex-col items-center group relative cursor-pointer">
+                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
+                    <img src="/ideal gastronomia.png" alt="Polos Gastronómicos" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                 </motion.div>
+                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.5 }} className="flex flex-col items-center group relative cursor-pointer">
+                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
+                    <img src="/ideal rurales.png" alt="Proyectos Rurales" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                 </motion.div>
              </div>
          </div>
-
+ 
          <div className="mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 dark:opacity-20 mix-blend-overlay" />
             <div className="relative z-10 flex-1 drop-shadow-md">
-               <h3 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-4">Planes Empresariales</h3>
-               <p className="text-slate-800 dark:text-slate-200 max-w-4xl leading-relaxed text-lg font-light">Para proyectos a gran escala y corporaciones pesadas. Requerimos efectuar un relevamiento inicial exhaustivo para diseñar el mapa topológico que decanta exactamente en las directrices y cantidad de GB que demanda su exclusividad.</p>
+               <h3 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] uppercase tracking-[0.1em] mb-4" style={{ fontFamily: "'Orbitron', 'Syncopate', sans-serif" }}>Proyectos Empresariales a Medida</h3>
+               <div className="text-slate-800 dark:text-slate-200 max-w-4xl leading-relaxed text-lg font-light space-y-4">
+                  <p>Diseñado para organizaciones de gran escala y entornos corporativos de alta complejidad.</p>
+                  <p>Para este tipo de implementaciones, realizamos un relevamiento inicial exhaustivo que nos permite comprender en profundidad la estructura, los procesos y los requerimientos específicos de cada empresa. A partir de este análisis, diseñamos un mapa topológico personalizado que define con precisión la arquitectura necesaria, optimizando recursos, rendimiento y escalabilidad.</p>
+                  <p>De esta manera, determinamos exactamente la infraestructura, capacidad de almacenamiento (GB) y recursos tecnológicos que demanda cada proyecto, garantizando una solución exclusiva, alineada con los objetivos estratégicos y operativos de la organización.</p>
+               </div>
             </div>
-            <div className="relative z-10 shrink-0 w-full md:w-auto">
+            <div className="relative z-10 shrink-0 w-full md:w-auto flex flex-col items-center gap-5 mt-8 md:mt-0">
+               {/* Isologotipo Futurista MR Tech */}
+               <div className="flex flex-col items-center group cursor-default">
+                  <div className="relative w-24 h-24 flex items-center justify-center mb-2">
+                     <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full animate-pulse" />
+                     {/* Anillos Futuristas */}
+                     <div className="absolute inset-0 border-[0.5px] border-cyan-500/40 rounded-full animate-[spin_8s_linear_infinite]" style={{ borderTopColor: 'transparent', borderLeftColor: 'transparent' }} />
+                     <div className="absolute inset-2 border-[0.5px] border-blue-500/40 rounded-full animate-[spin_12s_linear_infinite_reverse]" style={{ borderBottomColor: 'transparent', borderRightColor: 'transparent' }} />
+                     
+                     <img src="/Logo_new.png" alt="MR Tech" className="w-14 h-14 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)] group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <span className="text-xs uppercase tracking-[0.3em] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">MR Tech</span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-slate-400 mt-1 font-bold">Enterprise Solutions</span>
+               </div>
+
                <Button 
                  size="lg" 
-                 onClick={() => openLeadModal("QUOTE", "Relevamiento IT - Planes Empresariales", "Solicitud de relevamiento técnico exhaustivo y cotización a medida para corporaciones.")}
-                 className="w-full md:w-auto px-10 py-8 text-lg font-black rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.5)] bg-blue-600 hover:bg-blue-500 transition-transform hover:scale-105 border border-blue-400"
+                 onClick={() => openLeadModal("QUOTE", "Relevamiento IT - Proyectos Empresariales", "Solicitud de relevamiento técnico exhaustivo y cotización a medida para corporaciones por parte de MR Tech.")}
+                 className="w-full md:w-auto px-10 py-7 text-lg font-black rounded-2xl shadow-[0_0_30px_rgba(37,99,235,0.5)] bg-gradient-to-r from-blue-700 to-blue-500 hover:from-blue-600 hover:to-cyan-500 transition-all duration-300 hover:scale-105 border border-blue-400 hover:shadow-[0_0_40px_rgba(6,182,212,0.6)]"
                >
                  Solicitar Relevamiento IT
                </Button>
