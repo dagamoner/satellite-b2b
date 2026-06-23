@@ -1037,19 +1037,6 @@ export default function MarketingPage() {
                </div>
             </div>
             <div className="relative z-10 shrink-0 w-full md:w-auto flex flex-col items-center gap-5 mt-8 md:mt-0">
-               {/* Isologotipo Futurista MR Tech */}
-               <div className="flex flex-col items-center group cursor-default">
-                  <div className="relative w-24 h-24 flex items-center justify-center mb-2">
-                     <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full animate-pulse" />
-                     {/* Anillos Futuristas */}
-                     <div className="absolute inset-0 border-[0.5px] border-cyan-500/40 rounded-full animate-[spin_8s_linear_infinite]" style={{ borderTopColor: 'transparent', borderLeftColor: 'transparent' }} />
-                     <div className="absolute inset-2 border-[0.5px] border-blue-500/40 rounded-full animate-[spin_12s_linear_infinite_reverse]" style={{ borderBottomColor: 'transparent', borderRightColor: 'transparent' }} />
-                     
-                     <img src="/Logo_new.png" alt="MR Tech" className="w-14 h-14 object-contain relative z-10 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)] group-hover:scale-110 transition-transform duration-500" />
-                  </div>
-                  <span className="text-xs uppercase tracking-[0.3em] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 drop-shadow-[0_0_10px_rgba(59,130,246,0.6)]">MR Tech</span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-slate-400 mt-1 font-bold">Enterprise Solutions</span>
-               </div>
 
                <Button 
                  size="lg" 
