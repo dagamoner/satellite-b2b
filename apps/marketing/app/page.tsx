@@ -8,6 +8,7 @@ import CoverageSearch from "../components/CoverageSearch";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
+import ContactForm from "./components/ContactForm";
 
 const SpaceBackground = () => {
   useEffect(() => {
@@ -231,8 +232,9 @@ export default function MarketingPage() {
                     className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
                     style={{ 
                       mixBlendMode: 'screen',
-                      WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%)', 
-                      maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%)' 
+                      filter: 'brightness(1.1) contrast(1.1)',
+                      WebkitMaskImage: 'radial-gradient(ellipse 75% 75% at 50% 48%, black 55%, transparent 100%)', 
+                      maskImage: 'radial-gradient(ellipse 75% 75% at 50% 48%, black 55%, transparent 100%)' 
                     }}
                  />
              </div>
@@ -300,13 +302,14 @@ export default function MarketingPage() {
               <motion.img 
                  src="/Logo WEB MR Tech.png" 
                  alt="MR Technology" 
-                 animate={{ scale: [1, 1.025, 1], filter: ["brightness(1)", "brightness(1.15)", "brightness(1)"] }}
+                 animate={{ scale: [1, 1.025, 1], filter: ["brightness(1.1) contrast(1.1)", "brightness(1.25) contrast(1.15)", "brightness(1.1) contrast(1.1)"] }}
                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                  className="object-contain transition-all duration-700 relative z-10 w-[320px] md:w-[420px]"
                  style={{ 
                    mixBlendMode: 'screen',
-                   WebkitMaskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 100%)', 
-                   maskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 100%)' 
+                   filter: 'brightness(1.1) contrast(1.1)',
+                   WebkitMaskImage: 'radial-gradient(ellipse 80% 78% at 50% 48%, black 48%, transparent 100%)', 
+                   maskImage: 'radial-gradient(ellipse 80% 78% at 50% 48%, black 48%, transparent 100%)' 
                  }}
               />
           </div>
@@ -1142,6 +1145,9 @@ export default function MarketingPage() {
                </div>
             </div>
 
+
+            {/* Formulario de Contacto */}
+            <ContactForm />
             <motion.div 
               initial="hidden"
               whileInView="visible"
