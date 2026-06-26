@@ -331,7 +331,7 @@ export default function MarketingPage() {
             className="text-center text-white text-xs md:text-base font-bold tracking-[0.2em] mb-10 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
             style={{ fontFamily: "'Orbitron', monospace" }}
           >
-            A disposición todas nuestras <span className="text-[#00a2b8]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#00a2b8]">EMPRESA</span> con <span className="text-[#00a2b8]">ESTRATEGIA</span>, <span className="text-[#00a2b8]">INNOVACIÓN</span> y <span className="text-[#00a2b8]">COMPROMISO</span>. Porque tu <span className="text-[#00a2b8]">DESAFÍO</span> es el motor de nuestro <span className="text-[#00a2b8]">TRABAJO</span>.
+            A disposición todas nuestras <span className="text-[#00ffd0]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#00ffd0]">EMPRESA</span> con <span className="text-[#00ffd0]">ESTRATEGIA</span>, <span className="text-[#00ffd0]">INNOVACIÓN</span> y <span className="text-[#00ffd0]">COMPROMISO</span>. Porque tu <span className="text-[#00ffd0]">DESAFÍO</span> es el motor de nuestro <span className="text-[#00ffd0]">TRABAJO</span>.
           </motion.p>
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
