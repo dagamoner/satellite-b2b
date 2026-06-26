@@ -173,6 +173,7 @@ export default function MarketingPage() {
   const [mounted, setMounted] = useState(false);
   const [logoGlow, setLogoGlow] = useState<string | null>(null);
   const [hoveredAntenna, setHoveredAntenna] = useState<string | null>(null);
+  const [selectedEcosistema, setSelectedEcosistema] = useState<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -217,103 +218,209 @@ export default function MarketingPage() {
       <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? "bg-white/80 dark:bg-[#020617]/85 backdrop-blur-2xl border-b border-black/10 dark:border-white/10 shadow-2xl py-1" : "bg-transparent py-3 md:py-6"}`}>
-        <div className={`max-w-7xl mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between ${scrolled ? "h-20 md:h-28" : "h-24 md:h-52"}`}>
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-6 group cursor-pointer mt-2 md:mt-0"
-          >
-             <div className="relative shrink-0">
-                <motion.div 
-                  className="absolute -inset-2.5 rounded-xl blur-2xl pointer-events-none"
-                  animate={{
-                    opacity: logoGlow ? 0.95 : 0,
-                    backgroundColor: 
-                      logoGlow === 'antenas' ? '#3b82f6' :
-                      logoGlow === 'planes' ? '#14b8a6' :
-                      logoGlow === 'consultoria' ? '#a855f7' :
-                      logoGlow === 'portal-clientes' ? '#3b82f6' :
-                      logoGlow === 'portal-admin' ? '#6366f1' :
-                      'rgba(59,130,246,0)',
-                    boxShadow: 
-                      logoGlow === 'antenas' ? '0 0 40px rgba(59,130,246,0.95)' :
-                      logoGlow === 'planes' ? '0 0 40px rgba(20,184,166,0.95)' :
-                      logoGlow === 'consultoria' ? '0 0 40px rgba(168,85,247,0.95)' :
-                      logoGlow === 'portal-clientes' ? '0 0 40px rgba(59,130,246,0.95)' :
-                      logoGlow === 'portal-admin' ? '0 0 40px rgba(99,102,241,0.95)' :
-                      'none'
-                  }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                />
-               <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-xl blur-2xl opacity-0 group-hover:opacity-95 transition-all duration-500 pointer-events-none" />
-               <img src="/Logo_new.png" alt="MR Technology" className={`rounded-xl border-2 border-slate-700 relative z-10 shadow-lg object-contain transition-all duration-500 ${scrolled ? "w-16 h-16 md:w-24 md:h-24" : "w-20 h-20 md:w-[180px] md:h-[180px]"}`} />
-             </div>
-             <div className="flex flex-col gap-2">
-               <div className={`flex gap-4 text-slate-400 transition-opacity duration-500 ${scrolled ? "opacity-0 h-0 overflow-hidden" : "opacity-100"}`}>
-                 {/* LinkedIn */}
-                 <a 
-                    href="https://www.linkedin.com/in/mrtech2026" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative w-14 h-14 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_25px_rgba(1,137,221,0.9)] hover:scale-115 active:scale-95 group/social shrink-0 overflow-hidden"
-                  >
-                    {/* Breathing outer glow */}
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
-                    
-                    {/* Glossy sheen reflection */}
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/social:translate-x-[120%]" />
-
-                    <img 
-                      src="/social_linkedin_v3.png" 
-                      alt="LinkedIn" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/social:scale-110" 
-                    />
-                  </a>
-                 {/* Instagram */}
-                 <a 
-                    href="https://www.instagram.com/mrtechnologymza/?hl=es" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative w-14 h-14 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_25px_rgba(214,49,185,0.9)] hover:scale-115 active:scale-95 group/social shrink-0 overflow-hidden"
-                  >
-                    {/* Breathing outer glow */}
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
-                    
-                    {/* Glossy sheen reflection */}
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/social:translate-x-[120%]" />
-
-                    <img 
-                      src="/social_instagram_fixed_v1.png" 
-                      alt="Instagram" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/social:scale-110" 
-                    />
-                  </a>
-                 {/* WhatsApp */}
-                 <a 
-                    href="https://wa.me/5492616518318" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative w-14 h-14 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_25px_rgba(1,193,100,0.9)] hover:scale-115 active:scale-95 group/social shrink-0 overflow-hidden"
-                  >
-                    {/* Breathing outer glow */}
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
-                    
-                    {/* Glossy sheen reflection */}
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/social:translate-x-[120%]" />
-
-                    <img 
-                      src="/social_whatsapp_fixed_v1.png" 
-                      alt="WhatsApp" 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover/social:scale-110" 
-                    />
-                  </a>
-               </div>
-             </div>
-          </motion.div>
+      {/* Navigation (Sticky Header) */}
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
+        <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
           
-          <div className="hidden lg:flex items-center gap-4 xl:gap-8">
+          {/* Left Block - Small Logo */}
+          <div className="flex-1 flex items-center justify-start hidden md:flex">
+             <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                 <img 
+                    src="/Logo WEB MR Tech.png" 
+                    alt="MR Technology" 
+                    className="w-24 md:w-32 object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.6)] hover:scale-105 transition-transform duration-300"
+                    style={{ mixBlendMode: 'screen' }}
+                 />
+             </div>
+          </div>
+          
+          {/* Center Block - Legend Image & Hablamos Button */}
+          <div className="flex-1 md:flex-none flex flex-row items-center justify-center gap-4 relative shrink-0">
+             <img 
+               src="/Transformacion.png" 
+               alt="Transformación Digital Empresarial" 
+               className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+               style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
+             />
+             <a 
+               href="#hablamos"
+               className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
+             >
+               {/* Hover Glow halo */}
+               <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
+               <img 
+                 src="/Hablamos.png" 
+                 alt="Hablamos" 
+                 className="h-16 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.7)]"
+                 style={{ 
+                   mixBlendMode: 'screen',
+                   WebkitMaskImage: 'radial-gradient(circle 48% at 50% 50%, black 85%, transparent 100%)', 
+                   maskImage: 'radial-gradient(circle 48% at 50% 50%, black 85%, transparent 100%)' 
+                 }}
+               />
+             </a>
+          </div>
+
+          {/* Right Block - Theme Toggle */}
+          <div className="flex-1 flex justify-end items-center hidden md:flex">
+             <div className="pl-4">
+               <ThemeToggle />
+             </div>
+          </div>
+        </div>
+      </nav>
+
+      <LeadFormModal 
+         isOpen={isLeadModalOpen} 
+         onClose={() => setIsLeadModalOpen(false)} 
+         planInfo={selectedPlan} 
+      />
+
+      {/* Hero Section */}
+      <section className="relative z-10 pt-16 pb-24 md:pt-20 md:pb-32 px-6 flex flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full flex flex-col items-center"
+        >
+          
+          {/* Main Logo */}
+          <div className="relative shrink-0 flex items-center justify-center group/logo cursor-pointer mb-6">
+              <div className="absolute inset-0 rounded-full bg-[#005f6a] blur-[50px] opacity-0 group-hover/logo:opacity-80 transition-all duration-700 pointer-events-none mix-blend-screen scale-[1.1] group-hover/logo:scale-[1.4]" />
+              
+              <motion.div className="absolute top-6 right-12 w-4 h-4 text-cyan-200 z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 180, 360], scale: [0.5, 1.4, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_12px_rgba(165,243,252,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+              
+              <motion.div className="absolute bottom-8 left-12 w-5 h-5 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [360, 180, 0], scale: [0.6, 1.5, 0.6], opacity: [0.2, 1, 0.2] }} transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_15px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+
+              <motion.img 
+                 src="/Logo WEB MR Tech.png" 
+                 alt="MR Technology" 
+                 animate={{ scale: [1, 1.025, 1], filter: ["brightness(1)", "brightness(1.15)", "brightness(1)"] }}
+                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                 className="object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] group-hover/logo:drop-shadow-[0_0_40px_rgba(0,95,106,0.8)] transition-all duration-700 relative z-10 w-[320px] md:w-[420px]"
+                 style={{ mixBlendMode: 'screen' }}
+              />
+          </div>
+
+          {/* Legend - Leyenda ecosistema blended into the page */}
+          <div className="relative mb-12 flex justify-center w-full">
+             <img
+               src="/Leyenda ecosistema.png"
+               alt="Ecosistema by MR Tech"
+               className="h-14 md:h-[4.5rem] w-auto object-contain relative z-10 pointer-events-none select-none"
+               style={{
+                 mixBlendMode: 'screen',
+                 WebkitMaskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
+                 maskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
+               }}
+             />
+             {/* Sparkle constellation around the legend - white & teal */}
+             <motion.div className="absolute -top-5 right-[30%] w-5 h-5 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 180, 360], scale: [0.4, 1.6, 0.4], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_18px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+             <motion.div className="absolute -top-3 left-[28%] w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [180, 360, 540], scale: [0.5, 1.5, 0.5], opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 3.1, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_14px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+             <motion.div className="absolute -bottom-3 right-[25%] w-6 h-6 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 90, 180], scale: [0.5, 1.8, 0.5], opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.7, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_22px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+             <motion.div className="absolute -bottom-4 left-[22%] w-3 h-3 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [360, 180, 0], scale: [0.5, 1.4, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_12px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+             <motion.div className="absolute top-1 -left-4 w-3 h-3 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [90, 270, 450], scale: [0.4, 1.2, 0.4], opacity: [0.2, 0.8, 0.2] }} transition={{ duration: 2.0, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+             <motion.div className="absolute top-1 -right-4 w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 120, 240], scale: [0.5, 1.6, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.9, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_16px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
+          </div>
+          {/* Subtitle below Ecosistema legend */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.3 }}
+            className="text-center text-white text-xs md:text-base font-bold tracking-[0.2em] mb-10 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
+            style={{ fontFamily: "'Orbitron', monospace" }}
+          >
+            A disposición todas nuestras <span className="text-[#00a2b8]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#00a2b8]">EMPRESA</span> con <span className="text-[#00a2b8]">ESTRATEGIA</span>, <span className="text-[#00a2b8]">INNOVACIÓN</span> y <span className="text-[#00a2b8]">COMPROMISO</span>. Porque tu <span className="text-[#00a2b8]">DESAFÍO</span> es el motor de nuestro <span className="text-[#00a2b8]">TRABAJO</span>.
+          </motion.p>
+          {/* Click-outside wrapper: clicking the background area deselects */}
+          <div
+            className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative"
+            onClick={() => setSelectedEcosistema(null)}
+          >
+            {[
+              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", label: "TECNOLOGÍA\nINFORMÁTICA (IT)" },
+              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", label: "SOFTWARE ERP /\nSAAS EMPRESARIAL" },
+              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "CONECTIVIDAD\nSATELITAL" },
+              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", label: "INTELIGENCIA\nARTIFICIAL" },
+              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", label: "CIBER\nSEGURIDAD" }
+            ].map((logo, i) => {
+              const isSelected = selectedEcosistema === i;
+              const isOther = selectedEcosistema !== null && !isSelected;
+              return (
+                <motion.div
+                  key={i}
+                  animate={{
+                    y: [0, -10, 0],
+                    opacity: isOther ? 0 : 1,
+                    scale: isSelected ? 1.5 : 1,
+                    zIndex: isSelected ? 30 : 10,
+                  }}
+                  transition={{
+                    y: { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
+                    opacity: { duration: 0.4, ease: "easeInOut" },
+                    scale: { duration: 0.45, ease: "easeOut" },
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedEcosistema(isSelected ? null : i);
+                  }}
+                  className="flex flex-col items-center justify-center cursor-pointer relative"
+                  style={{ pointerEvents: isOther ? 'none' : 'auto' }}
+                >
+                  {/* Glow halo behind the logo when selected */}
+                  {isSelected && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 z-0 pointer-events-none"
+                      style={{
+                        background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0,162,184,0.45) 0%, rgba(0,162,184,0.15) 50%, transparent 80%)',
+                        filter: 'blur(18px)',
+                        transform: 'scale(1.6)',
+                      }}
+                    />
+                  )}
+                  <img
+                    src={`/${logo.src}`}
+                    alt={logo.alt}
+                    className="w-32 h-32 md:w-48 md:h-48 object-contain relative z-10"
+                    style={{
+                      mixBlendMode: 'screen',
+                      filter: isSelected
+                        ? 'drop-shadow(0 0 50px rgba(0,162,184,1)) brightness(1.2)'
+                        : 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
+                      WebkitMaskImage: isSelected
+                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
+                        : 'none',
+                      maskImage: isSelected
+                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
+                        : 'none',
+                    }}
+                  />
+                  {/* Logo label */}
+                  <div className="relative z-10 mt-2 text-center pointer-events-none">
+                    {logo.label.split('\n').map((line, li) => (
+                      <div
+                        key={li}
+                        className={`text-[0.55rem] md:text-[0.65rem] font-bold tracking-[0.2em] uppercase transition-all duration-500 ${
+                          li === 0 ? 'text-[#00a2b8]' : 'text-white/70'
+                        }`}
+                        style={{ fontFamily: "'Orbitron', monospace", textShadow: isSelected ? '0 0 10px rgba(0,162,184,0.8)' : 'none' }}
+                      >
+                        {line}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Centered Navigation Links & Portals */}
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mb-24 px-4 w-full max-w-6xl">
+            {/* Nav Links */}
             {["antenas", "planes", "consultoria"].map((id, index) => (
               <motion.a 
                 key={id}
@@ -327,120 +434,49 @@ export default function MarketingPage() {
                   y: 1,
                   filter: `drop-shadow(0 0 15px ${id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7'}) brightness(1.2)`
                 }}
-                onMouseEnter={() => setLogoGlow(id)}
-                onMouseLeave={() => setLogoGlow(null)}
-                onClick={() => setLogoGlow(id)}
-                className="group flex flex-col items-center gap-1 cursor-pointer"
+                className="group flex flex-col items-center gap-3 cursor-pointer"
               >
                 <div className="relative">
-                  <motion.div 
-                    className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                    style={{
-                      backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7',
-                      boxShadow: id === 'antenas' ? '0 0 30px rgba(59,130,246,0.85)' : id === 'planes' ? '0 0 30px rgba(20,184,166,0.85)' : '0 0 30px rgba(168,85,247,0.85)',
-                    }}
-                    animate={{
-                      opacity: logoGlow === id ? 0.85 : 0,
-                    }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className={`w-auto object-contain relative z-10 transition-all duration-500 ${scrolled ? "h-14" : "h-24 md:h-28"}`} />
+                  <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300" style={{ backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7' }} />
+                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className="w-auto h-24 md:h-28 object-contain relative z-10 transition-all duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)]" />
                 </div>
-                <span className={`text-[13px] font-black uppercase tracking-widest transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"} ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'}`}>
+                <span className={`text-sm md:text-base font-black uppercase tracking-widest ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'} drop-shadow-md`}>
                   {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
                 </span>
               </motion.a>
             ))}
+
+            <div className="w-px h-24 bg-white/10 hidden md:block mx-4" /> {/* Separator */}
+
+            {/* Portal Clientes */}
+            <motion.a 
+                href="https://clientes.mrtechnology.it.com" 
+                className="group flex flex-col items-center gap-3 cursor-pointer"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.94, y: 1, filter: "drop-shadow(0 0 15px #3b82f6) brightness(1.2)" }}
+            >
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300 bg-blue-500" />
+                  <img src="/card_portal.png" alt="Portal" className="w-auto h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
+                </div>
+                <span className="text-sm md:text-base font-black uppercase tracking-widest text-blue-400 drop-shadow-md">Portal Clientes</span>
+            </motion.a>
+
+            {/* Portal Admin */}
+            <motion.a 
+                href="https://admin.mrtechnology.it.com" 
+                className="group flex flex-col items-center gap-3 cursor-pointer"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.94, y: 1, filter: "drop-shadow(0 0 15px #6366f1) brightness(1.2)" }}
+            >
+                <div className="relative">
+                  <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300 bg-indigo-500" />
+                  <img src="/card_noc.png" alt="Soporte" className="w-auto h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
+                </div>
+                <span className="text-sm md:text-base font-black uppercase tracking-widest text-indigo-400 drop-shadow-md">Portal Admin</span>
+            </motion.a>
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex gap-4 items-center"
-          >
-             <motion.a 
-                href={"https://clientes.mrtechnology.it.com"} 
-                className="group"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ 
-                  scale: 0.94,
-                  y: 1,
-                  filter: "drop-shadow(0 0 15px #3b82f6) brightness(1.2)"
-                }}
-                onMouseEnter={() => setLogoGlow('portal-clientes')}
-                onMouseLeave={() => setLogoGlow(null)}
-                onClick={() => setLogoGlow('portal-clientes')}
-             >
-                <div className="flex flex-col items-center gap-1">
-                   <div className="relative">
-                     <motion.div 
-                       className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                       style={{
-                         backgroundColor: '#3b82f6',
-                         boxShadow: '0 0 30px rgba(59,130,246,0.85)',
-                       }}
-                       animate={{
-                         opacity: logoGlow === 'portal-clientes' ? 0.85 : 0,
-                       }}
-                       transition={{ duration: 0.3 }}
-                     />
-                     <img src="/card_portal.png" alt="Portal" className={`w-auto object-contain relative z-10 drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
-                   </div>
-                   <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-blue-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Clientes</span>
-                </div>
-             </motion.a>
-             <motion.a 
-                href={"https://admin.mrtechnology.it.com"} 
-                className="group hidden sm:block"
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ 
-                  scale: 0.94,
-                  y: 1,
-                  filter: "drop-shadow(0 0 15px #6366f1) brightness(1.2)"
-                }}
-                onMouseEnter={() => setLogoGlow('portal-admin')}
-                onMouseLeave={() => setLogoGlow(null)}
-                onClick={() => setLogoGlow('portal-admin')}
-             >
-                <div className="flex flex-col items-center gap-1">
-                   <div className="relative">
-                     <motion.div 
-                       className="absolute inset-0 rounded-full blur-2xl pointer-events-none"
-                       style={{
-                         backgroundColor: '#6366f1',
-                         boxShadow: '0 0 30px rgba(99,102,241,0.85)',
-                       }}
-                       animate={{
-                         opacity: logoGlow === 'portal-admin' ? 0.85 : 0,
-                       }}
-                       transition={{ duration: 0.3 }}
-                     />
-                     <img src="/card_noc.png" alt="Soporte" className={`w-auto object-contain relative z-10 drop-shadow-xl transition-all duration-500 ${scrolled ? "h-10 md:h-12" : "h-12 md:h-24"}`} />
-                   </div>
-                   <span className={`text-[11px] md:text-[13px] font-black uppercase tracking-widest text-indigo-400 transition-all duration-500 ${scrolled ? "opacity-0 h-0" : "opacity-100"}`}>Portal Admin</span>
-                </div>
-             </motion.a>
-             <div className="ml-2 border-l border-black/20 dark:border-white/20 pl-4">
-               <ThemeToggle />
-             </div>
-          </motion.div>
-        </div>
-      </nav>
-
-      <LeadFormModal 
-         isOpen={isLeadModalOpen} 
-         onClose={() => setIsLeadModalOpen(false)} 
-         planInfo={selectedPlan} 
-      />
-
-      {/* Hero Section */}
-      <section className="relative z-10 pt-56 pb-24 md:pt-64 md:pb-32 px-6 flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full flex flex-col items-center"
-        >
           <h1 className="text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white drop-shadow-lg">
             Conectividad sin fronteras con Starlink para tu empresa
           </h1>
@@ -1050,12 +1086,52 @@ export default function MarketingPage() {
       </section>
 
       {/* IT Consulting Services */}
-      <section id="consultoria" className="relative z-10 py-32 bg-white/50 dark:bg-[#020617]/50 backdrop-blur-xl border-t border-slate-300 dark:border-slate-800 px-6">
+      <section id="consultoria" className="relative z-10 py-32 bg-white/50 dark:bg-[#020617]/50 backdrop-blur-xl border-t border-slate-300 dark:border-slate-800 px-6 scroll-mt-20">
+         <div id="hablamos" className="absolute -top-20" />
          <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-20 drop-shadow-lg">
                <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">El Diferencial MR</h2>
                <h3 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">Consultoría y Actividades IT Hard & Soft</h3>
-               <p className="text-slate-800 dark:text-slate-200 max-w-2xl mx-auto text-xl font-light">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
+               <p className="text-slate-800 dark:text-slate-200 max-w-2xl mx-auto text-xl font-light mb-10">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
+
+               <div className="flex flex-col items-center gap-6 mt-12 mb-8">
+                 <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
+                 <div className="flex gap-6 justify-center">
+                   {/* LinkedIn */}
+                   <a 
+                      href="https://www.linkedin.com/in/mrtech2026" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group shrink-0 overflow-hidden"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+                      <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </a>
+                   {/* Instagram */}
+                   <a 
+                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group shrink-0 overflow-hidden"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+                      <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </a>
+                   {/* WhatsApp */}
+                   <a 
+                      href="https://wa.me/5492616518318" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group shrink-0 overflow-hidden"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover:translate-x-[120%]" />
+                      <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    </a>
+                 </div>
+               </div>
             </div>
 
             <motion.div 
