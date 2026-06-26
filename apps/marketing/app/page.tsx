@@ -228,8 +228,12 @@ export default function MarketingPage() {
                  <img 
                     src="/Logo WEB MR Tech.png" 
                     alt="MR Technology" 
-                    className="w-24 md:w-32 object-contain drop-shadow-[0_5px_10px_rgba(0,0,0,0.6)] hover:scale-105 transition-transform duration-300"
-                    style={{ mixBlendMode: 'screen' }}
+                    className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
+                    style={{ 
+                      mixBlendMode: 'screen',
+                      WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%)', 
+                      maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 60%, transparent 100%)' 
+                    }}
                  />
              </div>
           </div>
@@ -251,11 +255,11 @@ export default function MarketingPage() {
                <img 
                  src="/Hablamos.png" 
                  alt="Hablamos" 
-                 className="h-16 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(6,182,212,0.7)]"
+                 className="h-16 md:h-24 w-auto object-contain"
                  style={{ 
                    mixBlendMode: 'screen',
-                   WebkitMaskImage: 'radial-gradient(circle 48% at 50% 50%, black 85%, transparent 100%)', 
-                   maskImage: 'radial-gradient(circle 48% at 50% 50%, black 85%, transparent 100%)' 
+                   WebkitMaskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)', 
+                   maskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)' 
                  }}
                />
              </a>
@@ -298,8 +302,12 @@ export default function MarketingPage() {
                  alt="MR Technology" 
                  animate={{ scale: [1, 1.025, 1], filter: ["brightness(1)", "brightness(1.15)", "brightness(1)"] }}
                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                 className="object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] group-hover/logo:drop-shadow-[0_0_40px_rgba(0,95,106,0.8)] transition-all duration-700 relative z-10 w-[320px] md:w-[420px]"
-                 style={{ mixBlendMode: 'screen' }}
+                 className="object-contain transition-all duration-700 relative z-10 w-[320px] md:w-[420px]"
+                 style={{ 
+                   mixBlendMode: 'screen',
+                   WebkitMaskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 100%)', 
+                   maskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 50%, transparent 100%)' 
+                 }}
               />
           </div>
 
