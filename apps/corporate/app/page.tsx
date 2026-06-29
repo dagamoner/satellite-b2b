@@ -623,6 +623,18 @@ export default function MarketingPage() {
                   }}
                   onMouseEnter={() => setSelectedEcosistema(i)}
                   onMouseLeave={() => setSelectedEcosistema(null)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // En desktop, abrir en nueva pestaña
+                    window.open(logo.url, '_blank');
+                  }}
+                  onTouchEnd={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // En mobile, forzar la redirección en la misma pestaña para evitar bloqueos
+                    window.location.href = logo.url;
+                  }}
                   className="flex flex-col items-center justify-center cursor-pointer relative"
                   style={{ pointerEvents: 'auto', textDecoration: 'none' }}
                 >
