@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import LeadFormModal from "../components/LeadFormModal";
 import CoverageSearch from "../components/CoverageSearch";
-import { ThemeToggle } from "../components/ThemeToggle";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
 const SpaceBackground = () => {
@@ -510,9 +509,6 @@ export default function MarketingPage() {
                  }}
                />
              </a>
-             <div className="pl-4">
-               <ThemeToggle />
-             </div>
           </div>
         </div>
       </nav>
