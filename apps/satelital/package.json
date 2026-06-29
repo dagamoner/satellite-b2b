@@ -15,6 +15,7 @@
     "@repo/database": "*",
     "@repo/ui": "*",
     "@repo/validation": "*",
+    "@supabase/supabase-js": "^2.108.2",
     "browser-image-compression": "^2.0.2",
     "jspdf": "^4.2.1",
     "lucide-react": "^1.17.0",
