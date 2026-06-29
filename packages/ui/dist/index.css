@@ -200,6 +200,13 @@
     --glass-bg: rgba(15, 23, 42, 0.65);
     --glass-border: rgba(255, 255, 255, 0.1);
   }
+  select, select option {
+    background-color: #020617;
+    color: #f8fafc;
+  }
+  select:focus {
+    outline: 2px solid rgba(6, 182, 212, 0.5);
+  }
   ::-webkit-scrollbar {
     width: 6px;
   }
