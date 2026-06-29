@@ -605,8 +605,11 @@ export default function MarketingPage() {
               const isSelected = selectedEcosistema === i;
               const isOther = selectedEcosistema !== null && !isSelected;
               return (
-                <motion.div
+                <motion.a
                   key={i}
+                  href={logo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   animate={{
                     y: [0, -10, 0],
                     opacity: isOther ? 0.3 : 1, // Don't hide completely, just dim
@@ -620,12 +623,8 @@ export default function MarketingPage() {
                   }}
                   onMouseEnter={() => setSelectedEcosistema(i)}
                   onMouseLeave={() => setSelectedEcosistema(null)}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.open(logo.url, '_blank'); // Open subdomain on click
-                  }}
                   className="flex flex-col items-center justify-center cursor-pointer relative"
-                  style={{ pointerEvents: 'auto' }}
+                  style={{ pointerEvents: 'auto', textDecoration: 'none' }}
                 >
                   {/* Glow halo behind the logo when selected */}
                   {isSelected && (
@@ -678,7 +677,7 @@ export default function MarketingPage() {
                       <div className="text-[#33E8FF] mt-2 font-black animate-pulse text-center w-full block">Clic para ingresar</div>
                     </motion.div>
                   )}
-                </motion.div>
+                </motion.a>
               );
             })}
           </div>
