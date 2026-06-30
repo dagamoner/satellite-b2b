@@ -540,13 +540,9 @@ export default function MarketingPage() {
                  }}
                />
              </a>
-<<<<<<< HEAD:apps/satelital/app/page.tsx
-=======
-
              <div className="pl-2 border-l border-white/20">
                <ThemeToggle />
              </div>
->>>>>>> 802962b (feat(marketing): refine layout aesthetics, optimize Ecosistema UI, and remove deprecated IT Consulting section):apps/marketing/app/page.tsx
           </div>
         </div>
       </nav>
