@@ -235,7 +235,7 @@ export default function MarketingPage() {
   useEffect(() => {
     if (selectedEcosistema === 0) {
       const timer = setTimeout(() => {
-        window.location.href = "#conectividad-sin-fronteras";
+        window.location.href = "https://satelital.mrtechnology.it.com";
         setSelectedEcosistema(null);
       }, 7000);
       return () => clearTimeout(timer);
