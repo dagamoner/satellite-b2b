@@ -942,7 +942,7 @@ export default function MarketingPage() {
                       { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial" },
                       { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial" },
                       { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad" }
-                    ][selectedEcosistema].src}`} 
+                    ][selectedEcosistema ?? 0].src}`} 
                     alt="Ecosystem Logo"
                     className="w-[280px] h-[280px] md:w-[500px] md:h-[500px] object-contain relative z-10"
                     style={{
