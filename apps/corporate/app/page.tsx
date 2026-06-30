@@ -1,10 +1,6 @@
 "use client";
-import { Button } from "@repo/ui/button";
-import { Card } from "@repo/ui/card";
-import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
 import LeadFormModal from "../components/LeadFormModal";
-import CoverageSearch from "../components/CoverageSearch";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
 const SpaceBackground = () => {
