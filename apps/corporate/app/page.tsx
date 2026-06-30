@@ -778,13 +778,11 @@ export default function MarketingPage() {
              </div>
           </div>
 
+          </>)}
         </motion.div>
-
 
       </section>
 
-
-          </>)}
       {clickedEcosistema === null && (<>
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
