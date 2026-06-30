@@ -7,6 +7,7 @@ import LeadFormModal from "../components/LeadFormModal";
 import CoverageSearch from "../components/CoverageSearch";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
+import { ThemeToggle } from "../components/ThemeToggle";
 const SpaceBackground = () => {
   useEffect(() => {
     const canvas = document.getElementById('space-canvas') as HTMLCanvasElement;
