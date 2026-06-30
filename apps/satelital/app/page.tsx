@@ -478,7 +478,7 @@ export default function MarketingPage() {
           <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
              {/* ECOSISTEMA Header Button */}
              <button
-                onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+                onClick={() => { window.location.href = "http://localhost:3000"; }}
                 className="relative group/eco shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 ml-2 mr-2"
              >
                 <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">

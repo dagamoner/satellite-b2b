@@ -592,7 +592,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative"
+            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full relative transition-all duration-700 ${clickedEcosistema !== null ? "min-h-[70vh]" : "min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
