@@ -210,6 +210,12 @@ export default function MarketingPage() {
   const [satelliteFlash, setSatelliteFlash] = useState(false);
   const [earthFlash, setEarthFlash] = useState(false);
   const orbitStartRef = useRef<number>(0);
+  const [isSatelital, setIsSatelital] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hostname.includes("satelital")) {
+      setIsSatelital(true);
+    }
+  }, []);
 
   const triggerConjunction = useCallback(() => {
     setSatelliteFlash(true);
@@ -243,7 +249,7 @@ export default function MarketingPage() {
         "https://cyber.mrtechnology.it.com"
       ][clickedEcosistema];
       const timer = setTimeout(() => {
-        window.location.href = url;
+        if (url) window.location.href = url;
       }, 7000);
       return () => clearTimeout(timer);
     }
@@ -462,7 +468,7 @@ export default function MarketingPage() {
         <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
           
           {/* Left Block - Small Logo */}
-          <div className="flex-1 flex items-center justify-start hidden md:flex">
+          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital ? "invisible" : ""}`}>
              <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                  <img 
                     src="/Logo WEB MR Tech.png" 
@@ -489,7 +495,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Right Block - Hablamos & Theme Toggle */}
-          <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
+          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 ${isSatelital ? "invisible" : ""}`}>
              <a 
                href="#whatsapp-contact"
                className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
