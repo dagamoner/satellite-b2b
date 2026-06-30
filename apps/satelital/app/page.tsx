@@ -539,235 +539,6 @@ export default function MarketingPage() {
           className="w-full flex flex-col items-center"
           style={{ pointerEvents: 'auto' }}
         >
-          
-          {/* Main Logo */}
-          <div className="relative shrink-0 flex items-center justify-center group/logo cursor-pointer mb-0">
-              <div className="absolute inset-0 rounded-full bg-[#005f6a] blur-[50px] opacity-0 group-hover/logo:opacity-80 transition-all duration-700 pointer-events-none mix-blend-screen scale-[1.1] group-hover/logo:scale-[1.4]" />
-              
-              <motion.div className="absolute top-6 right-12 w-4 h-4 text-cyan-200 z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 180, 360], scale: [0.5, 1.4, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_12px_rgba(165,243,252,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-              
-              <motion.div className="absolute bottom-8 left-12 w-5 h-5 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [360, 180, 0], scale: [0.6, 1.5, 0.6], opacity: [0.2, 1, 0.2] }} transition={{ duration: 4.8, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_15px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-
-              <motion.img 
-                 src="/Logo WEB MR Tech.png" 
-                 alt="MR Technology" 
-                 animate={{ scale: [1, 1.025, 1], filter: ["brightness(1.1) contrast(1.1)", "brightness(1.25) contrast(1.15)", "brightness(1.1) contrast(1.1)"] }}
-                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                 className="object-contain transition-all duration-700 relative z-10 w-[380px] md:w-[500px]"
-                 style={{ 
-                   mixBlendMode: 'screen',
-                   filter: 'brightness(1.1) contrast(1.1)'
-                 }}
-              />
-          </div>
-
-          {/* Tagline - Debajo del logo */}
-          <motion.p
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="text-center text-[12px] text-white font-bold tracking-[0.15em] -mt-10 mb-5 max-w-3xl mx-auto px-4 uppercase"
-            style={{ fontFamily: "'Inter', sans-serif" }}
-          >
-            "Lo esencial de lo simple, el crecimiento tecnológico y digital de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> es nuestro gran <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">JUNTOS</span> podemos lograrlo."
-          </motion.p>
-
-          {/* Legend - Leyenda ecosistema blended into the page */}
-          <div className="relative mb-5 flex justify-center w-full">
-             <img
-               src="/Leyenda ecosistema.png"
-               alt="Ecosistema by MR Tech"
-               className="h-14 md:h-[4.5rem] w-auto object-contain relative z-10 pointer-events-none select-none"
-               style={{
-                 mixBlendMode: 'screen',
-                 WebkitMaskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-                 maskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-               }}
-             />
-             {/* Sparkle constellation around the legend - white & teal */}
-             <motion.div className="absolute -top-5 right-[30%] w-5 h-5 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 180, 360], scale: [0.4, 1.6, 0.4], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_18px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-             <motion.div className="absolute -top-3 left-[28%] w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [180, 360, 540], scale: [0.5, 1.5, 0.5], opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 3.1, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_14px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-             <motion.div className="absolute -bottom-3 right-[25%] w-6 h-6 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 90, 180], scale: [0.5, 1.8, 0.5], opacity: [0.4, 1, 0.4] }} transition={{ duration: 2.7, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_22px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-             <motion.div className="absolute -bottom-4 left-[22%] w-3 h-3 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [360, 180, 0], scale: [0.5, 1.4, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 3.5, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_12px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-             <motion.div className="absolute top-1 -left-4 w-3 h-3 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [90, 270, 450], scale: [0.4, 1.2, 0.4], opacity: [0.2, 0.8, 0.2] }} transition={{ duration: 2.0, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-             <motion.div className="absolute top-1 -right-4 w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 120, 240], scale: [0.5, 1.6, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.9, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_16px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
-          </div>
-          {/* Subtitle below Ecosistema legend */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
-            className="text-justify text-white text-[12px] font-bold tracking-[0.1em] md:tracking-wide mb-5 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
-            style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
-          >
-            A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>. Porque tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span> es el motor de nuestro <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">TRABAJO</span>.
-          </motion.p>
-          {/* Click-outside wrapper: clicking the background area deselects */}
-          <div
-            id="ecosistema"
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative scroll-mt-24"
-          >
-            {[
-              { 
-                src: "3. Logo Mini Conectividad Satelital.png", 
-                alt: "Conectividad Satelital", 
-                content: (
-                  <div className="flex flex-col gap-6">
-                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿Tu EMPRESA enfrenta desafíos de conectividad?</p>
-                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
-                      En MR Technology diseñamos, implementamos y comercializamos soluciones de conectividad adaptadas a las necesidades de cada organización, sin importar dónde se encuentre tu EMPRESA.
-                    </p>
-                    <p className="text-left font-black text-cyan-300 mt-2 tracking-wide text-2xl">
-                      Conectamos tu EMPRESA con el FUTURO.
-                    </p>
-                  </div>
-                )
-              },
-              { 
-                src: "1. Logo Mini Tecnologia Informatica (IT).png", 
-                alt: "Tecnología Informática (IT)", 
-                content: (
-                  <div className="flex flex-col gap-6">
-                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">La tecnología adecuada marca la diferencia.</p>
-                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
-                      En MR Technology ayudamos a las EMPRESAS a evolucionar mediante soluciones tecnológicas innovadoras, seguras y escalables. Desarrollamos estrategias que optimizan el rendimiento de tu EMPRESA y garantizan una transformación digital exitosa.
-                    </p>
-                    <p className="text-left font-black text-cyan-300 mt-2 tracking-wide text-2xl">
-                      Innovación, confianza y tecnología para llevar tu EMPRESA al siguiente nivel.
-                    </p>
-                  </div>
-                )
-              },
-              { 
-                src: "2. Logo Mini Alianzas Software ERP.png", 
-                alt: "Software ERP / SAAS Empresarial", 
-                content: (
-                  <div className="flex flex-col gap-6">
-                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿El software actual limita tu crecimiento?</p>
-                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
-                      Necesitas un soft o con el que operas no te da los resultados que TU EMPRESA necesita ? Desde MR Tech te podemos ofrecer el soft a medida de tus requerimientos.
-                    </p>
-                  </div>
-                )
-              },
-              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", content: <p className="text-2xl text-white">Próximamente...</p> },
-              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", content: <p className="text-2xl text-white">Próximamente...</p> }
-            ].map((logo, i) => {
-              const isSelected = false; const isOther = false;
-return (
-                <motion.div
-                  key={i}
-                  layoutId={`ecosystem-logo-${i}`}
-                  animate={{
-                    y: [0, -10, 0],
-                    opacity: isOther ? 0 : 1,
-                  }}
-                  transition={{
-                    y: { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                    opacity: { duration: 0.4, ease: "easeInOut" },
-                  }}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const urls = ["https://satelital.mrtechnology.it.com", "https://informatica.mrtechnology.it.com", "https://erp.mrtechnology.it.com", "https://ai.mrtechnology.it.com", "https://ciberseguridad.mrtechnology.it.com"];
-                    window.location.href = urls[i] || "";
-                  }}
-                  className="flex flex-col items-center justify-center cursor-pointer relative"
-                  style={{ pointerEvents: isOther ? 'none' : 'auto' }}
-                >
-                  <img
-                    src={`/${logo.src}`}
-                    alt={logo.alt}
-                    className="w-32 h-32 md:w-48 md:h-48 object-contain relative z-10"
-                    style={{
-                      mixBlendMode: 'screen',
-                      filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
-                    }}
-                  />
-                </motion.div>
-              );
-            })}
-          </div>
-
-
-
-          {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
-          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
-             <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
-             <div className="flex flex-col items-center gap-6">
-               {/* WhatsApp (Top) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="https://wa.me/5492616518318" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                    <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                  </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
-               </div>
-               
-               <div className="flex gap-40 justify-center w-full relative">
-                 {/* LinkedIn (Left) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">www.linkedin.com/in/mrtech2026</span>
-                   <a 
-                      href="https://www.linkedin.com/in/mrtech2026" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
-                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
-                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                      <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                    </a>
-                 </div>
-
-                 {/* Instagram (Right) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <a 
-                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
-                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
-                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                      <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                    </a>
-                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
-                 </div>
-               </div>
-               
-               {/* Email (Bottom) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="mailto:mr@mrestudioinformatico.com" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#ef4444] opacity-40 animate-pulse pointer-events-none" />
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                    <img src="/logo mail.png" alt="Email" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110 relative z-10" />
-                  </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
-               </div>
-             </div>
-             
-             <div className="mt-12 flex flex-col items-center gap-2">
-                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
-                <p className="tracking-[0.2em] font-black text-[14px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
-             </div>
-          </div>
-
           {/* Centered Navigation Links & Portals */}
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mt-40 mb-48 px-4 w-full max-w-6xl">
             {/* Nav Links */}
@@ -1440,6 +1211,83 @@ return (
       </section>
 
 
+
+          {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
+          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
+             <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
+             <div className="flex flex-col items-center gap-6">
+               {/* WhatsApp (Top) */}
+               <div className="relative group shrink-0 flex items-center">
+                 <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                 <a 
+                    href="https://wa.me/5492616518318" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                  >
+                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
+                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                    <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                  </a>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
+               </div>
+               
+               <div className="flex gap-40 justify-center w-full relative">
+                 {/* LinkedIn (Left) */}
+                 <div className="relative group shrink-0 flex items-center">
+                   <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                   <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">www.linkedin.com/in/mrtech2026</span>
+                   <a 
+                      href="https://www.linkedin.com/in/mrtech2026" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                      <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                    </a>
+                 </div>
+
+                 {/* Instagram (Right) */}
+                 <div className="relative group shrink-0 flex items-center">
+                   <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                   <a 
+                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                      <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                    </a>
+                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
+                 </div>
+               </div>
+               
+               {/* Email (Bottom) */}
+               <div className="relative group shrink-0 flex items-center">
+                 <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                 <a 
+                    href="mailto:mr@mrestudioinformatico.com" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                  >
+                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#ef4444] opacity-40 animate-pulse pointer-events-none" />
+                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                    <img src="/logo mail.png" alt="Email" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110 relative z-10" />
+                  </a>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
+               </div>
+             </div>
+             
+             <div className="mt-12 flex flex-col items-center gap-2">
+                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
+                <p className="tracking-[0.2em] font-black text-[14px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
+             </div>
+          </div>
 
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
