@@ -235,21 +235,23 @@ export default function MarketingPage() {
     orbitStartRef.current = Date.now();
   }, []);
 
+  const handleAdvance = useCallback(() => {
+    if (selectedEcosistema === 0) {
+      window.location.href = "#conectividad-sin-fronteras";
+    }
+    // Para los demás, simplemente regresa al ecosistema cerrando la vista
+    setSelectedEcosistema(null);
+  }, [selectedEcosistema]);
+
   // Action when logos are selected
   useEffect(() => {
-    if (selectedEcosistema === 0) {
+    if (selectedEcosistema !== null) {
       const timer = setTimeout(() => {
-        window.location.href = "#conectividad-sin-fronteras";
-        setSelectedEcosistema(null);
-      }, 7000);
-      return () => clearTimeout(timer);
-    } else if (selectedEcosistema === 1 || selectedEcosistema === 2) {
-      const timer = setTimeout(() => {
-        setSelectedEcosistema(null);
-      }, 7000);
+        handleAdvance();
+      }, 10000);
       return () => clearTimeout(timer);
     }
-  }, [selectedEcosistema]);
+  }, [selectedEcosistema, handleAdvance]);
 
   // Automatic effect: when satellite passes Earth zone (~42s into each 120s cycle)
   useEffect(() => {
@@ -492,6 +494,35 @@ export default function MarketingPage() {
 
           {/* Right Block - Hablamos & Theme Toggle */}
           <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
+             {/* ECOSISTEMA Header Button */}
+             <button
+                onClick={() => {
+                   setSelectedEcosistema(null);
+                   setTimeout(() => {
+                      document.getElementById('ecosistema')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                   }, 100);
+                }}
+                className="relative group/eco shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 ml-2 mr-2"
+             >
+                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
+                   <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
+                   <img 
+                      src="/logo_eco.jpg.jpg" 
+                      alt="Ecosistema"
+                      className="w-full h-full object-cover rounded-full relative z-10"
+                      style={{
+                         mixBlendMode: 'screen',
+                         WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)',
+                         maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)',
+                         filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)'
+                      }}
+                   />
+                </div>
+                <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">
+                   ECOSISTEMA
+                </span>
+             </button>
+
              <a 
                href="#whatsapp-contact"
                className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
@@ -509,6 +540,13 @@ export default function MarketingPage() {
                  }}
                />
              </a>
+<<<<<<< HEAD:apps/satelital/app/page.tsx
+=======
+
+             <div className="pl-2 border-l border-white/20">
+               <ThemeToggle />
+             </div>
+>>>>>>> 802962b (feat(marketing): refine layout aesthetics, optimize Ecosistema UI, and remove deprecated IT Consulting section):apps/marketing/app/page.tsx
           </div>
         </div>
       </nav>
@@ -523,9 +561,10 @@ export default function MarketingPage() {
       <section className="relative z-10 pt-8 pb-24 md:pt-10 md:pb-32 px-6 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          animate={{ opacity: selectedEcosistema !== null ? 0 : 1, y: selectedEcosistema !== null ? 30 : 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="w-full flex flex-col items-center"
+          style={{ pointerEvents: selectedEcosistema !== null ? 'none' : 'auto' }}
         >
           
           {/* Main Logo */}
@@ -592,31 +631,68 @@ export default function MarketingPage() {
           </motion.p>
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative"
-            onClick={() => setSelectedEcosistema(null)}
+            id="ecosistema"
+            className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative scroll-mt-24"
           >
             {[
-              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "CONECTIVIDAD\nSATELITAL" },
-              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", label: "TECNOLOGÍA\nINFORMÁTICA (IT)" },
-              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", label: "SOFTWARE ERP /\nSAAS EMPRESARIAL" },
-              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", label: "INTELIGENCIA\nARTIFICIAL" },
-              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", label: "CIBERSEGURIDAD" }
+              { 
+                src: "3. Logo Mini Conectividad Satelital.png", 
+                alt: "Conectividad Satelital", 
+                content: (
+                  <div className="flex flex-col gap-6">
+                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿Tu EMPRESA enfrenta desafíos de conectividad?</p>
+                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                      En MR Technology diseñamos, implementamos y comercializamos soluciones de conectividad adaptadas a las necesidades de cada organización, sin importar dónde se encuentre tu EMPRESA.
+                    </p>
+                    <p className="text-left font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                      Conectamos tu EMPRESA con el FUTURO.
+                    </p>
+                  </div>
+                )
+              },
+              { 
+                src: "1. Logo Mini Tecnologia Informatica (IT).png", 
+                alt: "Tecnología Informática (IT)", 
+                content: (
+                  <div className="flex flex-col gap-6">
+                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">La tecnología adecuada marca la diferencia.</p>
+                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                      En MR Technology ayudamos a las EMPRESAS a evolucionar mediante soluciones tecnológicas innovadoras, seguras y escalables. Desarrollamos estrategias que optimizan el rendimiento de tu EMPRESA y garantizan una transformación digital exitosa.
+                    </p>
+                    <p className="text-left font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                      Innovación, confianza y tecnología para llevar tu EMPRESA al siguiente nivel.
+                    </p>
+                  </div>
+                )
+              },
+              { 
+                src: "2. Logo Mini Alianzas Software ERP.png", 
+                alt: "Software ERP / SAAS Empresarial", 
+                content: (
+                  <div className="flex flex-col gap-6">
+                    <p className="text-left font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿El software actual limita tu crecimiento?</p>
+                    <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                      Necesitas un soft o con el que operas no te da los resultados que TU EMPRESA necesita ? Desde MR Tech te podemos ofrecer el soft a medida de tus requerimientos.
+                    </p>
+                  </div>
+                )
+              },
+              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", content: <p className="text-2xl text-white">Próximamente...</p> },
+              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", content: <p className="text-2xl text-white">Próximamente...</p> }
             ].map((logo, i) => {
               const isSelected = selectedEcosistema === i;
               const isOther = selectedEcosistema !== null && !isSelected;
               return (
                 <motion.div
                   key={i}
+                  layoutId={`ecosystem-logo-${i}`}
                   animate={{
                     y: [0, -10, 0],
                     opacity: isOther ? 0 : 1,
-                    scale: isSelected ? 1.5 : 1,
-                    zIndex: isSelected ? 30 : 10,
                   }}
                   transition={{
                     y: { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
                     opacity: { duration: 0.4, ease: "easeInOut" },
-                    scale: { duration: 0.45, ease: "easeOut" },
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -625,59 +701,21 @@ export default function MarketingPage() {
                   className="flex flex-col items-center justify-center cursor-pointer relative"
                   style={{ pointerEvents: isOther ? 'none' : 'auto' }}
                 >
-                  {/* Glow halo behind the logo when selected */}
-                  {isSelected && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 z-0 pointer-events-none"
-                      style={{
-                        background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0,95,106,0.85) 0%, rgba(0,95,106,0.45) 50%, transparent 80%)',
-                        filter: 'blur(18px)',
-                        transform: 'scale(1.6)',
-                      }}
-                    />
-                  )}
                   <img
                     src={`/${logo.src}`}
                     alt={logo.alt}
                     className="w-32 h-32 md:w-48 md:h-48 object-contain relative z-10"
                     style={{
                       mixBlendMode: 'screen',
-                      filter: isSelected
-                        ? 'drop-shadow(0 0 50px rgba(0,95,106,1)) brightness(1.2)'
-                        : 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
-                      WebkitMaskImage: isSelected
-                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
-                        : 'none',
-                      maskImage: isSelected
-                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
-                        : 'none',
+                      filter: 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
                     }}
                   />
-                  {/* Mensajes especiales para Logos seleccionados */}
-                  {isSelected && (i === 0 || i === 1 || i === 2) && (
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="absolute left-full ml-4 md:ml-8 w-56 md:w-72 text-white text-[12px] font-bold text-justify z-40 bg-transparent p-4 rounded-lg transition-all duration-500 cursor-default backdrop-blur-sm pointer-events-none"
-                    >
-                      {/* Fondo difuminado verde petróleo y blanco inmediato */}
-                      <div className="absolute inset-0 bg-[#00a2b8]/50 blur-xl rounded-lg pointer-events-none -z-10" />
-                      <div className="absolute inset-0 bg-white/10 rounded-lg pointer-events-none -z-10" />
-                      
-                      <div className="relative z-10 drop-shadow-md">
-                        {i === 0 && "Tu EMPRESA tiene problemas de conectividad? MR Tech comercializa, implementa, posee planes para brindar la solución a tus requerimientos."}
-                        {i === 1 && "Necesita TU EMPRESA tecnologia ? Desde MR Tech te podemos ofrecer todo lo realcionado a este aspecto y brindar soluciones a todos tus problemas."}
-                        {i === 2 && "Necesitas un soft o con el que operas no te da los resultados que TU EMPRESA necesita ? Desde MR Tech te podemos ofrecer el soft a medida de tus requerimientos."}
-                      </div>
-                    </motion.div>
-                  )}
                 </motion.div>
               );
             })}
           </div>
+
+
 
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
@@ -815,11 +853,11 @@ export default function MarketingPage() {
             </motion.a>
           </div>
 
-          <h1 id="conectividad-sin-fronteras" className="scroll-mt-32 text-3xl md:text-6xl lg:text-7xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white drop-shadow-lg">
-            Conectividad sin fronteras con Starlink para tu empresa
+          <h1 id="conectividad-sin-fronteras" className="scroll-mt-32 text-2xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white drop-shadow-lg">
+            <span className="text-[#33E8FF]">Conectividad</span> sin fronteras con <span className="text-[#33E8FF]">Starlink</span> para tu empresa
           </h1>
-          <p className="text-base md:text-xl text-slate-700 dark:text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-bold px-4 md:px-0">
-            Internet satelital de alta velocidad y máxima estabilidad. Equipamiento desde <strong className="text-blue-600 font-bold">$300.000</strong> y abonos desde <strong className="text-blue-600 font-bold">$90.000</strong> CON FINANCIACION PROPIA. Respaldado por soporte técnico presencial en toda Mendoza.
+          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-bold px-4 md:px-0">
+            Internet satelital de alta velocidad y máxima estabilidad. <span className="text-[#33E8FF]">Equipamiento</span> desde <span className="text-[#33E8FF]">$300.000</span> y <span className="text-[#33E8FF]">abonos</span> desde <span className="text-[#33E8FF]">$90.000</span> <span className="text-[#33E8FF]">FINANCIACION PROPIA</span>. Respaldado por soporte técnico presencial en toda Mendoza.
           </p>
 
           <CoverageSearch onCoverageConfirmed={(address) => openLeadModal("INFO", "Consulta por Cobertura", `Solicito información para instalación satelital en la dirección validada: ${address}`)} />
@@ -884,11 +922,117 @@ export default function MarketingPage() {
 
       </section>
 
+      {/* Immersive Overlay for Selected Ecosystem */}
+      <AnimatePresence>
+        {selectedEcosistema !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[45] bg-[#020617]/20 flex items-center justify-center px-6 md:px-20 pt-16 md:pt-20"
+            onClick={handleAdvance}
+            onWheel={(e) => { if (e.deltaY > 0) handleAdvance(); }}
+          >
+            <div className="w-full max-w-7xl flex flex-col md:flex-row items-center gap-10 md:gap-20">
+              <motion.div 
+                 layoutId={`ecosystem-logo-${selectedEcosistema}`}
+                 className="w-full md:w-1/2 flex justify-center items-center"
+              >
+                 <img 
+                    src={`/${[
+                      { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital" },
+                      { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)" },
+                      { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial" },
+                      { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial" },
+                      { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad" }
+                    ][selectedEcosistema].src}`} 
+                    alt="Ecosystem Logo"
+                    className="w-[280px] h-[280px] md:w-[500px] md:h-[500px] object-contain relative z-10"
+                    style={{
+                      mixBlendMode: 'screen',
+                      filter: 'drop-shadow(0 0 60px rgba(0,162,184,0.6)) brightness(1.2)',
+                      WebkitMaskImage: 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)',
+                      maskImage: 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)',
+                    }}
+                 />
+              </motion.div>
+              <motion.div 
+                 initial={{ opacity: 0, x: 50 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: 0.3, duration: 0.6 }}
+                 className="w-full md:w-1/2 flex flex-col justify-center cursor-pointer"
+              >
+                 {[
+                    <div key="0" className="flex flex-col gap-6">
+                      <p className="text-center font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿Tu empresa enfrenta desafíos de conectividad?</p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        En MR Technology diseñamos, implementamos y comercializamos soluciones de conectividad adaptadas a las necesidades de cada organización, sin importar dónde se encuentre tu empresa.
+                      </p>
+                      <p className="text-center font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                        Conectamos tu empresa con el futuro.
+                      </p>
+                    </div>,
+                    <div key="1" className="flex flex-col gap-6">
+                      <p className="text-center font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">La tecnología adecuada marca la diferencia.</p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        En MR Technology ayudamos a las empresas a evolucionar mediante soluciones tecnológicas innovadoras, seguras y escalables. Desarrollamos estrategias que optimizan el rendimiento de tu empresa y garantizan una transformación digital exitosa.
+                      </p>
+                      <p className="text-center font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                        Innovación, confianza y tecnología para llevar tu empresa al siguiente nivel.
+                      </p>
+                    </div>,
+                    <div key="2" className="flex flex-col gap-6">
+                      <p className="text-center font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿Tu software está limitando el crecimiento de tu empresa?</p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        Si tu sistema actual ya no responde a las necesidades de tu negocio o necesitas desarrollar una solución desde cero, <span className="text-cyan-300 font-bold">MR Technology</span> tiene la respuesta.
+                      </p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        Diseñamos e implementamos <span className="text-cyan-300 font-bold">software empresarial a medida</span>, adaptado a cada industria: gastronomía, comercio, industria, logística, inteligencia artificial y ciberseguridad.
+                      </p>
+                      <p className="text-center font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                        Transformamos tus procesos en soluciones inteligentes, eficientes y escalables para impulsar el crecimiento de tu empresa.
+                      </p>
+                    </div>,
+                    <div key="3" className="flex flex-col gap-6">
+                      <p className="text-center font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">Impulsa la innovación IA con proyectos diseñados para transformar tu empresa.</p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        En <span className="text-cyan-300 font-bold">MR Technology</span> desarrollamos proyectos tecnológicos de alto impacto, combinando Arquitectura de Inteligencia Artificial, automatización, integración de sistemas y transformación digital para optimizar procesos y acelerar el crecimiento de tu organización.
+                      </p>
+                      <p className="text-center font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                        La IA por sí sola no es la clave, sino cómo comprendemos su Arquitectura.
+                      </p>
+                    </div>,
+                    <div key="4" className="flex flex-col gap-6">
+                      <p className="text-center font-black text-cyan-300 text-3xl md:text-5xl drop-shadow-md">¿Tu empresa está realmente segura?</p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        Las amenazas informáticas evolucionan constantemente y pueden comprometer la continuidad de tu negocio, la información de tus clientes y la reputación de tu empresa.
+                      </p>
+                      <p className="text-justify font-medium text-slate-100 leading-relaxed text-xl">
+                        En <span className="text-cyan-300 font-bold">MR Technology</span> diseñamos e implementamos soluciones integrales de <span className="text-cyan-300 font-bold">Ciberseguridad</span>, orientadas a proteger tu infraestructura tecnológica, redes, servidores, aplicaciones y datos críticos.
+                      </p>
+                      <p className="text-center font-black text-cyan-300 mt-2 tracking-wide text-2xl">
+                        Protegemos lo más valioso de tu empresa: su información, su continuidad operativa y la confianza de sus clientes.
+                      </p>
+                    </div>
+                 ][selectedEcosistema]}
+                 
+                 <p className="mt-10 text-slate-500 text-sm flex items-center gap-2 animate-pulse">
+                   Haz clic, haz scroll, o espera 10s para continuar
+                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                   </svg>
+                 </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hardware Section */}
       <section id="antenas" className="relative z-10 py-10 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-6 -mt-16">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-10 text-center text-slate-900 dark:text-white drop-shadow-xl">
+            <h2 className="text-lg md:text-xl font-extrabold mb-10 text-center text-slate-900 dark:text-white drop-shadow-xl">
               Que tipo de proyecto queres realizar ? <span className="text-pink-500">HOGAREÑO, RESIDENCIAL, EMPRESA, MOVILIDAD</span> y en base al mismo podes elegir tu <span className="text-blue-500">antena a medida</span>
             </h2>
             <div className="grid md:grid-cols-3 gap-8" onMouseLeave={() => setHoveredAntenna(null)}>
@@ -1368,49 +1512,51 @@ export default function MarketingPage() {
          </div>
       </section>
 
-
-
       {/* Planes Section */}
       <section id="planes" className="relative z-10 pt-4 pb-32 px-6 max-w-7xl mx-auto">
 
          {/* Ideal Para Section */}
-         <div className="mt-0 pt-2 text-center max-w-6xl mx-auto">
-             <img src="/ideal.png" alt="Ideal Para" className="w-full max-w-2xl mx-auto h-auto object-contain mb-4 border-none bg-transparent drop-shadow-2xl" style={{ maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)' }} />
-             <div className="flex flex-wrap md:flex-nowrap justify-center items-center gap-3 md:gap-6">
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 0 }} className="flex flex-col items-center group relative cursor-pointer">
-                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
-                    <img src="/ideal bodegas.png" alt="Bodegas" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
-                 </motion.div>
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 0.2 }} className="flex flex-col items-center group relative cursor-pointer">
-                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
-                    <img src="/ideal hoteles.png" alt="Hoteles" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
-                 </motion.div>
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4.2, ease: "easeInOut", delay: 0.4 }} className="flex flex-col items-center group relative cursor-pointer">
-                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
-                    <img src="/ideal empresariales.png" alt="Empresariales" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
-                 </motion.div>
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.8, ease: "easeInOut", delay: 0.1 }} className="flex flex-col items-center group relative cursor-pointer">
-                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
-                    <img src="/ideal gastronomia.png" alt="Polos Gastronómicos" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
-                 </motion.div>
-                 <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut", delay: 0.5 }} className="flex flex-col items-center group relative cursor-pointer">
-                    <div className="absolute inset-2 bg-[#fbbf24]/0 group-hover:bg-[#fbbf24]/50 blur-2xl rounded-full transition-all duration-700 pointer-events-none z-0" />
-                    <img src="/ideal rurales.png" alt="Proyectos Rurales" className="w-24 md:w-36 lg:w-44 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
-                 </motion.div>
+         <div className="w-full relative z-10 pt-10 pb-8 flex flex-col items-center border-t border-slate-300/80 dark:border-slate-800/80 mt-16 max-w-[90rem] mx-auto overflow-hidden">
+             <img src="/ideal.png" alt="Ideal Para" className="w-full max-w-lg md:max-w-xl mx-auto h-auto object-contain mb-4 border-none bg-transparent drop-shadow-2xl" style={{ maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)' }} />
+             
+             {/* Slider container for continuous movement on mobile, flex on desktop */}
+             <div className="w-full relative flex justify-center mt-6">
+                <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-8 lg:gap-12 px-4 max-w-full">
+                    <div className="relative group cursor-pointer flex justify-center items-center">
+                       <div className="absolute inset-0 bg-yellow-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
+                    <img src="/ideal bodegas.png" alt="Bodegas" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    </div>
+                    <div className="relative group cursor-pointer flex justify-center items-center">
+                       <div className="absolute inset-0 bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
+                    <img src="/ideal hoteles.png" alt="Hoteles" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    </div>
+                    <div className="relative group cursor-pointer flex justify-center items-center">
+                       <div className="absolute inset-0 bg-cyan-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
+                    <img src="/ideal empresariales.png" alt="Empresariales" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    </div>
+                    <div className="relative group cursor-pointer flex justify-center items-center">
+                       <div className="absolute inset-0 bg-pink-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
+                    <img src="/ideal gastronomia.png" alt="Polos Gastronómicos" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    </div>
+                    <div className="relative group cursor-pointer flex justify-center items-center">
+                       <div className="absolute inset-0 bg-green-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
+                    <img src="/ideal rurales.png" alt="Proyectos Rurales" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    </div>
+                 </div>
              </div>
          </div>
  
-         <div className="mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group">
+         <div className="mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col items-center justify-center gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group w-full text-center">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 dark:opacity-20 mix-blend-overlay" />
-            <div className="relative z-10 flex-1 drop-shadow-md">
-               <h3 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] uppercase tracking-[0.1em] mb-4" style={{ fontFamily: "'Orbitron', 'Syncopate', sans-serif" }}>Proyectos Empresariales a Medida</h3>
-               <div className="text-slate-800 dark:text-slate-200 max-w-4xl leading-relaxed text-lg font-light space-y-4">
-                  <p>Diseñado para organizaciones de gran escala y entornos corporativos de alta complejidad.</p>
-                  <p>Para este tipo de implementaciones, realizamos un relevamiento inicial exhaustivo que nos permite comprender en profundidad la estructura, los procesos y los requerimientos específicos de cada empresa. A partir de este análisis, diseñamos un mapa topológico personalizado que define con precisión la arquitectura necesaria, optimizando recursos, rendimiento y escalabilidad.</p>
-                  <p>De esta manera, determinamos exactamente la infraestructura, capacidad de almacenamiento (GB) y recursos tecnológicos que demanda cada proyecto, garantizando una solución exclusiva, alineada con los objetivos estratégicos y operativos de la organización.</p>
+            <div className="relative z-10 w-full drop-shadow-md flex flex-col items-center">
+               <h3 className="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] uppercase tracking-[0.1em] mb-6 w-full text-center" style={{ fontFamily: "'Orbitron', 'Syncopate', sans-serif" }}>Proyectos Empresariales a Medida</h3>
+               <div className="text-white w-full max-w-5xl mx-auto leading-relaxed text-lg font-bold space-y-0 text-justify">
+                  <p>En MR Technology desarrollamos proyectos tecnológicos personalizados para empresas de cualquier indole, adaptándonos a la complejidad operativa y a los objetivos estratégicos de cada organización en base a sus estandares de conectividad exijida.</p>
+                  <p>Nuestro proceso comienza con un relevamiento integral, donde analizamos la infraestructura existente, los procesos de negocio, las necesidades operativas y las oportunidades de mejora. A partir de este diagnóstico, diseñamos una arquitectura tecnológica y un mapa topológico que permiten definir con precisión la solución más adecuada para cada proyecto.</p>
+                  <p>En MR Technology no implementamos soluciones estándar; diseñamos ecosistemas tecnológicos alineados con la estrategia de tu empresa, asegurando rendimiento, continuidad operativa y una verdadera transformación digital, empezando por una de las bases que es la conectividad.</p>
                </div>
             </div>
-            <div className="relative z-10 shrink-0 w-full md:w-auto flex flex-col items-center gap-5 mt-8 md:mt-0">
+            <div className="relative z-10 shrink-0 w-full flex justify-center mt-4">
 
                <Button 
                  size="lg" 
@@ -1423,81 +1569,7 @@ export default function MarketingPage() {
          </div>
       </section>
 
-      {/* IT Consulting Services */}
-      <section id="consultoria" className="relative z-10 py-32 bg-white/50 dark:bg-[#020617]/50 backdrop-blur-xl border-t border-slate-300 dark:border-slate-800 px-6 scroll-mt-20">
-         <div id="hablamos" className="absolute -top-20" />
-         <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-20 drop-shadow-lg">
-               <h2 className="text-sm font-bold text-blue-500 tracking-[0.2em] mb-4 uppercase">El Diferencial MR</h2>
-               <h3 className="text-4xl md:text-5xl font-extrabold mb-6 text-slate-900 dark:text-white tracking-tight">Consultoría y Actividades IT Hard & Soft</h3>
-               <p className="text-slate-800 dark:text-slate-200 max-w-2xl mx-auto text-xl font-light mb-10">Ofrecemos soporte integral y mantenimiento preventivo/activo de nivel gerencial. Su proveedor no es solo un distribuidor, es todo su equipo de Infraestructura y Redes.</p>
 
-                           </div>
-
-
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={{
-                visible: { transition: { staggerChildren: 0.15 } },
-                hidden: {}
-              }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-               {[
-                 { 
-                   title: "Arquitectura & Relevamiento", 
-                   icon: "architecture", 
-                   color: "blue",
-                   items: [
-                     "Relevamiento inicial del parque informático.",
-                     "Análisis de Topología y Tipología de la RED interna.",
-                     "Plano Físico y Digital del Armado Estructural.",
-                     "Documentación objetiva de la red."
-                   ]
-                 },
-                 { 
-                   title: "Centro de Operaciones", 
-                   icon: "noc_center", 
-                   color: "indigo",
-                   items: [
-                     "Operador Técnico / Soporte Especializado.",
-                     "Analista SOC (con foco estricto en redes).",
-                     "Especialista en monitorización constante.",
-                     "Resolución y mitigación de incidentes."
-                   ]
-                 },
-                 { 
-                   title: "Ingeniería & Soporte", 
-                   icon: "engineering", 
-                   color: "emerald",
-                   items: [
-                     "Técnico de soporte y Field Network Engineer.",
-                     "Instalador de Fibra Óptica certificado.",
-                     "Técnico de cableado estructurado IT.",
-                     "Protocolos de mitigación in-situ."
-                   ]
-                 }
-               ].map((service, i) => (
-                 <Card key={i} variant="glass" className="p-10 group">
-                    <div className="h-24 w-24 mb-8 relative flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
-                       <img src={`/icon_${service.icon}.png`} alt={service.title} className={`w-full h-full object-contain drop-shadow-[0_0_15px_rgba(var(--${service.color}-shadow),0.4)]`} />
-                    </div>
-                    <h4 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 drop-shadow-sm">{service.title}</h4>
-                    <ul className="text-slate-700 dark:text-slate-300 text-sm space-y-4 font-medium">
-                       {service.items.map((item, j) => (
-                         <li key={j} className="flex items-start gap-3">
-                           <span className={`text-${service.color}-400 block shrink-0 drop-shadow-sm`}>•</span> 
-                           {item}
-                         </li>
-                       ))}
-                    </ul>
-                 </Card>
-               ))}
-            </motion.div>
-         </div>
-      </section>
 
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
@@ -1511,6 +1583,6 @@ export default function MarketingPage() {
          </div>
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
-      </main>
+    </main>
   );
 }
