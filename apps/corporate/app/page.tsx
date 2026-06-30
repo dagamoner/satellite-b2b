@@ -206,6 +206,7 @@ export default function MarketingPage() {
   const [logoGlow, setLogoGlow] = useState<string | null>(null);
   const [hoveredAntenna, setHoveredAntenna] = useState<string | null>(null);
   const [selectedEcosistema, setSelectedEcosistema] = useState<number | null>(null);
+  const [clickedEcosistema, setClickedEcosistema] = useState<number | null>(null);
   const [satelliteFlash, setSatelliteFlash] = useState(false);
   const [earthFlash, setEarthFlash] = useState(false);
   const orbitStartRef = useRef<number>(0);
@@ -233,19 +234,20 @@ export default function MarketingPage() {
 
   // Action when logos are selected
   useEffect(() => {
-    if (selectedEcosistema === 0) {
+    if (clickedEcosistema !== null) {
+      const url = [
+        "https://satelital.mrtechnology.it.com",
+        "https://informatica.mrtechnology.it.com",
+        "https://erp.mrtechnology.it.com",
+        "https://ia.mrtechnology.it.com",
+        "https://cyber.mrtechnology.it.com"
+      ][clickedEcosistema];
       const timer = setTimeout(() => {
-        window.location.href = "https://satelital.mrtechnology.it.com";
-        setSelectedEcosistema(null);
-      }, 7000);
-      return () => clearTimeout(timer);
-    } else if (selectedEcosistema === 1 || selectedEcosistema === 2) {
-      const timer = setTimeout(() => {
-        setSelectedEcosistema(null);
+        window.location.href = url;
       }, 7000);
       return () => clearTimeout(timer);
     }
-  }, [selectedEcosistema]);
+  }, [clickedEcosistema]);
 
   // Automatic effect: when satellite passes Earth zone (~42s into each 120s cycle)
   useEffect(() => {
@@ -524,6 +526,7 @@ export default function MarketingPage() {
           className="w-full flex flex-col items-center"
         >
           
+          {clickedEcosistema === null && (<>
           {/* Main Logo */}
           <div className="relative shrink-0 flex items-center justify-center group/logo cursor-pointer mb-0">
               <div className="absolute inset-0 rounded-full bg-[#005f6a] blur-[50px] opacity-0 group-hover/logo:opacity-80 transition-all duration-700 pointer-events-none mix-blend-screen scale-[1.1] group-hover/logo:scale-[1.4]" />
@@ -586,6 +589,7 @@ export default function MarketingPage() {
           >
             A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>. Porque tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span> es el motor de nuestro <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">TRABAJO</span>.
           </motion.p>
+          </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
             className="flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full min-h-[12rem] md:min-h-[16rem] relative"
@@ -598,8 +602,8 @@ export default function MarketingPage() {
               { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", label: "INTELIGENCIA\nARTIFICIAL", url: "https://ia.mrtechnology.it.com" },
               { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", label: "CIBERSEGURIDAD", url: "https://cyber.mrtechnology.it.com" }
             ].map((logo, i) => {
-              const isSelected = selectedEcosistema === i;
-              const isOther = selectedEcosistema !== null && !isSelected;
+              const isSelected = selectedEcosistema === i || clickedEcosistema === i;
+              const isOther = (selectedEcosistema !== null && !isSelected) || (clickedEcosistema !== null && clickedEcosistema !== i);
               return (
                 <motion.a
                   key={i}
@@ -609,7 +613,7 @@ export default function MarketingPage() {
                   animate={{
                     y: [0, -10, 0],
                     opacity: isOther ? 0.3 : 1, // Don't hide completely, just dim
-                    scale: isSelected ? 1.2 : 1,
+                    scale: clickedEcosistema === i ? 1.5 : isSelected ? 1.2 : 1,
                     zIndex: isSelected ? 30 : 10,
                   }}
                   transition={{
@@ -622,17 +626,23 @@ export default function MarketingPage() {
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // En desktop, abrir en nueva pestaña
-                    window.open(logo.url, '_blank');
+                    if (clickedEcosistema === i) {
+                      window.location.href = logo.url;
+                    } else {
+                      setClickedEcosistema(i);
+                    }
                   }}
                   onTouchEnd={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
-                    // En mobile, forzar la redirección en la misma pestaña para evitar bloqueos
-                    window.location.href = logo.url;
+                    if (clickedEcosistema === i) {
+                      window.location.href = logo.url;
+                    } else {
+                      setClickedEcosistema(i);
+                    }
                   }}
                   className="flex flex-col items-center justify-center cursor-pointer relative"
-                  style={{ pointerEvents: 'auto', textDecoration: 'none' }}
+                  style={{ pointerEvents: 'auto', textDecoration: 'none', display: clickedEcosistema !== null && clickedEcosistema !== i ? 'none' : 'flex' }}
                 >
                   {/* Glow halo behind the logo when selected */}
                   {isSelected && (
@@ -690,6 +700,7 @@ export default function MarketingPage() {
             })}
           </div>
 
+          {clickedEcosistema === null && (<>
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
              <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
@@ -773,6 +784,8 @@ export default function MarketingPage() {
       </section>
 
 
+          </>)}
+      {clickedEcosistema === null && (<>
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
@@ -785,6 +798,7 @@ export default function MarketingPage() {
          </div>
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
+      </>)}
       </main>
   );
 }
