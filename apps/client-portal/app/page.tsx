@@ -161,7 +161,7 @@ function EntryPortalContent() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-6 selection:bg-cyan-500/30 relative overflow-hidden">
+    <main className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 md:p-6 selection:bg-cyan-500/30 relative overflow-hidden">
       {/* Elementos Decorativos de Fondo */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/10 blur-[150px] rounded-full -mr-64 -mt-64" />
@@ -189,7 +189,7 @@ function EntryPortalContent() {
           </a>
         </motion.div>
 
-        <Card variant="glass" className="p-12 border-white/5 shadow-2xl relative overflow-hidden">
+        <Card variant="glass" className="p-6 md:p-12 border-white/5 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
           
           <div className="flex flex-col items-center mb-10 text-center">
@@ -223,14 +223,14 @@ function EntryPortalContent() {
                       value={dni}
                       onChange={(e) => setDni(e.target.value)}
                       placeholder="Identidad del Titular"
-                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-6 py-4 md:px-8 md:py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
                     />
                   </div>
 
                   <div className="space-y-3">
                     <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">ID de Contrato</label>
                     <div className="flex bg-slate-950/50 border border-white/5 rounded-2xl p-1.5 focus-within:border-cyan-500/40 focus-within:bg-slate-900 transition-all shadow-inner items-center">
-                      <div className="flex items-center gap-1 pl-4 pr-3 py-3 border-r border-white/5 bg-slate-900/40 rounded-xl select-none">
+                      <div className="flex items-center gap-1 pl-3 md:pl-4 pr-2 md:pr-3 py-3 border-r border-white/5 bg-slate-900/40 rounded-xl select-none">
                         {/* Prefijo */}
                         <select
                           value={selectedPrefix}
@@ -268,7 +268,7 @@ function EntryPortalContent() {
                         }}
                         placeholder="Nº de Contrato (ej: 30 o 0030)"
                         maxLength={6}
-                        className="flex-grow bg-transparent border-none text-white font-bold outline-none px-5 py-3.5 text-xs placeholder:text-slate-800 tracking-wider"
+                        className="flex-grow bg-transparent border-none text-white font-bold outline-none px-3 py-3 md:px-5 md:py-3.5 text-xs placeholder:text-slate-800 tracking-wider"
                       />
                     </div>
                   </div>
@@ -288,7 +288,7 @@ function EntryPortalContent() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="usuario@dominio.com"
-                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-6 py-4 md:px-8 md:py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
                     />
                   </div>
 
@@ -299,7 +299,7 @@ function EntryPortalContent() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-8 py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
+                      className="w-full bg-slate-950/50 border border-white/5 rounded-2xl px-6 py-4 md:px-8 md:py-5 text-white font-bold outline-none focus:border-cyan-500/40 focus:bg-slate-900 transition-all placeholder:text-slate-800 shadow-inner"
                     />
                   </div>
                 </motion.div>
@@ -330,7 +330,7 @@ function EntryPortalContent() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              className="w-full relative group overflow-hidden bg-white text-slate-950 font-black py-5 rounded-[1.8rem] transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)] active:shadow-none disabled:opacity-50"
+              className="w-full relative group overflow-hidden bg-white text-slate-950 font-black py-4 md:py-5 rounded-[1.8rem] transition-all shadow-[0_0_50px_rgba(255,255,255,0.1)] active:shadow-none disabled:opacity-50"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
               <span className="relative z-10 group-hover:text-white transition-colors uppercase tracking-[0.3em] text-[11px]">
