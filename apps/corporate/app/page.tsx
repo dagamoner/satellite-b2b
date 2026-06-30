@@ -464,11 +464,11 @@ export default function MarketingPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation (Sticky Header) */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled || clickedEcosistema !== null ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
         <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
           
           {/* Left Block - Small Logo */}
-          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital ? "invisible" : ""}`}>
+          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital || clickedEcosistema !== null ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
              <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                  <img 
                     src="/Logo WEB MR Tech.png" 
@@ -495,7 +495,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Right Block - Hablamos & Theme Toggle */}
-          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 ${isSatelital ? "invisible" : ""}`}>
+          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 ${isSatelital || clickedEcosistema !== null ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
              <a 
                href="#whatsapp-contact"
                className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
@@ -598,7 +598,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full relative transition-all duration-700 ${clickedEcosistema !== null ? "min-h-[70vh]" : "min-h-[12rem] md:min-h-[16rem]"}`}
+            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 bg-[#020617]/80 backdrop-blur-sm m-0" : "relative min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
