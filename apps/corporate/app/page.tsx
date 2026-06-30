@@ -468,7 +468,7 @@ export default function MarketingPage() {
         <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
           
           {/* Left Block - Small Logo */}
-          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital || clickedEcosistema !== null ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
+          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
              <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                  <img 
                     src="/Logo WEB MR Tech.png" 
@@ -598,7 +598,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 bg-[#020617]/80 backdrop-blur-sm m-0" : "relative min-h-[12rem] md:min-h-[16rem]"}`}
+            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0" : "relative min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
@@ -619,7 +619,7 @@ export default function MarketingPage() {
                   animate={{
                     y: [0, -10, 0],
                     opacity: isOther ? 0.3 : 1, // Don't hide completely, just dim
-                    scale: clickedEcosistema === i ? 1.5 : isSelected ? 1.2 : 1,
+                    scale: clickedEcosistema === i ? 2.2 : isSelected ? 1.2 : 1,
                     zIndex: isSelected ? 30 : 10,
                   }}
                   transition={{
