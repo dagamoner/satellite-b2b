@@ -418,26 +418,7 @@ export default function MarketingPage() {
         )}
       </AnimatePresence>
 
-      {/* Sello de Agua - Logo MR Technology */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.07 }}
-        transition={{ duration: 2 }}
-        aria-hidden="true"
-        className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center"
-      >
-        <img
-          src="/Logo_new.png"
-          alt=""
-          className="w-[520px] max-w-[60vw] select-none"
-          style={{
-            filter: 'grayscale(100%) brightness(3)',
-            mixBlendMode: 'screen',
-            WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
-            maskImage: 'radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 75%)',
-          }}
-        />
-      </motion.div>
+      {/* Sello de Agua Eliminado */}
 
       {/* Halo de luz adicional sobre el fondo, no invasivo */}
       <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
@@ -447,20 +428,8 @@ export default function MarketingPage() {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
         <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
           
-          {/* Left Block - Small Logo */}
-          <div className="flex-1 flex items-center justify-start hidden md:flex">
-             <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                 <img 
-                    src="/Logo WEB MR Tech.png" 
-                    alt="MR Technology" 
-                    className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ 
-                      mixBlendMode: 'screen',
-                      filter: 'brightness(1.1) contrast(1.1)'
-                    }}
-                 />
-             </div>
-          </div>
+          {/* Left Block - Empty */}
+          <div className="flex-1 flex items-center justify-start hidden md:flex"></div>
           
           {/* Center Block - Legend Image & Hablamos Button */}
           <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
@@ -500,23 +469,7 @@ export default function MarketingPage() {
                 </span>
              </button>
 
-             <a 
-               href="#whatsapp-contact"
-               className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
-             >
-               {/* Hover Glow halo */}
-               <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                 <img 
-                 src="/Hablamos.png" 
-                 alt="Hablamos" 
-                 className="h-20 md:h-24 w-auto object-contain relative z-10"
-                 style={{ 
-                   mixBlendMode: 'screen',
-                   WebkitMaskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)', 
-                   maskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)' 
-                 }}
-               />
-             </a>
+             {/* Hablamos Header Icon Eliminado */}
              <div className="pl-2 border-l border-white/20">
                <ThemeToggle />
              </div>
@@ -1209,85 +1162,6 @@ export default function MarketingPage() {
             </div>
          </div>
       </section>
-
-
-
-          {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
-          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
-             <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
-             <div className="flex flex-col items-center gap-6">
-               {/* WhatsApp (Top) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="https://wa.me/5492616518318" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                    <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                  </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
-               </div>
-               
-               <div className="flex gap-40 justify-center w-full relative">
-                 {/* LinkedIn (Left) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">www.linkedin.com/in/mrtech2026</span>
-                   <a 
-                      href="https://www.linkedin.com/in/mrtech2026" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
-                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
-                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                      <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                    </a>
-                 </div>
-
-                 {/* Instagram (Right) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <a 
-                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
-                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
-                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                      <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
-                    </a>
-                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
-                 </div>
-               </div>
-               
-               {/* Email (Bottom) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="mailto:mr@mrestudioinformatico.com" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
-                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#ef4444] opacity-40 animate-pulse pointer-events-none" />
-                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
-                    <img src="/logo mail.png" alt="Email" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110 relative z-10" />
-                  </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
-               </div>
-             </div>
-             
-             <div className="mt-12 flex flex-col items-center gap-2">
-                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
-                <p className="tracking-[0.2em] font-black text-[14px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
-             </div>
-          </div>
 
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
