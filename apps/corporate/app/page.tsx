@@ -636,6 +636,9 @@ export default function MarketingPage() {
                       window.location.href = logo.url;
                     } else {
                       setClickedEcosistema(i);
+                      setTimeout(() => {
+                        window.location.href = logo.url;
+                      }, 800);
                     }
                   }}
                   onTouchEnd={(e) => {
@@ -645,6 +648,9 @@ export default function MarketingPage() {
                       window.location.href = logo.url;
                     } else {
                       setClickedEcosistema(i);
+                      setTimeout(() => {
+                        window.location.href = logo.url;
+                      }, 800);
                     }
                   }}
                   className="flex flex-col items-center justify-center cursor-pointer relative"
