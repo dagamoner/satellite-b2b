@@ -807,6 +807,11 @@ export default function MarketingPage() {
             <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
          </div>
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
+         <p className="text-xs tracking-widest text-slate-500 mt-4">
+            <a href="https://github.com/dagamoner/satellite-b2b" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors">
+              https://github.com/dagamoner/satellite-b2b
+            </a>
+         </p>
       </footer>
       </>)}
       </main>
