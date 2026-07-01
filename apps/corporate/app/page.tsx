@@ -598,7 +598,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className={`flex flex-wrap items-center justify-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0" : "relative min-h-[12rem] md:min-h-[16rem]"}`}
+            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-end md:pr-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
