@@ -425,54 +425,65 @@ export default function MarketingPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation (Sticky Header) */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
-        <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
-          
-          {/* Left Block - Empty */}
-          <div className="flex-1 flex items-center justify-start hidden md:flex"></div>
-          
-          {/* Center Block - Legend Image & Hablamos Button */}
-          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
-             <div className="relative flex items-center justify-center">
-                 <img 
-                   src="/Transformacion.png" 
-                   alt="Transformación Digital Empresarial" 
-                   className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
-                   style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
-                 />
-             </div>
+      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
+        <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20">
+
+          {/* Left Block - MR Tech Logo */}
+          <div className="flex-1 flex items-center justify-start hidden md:flex">
+            <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <img
+                src="/Logo WEB MR Tech.png"
+                alt="MR Technology"
+                className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
+                style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
+              />
+            </div>
           </div>
 
-          {/* Right Block - Hablamos & Theme Toggle */}
-          <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
-             {/* ECOSISTEMA Header Button */}
-             <button
-                onClick={() => { window.location.href = "http://localhost:3000"; }}
-                className="relative group/eco shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 ml-2 mr-2"
-             >
-                <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
-                   <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
-                   <img 
-                      src="/logo_eco.jpg.jpg" 
-                      alt="Ecosistema"
-                      className="w-full h-full object-cover rounded-full relative z-10"
-                      style={{
-                         mixBlendMode: 'screen',
-                         WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)',
-                         maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)',
-                         filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)'
-                      }}
-                   />
-                </div>
-                <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">
-                   ECOSISTEMA
-                </span>
-             </button>
+          {/* Center Block - Transformacion Legend */}
+          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
+            <div className="relative flex items-center justify-center">
+              <img
+                src="/Transformacion.png"
+                alt="Transformación Digital Empresarial"
+                className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
+                style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
+              />
+            </div>
+          </div>
 
-             {/* Hablamos Header Icon Eliminado */}
-             <div className="pl-2 border-l border-white/20">
-               <ThemeToggle />
-             </div>
+          {/* Right Block - Ecosistema + Hablamos */}
+          <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
+            {/* ECOSISTEMA Header Button */}
+            <button
+              onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+              className="relative group/eco shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 mr-2"
+            >
+              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
+                <img
+                  src="/logo_eco.jpg.jpg"
+                  alt="Ecosistema"
+                  className="w-full h-full object-cover rounded-full relative z-10"
+                  style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)' }}
+                />
+              </div>
+              <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">ECOSISTEMA</span>
+            </button>
+
+            {/* Hablamos Button */}
+            <a
+              href="#whatsapp-contact"
+              className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
+            >
+              <div className="absolute inset-0 rounded-full bg-[#33E8FF] blur-xl opacity-0 group-hover/hablamos:opacity-60 transition-opacity duration-300 pointer-events-none scale-[1.5] z-0" />
+              <div className="relative z-10 flex flex-col items-center gap-1">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#33E8FF] bg-gradient-to-b from-[#33E8FF]/20 to-[#33E8FF]/5 flex items-center justify-center hover:shadow-[0_0_25px_rgba(51,232,255,0.8)] transition-all duration-300">
+                  <span className="text-[#33E8FF] text-lg font-black">💬</span>
+                </div>
+                <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">HABLAMOS</span>
+              </div>
+            </a>
           </div>
         </div>
       </nav>
