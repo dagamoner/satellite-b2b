@@ -18,7 +18,7 @@ export default function Page() {
         />
         
         <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 drop-shadow-[0_0_15px_rgba(56,189,248,0.5)] tracking-widest uppercase">
-          ¡PRÓXIMAMENTE!
+          PRÓXIMAMENTE ...
         </h1>
         
         <p className="text-xl md:text-2xl text-slate-300 font-light mt-4 mb-8 max-w-2xl">
