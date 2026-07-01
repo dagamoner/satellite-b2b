@@ -16,7 +16,7 @@
   }
 }
 
-body {
+html, body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -24,6 +24,52 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  /* Prevent horizontal overflow on all devices */
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ─── MOBILE-FIRST RESPONSIVE FIXES ─── */
+
+/* Ensure all images are responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent fixed-size decorative blobs from causing horizontal scroll */
+@media (max-width: 767px) {
+  /* Hide oversized decorative background halos on small screens */
+  .halo-blob {
+    display: none;
+  }
+
+  /* Navigation links in hero: reduce gaps and icon sizes */
+  .hero-nav-icons {
+    gap: 1rem;
+  }
+
+  /* Prevent text from overflowing cards */
+  .card-price-text {
+    font-size: clamp(1.25rem, 5vw, 1.875rem);
+  }
+}
+
+/* ─── TABLET PORTRAIT (768px – 1023px) ─── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Ensure 3-col antenna grid wraps nicely on tablet portrait */
+  .antenna-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ─── LANDSCAPE MOBILE (max-height: 500px, landscape) ─── */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Reduce hero top padding in landscape so content is visible */
+  .hero-section {
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+  }
 }
 
 @keyframes slide-right {

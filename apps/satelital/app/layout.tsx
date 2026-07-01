@@ -11,6 +11,12 @@ export const metadata: Metadata = {
   description: "Servicios de internet satelital de alta velocidad para empresas y sectores rurales. Partner oficial de Starlink en Mendoza.",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: {

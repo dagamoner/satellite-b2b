@@ -421,8 +421,8 @@ export default function MarketingPage() {
       {/* Sello de Agua Eliminado */}
 
       {/* Halo de luz adicional sobre el fondo, no invasivo */}
-      <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
+      <div className="fixed top-[-20%] left-[-10%] w-[40vw] max-w-[800px] h-[30vw] max-h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40vw] max-w-[600px] h-[40vw] max-h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation (Sticky Header) */}
       <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
@@ -499,7 +499,7 @@ export default function MarketingPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-8 pb-24 md:pt-10 md:pb-32 px-6 flex flex-col items-center text-center">
+      <section className="relative z-10 pt-8 pb-16 md:pt-10 md:pb-32 px-3 sm:px-6 flex flex-col items-center text-center w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -508,7 +508,7 @@ export default function MarketingPage() {
           style={{ pointerEvents: 'auto' }}
         >
           {/* Centered Navigation Links & Portals */}
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12 mt-40 mb-48 px-4 w-full max-w-6xl">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 md:gap-12 mt-28 sm:mt-40 mb-24 sm:mb-48 px-2 sm:px-4 w-full max-w-6xl">
             {/* Nav Links */}
             {["antenas", "planes", "consultoria"].map((id, index) => (
               <motion.a 
@@ -527,9 +527,9 @@ export default function MarketingPage() {
               >
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300" style={{ backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7' }} />
-                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className="w-auto h-24 md:h-28 object-contain relative z-10 transition-all duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)]" />
+                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className="w-auto h-16 sm:h-24 md:h-28 object-contain relative z-10 transition-all duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)]" />
                 </div>
-                <span className={`text-sm md:text-base font-black uppercase tracking-widest ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'} drop-shadow-md`}>
+                <span className={`text-[10px] sm:text-sm md:text-base font-black uppercase tracking-widest ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'} drop-shadow-md`}>
                   {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
                 </span>
               </motion.a>
@@ -546,9 +546,9 @@ export default function MarketingPage() {
             >
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300 bg-blue-500" />
-                  <img src="/card_portal.png" alt="Portal" className="w-auto h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
+                  <img src="/card_portal.png" alt="Portal" className="w-auto h-14 sm:h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
                 </div>
-                <span className="text-sm md:text-base font-black uppercase tracking-widest text-blue-400 drop-shadow-md">Portal Clientes</span>
+                <span className="text-[10px] sm:text-sm md:text-base font-black uppercase tracking-widest text-blue-400 drop-shadow-md">Portal Clientes</span>
             </motion.a>
 
             {/* Portal Admin */}
@@ -560,22 +560,22 @@ export default function MarketingPage() {
             >
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300 bg-indigo-500" />
-                  <img src="/card_noc.png" alt="Soporte" className="w-auto h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
+                  <img src="/card_noc.png" alt="Soporte" className="w-auto h-14 sm:h-20 md:h-24 object-contain relative z-10 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)] transition-all duration-500" />
                 </div>
-                <span className="text-sm md:text-base font-black uppercase tracking-widest text-indigo-400 drop-shadow-md">Portal Admin</span>
+                <span className="text-[10px] sm:text-sm md:text-base font-black uppercase tracking-widest text-indigo-400 drop-shadow-md">Portal Admin</span>
             </motion.a>
           </div>
 
-          <h1 id="conectividad-sin-fronteras" className="scroll-mt-32 text-2xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white drop-shadow-lg">
+          <h1 id="conectividad-sin-fronteras" className="scroll-mt-32 text-xl sm:text-2xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 md:mb-8 max-w-6xl leading-[1.2] md:leading-[1.1] text-white drop-shadow-lg px-2">
             <span className="text-[#33E8FF]">Conectividad</span> sin fronteras con <span className="text-[#33E8FF]">Starlink</span> para tu empresa
           </h1>
-          <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-3xl mb-8 md:mb-12 leading-relaxed font-bold px-4 md:px-0">
+          <p className="text-xs sm:text-sm md:text-base text-slate-700 dark:text-slate-300 max-w-3xl mb-6 md:mb-12 leading-relaxed font-bold px-4 md:px-0">
             Internet satelital de alta velocidad y máxima estabilidad. <span className="text-[#33E8FF]">Equipamiento</span> desde <span className="text-[#33E8FF]">$300.000</span> y <span className="text-[#33E8FF]">abonos</span> desde <span className="text-[#33E8FF]">$90.000</span> <span className="text-[#33E8FF]">FINANCIACION PROPIA</span>. Respaldado por soporte técnico presencial en toda Mendoza.
           </p>
 
           <CoverageSearch onCoverageConfirmed={(address) => openLeadModal("INFO", "Consulta por Cobertura", `Solicito información para instalación satelital en la dirección validada: ${address}`)} />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 w-full max-w-5xl mx-auto px-4 md:px-0 mt-8 relative z-10 justify-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 w-full max-w-5xl mx-auto px-4 md:px-0 mt-8 relative z-10 justify-center">
             {/* Card 1: Portal B2B Clientes */}
             <motion.a
               href="https://clientes.mrtechnology.it.com"
@@ -638,13 +638,13 @@ export default function MarketingPage() {
       
 
       {/* Hardware Section */}
-      <section id="antenas" className="relative z-10 py-10 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-6 -mt-16">
+      <section id="antenas" className="relative z-10 py-10 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-3 sm:px-6 -mt-16">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
             <h2 className="text-lg md:text-xl font-extrabold mb-10 text-center text-slate-900 dark:text-white drop-shadow-xl">
               Que tipo de proyecto queres realizar ? <span className="text-pink-500">HOGAREÑO, RESIDENCIAL, EMPRESA, MOVILIDAD</span> y en base al mismo podes elegir tu <span className="text-blue-500">antena a medida</span>
             </h2>
-            <div className="grid md:grid-cols-3 gap-8" onMouseLeave={() => setHoveredAntenna(null)}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8" onMouseLeave={() => setHoveredAntenna(null)}>
                <AnimatePresence mode="popLayout">
                {/* Mini X */}
                {(!hoveredAntenna || hoveredAntenna === 'mini-x') && (
@@ -1122,40 +1122,40 @@ export default function MarketingPage() {
       </section>
 
       {/* Planes Section */}
-      <section id="planes" className="relative z-10 pt-4 pb-32 px-6 max-w-7xl mx-auto">
+      <section id="planes" className="relative z-10 pt-4 pb-16 md:pb-32 px-3 sm:px-6 max-w-7xl mx-auto w-full">
 
          {/* Ideal Para Section */}
-         <div className="w-full relative z-10 pt-10 pb-8 flex flex-col items-center border-t border-slate-300/80 dark:border-slate-800/80 mt-16 max-w-[90rem] mx-auto overflow-hidden">
+         <div className="w-full relative z-10 pt-10 pb-8 flex flex-col items-center border-t border-slate-300/80 dark:border-slate-800/80 mt-8 md:mt-16 max-w-[90rem] mx-auto overflow-hidden">
              <img src="/ideal.png" alt="Ideal Para" className="w-full max-w-lg md:max-w-xl mx-auto h-auto object-contain mb-4 border-none bg-transparent drop-shadow-2xl" style={{ maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)' }} />
              
              {/* Slider container for continuous movement on mobile, flex on desktop */}
              <div className="w-full relative flex justify-center mt-6">
-                <div className="flex flex-wrap md:flex-nowrap justify-center gap-4 md:gap-8 lg:gap-12 px-4 max-w-full">
+                <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-8 lg:gap-12 px-2 sm:px-4 max-w-full">
                     <div className="relative group cursor-pointer flex justify-center items-center">
                        <div className="absolute inset-0 bg-yellow-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
-                    <img src="/ideal bodegas.png" alt="Bodegas" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    <img src="/ideal bodegas.png" alt="Bodegas" className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
                     </div>
                     <div className="relative group cursor-pointer flex justify-center items-center">
                        <div className="absolute inset-0 bg-blue-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
-                    <img src="/ideal hoteles.png" alt="Hoteles" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    <img src="/ideal hoteles.png" alt="Hoteles" className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
                     </div>
                     <div className="relative group cursor-pointer flex justify-center items-center">
                        <div className="absolute inset-0 bg-cyan-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
-                    <img src="/ideal empresariales.png" alt="Empresariales" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    <img src="/ideal empresariales.png" alt="Empresariales" className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
                     </div>
                     <div className="relative group cursor-pointer flex justify-center items-center">
                        <div className="absolute inset-0 bg-pink-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
-                    <img src="/ideal gastronomia.png" alt="Polos Gastronómicos" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    <img src="/ideal gastronomia.png" alt="Polos Gastronómicos" className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
                     </div>
                     <div className="relative group cursor-pointer flex justify-center items-center">
                        <div className="absolute inset-0 bg-green-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-150 z-0 pointer-events-none" />
-                    <img src="/ideal rurales.png" alt="Proyectos Rurales" className="w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
+                    <img src="/ideal rurales.png" alt="Proyectos Rurales" className="w-14 sm:w-20 md:w-28 lg:w-36 h-auto object-contain group-hover:scale-110 transition-transform duration-500 relative z-10 border-none bg-transparent drop-shadow-xl" style={{ maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 50%, transparent 100%)' }} />
                     </div>
                  </div>
              </div>
          </div>
  
-         <div className="mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-10 md:p-16 flex flex-col items-center justify-center gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group w-full text-center">
+         <div className="mt-8 md:mt-16 bg-gradient-to-br from-blue-100 via-slate-100 to-slate-200 dark:from-blue-900/60 dark:via-slate-900/80 dark:to-slate-950/90 backdrop-blur-xl border border-blue-500/40 rounded-3xl p-6 sm:p-10 md:p-16 flex flex-col items-center justify-center gap-6 md:gap-10 shadow-[0_0_60px_rgba(37,99,235,0.15)] relative overflow-hidden group w-full text-center">
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 dark:opacity-20 mix-blend-overlay" />
             <div className="relative z-10 w-full drop-shadow-md flex flex-col items-center">
                <h3 className="text-2xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] uppercase tracking-[0.1em] mb-6 w-full text-center" style={{ fontFamily: "'Orbitron', 'Syncopate', sans-serif" }}>PROYECTOS / SOLUCIONES EMPRESARIALES A MEDIDA</h3>
@@ -1177,7 +1177,7 @@ export default function MarketingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
+      <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-10 md:py-20 px-4 sm:px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
          
          <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>

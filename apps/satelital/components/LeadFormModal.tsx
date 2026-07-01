@@ -343,7 +343,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
         ) : (
           <>
             <div className="flex flex-col lg:flex-row min-h-[600px]">
-              <div className="lg:w-[35%] bg-slate-100/50 dark:bg-slate-950/40 p-8 md:p-12 border-r border-black/5 dark:border-white/5 flex flex-col justify-between relative overflow-hidden">
+              <div className="lg:w-[35%] bg-slate-100/50 dark:bg-slate-950/40 p-6 md:p-12 border-r border-black/5 dark:border-white/5 flex flex-col justify-between relative overflow-hidden">
                 <div className="relative z-10">
                   <div className="mb-8">
                     <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20 mb-6 inline-block">
@@ -388,8 +388,8 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
               </div>
 
               {/* Right Panel: Form */}
-              <div className="lg:w-[65%] p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
-                <div className="flex justify-between items-center mb-16">
+              <div className="lg:w-[65%] p-6 sm:p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
+                <div className="flex justify-between items-center mb-8 md:mb-16">
                   <div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">Datos de la Solicitud</h3>
                     <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
