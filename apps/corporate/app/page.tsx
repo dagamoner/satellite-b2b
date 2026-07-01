@@ -567,16 +567,12 @@ export default function MarketingPage() {
 
           {/* Legend - Leyenda ecosistema blended into the page */}
           <div className="relative mb-5 flex justify-center w-full">
-             <img
-               src="/Leyenda ecosistema.png"
-               alt="Ecosistema by MR Tech"
-               className="h-14 md:h-[4.5rem] w-auto object-contain relative z-10 pointer-events-none select-none"
-               style={{
-                 mixBlendMode: 'screen',
-                 WebkitMaskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-                 maskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-               }}
-             />
+             <div className="flex items-center justify-center relative z-10 pointer-events-none select-none h-14 md:h-[4.5rem]">
+               <h2 className="text-[1.5rem] md:text-[2.2rem] font-black tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.6)]">
+                 <span className="text-white">ECOSISTEMA BY </span><span className="text-[#33E8FF]">MR GATO</span>
+               </h2>
+             </div>
+
              {/* Sparkle constellation around the legend - white & teal */}
              <motion.div className="absolute -top-5 right-[30%] w-5 h-5 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 180, 360], scale: [0.4, 1.6, 0.4], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_18px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
              <motion.div className="absolute -top-3 left-[28%] w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [180, 360, 540], scale: [0.5, 1.5, 0.5], opacity: [0.2, 0.9, 0.2] }} transition={{ duration: 3.1, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_14px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
