@@ -468,7 +468,7 @@ export default function MarketingPage() {
         <div className="max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20">
           
           {/* Left Block - Small Logo */}
-          <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
+          <div className="flex-1 flex items-center justify-start hidden md:flex opacity-100 transition-opacity duration-500">
              <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                  <img 
                     src="/Logo WEB MR Tech.png" 
@@ -598,7 +598,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-end md:pr-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
+            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-start md:pl-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
