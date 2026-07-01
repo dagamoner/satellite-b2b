@@ -464,8 +464,8 @@ export default function MarketingPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* Navigation (Sticky Header) */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-700 ${scrolled || clickedEcosistema !== null ? "bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"}`}>
-        <div className={`max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20`}>
+      <nav className="fixed top-0 w-full z-50 transition-all duration-700 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
+        <div className="max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20">
           
           {/* Left Block - Small Logo */}
           <div className={`flex-1 flex items-center justify-start hidden md:flex ${isSatelital ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
