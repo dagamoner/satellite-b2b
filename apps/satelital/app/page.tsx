@@ -476,13 +476,17 @@ export default function MarketingPage() {
               href="#whatsapp-contact"
               className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
             >
-              <div className="absolute inset-0 rounded-full bg-[#33E8FF] blur-xl opacity-0 group-hover/hablamos:opacity-60 transition-opacity duration-300 pointer-events-none scale-[1.5] z-0" />
-              <div className="relative z-10 flex flex-col items-center gap-1">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-[#33E8FF] bg-gradient-to-b from-[#33E8FF]/20 to-[#33E8FF]/5 flex items-center justify-center hover:shadow-[0_0_25px_rgba(51,232,255,0.8)] transition-all duration-300">
-                  <span className="text-[#33E8FF] text-lg font-black">💬</span>
-                </div>
-                <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">HABLAMOS</span>
-              </div>
+              <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <img
+                src="/Hablamos.png"
+                alt="Hablamos"
+                className="h-24 md:h-28 w-auto object-contain relative z-10"
+                style={{
+                  mixBlendMode: 'screen',
+                  WebkitMaskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)',
+                  maskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)'
+                }}
+              />
             </a>
           </div>
         </div>
@@ -1187,3 +1191,4 @@ export default function MarketingPage() {
     </main>
   );
 }
+

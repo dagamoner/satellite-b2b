@@ -473,7 +473,7 @@ export default function MarketingPage() {
                  <img 
                     src="/Logo WEB MR Tech.png" 
                     alt="MR Technology" 
-                    className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
+                    className="w-28 md:w-40 object-contain hover:scale-105 transition-transform duration-300"
                     style={{ 
                       mixBlendMode: 'screen',
                       filter: 'brightness(1.1) contrast(1.1)'
@@ -505,7 +505,7 @@ export default function MarketingPage() {
                  <img 
                  src="/Hablamos.png" 
                  alt="Hablamos" 
-                 className="h-20 md:h-24 w-auto object-contain relative z-10"
+                 className="h-24 md:h-28 w-auto object-contain relative z-10"
                  style={{ 
                    mixBlendMode: 'screen',
                    WebkitMaskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)', 
@@ -806,3 +806,4 @@ export default function MarketingPage() {
       </main>
   );
 }
+
