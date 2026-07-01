@@ -730,7 +730,7 @@ export default function MarketingPage() {
                     <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
                     <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
                   </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-[#01c164] group-hover:drop-shadow-[0_0_12px_rgba(1,193,100,0.9)] font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
                </div>
                
                <div className="flex gap-40 justify-center w-full relative">
