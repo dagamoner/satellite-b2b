@@ -602,7 +602,7 @@ export default function MarketingPage() {
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
-              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "CONECTIVIDAD\nSATELITAL", url: "https://satelital.mrtechnology.it.com" },
+              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "prueba con\ndante", url: "https://satelital.mrtechnology.it.com" },
               { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", label: "TECNOLOGÍA\nINFORMÁTICA (IT)", url: "https://informatica.mrtechnology.it.com" },
               { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", label: "SOFTWARE ERP /\nSAAS EMPRESARIAL", url: "https://erp.mrtechnology.it.com" },
               { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", label: "INTELIGENCIA\nARTIFICIAL", url: "https://ia.mrtechnology.it.com" },
