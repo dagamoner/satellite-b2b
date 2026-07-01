@@ -559,23 +559,18 @@ export default function MarketingPage() {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-center text-[12px] text-white font-bold tracking-[0.15em] -mt-10 mb-5 max-w-3xl mx-auto px-4 uppercase"
+            className="text-center text-[12px] text-white font-bold tracking-[0.15em] -mt-12 mb-2 max-w-3xl mx-auto px-4 uppercase"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
             "Lo esencial de lo simple, el crecimiento tecnológico y digital de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> es nuestro gran <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">JUNTOS</span> podemos lograrlo."
           </motion.p>
 
           {/* Legend - Leyenda ecosistema blended into the page */}
-          <div className="relative mb-5 flex justify-center w-full">
+          <div className="relative -mt-18 md:-mt-[10rem] mb-2 flex justify-center w-full">
              <img
                src="/Leyenda ecosistema.png"
                alt="Ecosistema by MR Tech"
-               className="h-14 md:h-[4.5rem] w-auto object-contain relative z-10 pointer-events-none select-none"
-               style={{
-                 mixBlendMode: 'screen',
-                 WebkitMaskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-                 maskImage: 'radial-gradient(ellipse 88% 82% at 50% 50%, black 60%, transparent 100%)',
-               }}
+               className="h-[24rem] md:h-[30rem] w-auto object-contain relative z-10 pointer-events-none select-none mix-blend-screen"
              />
 
              {/* Sparkle constellation around the legend - white & teal */}
@@ -591,7 +586,7 @@ export default function MarketingPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3 }}
-            className="text-justify text-white text-[12px] font-bold tracking-[0.1em] md:tracking-wide mb-5 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
+            className="text-justify text-white text-[12px] font-bold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
             style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
           >
             A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>. Porque tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span> es el motor de nuestro <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">TRABAJO</span>.
@@ -599,7 +594,7 @@ export default function MarketingPage() {
           </>)}
           {/* Click-outside wrapper: clicking the background area deselects */}
           <div
-            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mb-20 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-start md:pl-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
+            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mt-0 mb-12 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-start md:pl-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
@@ -715,7 +710,7 @@ export default function MarketingPage() {
 
           {clickedEcosistema === null && (<>
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
-          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-12 mb-20 w-full relative z-20 scroll-mt-24">
+          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-14 md:-mt-18 mb-16 w-full relative z-20 scroll-mt-24">
              <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
              <div className="flex flex-col items-center gap-6">
                {/* WhatsApp (Top) */}
