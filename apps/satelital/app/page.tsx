@@ -508,7 +508,7 @@ export default function MarketingPage() {
           style={{ pointerEvents: 'auto' }}
         >
           {/* Centered Navigation Links & Portals */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 md:gap-12 mt-28 sm:mt-40 mb-24 sm:mb-48 px-2 sm:px-4 w-full max-w-6xl">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 md:gap-12 mt-16 sm:mt-24 mb-12 sm:mb-24 px-2 sm:px-4 w-full max-w-6xl">
             {/* Nav Links */}
             {["antenas", "planes", "consultoria"].map((id, index) => (
               <motion.a 
@@ -527,7 +527,7 @@ export default function MarketingPage() {
               >
                 <div className="relative">
                   <div className="absolute inset-0 rounded-full blur-2xl pointer-events-none opacity-0 group-hover:opacity-85 transition-opacity duration-300" style={{ backgroundColor: id === 'antenas' ? '#3b82f6' : id === 'planes' ? '#14b8a6' : '#a855f7' }} />
-                  <img src={`/nav_${id === 'antenas' ? 'equipos' : id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className="w-auto h-16 sm:h-24 md:h-28 object-contain relative z-10 transition-all duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)]" />
+                  <img src={id === 'antenas' ? '/equipos.png' : `/nav_${id === 'planes' ? 'planes' : 'servicios'}.png`} alt={id} className="w-auto h-16 sm:h-24 md:h-28 object-contain relative z-10 transition-all duration-500 drop-shadow-[0_8px_15px_rgba(0,0,0,0.4)]" />
                 </div>
                 <span className={`text-[10px] sm:text-sm md:text-base font-black uppercase tracking-widest ${id === 'antenas' ? 'text-blue-400' : id === 'planes' ? 'text-teal-400' : 'text-purple-400'} drop-shadow-md`}>
                   {id === 'antenas' ? 'Equipos' : id === 'planes' ? 'Planes' : 'Servicios IT'}
