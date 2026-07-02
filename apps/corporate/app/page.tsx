@@ -480,7 +480,7 @@ export default function MarketingPage() {
           </div>
 
           {/* Right Block - Hablamos & Theme Toggle */}
-          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 ${isSatelital || clickedEcosistema !== null ? "invisible opacity-0" : "opacity-100"} transition-opacity duration-500`}>
+          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 opacity-100 transition-opacity duration-500`}>
              <a 
                href="#whatsapp-contact"
                className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
@@ -787,8 +787,8 @@ export default function MarketingPage() {
              </div>
              
              <div className="mt-12 flex flex-col items-center gap-2">
-                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">Ciudad de Mendoza - Zona Cuyo</p>
-                <p className="tracking-[0.2em] font-black text-[14px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
+                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">ZONA CUYO - Provincia de Mendoza</p>
+                <p className="tracking-[0.2em] font-black text-[18px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
              </div>
           </div>
 
