@@ -238,22 +238,7 @@ export default function MarketingPage() {
     orbitStartRef.current = Date.now();
   }, []);
 
-  // Action when logos are selected
-  useEffect(() => {
-    if (clickedEcosistema !== null) {
-      const url = [
-        "https://satelital.mrtechnology.it.com",
-        "https://informatica.mrtechnology.it.com",
-        "https://erp.mrtechnology.it.com",
-        "https://ia.mrtechnology.it.com",
-        "https://cyber.mrtechnology.it.com"
-      ][clickedEcosistema];
-      const timer = setTimeout(() => {
-        if (url) window.location.href = url;
-      }, 7000);
-      return () => clearTimeout(timer);
-    }
-  }, [clickedEcosistema]);
+  // The action when logos are selected is now handled directly in the onClick/onTouchEnd handlers.
 
   // Automatic effect: when satellite passes Earth zone (~42s into each 120s cycle)
   useEffect(() => {
@@ -559,7 +544,7 @@ export default function MarketingPage() {
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-center text-[12px] text-white font-bold tracking-[0.15em] -mt-12 mb-2 max-w-3xl mx-auto px-4 uppercase"
+            className="text-center text-[12px] text-white font-extrabold tracking-[0.15em] -mt-12 mb-2 max-w-3xl mx-auto px-4 uppercase"
             style={{ fontFamily: "'Inter', sans-serif" }}
           >
             "Lo esencial de lo simple, el crecimiento tecnológico y digital de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> es nuestro gran <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">JUNTOS</span> podemos lograrlo."
@@ -586,7 +571,7 @@ export default function MarketingPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.3 }}
-            className="text-justify text-white text-[12px] font-bold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
+            className="text-justify text-white text-[12px] font-extrabold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
             style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
           >
             A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>. Porque tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span> es el motor de nuestro <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">TRABAJO</span>.
@@ -606,6 +591,21 @@ export default function MarketingPage() {
             ].map((logo, i) => {
               const isSelected = selectedEcosistema === i || clickedEcosistema === i;
               const isOther = (selectedEcosistema !== null && !isSelected) || (clickedEcosistema !== null && clickedEcosistema !== i);
+              
+              let tooltipPositionClass = "left-full ml-4 md:ml-8";
+              let motionProps = {
+                initial: { opacity: 0, x: -20, y: 0 },
+                animate: { opacity: 1, x: 0, y: 0 }
+              };
+              
+              if (i === 2 || i === 3 || i === 4) {
+                tooltipPositionClass = "right-full mr-4 md:mr-8";
+                motionProps = {
+                   initial: { opacity: 0, x: 20, y: 0 },
+                   animate: { opacity: 1, x: 0, y: 0 }
+                };
+              }
+
               return (
                 <motion.a
                   key={i}
@@ -613,13 +613,13 @@ export default function MarketingPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   animate={{
-                    y: [0, -10, 0],
+                    y: isSelected ? 0 : [0, -10, 0],
                     opacity: isOther ? 0.3 : 1, // Don't hide completely, just dim
                     scale: clickedEcosistema === i ? 2.2 : isSelected ? 1.2 : 1,
                     zIndex: isSelected ? 30 : 10,
                   }}
                   transition={{
-                    y: { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
+                    y: isSelected ? { duration: 0.4, ease: "easeOut" } : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
                     opacity: { duration: 0.4, ease: "easeInOut" },
                     scale: { duration: 0.45, ease: "easeOut" },
                   }}
@@ -632,9 +632,10 @@ export default function MarketingPage() {
                       window.location.href = logo.url;
                     } else {
                       setClickedEcosistema(i);
+                      const delay = 15000;
                       setTimeout(() => {
                         window.location.href = logo.url;
-                      }, 800);
+                      }, delay);
                     }
                   }}
                   onTouchEnd={(e) => {
@@ -644,9 +645,10 @@ export default function MarketingPage() {
                       window.location.href = logo.url;
                     } else {
                       setClickedEcosistema(i);
+                      const delay = 15000;
                       setTimeout(() => {
                         window.location.href = logo.url;
-                      }, 800);
+                      }, delay);
                     }
                   }}
                   className="flex flex-col items-center justify-center cursor-pointer relative"
@@ -685,22 +687,26 @@ export default function MarketingPage() {
                     }}
                   />
                   {/* Mensajes especiales para Logos seleccionados */}
-                  {isSelected && (i === 0 || i === 1 || i === 2) && (
+                  {isSelected && (
                     <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="absolute left-full ml-4 md:ml-8 w-56 md:w-72 text-white text-[12px] font-bold text-justify z-40 bg-transparent p-4 rounded-lg transition-all duration-500 cursor-default backdrop-blur-sm pointer-events-none"
+                      {...motionProps}
+                      className={`absolute ${tooltipPositionClass} w-[280px] md:w-[420px] p-0 z-40 bg-transparent rounded-xl transition-all duration-500 cursor-default pointer-events-none`}
                     >
-                      {/* Fondo difuminado verde petróleo y blanco inmediato */}
-                      <div className="absolute inset-0 bg-[#00a2b8]/50 blur-xl rounded-lg pointer-events-none -z-10" />
-                      <div className="absolute inset-0 bg-white/10 rounded-lg pointer-events-none -z-10" />
-                      
-                      <div className="relative z-10 drop-shadow-md pb-2">
-                        {i === 0 && "Tu EMPRESA tiene problemas de conectividad? MR Tech comercializa, implementa, posee planes para brindar la solución a tus requerimientos."}
-                        {i === 1 && "Necesita TU EMPRESA tecnologia ? Desde MR Tech te podemos ofrecer todo lo realcionado a este aspecto y brindar soluciones a todos tus problemas."}
-                        {i === 2 && "Necesitas un soft o con el que operas no te da los resultados que TU EMPRESA necesita ? Desde MR Tech te podemos ofrecer el soft a medida de tus requerimientos."}
+                      <div className="relative z-10 pb-2 flex justify-center items-center w-full">
+                         <div className="w-full flex justify-center">
+                           <img 
+                             src={
+                               i === 0 ? (clickedEcosistema === 0 ? "/Problemas de conectividad.png" : "/Problemas de conectividad inicial.png") :
+                               i === 1 ? "/Problemas con Tecnologia.png" :
+                               i === 2 ? "/Problemas Soft.png" :
+                               i === 3 ? "/Problemas IA.png" :
+                               "/Problemas seguros.png"
+                             }
+                             alt="Información del Ecosistema" 
+                             className="w-full h-auto object-contain rounded-xl transition-all duration-700 shadow-[0_0_20px_rgba(51,232,255,0.2)]" 
+                           />
+                         </div>
                       </div>
-                      <div className="text-[#33E8FF] mt-2 font-black animate-pulse text-center w-full block">Clic para ingresar</div>
                     </motion.div>
                   )}
                 </motion.a>
@@ -708,9 +714,9 @@ export default function MarketingPage() {
             })}
           </div>
 
-          {clickedEcosistema === null && (<>
+          {(clickedEcosistema === null && selectedEcosistema === null) && (<>
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
-          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-14 md:-mt-18 mb-16 w-full relative z-20 scroll-mt-24">
+          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
              <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
              <div className="flex flex-col items-center gap-6">
                {/* WhatsApp (Top) */}
@@ -791,7 +797,7 @@ export default function MarketingPage() {
 
       </section>
 
-      {clickedEcosistema === null && (<>
+      {(clickedEcosistema === null && selectedEcosistema === null) && (<>
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
