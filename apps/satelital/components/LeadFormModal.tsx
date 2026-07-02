@@ -387,7 +387,9 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
               <div className="lg:w-[65%] p-6 sm:p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-8 md:mb-16">
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">DATOS DE SOLICITUD INICIALES:</h3>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">
+                      {planInfo.type === 'QUOTE' ? 'DATOS DE SOLICITUD INICIAL DE RELEVAMIENTO:' : 'DATOS DE SOLICITUD INICIALES:'}
+                    </h3>
                     <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
                   </div>
                   <button 

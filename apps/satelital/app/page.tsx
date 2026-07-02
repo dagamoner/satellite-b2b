@@ -583,7 +583,7 @@ export default function MarketingPage() {
       
 
       {/* Hardware Section */}
-      <section id="antenas" className="relative z-10 py-10 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-3 sm:px-6 -mt-16">
+      <section id="antenas" className="relative z-10 py-10 bg-white/40 dark:bg-[#020617]/40 backdrop-blur-xl border-y border-slate-300/80 dark:border-slate-800/80 px-3 sm:px-6 -mt-28">
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
             <h2 className="text-lg md:text-xl font-extrabold mb-10 text-center text-slate-900 dark:text-white drop-shadow-xl">
@@ -1070,7 +1070,7 @@ export default function MarketingPage() {
       <section id="planes" className="relative z-10 pt-4 pb-16 md:pb-32 px-3 sm:px-6 max-w-7xl mx-auto w-full">
 
          {/* Ideal Para Section */}
-         <div className="w-full relative z-10 pt-10 pb-8 flex flex-col items-center border-t border-slate-300/80 dark:border-slate-800/80 mt-8 md:mt-16 max-w-[90rem] mx-auto overflow-hidden">
+         <div className="w-full relative z-10 pt-4 pb-8 flex flex-col items-center border-t border-slate-300/80 dark:border-slate-800/80 mt-2 md:mt-4 max-w-[90rem] mx-auto overflow-hidden">
              <img src="/ideal.png" alt="Ideal Para" className="w-full max-w-lg md:max-w-xl mx-auto h-auto object-contain mb-4 border-none bg-transparent drop-shadow-2xl" style={{ maskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 50%, black 50%, transparent 100%)' }} />
              
              {/* Slider container for continuous movement on mobile, flex on desktop */}
