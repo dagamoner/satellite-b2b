@@ -243,11 +243,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
       return;
     }
 
-    if (formData.cbu && formData.cbu.length !== 22) {
-      alert("El CBU ingresado es inválido. Debe contener exactamente 22 números.");
-      setLoading(false);
-      return;
-    }
+
 
     try {
       const normalizedDni = formData.dni.replace(/\D/g, "");
@@ -347,7 +343,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <div className="relative z-10">
                   <div className="mb-8">
                     <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20 mb-6 inline-block">
-                      {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'Configuración de Enlace'}
+                      {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'ADQUISICIÓN INICIAL'}
                     </span>
                     <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight mb-8">
                       {planInfo.title}
@@ -355,7 +351,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-blue-600 mb-10 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)]" />
                   </div>
                   
-                  <p className="text-slate-400 text-sm font-medium leading-relaxed mb-10">
+                  <p className="text-white text-sm font-bold leading-relaxed mb-10">
                     {planInfo.description}
                   </p>
 
@@ -391,7 +387,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
               <div className="lg:w-[65%] p-6 sm:p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
                 <div className="flex justify-between items-center mb-8 md:mb-16">
                   <div>
-                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">Datos de la Solicitud</h3>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white uppercase tracking-[0.3em] leading-none mb-3">DATOS DE SOLICITUD INICIALES:</h3>
                     <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
                   </div>
                   <button 
@@ -406,34 +402,10 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                 <form onSubmit={handleSubmit} className="space-y-8 flex-1">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-slate-700 dark:text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre Completo</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.name}
-                        onChange={e => setFormData({...formData, name: e.target.value})}
-                        placeholder="Juan Pérez"
-                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-bold shadow-2xl"
-                      />
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-slate-700 dark:text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.dni}
-                        onChange={e => setFormData({...formData, dni: e.target.value})}
-                        placeholder="20345678901"
-                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-mono font-bold shadow-2xl"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                    <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Razón Social</label>
                       <input 
                         type="text" 
+                        required
                         value={formData.razonSocial}
                         onChange={e => setFormData({...formData, razonSocial: e.target.value})}
                         placeholder="Empresa S.A."
@@ -444,6 +416,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre de Fantasía</label>
                       <input 
                         type="text" 
+                        required
                         value={formData.nombreFantasia}
                         onChange={e => setFormData({...formData, nombreFantasia: e.target.value})}
                         placeholder="Mi Negocio"
@@ -454,41 +427,26 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CBU</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
                       <input 
                         type="text" 
-                        value={formData.cbu}
-                        onChange={e => setFormData({...formData, cbu: e.target.value.replace(/\D/g, "")})}
-                        placeholder="0000000000000000000000"
-                        className={`w-full bg-black/40 border ${formData.cbu.length > 0 && formData.cbu.length !== 22 ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10' : 'border-white/5 focus:border-cyan-500/50 focus:ring-cyan-500/5'} text-white rounded-2xl px-8 py-5 focus:ring-8 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl`}
+                        required
+                        value={formData.dni}
+                        onChange={e => setFormData({...formData, dni: e.target.value})}
+                        placeholder="20345678901"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-mono font-bold shadow-2xl"
                       />
-                      {formData.cbu.length > 0 && formData.cbu.length < 22 && (
-                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ Faltan {22 - formData.cbu.length} números para los 22 requeridos.</p>
-                      )}
-                      {formData.cbu.length > 22 && (
-                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ Sobran {formData.cbu.length - 22} números. Un CBU tiene exactamente 22.</p>
-                      )}
-                      {formData.cbu.length === 22 && (
-                        <p className="text-emerald-400 text-[10px] uppercase font-bold ml-2">✅ CBU Correcto (22 dígitos).</p>
-                      )}
                     </div>
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Categoría</label>
-                      <select 
-                        value={formData.clientCategory}
-                        onChange={e => setFormData({...formData, clientCategory: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
-                      >
-                        <option value="HOGAREÑO">HOGAREÑO</option>
-                        <option value="HOGAREÑO RESIDENCIAL">HOGAREÑO RESIDENCIAL</option>
-                        <option value="LOCAL COMERCIAL">LOCAL COMERCIAL</option>
-                        <option value="LOCAL">LOCAL</option>
-                        <option value="GASTRONOMICO">GASTRONOMICO</option>
-                        <option value="PYMES">PYMES</option>
-                        <option value="EMPRESAS">EMPRESAS</option>
-                        <option value="BODEGAS">BODEGAS</option>
-                        <option value="HOTELES">HOTELES</option>
-                      </select>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre y Apellido Completo</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.name}
+                        onChange={e => setFormData({...formData, name: e.target.value})}
+                        placeholder="Juan Pérez"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
                     </div>
                   </div>
 
@@ -496,6 +454,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     <div className="space-y-4">
                       <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Rubro</label>
                       <select 
+                        required
                         value={formData.rubro}
                         onChange={e => setFormData({...formData, rubro: e.target.value})}
                         className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
@@ -508,162 +467,23 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                         <option value="RETAIL">RETAIL</option>
                       </select>
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Email de Contacto</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Mail</label>
                       <input 
                         type="email" 
                         required
                         pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-                        title="El correo debe contener el símbolo '@' y un dominio válido (ej. correo@empresa.com)"
                         value={formData.email}
                         onChange={e => setFormData({...formData, email: e.target.value.trim()})}
                         placeholder="correo@empresa.com"
                         className={`w-full bg-black/40 border ${formData.email.length > 0 && !/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10' : 'border-white/5 focus:border-cyan-500/50 focus:ring-cyan-500/5'} text-white rounded-2xl px-8 py-5 focus:ring-8 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl`}
                       />
-                      {formData.email.length > 0 && !formData.email.includes("@") && (
-                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ El correo debe contener el símbolo '@'.</p>
-                      )}
-                      {formData.email.length > 0 && formData.email.includes("@") && !/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) && (
-                        <p className="text-red-400 text-[10px] uppercase font-bold ml-2">❌ El correo parece estar incompleto (ej. falta el .com o el dominio).</p>
-                      )}
-                      {/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) && (
-                        <p className="text-emerald-400 text-[10px] uppercase font-bold ml-2">✅ Email válido.</p>
-                      )}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Antena</label>
-                      <select 
-                        required
-                        value={formData.antennaModel}
-                        onChange={handleAntennaChange}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
-                      >
-                        <option value="" disabled>Seleccionar Antena...</option>
-                        {ANTENA_OPTIONS.map(opt => (
-                          <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Plan Seleccionado</label>
-                      <select 
-                        required
-                        disabled={!formData.antennaModel}
-                        value={formData.planName}
-                        onChange={e => setFormData({...formData, planName: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px] disabled:opacity-50"
-                      >
-                        {!formData.antennaModel && <option value="" disabled>Primero seleccione antena...</option>}
-                        {formData.antennaModel && getPlanOptions(formData.antennaModel).map(opt => (
-                          <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Instalación</label>
-                      <select 
-                        required
-                        disabled={!formData.antennaModel}
-                        value={formData.installationPrice}
-                        onChange={e => setFormData({...formData, installationPrice: e.target.value})}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px] disabled:opacity-50"
-                      >
-                        {!formData.antennaModel && <option value="" disabled>Primero seleccione antena...</option>}
-                        {formData.antennaModel && getInstallationOptions(formData.antennaModel).map(opt => (
-                          <option key={opt.value} value={opt.value}>{opt.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Provincia</label>
-                      <select 
-                        required
-                        value={formData.province}
-                        onChange={e => {
-                          const prov = e.target.value;
-                          const deptos = DEPARTAMENTOS[prov] || [];
-                          setFormData({...formData, province: prov, departamento: deptos.length > 0 ? (deptos[0] || "") : ""});
-                        }}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
-                      >
-                        <option value="" disabled>Seleccionar Provincia</option>
-                        {PROVINCIAS.map(p => (
-                          <option key={p} value={p}>{p}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Departamento</label>
-                      {DEPARTAMENTOS[formData.province] ? (
-                        <select 
-                          required
-                          value={formData.departamento}
-                          onChange={e => setFormData({...formData, departamento: e.target.value})}
-                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none text-[11px]"
-                        >
-                          <option value="" disabled>Seleccionar Depto</option>
-                          {(DEPARTAMENTOS[formData.province] || []).map(d => (
-                            <option key={d} value={d}>{d}</option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input 
-                          type="text" 
-                          required
-                          value={formData.departamento}
-                          onChange={e => setFormData({...formData, departamento: e.target.value})}
-                          placeholder="Ingrese su departamento"
-                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl text-[11px]"
-                        />
-                      )}
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">
-                        Localidad {loadingLocalities && <span className="text-cyan-500 ml-2 animate-pulse text-[10px]">Cargando...</span>}
-                      </label>
-                      <select 
-                        required
-                        value={formData.city}
-                        onChange={e => setFormData({...formData, city: e.target.value})}
-                        disabled={!formData.province || loadingLocalities}
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none disabled:opacity-50 text-[11px]"
-                      >
-                        <option value="" disabled>Seleccionar Localidad</option>
-                        {localities.map(c => (
-                          <option key={c} value={c}>{c}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {formData.city === "Otra localidad" && (
-                    <div className="grid grid-cols-1 gap-10 animate-in slide-in-from-top-2">
-                      <div className="space-y-4">
-                        <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Especifique Localidad</label>
-                        <input 
-                          type="text" 
-                          required
-                          value={formData.otherCity}
-                          onChange={e => setFormData({...formData, otherCity: e.target.value})}
-                          placeholder="Ingrese el nombre de su localidad"
-                          className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="grid grid-cols-1 gap-10">
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Teléfono Móvil</label>
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Celular</label>
                       <input 
                         type="tel" 
                         required
@@ -675,58 +495,8 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="space-y-4 md:col-span-1">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Dirección (Calle)</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.street}
-                        onChange={e => setFormData({...formData, street: e.target.value})}
-                        placeholder="Av. San Martín"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
-                      />
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Número</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.houseNumber}
-                        onChange={e => setFormData({...formData, houseNumber: e.target.value})}
-                        placeholder="1234"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
-                      />
-                    </div>
-                    <div className="space-y-4">
-                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">C.P.</label>
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.zipCode}
-                        onChange={e => setFormData({...formData, zipCode: e.target.value})}
-                        placeholder="M5500"
-                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-mono font-bold shadow-2xl"
-                      />
-                    </div>
-                  </div>
-
-                  {planInfo.type === 'QUOTE' && (
-                    <div className="p-6 rounded-3xl bg-blue-500/5 border border-blue-500/20 space-y-4 animate-in slide-in-from-bottom-4 duration-500">
-                      <div className="flex items-center gap-3 mb-2">
-                        <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        <h4 className="text-xs font-black text-white uppercase tracking-widest">Coordenadas del Proyecto</h4>
-                      </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input placeholder="Latitud (Opcional)" className="w-full bg-black/60 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs font-mono outline-none focus:border-blue-500" />
-                        <input placeholder="Longitud (Opcional)" className="w-full bg-black/60 border border-slate-800 text-white rounded-xl px-4 py-2 text-xs font-mono outline-none focus:border-blue-500" />
-                      </div>
-                      <p className="text-[10px] text-slate-500 italic">Si conoce la ubicación exacta, nos ayuda a realizar el pre-estudio de factibilidad satelital.</p>
-                    </div>
-                  )}
-
                   <div className="space-y-4">
-                    <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Observaciones / Detalles</label>
+                    <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Observaciones</label>
                     <textarea 
                       rows={4}
                       value={formData.message}
@@ -753,7 +523,7 @@ export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormMod
 
                   <div className="flex items-center justify-center gap-3 opacity-40 hover:opacity-100 transition-opacity duration-500">
                     <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Seguridad de Grado Militar · MR Technology</span>
+                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">CIBERSEGURIDAD - MR Tech</span>
                   </div>
                 </form>
               </div>
