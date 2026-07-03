@@ -605,8 +605,8 @@ export default function MarketingPage() {
           </AnimatePresence>
           {/* Logos row — hover limpio, escala suave, tooltip a la derecha */}
           <div
-            className="relative flex items-center justify-center gap-6 md:gap-12 px-4 mb-12 w-full z-30"
-            style={{ minHeight: '20rem' }}
+            className="relative flex items-center justify-center gap-6 md:gap-12 w-full z-30"
+            style={{ minHeight: '22rem', padding: '2.5rem 4rem' }}
             onMouseLeave={() => setSelectedEcosistema(null)}
           >
             {[
@@ -621,22 +621,26 @@ export default function MarketingPage() {
               const isOther = anySelected && !isSelected;
 
               return (
-                <motion.div
+                <div
                   key={i}
                   className="relative flex-shrink-0"
+                  style={{ padding: '1rem' }}
+                  onMouseEnter={() => setSelectedEcosistema(i)}
+                >
+                <motion.div
+                  className="relative"
                   animate={{
-                    scale: isSelected ? 1.6 : 1,
+                    scale: isSelected ? 1.55 : 1,
                     opacity: isOther ? 0 : 1,
                     y: isSelected ? 0 : [0, -8, 0],
                   }}
                   transition={{
-                    scale: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+                    scale: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
                     opacity: { duration: 0.4, ease: 'easeInOut' },
                     y: isSelected
                       ? { duration: 0.5 }
                       : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
                   }}
-                  onMouseEnter={() => setSelectedEcosistema(i)}
                   style={{ pointerEvents: isOther ? 'none' : 'auto' }}
                 >
                   {/* Glow halo cuando está seleccionado */}
@@ -709,6 +713,7 @@ export default function MarketingPage() {
                     )}
                   </AnimatePresence>
                 </motion.div>
+                </div>
               );
             })}
           </div>
