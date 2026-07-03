@@ -569,7 +569,10 @@ export default function MarketingPage() {
           </>)}
 
           {/* Legend - Leyenda ecosistema - always visible above logos */}
-          <div className="relative mb-2 flex justify-center w-full" style={{ marginTop: selectedEcosistema !== null ? '-4rem' : '-10rem', transition: 'margin-top 0.8s cubic-bezier(0.4,0,0.2,1)' }}>
+          <div
+            className="relative mb-0 flex justify-center w-full"
+            style={{ marginTop: selectedEcosistema !== null ? '-2rem' : '-10rem', transition: 'margin-top 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+          >
              <img
                src="/Leyenda ecosistema.png"
                alt="Ecosistema by MR Tech"
@@ -600,15 +603,11 @@ export default function MarketingPage() {
               </motion.p>
             )}
           </AnimatePresence>
-          {/* Logos row — always centered, selected logo expands in-place with tooltip */}
+          {/* Logos row — centrados, logo seleccionado se expande en su lugar */}
           <div
-            className="flex items-center justify-center gap-8 md:gap-14 px-4 mb-12 w-full relative min-h-[16rem] md:min-h-[20rem] z-30"
-            style={{
-              marginTop: selectedEcosistema !== null ? '0.5rem' : '0rem',
-              transition: 'all 0.7s cubic-bezier(0.4,0,0.2,1)',
-              paddingLeft: selectedEcosistema !== null ? '18%' : '0'
-            }}
-            onClick={() => setSelectedEcosistema(null)}
+            className="flex items-center justify-center gap-6 md:gap-10 px-4 mb-12 w-full relative z-30"
+            style={{ minHeight: '22rem', transition: 'all 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+            onMouseLeave={() => setSelectedEcosistema(null)}
           >
             {[
               { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "CONECTIVIDAD\nSATELITAL", url: "https://satelital.mrtechnology.it.com" },
@@ -618,84 +617,92 @@ export default function MarketingPage() {
               { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", label: "CIBERSEGURIDAD", url: "https://cyber.mrtechnology.it.com" }
             ].map((logo, i) => {
               const isSelected = selectedEcosistema === i || clickedEcosistema === i;
-              const isOther = (selectedEcosistema !== null && !isSelected) || (clickedEcosistema !== null && clickedEcosistema !== i);
-              
-              // Always position tooltip to the right for the selected item since the logo will be on the left
-              let tooltipPositionClass = "left-full ml-8 md:ml-12";
-              let motionProps = {
-                initial: { opacity: 0, x: -20, y: 0 },
-                animate: { opacity: 1, x: 0, y: 0 }
-              };
+              const anySelected = selectedEcosistema !== null || clickedEcosistema !== null;
+              const isOther = anySelected && !isSelected;
 
               return (
-                <motion.a
+                <div
                   key={i}
-                  href={logo.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  animate={{
-                    y: isSelected ? 0 : [0, -8, 0],
+                  className="relative flex items-center flex-shrink-0"
+                  style={{
+                    transition: 'all 0.6s cubic-bezier(0.4,0,0.2,1)',
                     opacity: isOther ? 0 : 1,
-                    scale: isSelected ? 1.5 : 1,
+                    pointerEvents: isOther ? 'none' : 'auto',
+                    // Cuando hay seleccionado y NO es este, colapsar el ancho para que no empuje
+                    width: isOther ? '0px' : undefined,
+                    overflow: 'visible',
+                    margin: isOther ? '0' : undefined,
                   }}
-                  transition={{
-                    y: isSelected ? { duration: 0.7, ease: [0.4, 0, 0.2, 1] } : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                    opacity: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
-                    scale: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
-                  }}
-                  onMouseEnter={() => setSelectedEcosistema(i)}
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
-                  onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
-                  className="flex flex-col items-center justify-center cursor-pointer relative flex-shrink-0"
-                  style={{ pointerEvents: isOther ? 'none' : 'auto', textDecoration: 'none', opacity: isOther ? 0 : 1 }}
                 >
-                  {/* Glow halo behind the logo when selected */}
-                  {isSelected && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.5 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="absolute inset-0 z-0 pointer-events-none"
+                  <motion.a
+                    href={logo.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    animate={{
+                      scale: isSelected ? 1.8 : 1,
+                      y: isSelected ? 0 : [0, -8, 0],
+                    }}
+                    transition={{
+                      scale: { duration: 0.65, ease: [0.4, 0, 0.2, 1] },
+                      y: isSelected
+                        ? { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+                        : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
+                    }}
+                    onMouseEnter={() => setSelectedEcosistema(i)}
+                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
+                    onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
+                    className="flex flex-col items-center justify-center cursor-pointer relative"
+                    style={{ textDecoration: 'none', display: 'block' }}
+                  >
+                    {/* Glow halo */}
+                    {isSelected && (
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="absolute inset-0 z-0 pointer-events-none"
+                        style={{
+                          background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,95,106,0.9) 0%, rgba(0,95,106,0.4) 55%, transparent 80%)',
+                          filter: 'blur(22px)',
+                          transform: 'scale(1.8)',
+                        }}
+                      />
+                    )}
+                    <img
+                      src={`/${logo.src}`}
+                      alt={logo.alt}
+                      title={`Ingresar a ${logo.alt}`}
+                      className="w-32 h-32 md:w-44 md:h-44 object-contain relative z-10"
                       style={{
-                        background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0,95,106,0.85) 0%, rgba(0,95,106,0.45) 50%, transparent 80%)',
-                        filter: 'blur(18px)',
-                        transform: 'scale(1.6)',
+                        mixBlendMode: 'screen',
+                        filter: isSelected
+                          ? 'drop-shadow(0 0 50px rgba(0,95,106,1)) brightness(1.3)'
+                          : 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
+                        WebkitMaskImage: isSelected
+                          ? 'radial-gradient(ellipse 78% 78% at 50% 50%, black 38%, rgba(0,0,0,0.5) 62%, transparent 87%)'
+                          : 'none',
+                        maskImage: isSelected
+                          ? 'radial-gradient(ellipse 78% 78% at 50% 50%, black 38%, rgba(0,0,0,0.5) 62%, transparent 87%)'
+                          : 'none',
+                        transition: 'filter 0.5s ease, mask-image 0.5s ease',
                       }}
                     />
-                  )}
-                  <img
-                    src={`/${logo.src}`}
-                    alt={logo.alt}
-                    title={`Ingresar a ${logo.alt}`}
-                    className="w-32 h-32 md:w-48 md:h-48 object-contain relative z-10 transition-transform duration-300 hover:scale-110"
-                    style={{
-                      mixBlendMode: 'screen',
-                      filter: isSelected
-                        ? 'drop-shadow(0 0 50px rgba(0,95,106,1)) brightness(1.2)'
-                        : 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
-                      WebkitMaskImage: isSelected
-                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
-                        : 'none',
-                      maskImage: isSelected
-                        ? 'radial-gradient(ellipse 75% 75% at 50% 50%, black 35%, rgba(0,0,0,0.5) 60%, transparent 85%)'
-                        : 'none',
-                    }}
-                  />
-                  {/* Tooltip cartel - mismo nivel vertical que el logo */}
+                  </motion.a>
+
+                  {/* Tooltip / Cartel — aparece a la derecha del logo seleccionado */}
                   <AnimatePresence>
                     {isSelected && (
                       <motion.div
                         key="tip"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                        initial={{ opacity: 0, x: 30, scale: 0.95 }}
+                        animate={{ opacity: 1, x: 0, scale: 1 }}
+                        exit={{ opacity: 0, x: 30, scale: 0.95 }}
+                        transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
                         className="absolute z-40 pointer-events-none"
                         style={{
-                          left: 'calc(100% + 3rem)',
+                          left: 'calc(100% + 2.5rem)',
                           top: '50%',
                           transform: 'translateY(-50%)',
-                          width: 'clamp(220px, 35vw, 480px)',
+                          width: 'clamp(200px, 30vw, 420px)',
                         }}
                       >
                         <img
@@ -708,12 +715,12 @@ export default function MarketingPage() {
                           }
                           alt="Información del Ecosistema"
                           className="w-full h-auto object-contain rounded-xl"
-                          style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.2))' }}
+                          style={{ filter: 'drop-shadow(0 0 24px rgba(51,232,255,0.3)) brightness(1.05)' }}
                         />
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.a>
+                </div>
               );
             })}
           </div>
