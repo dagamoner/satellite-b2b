@@ -587,7 +587,7 @@ export default function MarketingPage() {
          <div className="absolute left-1/2 top-0 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
          <div className="max-w-7xl mx-auto">
             <h2 className="text-lg md:text-xl font-extrabold mb-10 text-center text-slate-900 dark:text-white drop-shadow-xl">
-              Que tipo de proyecto queres realizar ? <span className="text-pink-500">HOGAREÑO, RESIDENCIAL, EMPRESA, MOVILIDAD</span> y en base al mismo podes elegir tu <span className="text-blue-500">antena a medida</span>
+              Que tipo de proyecto queres realizar ? <span className="text-pink-500">HOGAREÑO, RESIDENCIAL, EMPRESA, MOVILIDAD</span> y en base al mismo podes elegir tu <span className="text-blue-500">ANTENA A MEDIDA</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8" onMouseLeave={() => setHoveredAntenna(null)}>
                <AnimatePresence mode="popLayout">
