@@ -603,124 +603,112 @@ export default function MarketingPage() {
               </motion.p>
             )}
           </AnimatePresence>
-          {/* Logos row — centrados, logo seleccionado se expande en su lugar */}
+          {/* Logos row — hover limpio, escala suave, tooltip a la derecha */}
           <div
-            className="flex items-center justify-center gap-6 md:gap-10 px-4 mb-12 w-full relative z-30"
-            style={{ minHeight: '22rem', transition: 'all 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+            className="relative flex items-center justify-center gap-6 md:gap-12 px-4 mb-12 w-full z-30"
+            style={{ minHeight: '20rem' }}
             onMouseLeave={() => setSelectedEcosistema(null)}
           >
             {[
-              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", label: "CONECTIVIDAD\nSATELITAL", url: "https://satelital.mrtechnology.it.com" },
-              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", label: "TECNOLOGÍA\nINFORMÁTICA (IT)", url: "https://informatica.mrtechnology.it.com" },
-              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", label: "SOFTWARE ERP /\nSAAS EMPRESARIAL", url: "https://erp.mrtechnology.it.com" },
-              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", label: "INTELIGENCIA\nARTIFICIAL", url: "https://ia.mrtechnology.it.com" },
-              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", label: "CIBERSEGURIDAD", url: "https://cyber.mrtechnology.it.com" }
+              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png" },
+              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", url: "https://informatica.mrtechnology.it.com", tip: "/Problemas con Tecnologia.png" },
+              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png" },
+              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png" },
+              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png" }
             ].map((logo, i) => {
               const isSelected = selectedEcosistema === i || clickedEcosistema === i;
               const anySelected = selectedEcosistema !== null || clickedEcosistema !== null;
               const isOther = anySelected && !isSelected;
 
               return (
-                <div
+                <motion.div
                   key={i}
-                  className="relative flex items-center flex-shrink-0"
-                  style={{
-                    transition: 'all 0.6s cubic-bezier(0.4,0,0.2,1)',
+                  className="relative flex-shrink-0"
+                  animate={{
+                    scale: isSelected ? 1.6 : 1,
                     opacity: isOther ? 0 : 1,
-                    pointerEvents: isOther ? 'none' : 'auto',
-                    // Cuando hay seleccionado y NO es este, colapsar el ancho para que no empuje
-                    width: isOther ? '0px' : undefined,
-                    overflow: 'visible',
-                    margin: isOther ? '0' : undefined,
+                    y: isSelected ? 0 : [0, -8, 0],
                   }}
+                  transition={{
+                    scale: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+                    opacity: { duration: 0.4, ease: 'easeInOut' },
+                    y: isSelected
+                      ? { duration: 0.5 }
+                      : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
+                  }}
+                  onMouseEnter={() => setSelectedEcosistema(i)}
+                  style={{ pointerEvents: isOther ? 'none' : 'auto' }}
                 >
-                  <motion.a
+                  {/* Glow halo cuando está seleccionado */}
+                  {isSelected && (
+                    <div
+                      className="absolute inset-0 pointer-events-none z-0"
+                      style={{
+                        background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0,95,106,0.85) 0%, rgba(0,95,106,0.35) 55%, transparent 80%)',
+                        filter: 'blur(20px)',
+                        transform: 'scale(1.7)',
+                      }}
+                    />
+                  )}
+
+                  {/* Logo image */}
+                  <a
                     href={logo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    animate={{
-                      scale: isSelected ? 1.8 : 1,
-                      y: isSelected ? 0 : [0, -8, 0],
-                    }}
-                    transition={{
-                      scale: { duration: 0.65, ease: [0.4, 0, 0.2, 1] },
-                      y: isSelected
-                        ? { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
-                        : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                    }}
-                    onMouseEnter={() => setSelectedEcosistema(i)}
-                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
-                    onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
-                    className="flex flex-col items-center justify-center cursor-pointer relative"
-                    style={{ textDecoration: 'none', display: 'block' }}
+                    onClick={(e) => { e.stopPropagation(); window.open(logo.url, '_blank'); }}
+                    style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
                   >
-                    {/* Glow halo */}
-                    {isSelected && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="absolute inset-0 z-0 pointer-events-none"
-                        style={{
-                          background: 'radial-gradient(ellipse 80% 80% at 50% 50%, rgba(0,95,106,0.9) 0%, rgba(0,95,106,0.4) 55%, transparent 80%)',
-                          filter: 'blur(22px)',
-                          transform: 'scale(1.8)',
-                        }}
-                      />
-                    )}
                     <img
                       src={`/${logo.src}`}
                       alt={logo.alt}
-                      title={`Ingresar a ${logo.alt}`}
-                      className="w-32 h-32 md:w-44 md:h-44 object-contain relative z-10"
+                      className="w-28 h-28 md:w-40 md:h-40 object-contain relative z-10"
                       style={{
                         mixBlendMode: 'screen',
                         filter: isSelected
-                          ? 'drop-shadow(0 0 50px rgba(0,95,106,1)) brightness(1.3)'
-                          : 'drop-shadow(0 15px 25px rgba(0,0,0,0.7))',
-                        WebkitMaskImage: isSelected
-                          ? 'radial-gradient(ellipse 78% 78% at 50% 50%, black 38%, rgba(0,0,0,0.5) 62%, transparent 87%)'
-                          : 'none',
-                        maskImage: isSelected
-                          ? 'radial-gradient(ellipse 78% 78% at 50% 50%, black 38%, rgba(0,0,0,0.5) 62%, transparent 87%)'
-                          : 'none',
-                        transition: 'filter 0.5s ease, mask-image 0.5s ease',
+                          ? 'drop-shadow(0 0 40px rgba(0,95,106,1)) brightness(1.3)'
+                          : 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))',
+                        transition: 'filter 0.5s ease',
                       }}
                     />
-                  </motion.a>
+                  </a>
 
-                  {/* Tooltip / Cartel — aparece a la derecha del logo seleccionado */}
+                  {/* Tooltip / Cartel a la derecha del logo seleccionado */}
                   <AnimatePresence>
                     {isSelected && (
                       <motion.div
-                        key="tip"
-                        initial={{ opacity: 0, x: 30, scale: 0.95 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        exit={{ opacity: 0, x: 30, scale: 0.95 }}
-                        transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
-                        className="absolute z-40 pointer-events-none"
+                        key={`tip-${i}`}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        className="absolute z-50"
                         style={{
-                          left: 'calc(100% + 2.5rem)',
+                          left: 'calc(100% + 2rem)',
                           top: '50%',
                           transform: 'translateY(-50%)',
-                          width: 'clamp(200px, 30vw, 420px)',
+                          width: 'clamp(180px, 28vw, 400px)',
+                          cursor: 'pointer',
                         }}
                       >
-                        <img
-                          src={
-                            i === 0 ? "/Problemas de conectividad inicial.png" :
-                            i === 1 ? "/Problemas con Tecnologia.png" :
-                            i === 2 ? "/Problemas Soft.png" :
-                            i === 3 ? "/Problemas IA.png" :
-                            "/Problemas seguros.png"
-                          }
-                          alt="Información del Ecosistema"
-                          className="w-full h-auto object-contain rounded-xl"
-                          style={{ filter: 'drop-shadow(0 0 24px rgba(51,232,255,0.3)) brightness(1.05)' }}
-                        />
+                        <a
+                          href={logo.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => { e.stopPropagation(); window.open(logo.url, '_blank'); }}
+                          style={{ display: 'block' }}
+                        >
+                          <img
+                            src={logo.tip}
+                            alt="Información del Ecosistema"
+                            className="w-full h-auto object-contain rounded-xl hover:scale-[1.02] transition-transform duration-300"
+                            style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)' }}
+                          />
+                        </a>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
           </div>
