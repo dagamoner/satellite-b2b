@@ -280,6 +280,23 @@ export default function MarketingPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (selectedEcosistema !== null) {
+      const urls = [
+        "https://satelital.mrtechnology.it.com",
+        "https://informatica.mrtechnology.it.com",
+        "https://erp.mrtechnology.it.com",
+        "https://ia.mrtechnology.it.com",
+        "https://cyber.mrtechnology.it.com"
+      ];
+      timer = setTimeout(() => {
+        window.location.href = urls[selectedEcosistema];
+      }, 5000);
+    }
+    return () => clearTimeout(timer);
+  }, [selectedEcosistema]);
+
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative transition-colors duration-500">
       
@@ -517,7 +534,7 @@ export default function MarketingPage() {
           className="w-full flex flex-col items-center"
         >
           
-          {clickedEcosistema === null && (<>
+          {selectedEcosistema === null && clickedEcosistema === null && (<>
           {/* Main Logo */}
           <div className="relative shrink-0 flex items-center justify-center group/logo cursor-pointer mb-0">
               <div className="absolute inset-0 rounded-full bg-[#005f6a] blur-[50px] opacity-0 group-hover/logo:opacity-80 transition-all duration-700 pointer-events-none mix-blend-screen scale-[1.1] group-hover/logo:scale-[1.4]" />
@@ -549,9 +566,10 @@ export default function MarketingPage() {
           >
             "Lo esencial de lo simple, el crecimiento tecnológico y digital de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> es nuestro gran <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">JUNTOS</span> podemos lograrlo."
           </motion.p>
+          </>)}
 
-          {/* Legend - Leyenda ecosistema blended into the page */}
-          <div className="relative -mt-18 md:-mt-[10rem] mb-2 flex justify-center w-full">
+          {/* Legend - Leyenda ecosistema - always visible above logos */}
+          <div className="relative mb-2 flex justify-center w-full" style={{ marginTop: selectedEcosistema !== null ? '-4rem' : '-10rem', transition: 'margin-top 0.8s cubic-bezier(0.4,0,0.2,1)' }}>
              <img
                src="/Leyenda ecosistema.png"
                alt="Ecosistema by MR Tech"
@@ -566,20 +584,30 @@ export default function MarketingPage() {
              <motion.div className="absolute top-1 -left-4 w-3 h-3 text-white z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [90, 270, 450], scale: [0.4, 1.2, 0.4], opacity: [0.2, 0.8, 0.2] }} transition={{ duration: 2.0, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_10px_rgba(255,255,255,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
              <motion.div className="absolute top-1 -right-4 w-4 h-4 text-[#00a2b8] z-20 pointer-events-none mix-blend-screen" animate={{ rotate: [0, 120, 240], scale: [0.5, 1.6, 0.5], opacity: [0.3, 1, 0.3] }} transition={{ duration: 2.9, repeat: Infinity, ease: "linear" }}><svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full drop-shadow-[0_0_16px_rgba(0,162,184,1)]"><path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" /></svg></motion.div>
           </div>
-          {/* Subtitle below Ecosistema legend */}
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.3 }}
-            className="text-justify text-white text-[12px] font-extrabold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
-            style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
-          >
-            A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>. Porque tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span> es el motor de nuestro <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">TRABAJO</span>.
-          </motion.p>
-          </>)}
-          {/* Click-outside wrapper: clicking the background area deselects */}
+          {/* Subtitle below Ecosistema legend - fades gracefully */}
+          <AnimatePresence>
+            {selectedEcosistema === null && clickedEcosistema === null && (
+              <motion.p
+                key="eco-subtitle"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-justify text-white text-[12px] font-extrabold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
+                style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
+              >
+                A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>.
+              </motion.p>
+            )}
+          </AnimatePresence>
+          {/* Logos row — always centered, selected logo expands in-place with tooltip */}
           <div
-            className={`flex flex-wrap items-center gap-8 md:gap-14 px-4 mt-0 mb-12 w-full transition-all duration-700 ${clickedEcosistema !== null ? "fixed inset-0 z-40 m-0 justify-center md:justify-start md:pl-[15vw]" : "relative justify-center min-h-[12rem] md:min-h-[16rem]"}`}
+            className="flex items-center justify-center gap-8 md:gap-14 px-4 mb-12 w-full relative min-h-[16rem] md:min-h-[20rem] z-30"
+            style={{
+              marginTop: selectedEcosistema !== null ? '0.5rem' : '0rem',
+              transition: 'all 0.7s cubic-bezier(0.4,0,0.2,1)',
+              paddingLeft: selectedEcosistema !== null ? '18%' : '0'
+            }}
             onClick={() => setSelectedEcosistema(null)}
           >
             {[
@@ -592,19 +620,12 @@ export default function MarketingPage() {
               const isSelected = selectedEcosistema === i || clickedEcosistema === i;
               const isOther = (selectedEcosistema !== null && !isSelected) || (clickedEcosistema !== null && clickedEcosistema !== i);
               
-              let tooltipPositionClass = "left-full ml-4 md:ml-8";
+              // Always position tooltip to the right for the selected item since the logo will be on the left
+              let tooltipPositionClass = "left-full ml-8 md:ml-12";
               let motionProps = {
                 initial: { opacity: 0, x: -20, y: 0 },
                 animate: { opacity: 1, x: 0, y: 0 }
               };
-              
-              if (i === 2 || i === 3 || i === 4) {
-                tooltipPositionClass = "right-full mr-4 md:mr-8";
-                motionProps = {
-                   initial: { opacity: 0, x: 20, y: 0 },
-                   animate: { opacity: 1, x: 0, y: 0 }
-                };
-              }
 
               return (
                 <motion.a
@@ -613,46 +634,20 @@ export default function MarketingPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   animate={{
-                    y: isSelected ? 0 : [0, -10, 0],
-                    opacity: isOther ? 0.3 : 1, // Don't hide completely, just dim
-                    scale: clickedEcosistema === i ? 2.2 : isSelected ? 1.2 : 1,
-                    zIndex: isSelected ? 30 : 10,
+                    y: isSelected ? 0 : [0, -8, 0],
+                    opacity: isOther ? 0 : 1,
+                    scale: isSelected ? 1.5 : 1,
                   }}
                   transition={{
-                    y: isSelected ? { duration: 0.4, ease: "easeOut" } : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                    opacity: { duration: 0.4, ease: "easeInOut" },
-                    scale: { duration: 0.45, ease: "easeOut" },
+                    y: isSelected ? { duration: 0.7, ease: [0.4, 0, 0.2, 1] } : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
+                    opacity: { duration: 0.6, ease: [0.4, 0, 0.2, 1] },
+                    scale: { duration: 0.7, ease: [0.4, 0, 0.2, 1] },
                   }}
                   onMouseEnter={() => setSelectedEcosistema(i)}
-                  onMouseLeave={() => setSelectedEcosistema(null)}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (clickedEcosistema === i) {
-                      window.location.href = logo.url;
-                    } else {
-                      setClickedEcosistema(i);
-                      const delay = 15000;
-                      setTimeout(() => {
-                        window.location.href = logo.url;
-                      }, delay);
-                    }
-                  }}
-                  onTouchEnd={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (clickedEcosistema === i) {
-                      window.location.href = logo.url;
-                    } else {
-                      setClickedEcosistema(i);
-                      const delay = 15000;
-                      setTimeout(() => {
-                        window.location.href = logo.url;
-                      }, delay);
-                    }
-                  }}
-                  className="flex flex-col items-center justify-center cursor-pointer relative"
-                  style={{ pointerEvents: 'auto', textDecoration: 'none', display: clickedEcosistema !== null && clickedEcosistema !== i ? 'none' : 'flex' }}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
+                  onTouchEnd={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = logo.url; }}
+                  className="flex flex-col items-center justify-center cursor-pointer relative flex-shrink-0"
+                  style={{ pointerEvents: isOther ? 'none' : 'auto', textDecoration: 'none', opacity: isOther ? 0 : 1 }}
                 >
                   {/* Glow halo behind the logo when selected */}
                   {isSelected && (
@@ -686,35 +681,44 @@ export default function MarketingPage() {
                         : 'none',
                     }}
                   />
-                  {/* Mensajes especiales para Logos seleccionados */}
-                  {isSelected && (
-                    <motion.div 
-                      {...motionProps}
-                      className={`absolute ${tooltipPositionClass} w-[280px] md:w-[420px] p-0 z-40 bg-transparent rounded-xl transition-all duration-500 cursor-default pointer-events-none`}
-                    >
-                      <div className="relative z-10 pb-2 flex justify-center items-center w-full">
-                         <div className="w-full flex justify-center">
-                           <img 
-                             src={
-                               i === 0 ? (clickedEcosistema === 0 ? "/Problemas de conectividad.png" : "/Problemas de conectividad inicial.png") :
-                               i === 1 ? "/Problemas con Tecnologia.png" :
-                               i === 2 ? "/Problemas Soft.png" :
-                               i === 3 ? "/Problemas IA.png" :
-                               "/Problemas seguros.png"
-                             }
-                             alt="Información del Ecosistema" 
-                             className="w-full h-auto object-contain rounded-xl transition-all duration-700 shadow-[0_0_20px_rgba(51,232,255,0.2)]" 
-                           />
-                         </div>
-                      </div>
-                    </motion.div>
-                  )}
+                  {/* Tooltip cartel - mismo nivel vertical que el logo */}
+                  <AnimatePresence>
+                    {isSelected && (
+                      <motion.div
+                        key="tip"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                        className="absolute z-40 pointer-events-none"
+                        style={{
+                          left: 'calc(100% + 3rem)',
+                          top: '50%',
+                          transform: 'translateY(-50%)',
+                          width: 'clamp(220px, 35vw, 480px)',
+                        }}
+                      >
+                        <img
+                          src={
+                            i === 0 ? "/Problemas de conectividad inicial.png" :
+                            i === 1 ? "/Problemas con Tecnologia.png" :
+                            i === 2 ? "/Problemas Soft.png" :
+                            i === 3 ? "/Problemas IA.png" :
+                            "/Problemas seguros.png"
+                          }
+                          alt="Información del Ecosistema"
+                          className="w-full h-auto object-contain rounded-xl"
+                          style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.2))' }}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.a>
               );
             })}
           </div>
 
-          {(clickedEcosistema === null && selectedEcosistema === null) && (<>
+          {selectedEcosistema === null && clickedEcosistema === null && (<>
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
              <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
@@ -803,11 +807,31 @@ export default function MarketingPage() {
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
          
          <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
-         <div className="flex justify-center gap-10 text-sm mb-16 font-semibold">
+         <div className="flex justify-center gap-10 text-sm mb-10 font-semibold">
             <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
             <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
             <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
          </div>
+
+         {/* GitHub Repository Link */}
+         <div className="flex flex-col items-center gap-2 mb-10">
+           <a
+             href="https://github.com/dagamoner/satellite-b2b"
+             target="_blank"
+             rel="noopener noreferrer"
+             className="group flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#33E8FF]/40 transition-all duration-300"
+             title="Repositorio GitHub — satellite-b2b"
+           >
+             {/* GitHub SVG icon */}
+             <svg className="w-4 h-4 text-slate-400 group-hover:text-[#33E8FF] transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+               <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+             </svg>
+             <span className="text-xs font-mono tracking-wider text-slate-400 group-hover:text-[#33E8FF] transition-colors duration-300">
+               github.com/dagamoner/satellite-b2b
+             </span>
+           </a>
+         </div>
+
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
       </>)}
