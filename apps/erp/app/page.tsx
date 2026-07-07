@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 /* ── Fondo del universo (igual que corporate) ── */
 const SpaceBackground = () => {
@@ -154,6 +154,7 @@ const SatelliteOrbit = () => (
 );
 
 export default function ErpPage() {
+  const [showInfo, setShowInfo] = useState(false);
   return (
     <main className="min-h-screen bg-[#020617] text-slate-50 font-sans overflow-x-hidden relative">
 
@@ -211,44 +212,56 @@ export default function ErpPage() {
       <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
 
       {/* ── Encabezado sticky ── */}
-      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
-        <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20">
+      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 transition-all duration-700">
+        <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20 transition-all duration-500">
 
-          {/* Logo izquierda */}
-          <div className="flex-1 hidden md:flex items-center justify-start">
-            <a href="https://www.mrtechnology.it.com">
+          {/* Left Block - MR Tech Logo */}
+          <div className="flex-1 flex items-center justify-start hidden md:flex opacity-100 transition-opacity duration-500">
+            <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
               <img
                 src="/Logo WEB MR Tech.png"
                 alt="MR Technology"
-                className="w-28 md:w-40 object-contain hover:scale-105 transition-transform duration-300"
-                style={{ mixBlendMode: "screen", filter: "brightness(1.1) contrast(1.1)" }}
+                className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
+                style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
               />
-            </a>
+            </div>
           </div>
 
-          {/* Centro - Transformación Digital */}
-          <div className="flex-1 md:flex-none flex items-center justify-center">
-            <img
-              src="/Transformacion.png"
-              alt="Transformación Digital Empresarial"
-              className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
-              style={{
-                mixBlendMode: "screen",
-                WebkitMaskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)",
-                maskImage: "radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)",
-              }}
-            />
+          {/* Center Block - Transformacion Legend */}
+          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
+            <div className="relative flex items-center justify-center">
+              <img
+                src="/Transformacion.png"
+                alt="Transformación Digital Empresarial"
+                className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
+                style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
+              />
+            </div>
           </div>
 
-          {/* Hablamos y Ecosistema (derecha) */}
-          <div className="flex-1 hidden md:flex justify-end items-center gap-6">
-            <button onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }} className="flex items-center gap-2 group hover:scale-105 transition-transform duration-300">
-               <img src="/logo_eco.jpg.jpg" alt="Ecosistema" className="h-12 w-12 object-cover rounded-full drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.8)] transition-all" />
-               <span className="text-[#33E8FF] font-black text-sm tracking-widest uppercase group-hover:text-white transition-colors">Ecosistema</span>
+          {/* Right Block - Ecosistema + Hablamos */}
+          <div className="flex-1 flex justify-end items-center hidden md:flex gap-4 opacity-100 transition-opacity duration-500">
+            {/* ECOSISTEMA Header Button */}
+            <button
+              onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+              className="relative group/eco shrink-0 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:scale-105 mr-2"
+            >
+              <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
+                <img
+                  src="/logo_eco.jpg.jpg"
+                  alt="Ecosistema"
+                  className="w-full h-full object-cover rounded-full relative z-10"
+                  style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)' }}
+                />
+              </div>
+              <span className="text-[#33E8FF] font-black text-[10px] tracking-[0.15em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">ECOSISTEMA</span>
             </button>
+
+            {/* Hablamos Button */}
             <button
               onClick={() => { window.location.href = "https://www.mrtechnology.it.com/#whatsapp-contact"; }}
-              className="relative group/hablamos shrink-0 flex items-center justify-center hover:scale-105 transition-transform duration-300 cursor-pointer"
+              className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
               <img
@@ -256,9 +269,9 @@ export default function ErpPage() {
                 alt="Hablamos"
                 className="h-24 md:h-28 w-auto object-contain relative z-10"
                 style={{
-                  mixBlendMode: "screen",
-                  WebkitMaskImage: "radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)",
-                  maskImage: "radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)",
+                  mixBlendMode: 'screen',
+                  WebkitMaskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)',
+                  maskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)'
                 }}
               />
             </button>
@@ -274,83 +287,77 @@ export default function ErpPage() {
           transition={{ duration: 0.9, ease: "easeOut" }}
           className="flex flex-col items-center gap-6 max-w-3xl"
         >
-          {/* Logo WEB MR Tech central */}
-          <motion.img
-            src="/Logo WEB MR Tech.png"
-            alt="MR Technology"
-            className="w-72 md:w-[480px] object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.1)] mb-1"
-            animate={{ scale: [1, 1.03, 1], filter: ["brightness(1.0)", "brightness(1.2)", "brightness(1.0)"] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            style={{ mixBlendMode: "screen" }}
-          />
-
           {/* Maxirest Info - Sin fondo */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 w-full"
+            className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 w-full cursor-pointer hover:scale-105 transition-transform duration-300"
+            onClick={() => setShowInfo(true)}
           >
-            <div className="bg-white rounded-full p-2 shadow-[0_0_25px_rgba(51,232,255,0.3)] shrink-0 flex items-center justify-center">
+            <div className="bg-white rounded-full p-2 shadow-[0_0_25px_rgba(51,232,255,0.3)] shrink-0 flex items-center justify-center relative group">
+              <div className="absolute inset-0 rounded-full bg-cyan-400 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
               <img
                 src="/logo_maxirest.jpg"
                 alt="Maxirest"
-                className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full"
+                className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full relative z-10"
               />
             </div>
             <div className="flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
-                Software Gastronómico MAXIREST
+                Software Gastronómico <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
               </h2>
-              <span className="text-white font-medium text-xs md:text-sm tracking-widest mt-1 mb-1 opacity-90">
+              <span className="text-white font-bold text-base md:text-lg tracking-widest mt-2 mb-2 opacity-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
                 Potenciamos tu proyecto gastronómico al siguiente nivel
               </span>
-              <span className="text-white font-bold text-sm md:text-base tracking-widest mt-1 uppercase">
+              <span className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest mt-2 mb-1 uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
                 AGENTES OFICIALES.
               </span>
-              <span className="text-slate-300 text-xs md:text-sm font-light tracking-[0.2em] mt-1 uppercase">
+              <span className="text-slate-100 text-sm md:text-base font-bold tracking-[0.2em] mt-1 uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
                 Provincia de Mendoza y Alrededores
               </span>
             </div>
           </motion.div>
 
-          {/* Nueva Sección de Solución Completa */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="flex flex-col items-center w-full max-w-4xl mb-12"
-          >
-            <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl text-center tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)]">
-              La solución más completa para negocios gastronómicos
-            </h3>
-          </motion.div>
+          <AnimatePresence>
+            {showInfo && (
+              <motion.div
+                key="info-content"
+                initial={{ opacity: 0, height: 0, y: -20 }}
+                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                exit={{ opacity: 0, height: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="flex flex-col items-center w-full"
+              >
+                {/* Nueva Sección de Solución Completa */}
+                <div className="flex flex-col items-center w-full max-w-5xl mb-12 mt-4 px-4">
+                  <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl text-center tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mb-8">
+                    La solución más completa para negocios gastronómicos
+                  </h3>
+                  <img
+                    src="/Instancias Maxirest.png"
+                    alt="Instancias Maxirest"
+                    className="w-full object-contain rounded-xl drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                  />
+                </div>
 
-          {/* Separador con destellos */}
-          <div className="flex items-center gap-4 w-full max-w-md">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-            <motion.div
-              animate={{ rotate: [0, 360], scale: [0.8, 1.2, 0.8] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              className="text-[#33E8FF]"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 drop-shadow-[0_0_8px_rgba(51,232,255,1)]">
-                <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
-              </svg>
-            </motion.div>
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-          </div>
-
-          {/* Botón volver */}
-          <a
-            href="https://www.mrtechnology.it.com"
-            className="group relative inline-flex items-center justify-center gap-2 px-8 py-3.5 text-base font-bold text-white bg-blue-600/80 border border-blue-500/50 rounded-full hover:bg-blue-500 hover:border-blue-400 transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(37,99,235,0.7)] uppercase tracking-wider"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            Volver a MR Technology
-          </a>
+                {/* Separador con destellos */}
+                <div className="flex items-center gap-4 w-full max-w-md">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+                  <motion.div
+                    animate={{ rotate: [0, 360], scale: [0.8, 1.2, 0.8] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="text-[#33E8FF]"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 drop-shadow-[0_0_8px_rgba(51,232,255,1)]">
+                      <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
+                    </svg>
+                  </motion.div>
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </section>
 
