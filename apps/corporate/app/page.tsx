@@ -280,22 +280,7 @@ export default function MarketingPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    if (selectedEcosistema !== null) {
-      const urls = [
-        "https://satelital.mrtechnology.it.com",
-        "https://informatica.mrtechnology.it.com",
-        "https://erp.mrtechnology.it.com",
-        "https://ia.mrtechnology.it.com",
-        "https://cyber.mrtechnology.it.com"
-      ];
-      timer = setTimeout(() => {
-        window.location.href = urls[selectedEcosistema];
-      }, 5000);
-    }
-    return () => clearTimeout(timer);
-  }, [selectedEcosistema]);
+
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-[#020617] text-slate-900 dark:text-slate-50 font-sans selection:bg-cyan-500/30 overflow-x-hidden relative transition-colors duration-500">
@@ -534,7 +519,7 @@ export default function MarketingPage() {
           className="w-full flex flex-col items-center"
         >
           
-          {selectedEcosistema === null && clickedEcosistema === null && (<>
+
           {/* Main Logo */}
           <div className="relative shrink-0 flex items-center justify-center group/logo cursor-pointer mb-0">
               <div className="absolute inset-0 rounded-full bg-[#005f6a] blur-[50px] opacity-0 group-hover/logo:opacity-80 transition-all duration-700 pointer-events-none mix-blend-screen scale-[1.1] group-hover/logo:scale-[1.4]" />
@@ -566,12 +551,12 @@ export default function MarketingPage() {
           >
             "Lo esencial de lo simple, el crecimiento tecnológico y digital de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> es nuestro gran <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">DESAFÍO</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">JUNTOS</span> podemos lograrlo."
           </motion.p>
-          </>)}
+
 
           {/* Legend - Leyenda ecosistema - always visible above logos */}
           <div
             className="relative mb-0 flex justify-center w-full"
-            style={{ marginTop: selectedEcosistema !== null ? '-2rem' : '-10rem', transition: 'margin-top 0.7s cubic-bezier(0.4,0,0.2,1)' }}
+            style={{ marginTop: '-10rem' }}
           >
              <img
                src="/Leyenda ecosistema.png"
@@ -589,7 +574,7 @@ export default function MarketingPage() {
           </div>
           {/* Subtitle below Ecosistema legend - fades gracefully */}
           <AnimatePresence>
-            {selectedEcosistema === null && clickedEcosistema === null && (
+            {true && (
               <motion.p
                 key="eco-subtitle"
                 initial={{ opacity: 0 }}
@@ -605,8 +590,8 @@ export default function MarketingPage() {
           </AnimatePresence>
           {/* Logos row — hover limpio, escala suave, tooltip a la derecha */}
           <div
-            className="relative flex items-center justify-center gap-6 md:gap-12 w-full z-30"
-            style={{ minHeight: '22rem', padding: '2.5rem 4rem' }}
+            className="relative flex items-center justify-center gap-2 md:gap-4 w-full z-30 flex-wrap md:flex-nowrap"
+            style={{ minHeight: '22rem', padding: '2.5rem 4rem', marginTop: '-3rem' }}
             onMouseLeave={() => setSelectedEcosistema(null)}
           >
             {[
@@ -621,77 +606,57 @@ export default function MarketingPage() {
               const isOther = anySelected && !isSelected;
 
               return (
-                <div
+                  <div
                   key={i}
-                  className="relative flex-shrink-0"
-                  style={{ padding: '1rem' }}
+                  className="relative flex-shrink-0 flex items-center justify-center"
                   onMouseEnter={() => setSelectedEcosistema(i)}
-                >
-                <motion.div
-                  className="relative"
-                  animate={{
-                    scale: isSelected ? 1.55 : 1,
+                  style={{ 
+                    padding: '1rem',
                     opacity: isOther ? 0 : 1,
-                    y: isSelected ? 0 : [0, -8, 0],
+                    transition: 'opacity 0.4s ease-in-out',
+                    cursor: 'pointer'
                   }}
-                  transition={{
-                    scale: { duration: 0.55, ease: [0.4, 0, 0.2, 1] },
-                    opacity: { duration: 0.4, ease: 'easeInOut' },
-                    y: isSelected
-                      ? { duration: 0.5 }
-                      : { duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut" },
-                  }}
-                  style={{ pointerEvents: isOther ? 'none' : 'auto' }}
                 >
-                  {/* Glow halo cuando está seleccionado */}
-                  {isSelected && (
-                    <div
-                      className="absolute inset-0 pointer-events-none z-0"
-                      style={{
-                        background: 'radial-gradient(ellipse 70% 70% at 50% 50%, rgba(0,95,106,0.85) 0%, rgba(0,95,106,0.35) 55%, transparent 80%)',
-                        filter: 'blur(20px)',
-                        transform: 'scale(1.7)',
-                      }}
-                    />
-                  )}
-
-                  {/* Logo image */}
                   <a
                     href={logo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={(e) => { e.stopPropagation(); window.open(logo.url, '_blank'); }}
                     style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
                   >
                     <img
                       src={`/${logo.src}`}
                       alt={logo.alt}
-                      className="w-28 h-28 md:w-40 md:h-40 object-contain relative z-10"
                       style={{
                         mixBlendMode: 'screen',
-                        filter: isSelected
-                          ? 'drop-shadow(0 0 40px rgba(0,95,106,1)) brightness(1.3)'
-                          : 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))',
+                        filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))',
+                        width: 'clamp(140px, 16vw, 224px)',
+                        height: 'clamp(140px, 16vw, 224px)',
+                        objectFit: 'contain',
+                        position: 'relative',
+                        zIndex: 10,
+                        display: 'block',
                         transition: 'filter 0.5s ease',
                       }}
+                      onMouseEnter={(e) => e.currentTarget.style.filter = 'drop-shadow(0 0 20px rgba(51,232,255,0.3)) brightness(1.1)'}
+                      onMouseLeave={(e) => e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))'}
                     />
                   </a>
 
-                  {/* Tooltip / Cartel a la derecha del logo seleccionado */}
+                  {/* Tooltip / Cartel a la derecha o izquierda */}
                   <AnimatePresence>
                     {isSelected && (
                       <motion.div
                         key={`tip-${i}`}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
+                        initial={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
+                        animate={{ opacity: 1, x: 0, y: "-50%" }}
+                        exit={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
                         transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                        className="absolute z-50"
+                        className="absolute z-50 flex items-center justify-center"
                         style={{
-                          left: 'calc(100% + 2rem)',
+                          [i >= 2 ? 'right' : 'left']: 'calc(100% + 1rem)',
                           top: '50%',
-                          transform: 'translateY(-50%)',
-                          width: 'clamp(180px, 28vw, 400px)',
+                          height: 'clamp(140px, 16vw, 224px)', // Mismo tamaño exacto del logo
+                          width: 'clamp(220px, 30vw, 450px)',  // Ancho explícito para evitar colapso
                           cursor: 'pointer',
                         }}
                       >
@@ -699,26 +664,24 @@ export default function MarketingPage() {
                           href={logo.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          onClick={(e) => { e.stopPropagation(); window.open(logo.url, '_blank'); }}
-                          style={{ display: 'block' }}
+                          style={{ display: 'block', height: '100%', width: '100%' }}
                         >
                           <img
                             src={logo.tip}
                             alt="Información del Ecosistema"
-                            className="w-full h-auto object-contain rounded-xl hover:scale-[1.02] transition-transform duration-300"
+                            className="w-full h-full object-contain rounded-xl"
                             style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)' }}
                           />
                         </a>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </motion.div>
                 </div>
               );
             })}
           </div>
 
-          {selectedEcosistema === null && clickedEcosistema === null && (<>
+
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
              <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
@@ -796,12 +759,12 @@ export default function MarketingPage() {
              </div>
           </div>
 
-          </>)}
+
         </motion.div>
 
       </section>
 
-      {(clickedEcosistema === null && selectedEcosistema === null) && (<>
+
       {/* Footer */}
       <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
@@ -834,7 +797,7 @@ export default function MarketingPage() {
 
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
-      </>)}
+
       </main>
   );
 }
