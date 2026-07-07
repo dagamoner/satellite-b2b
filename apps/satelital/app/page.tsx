@@ -472,9 +472,9 @@ export default function MarketingPage() {
             </button>
 
             {/* Hablamos Button */}
-            <a
-              href="#whatsapp-contact"
-              className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
+            <button
+              onClick={() => { window.location.href = "https://www.mrtechnology.it.com/#whatsapp-contact"; }}
+              className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
               <img
@@ -487,7 +487,7 @@ export default function MarketingPage() {
                   maskImage: 'radial-gradient(circle 40% at 50% 50%, black 60%, transparent 100%)'
                 }}
               />
-            </a>
+            </button>
           </div>
         </div>
       </nav>
