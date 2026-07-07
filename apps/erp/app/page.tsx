@@ -240,12 +240,14 @@ export default function ErpPage() {
             />
           </div>
 
-          {/* Hablamos derecha */}
-          <div className="flex-1 hidden md:flex justify-end items-center">
+          {/* Hablamos y Ecosistema (derecha) */}
+          <div className="flex-1 hidden md:flex justify-end items-center gap-6">
+            <a href="https://www.mrtechnology.it.com" className="flex items-center gap-2 group hover:scale-105 transition-transform duration-300">
+               <img src="/logo_eco.jpg" alt="Ecosistema" className="h-12 w-12 object-cover rounded-full drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.8)] transition-all" />
+               <span className="text-[#33E8FF] font-black text-sm tracking-widest uppercase group-hover:text-white transition-colors">Ecosistema</span>
+            </a>
             <a
-              href="https://wa.me/5492616518318"
-              target="_blank"
-              rel="noreferrer"
+              href="https://www.mrtechnology.it.com/#whatsapp-contact"
               className="relative group/hablamos shrink-0 flex items-center justify-center hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 rounded-full bg-cyan-500/25 blur-md opacity-0 group-hover/hablamos:opacity-100 transition-opacity duration-300 pointer-events-none" />
