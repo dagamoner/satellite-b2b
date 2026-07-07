@@ -126,9 +126,9 @@ const SpaceBackground = () => {
 };
 
 /* ── Satélite orbitando ── */
-const SatelliteOrbit = () => (
+const SatelliteOrbit = ({ isHidden }: { isHidden: boolean }) => (
   <motion.div
-    className="fixed z-[5] opacity-55"
+    className={`fixed z-[5] transition-opacity duration-500 ${isHidden ? 'opacity-0 pointer-events-none' : 'opacity-55'}`}
     animate={{
       x: ["-30vw", "50vw", "120vw", "70vw", "-30vw"],
       y: ["20vh", "-10vh", "60vh", "110vh", "20vh"],
@@ -154,21 +154,27 @@ const SatelliteOrbit = () => (
 );
 
 export default function ErpPage() {
-  const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
+  const [mostrarInstanciaA, setMostrarInstanciaA] = useState(false);
+  const [mostrarInstanciaB, setMostrarInstanciaB] = useState(false);
+  const [mostrarPreciosB, setMostrarPreciosB] = useState(false);
+  
+  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB;
+
   return (
     <main className="min-h-screen bg-[#020617] text-slate-50 font-sans overflow-x-hidden relative">
 
       {/* Fondo universo */}
       <SpaceBackground />
-      <SatelliteOrbit />
+      <SatelliteOrbit isHidden={isModalOpen} />
 
       {/* Tierra — esquina superior derecha */}
       <motion.div
         className="fixed top-[-16vw] right-[-16vw] z-[1] pointer-events-none"
         initial={{ opacity: 0, rotate: 0 }}
-        animate={{ opacity: 0.6, rotate: 360 }}
+        animate={{ opacity: isModalOpen ? 0 : 0.6, rotate: 360 }}
         transition={{
-          opacity: { duration: 90, ease: [0.04, 0, 0.16, 1] },
+          opacity: { duration: 0.5 },
           rotate: { duration: 600, ease: "linear", repeat: Infinity },
         }}
         style={{ width: "52vw", maxWidth: "660px" }}
@@ -189,8 +195,8 @@ export default function ErpPage() {
       {/* Sello de agua - logo */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.07 }}
-        transition={{ duration: 2 }}
+        animate={{ opacity: isModalOpen ? 0 : 0.07 }}
+        transition={{ duration: 0.5 }}
         aria-hidden="true"
         className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center"
       >
@@ -208,11 +214,11 @@ export default function ErpPage() {
       </motion.div>
 
       {/* Halos de luz de fondo */}
-      <div className="fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0" />
+      <div className={`fixed top-[-20%] left-[-10%] w-[800px] h-[500px] bg-blue-600/10 blur-[130px] rounded-full pointer-events-none z-0 transition-opacity duration-500 ${isModalOpen ? 'opacity-0' : 'opacity-100'}`} />
+      <div className={`fixed bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-cyan-600/10 blur-[150px] rounded-full pointer-events-none z-0 transition-opacity duration-500 ${isModalOpen ? 'opacity-0' : 'opacity-100'}`} />
 
       {/* ── Encabezado sticky ── */}
-      <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 transition-all duration-700">
+      <nav className={`fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 transition-all duration-700 ${isModalOpen ? '-translate-y-full opacity-0 pointer-events-none' : 'translate-y-0 opacity-100'}`}>
         <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20 transition-all duration-500">
 
           {/* Left Block - MR Tech Logo */}
@@ -280,23 +286,23 @@ export default function ErpPage() {
       </nav>
 
       {/* ── Contenido principal ── */}
-      <section className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 text-center pt-24 pb-16">
+      <section className="relative z-10 flex flex-col items-center justify-start min-h-screen px-6 text-center pt-32 md:pt-40 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          className="flex flex-col items-center gap-6 max-w-3xl"
+          animate={{ opacity: isModalOpen ? 0 : 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className={`flex flex-col items-center gap-6 max-w-3xl w-full ${isModalOpen ? 'pointer-events-none' : ''}`}
         >
           {/* Maxirest Info - Sin fondo */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-6 mb-10 w-full cursor-pointer hover:scale-105 transition-transform duration-300"
-            onClick={() => setShowInfo(true)}
+            className="flex flex-col md:flex-row items-center justify-center gap-6 mb-4 w-full cursor-pointer hover:scale-105 transition-transform duration-300"
+            onClick={() => setShowInfo(!showInfo)}
           >
-            <div className="bg-white rounded-full p-2 shadow-[0_0_25px_rgba(51,232,255,0.3)] shrink-0 flex items-center justify-center relative group">
-              <div className="absolute inset-0 rounded-full bg-cyan-400 blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+            <div className={`bg-white rounded-full p-2 shadow-[0_0_25px_rgba(249,115,22,0.3)] shrink-0 flex items-center justify-center relative group transition-shadow duration-300 ${showInfo ? 'shadow-[0_0_40px_rgba(249,115,22,0.6)]' : ''}`}>
+              <div className={`absolute inset-0 rounded-full bg-orange-500 blur-xl transition-opacity duration-300 ${showInfo ? 'opacity-80' : 'opacity-0 group-hover:opacity-60'}`}></div>
               <img
                 src="/logo_maxirest.jpg"
                 alt="Maxirest"
@@ -330,15 +336,55 @@ export default function ErpPage() {
                 className="flex flex-col items-center w-full"
               >
                 {/* Nueva Sección de Solución Completa */}
-                <div className="flex flex-col items-center w-full max-w-5xl mb-12 mt-4 px-4">
-                  <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl text-center tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mb-8">
+                <div className="flex flex-col items-center w-full max-w-[1200px] mb-8 mt-2 px-2">
+                  <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl text-center tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mb-4">
                     La solución más completa para negocios gastronómicos
                   </h3>
-                  <img
-                    src="/Instancias Maxirest.png"
-                    alt="Instancias Maxirest"
-                    className="w-full object-contain rounded-xl drop-shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                  />
+                  
+                  {/* Contenedor relativo para la imagen principal y su overlay (Botón A) */}
+                  <div className="relative w-full max-w-4xl mx-auto flex justify-center">
+                    <img
+                      src="/Instancias Maxirest.png"
+                      alt="Instancias Maxirest"
+                      className="w-full object-contain relative z-10 pointer-events-none"
+                      style={{ 
+                        mixBlendMode: 'screen', 
+                        filter: 'brightness(1.2) contrast(1.1) drop-shadow(0 0 20px rgba(51,232,255,0.2))' 
+                      }}
+                    />
+                    
+                    {/* Botón Ir Instancia A (Overlay a la derecha arriba) */}
+                    <button 
+                      onClick={() => setMostrarInstanciaA(true)}
+                      className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
+                      style={{ top: '5%', right: '-18%', width: '18%' }}
+                      title="Ver Instancia A"
+                    >
+                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                      <img 
+                        src="/ir instancia A.png" 
+                        alt="Ir a Instancia A"
+                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                      />
+                    </button>
+
+                    {/* Botón Ir Instancia B (Overlay a la derecha abajo de Instancia A) */}
+                    <button 
+                      onClick={() => setMostrarInstanciaB(true)}
+                      className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
+                      style={{ top: '35%', right: '-18%', width: '18%' }}
+                      title="Ver Instancia B"
+                    >
+                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                      <img 
+                        src="/ir instancia B.png" 
+                        alt="Ir a Instancia B"
+                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                      />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Separador con destellos */}
@@ -360,6 +406,222 @@ export default function ErpPage() {
           </AnimatePresence>
         </motion.div>
       </section>
+
+      {/* Modal / Lightbox para Instancia A */}
+      <AnimatePresence>
+        {mostrarInstanciaA && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-transparent p-4 md:p-8"
+            onClick={() => setMostrarInstanciaA(false)}
+          >
+            <button 
+              onClick={() => setMostrarInstanciaA(false)}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">
+                REGRESAR
+              </span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
+                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/logo_eco.jpg.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.8, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-6xl w-full flex flex-col items-center justify-center z-10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src="/instancia A.png"
+                alt="Instancia A"
+                className="w-full h-auto max-h-[85vh] object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.4)] rounded-xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modal / Lightbox para Instancia B */}
+      <AnimatePresence>
+        {mostrarInstanciaB && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent p-4 md:p-8"
+            onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
+          >
+            {/* Botón Regresar */}
+            <button 
+              onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">
+                REGRESAR
+              </span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
+                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/logo_eco.jpg.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.8, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.8, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-7xl w-full flex flex-col items-center justify-start z-10 mt-8 h-full max-h-[85vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h2 className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-8 shrink-0">
+                INSTANCIA B - MAXIREST
+              </h2>
+              
+              <div className={`flex flex-col ${mostrarPreciosB ? 'lg:flex-row' : ''} items-center lg:items-start justify-center gap-8 md:gap-12 w-full transition-all duration-700`}>
+                
+                {/* Columna de Imágenes (Opciones) */}
+                <div className={`relative flex flex-col items-center justify-start gap-8 ${mostrarPreciosB ? 'w-full lg:w-[45%]' : 'w-full max-w-3xl'} transition-all duration-700`}>
+                  
+                  {/* 1. Licencias Maxirest */}
+                  <div className="relative w-full group flex justify-center">
+                    <img
+                      src="/Licencias Maxirest.png"
+                      alt="Licencias Maxirest"
+                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'licencias' ? false : 'licencias')}
+                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'licencias' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
+                      style={{ mixBlendMode: 'screen' }}
+                    />
+                    {!mostrarPreciosB && (
+                      <motion.div
+                        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.7, 0.3] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute inset-0 border-2 border-cyan-400 rounded-2xl pointer-events-none opacity-50"
+                        style={{ filter: 'blur(6px)' }}
+                      />
+                    )}
+                  </div>
+
+                  {/* 2. Implementaciones Maxirest */}
+                  <div className="relative w-full group flex justify-center">
+                    <img
+                      src="/Implementaciones Maxirest.png"
+                      alt="Implementaciones Maxirest"
+                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'implementaciones' ? false : 'implementaciones')}
+                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'implementaciones' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
+                      style={{ mixBlendMode: 'screen' }}
+                    />
+                  </div>
+
+                  {/* 3. Capacitaciones MAXIREST */}
+                  <div className="relative w-full group flex justify-center">
+                    <img
+                      src="/Capacitaciones MAXIREST.png"
+                      alt="Capacitaciones MAXIREST"
+                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'capacitaciones' ? false : 'capacitaciones')}
+                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'capacitaciones' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
+                      style={{ mixBlendMode: 'screen' }}
+                    />
+                  </div>
+                </div>
+
+                {/* Panel Derecho de Detalles */}
+                <AnimatePresence mode="wait">
+                  {mostrarPreciosB === 'licencias' && (
+                    <motion.div 
+                      key="licencias-panel"
+                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                      transition={{ duration: 0.6, type: "spring" }}
+                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
+                    >
+                      {/* Tarjeta FULL-PRO */}
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
+                        <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
+                          La versión FULL brinda todos los Módulos y submódulos del MAXIREST.
+                        </p>
+                        
+                        <div className="flex flex-col gap-4">
+                          <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                            <span className="text-white font-bold text-lg md:text-xl">Sistema Maxirest</span>
+                            <span className="text-orange-400 font-black text-xl md:text-2xl drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]">$130.899 Final</span>
+                          </div>
+                          <div className="flex justify-between items-center pt-1">
+                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional</span>
+                            <span className="text-orange-400/90 font-bold text-lg md:text-xl">$16.854 Final</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tarjeta XPRESS */}
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
+                        <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
+                          La versión XPRESS brinda los Módulos y submódulos junto con las funcionalidades de Punto de ventas sin Compras ni Stock entre otros.
+                        </p>
+                        
+                        <div className="flex flex-col gap-4">
+                          <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                            <span className="text-white font-bold text-lg md:text-xl">Sistema Maxirest</span>
+                            <span className="text-orange-400 font-black text-xl md:text-2xl drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]">$85.860 Final</span>
+                          </div>
+                          <div className="flex justify-between items-center pt-1">
+                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional</span>
+                            <span className="text-orange-400/90 font-bold text-lg md:text-xl">$11.236 Final</span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {mostrarPreciosB === 'implementaciones' && (
+                    <motion.div 
+                      key="implementaciones-panel"
+                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                      transition={{ duration: 0.6, type: "spring" }}
+                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
+                    >
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] min-h-[400px]">
+                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-4 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">IMPLEMENTACIONES</h4>
+                        <p className="text-slate-300 text-lg font-medium tracking-wide">Detalle de implementaciones disponible próximamente...</p>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {mostrarPreciosB === 'capacitaciones' && (
+                    <motion.div 
+                      key="capacitaciones-panel"
+                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
+                      transition={{ duration: 0.6, type: "spring" }}
+                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
+                    >
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] min-h-[400px]">
+                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-4 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">CAPACITACIONES</h4>
+                        <p className="text-slate-300 text-lg font-medium tracking-wide">Planes de capacitación disponibles próximamente...</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Footer mínimo */}
       <footer className="relative z-10 text-center py-6 border-t border-white/5">
