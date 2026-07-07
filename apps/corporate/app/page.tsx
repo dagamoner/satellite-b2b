@@ -205,7 +205,6 @@ export default function MarketingPage() {
   const [mounted, setMounted] = useState(false);
   const [logoGlow, setLogoGlow] = useState<string | null>(null);
   const [hoveredAntenna, setHoveredAntenna] = useState<string | null>(null);
-  const [selectedEcosistema, setSelectedEcosistema] = useState<number | null>(null);
   const [clickedEcosistema, setClickedEcosistema] = useState<number | null>(null);
   const [satelliteFlash, setSatelliteFlash] = useState(false);
   const [earthFlash, setEarthFlash] = useState(false);
@@ -454,35 +453,8 @@ export default function MarketingPage() {
       <nav className="fixed top-0 w-full z-50 transition-all duration-700 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
         <div className="max-w-[90rem] mx-auto px-4 md:px-6 transition-all duration-500 flex items-center justify-between h-16 md:h-20">
           
-          {/* Left Block - Small Logo */}
-          <div className="flex-1 flex items-center justify-start hidden md:flex opacity-100 transition-opacity duration-500">
-             <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                 <img 
-                    src="/Logo WEB MR Tech.png" 
-                    alt="MR Technology" 
-                    className="w-28 md:w-40 object-contain hover:scale-105 transition-transform duration-300"
-                    style={{ 
-                      mixBlendMode: 'screen',
-                      filter: 'brightness(1.1) contrast(1.1)'
-                    }}
-                 />
-             </div>
-          </div>
-          
-          {/* Center Block - Legend Image & Hablamos Button */}
-          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
-             <div className="relative flex items-center justify-center">
-                 <img 
-                   src="/Transformacion.png" 
-                   alt="Transformación Digital Empresarial" 
-                   className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
-                   style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
-                 />
-             </div>
-          </div>
-
-          {/* Right Block - Hablamos & Theme Toggle */}
-          <div className={`flex-1 flex justify-end items-center hidden md:flex gap-4 opacity-100 transition-opacity duration-500`}>
+          {/* Left Block - Hablamos (formerly Right Block) */}
+          <div className={`flex-1 flex justify-start items-center hidden md:flex gap-4 opacity-100 transition-opacity duration-500`}>
              <a 
                href="#whatsapp-contact"
                className="relative group/hablamos shrink-0 flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95"
@@ -500,6 +472,33 @@ export default function MarketingPage() {
                  }}
                />
              </a>
+          </div>
+          
+          {/* Center Block - Legend Image & Hablamos Button */}
+          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
+             <div className="relative flex items-center justify-center">
+                 <img 
+                   src="/Transformacion.png" 
+                   alt="Transformación Digital Empresarial" 
+                   className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
+                   style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
+                 />
+             </div>
+          </div>
+
+          {/* Right Block - Small Logo (formerly Left Block) */}
+          <div className="flex-1 flex items-center justify-end hidden md:flex opacity-100 transition-opacity duration-500">
+             <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                 <img 
+                    src="/Logo WEB MR Tech.png" 
+                    alt="MR Technology" 
+                    className="w-28 md:w-40 object-contain hover:scale-105 transition-transform duration-300"
+                    style={{ 
+                      mixBlendMode: 'screen',
+                      filter: 'brightness(1.1) contrast(1.1)'
+                    }}
+                 />
+             </div>
           </div>
         </div>
       </nav>
@@ -592,7 +591,6 @@ export default function MarketingPage() {
           <div
             className="relative flex items-center justify-center gap-2 md:gap-4 w-full z-30 flex-wrap md:flex-nowrap"
             style={{ minHeight: '22rem', padding: '2.5rem 4rem', marginTop: '-3rem' }}
-            onMouseLeave={() => setSelectedEcosistema(null)}
           >
             {[
               { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png" },
@@ -601,15 +599,20 @@ export default function MarketingPage() {
               { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png" },
               { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png" }
             ].map((logo, i) => {
-              const isSelected = selectedEcosistema === i || clickedEcosistema === i;
-              const anySelected = selectedEcosistema !== null || clickedEcosistema !== null;
+              const isSelected = clickedEcosistema === i;
+              const anySelected = clickedEcosistema !== null;
               const isOther = anySelected && !isSelected;
 
               return (
                   <div
                   key={i}
                   className="relative flex-shrink-0 flex items-center justify-center"
-                  onMouseEnter={() => setSelectedEcosistema(i)}
+                  onClick={(e) => {
+                    if (clickedEcosistema !== i) {
+                      e.preventDefault();
+                      setClickedEcosistema(i);
+                    }
+                  }}
                   style={{ 
                     padding: '1rem',
                     opacity: isOther ? 0 : 1,

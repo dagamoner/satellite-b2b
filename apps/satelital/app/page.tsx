@@ -428,32 +428,8 @@ export default function MarketingPage() {
       <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2">
         <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20">
 
-          {/* Left Block - MR Tech Logo */}
-          <div className="flex-1 flex items-center justify-start hidden md:flex">
-            <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <img
-                src="/Logo WEB MR Tech.png"
-                alt="MR Technology"
-                className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
-                style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
-              />
-            </div>
-          </div>
-
-          {/* Center Block - Transformacion Legend */}
-          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
-            <div className="relative flex items-center justify-center">
-              <img
-                src="/Transformacion.png"
-                alt="Transformación Digital Empresarial"
-                className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
-                style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
-              />
-            </div>
-          </div>
-
-          {/* Right Block - Ecosistema + Hablamos */}
-          <div className="flex-1 flex justify-end items-center hidden md:flex gap-4">
+          {/* Left Block - Ecosistema + Hablamos (formerly Right) */}
+          <div className="flex-1 flex justify-start items-center hidden md:flex gap-4">
             {/* ECOSISTEMA Header Button */}
             <button
               onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
@@ -488,6 +464,30 @@ export default function MarketingPage() {
                 }}
               />
             </button>
+          </div>
+
+          {/* Center Block - Transformacion Legend */}
+          <div className="flex-1 md:flex-none flex items-center justify-center relative shrink-0">
+            <div className="relative flex items-center justify-center">
+              <img
+                src="/Transformacion.png"
+                alt="Transformación Digital Empresarial"
+                className="h-14 md:h-[4.5rem] w-auto object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.4)] relative z-10"
+                style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)', maskImage: 'radial-gradient(ellipse 90% 90% at 50% 50%, black 60%, transparent 100%)' }}
+              />
+            </div>
+          </div>
+
+          {/* Right Block - MR Tech Logo (formerly Left) */}
+          <div className="flex-1 flex items-center justify-end hidden md:flex">
+            <div className="relative shrink-0 flex items-center cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <img
+                src="/Logo WEB MR Tech.png"
+                alt="MR Technology"
+                className="w-24 md:w-32 object-contain hover:scale-105 transition-transform duration-300"
+                style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
+              />
+            </div>
           </div>
         </div>
       </nav>
