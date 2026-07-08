@@ -456,11 +456,24 @@ export default function ErpPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent p-4 md:p-6"
-            onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
+            onClick={() => {
+              if (mostrarPreciosB) {
+                setMostrarPreciosB(false);
+              } else {
+                setMostrarInstanciaB(false);
+              }
+            }}
           >
             {/* Botón Regresar */}
             <button
-              onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (mostrarPreciosB) {
+                  setMostrarPreciosB(false);
+                } else {
+                  setMostrarInstanciaB(false);
+                }
+              }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
             >
               <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
