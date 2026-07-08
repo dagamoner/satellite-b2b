@@ -567,7 +567,7 @@ export default function ErpPage() {
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.1, type: "spring", damping: 20 }}
-                        className="flex flex-col gap-4 w-full lg:w-[46%]"
+                        className="flex flex-col gap-4 w-full lg:w-[30%] lg:-ml-24"
                       >
                         {/* Card FULL-PRO */}
                         <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
@@ -621,22 +621,20 @@ export default function ErpPage() {
                         initial={{ opacity: 0, x: 30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.18, type: "spring", damping: 20 }}
-                        className="flex flex-col gap-4 w-full lg:w-[54%]"
+                        className="flex flex-col gap-4 w-full lg:w-[75%] lg:-mr-12"
                       >
-                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-2">
+                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-3">
                           <img
                             src="/Estructura FULL.png"
                             alt="Estructura FULL Maxirest"
                             className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
-                            style={{ maxHeight: '29vh' }}
                           />
                         </div>
-                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-2">
+                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-3">
                           <img
                             src="/Estrcutura Xpress.png"
                             alt="Estructura XPRESS Maxirest"
                             className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
-                            style={{ maxHeight: '29vh' }}
                           />
                         </div>
                       </motion.div>
