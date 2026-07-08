@@ -157,7 +157,7 @@ export default function ErpPage() {
   const [showInfo, setShowInfo] = useState(true);
   const [mostrarInstanciaA, setMostrarInstanciaA] = useState(false);
   const [mostrarInstanciaB, setMostrarInstanciaB] = useState(false);
-  const [mostrarPreciosB, setMostrarPreciosB] = useState(false);
+  const [mostrarPreciosB, setMostrarPreciosB] = useState<string | boolean>(false);
   
   const isModalOpen = mostrarInstanciaA || mostrarInstanciaB;
 
