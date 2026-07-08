@@ -475,7 +475,7 @@ export default function ErpPage() {
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-7xl w-full flex flex-col items-center z-10 mt-16 h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden"
+              className="relative max-w-7xl w-full flex flex-col items-center z-10 mt-2 h-[calc(100vh-2rem)] overflow-y-auto overflow-x-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               <AnimatePresence mode="wait">
@@ -717,11 +717,11 @@ export default function ErpPage() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="w-full mt-4"
                       >
-                        <div className="border-l-4 border-[#33E8FF] bg-[#33E8FF]/5 p-5 rounded-r-xl">
-                          <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium">
+                        <div className="border border-[#33E8FF]/30 bg-[#33E8FF]/5 p-6 rounded-xl text-center">
+                          <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium" style={{ textAlign: "justify", textAlignLast: "center" }}>
                             Los valores incluyen las parametrizaciones generales para el funcionamiento inicial del software junto con toda la Carta Menú del local. Además, está incluida la configuración de cada PC con respecto al MAXIREST y las comanderas necesarias junto con la Factura Electrónica.
                           </p>
-                          <p className="mt-3 text-[#33E8FF] font-black text-sm md:text-base tracking-wider uppercase">
+                          <p className="mt-4 text-[#33E8FF] font-black text-sm md:text-base tracking-wider uppercase text-center">
                             ACTIVIDADES IT DESARROLLADAS DE MANERA PRESENCIAL.
                           </p>
                         </div>
