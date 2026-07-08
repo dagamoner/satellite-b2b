@@ -559,82 +559,85 @@ export default function ErpPage() {
                       />
                     </motion.div>
 
-                    {/* Fila inferior: izquierda cards · derecha estructuras */}
-                    <div className="flex flex-col lg:flex-row items-start justify-start gap-4 w-full">
-
-                      {/* ─── Columna IZQ: Cards de precios ─── */}
+                    {/* Layout de una columna: Cards y Estructuras intercaladas */}
+                    <div className="flex flex-col gap-10 w-full max-w-5xl mx-auto items-center mt-4">
+                      
+                      {/* --- FULL PRO --- */}
                       <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.1, type: "spring", damping: 20 }}
-                        className="flex flex-col gap-4 w-full lg:w-[30%] lg:-ml-24"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="w-full flex flex-col gap-6"
                       >
                         {/* Card FULL-PRO */}
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                           <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <h4 className="text-xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
-                          <p className="text-slate-300 text-xs mb-3 font-medium leading-relaxed">
+                          <h4 className="text-2xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
+                          <p className="text-slate-300 text-sm mb-4 font-medium leading-relaxed">
                             La versión FULL brinda todos los Módulos y funcionalidades completas del software.
                           </p>
                           <div className="flex flex-col gap-2">
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-2">
-                              <span className="text-white font-bold text-sm">Sistema MAXIREST BASE</span>
-                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$130.899</span>
+                              <span className="text-white font-bold text-base">Sistema MAXIREST BASE</span>
+                              <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$130.899</span>
                             </div>
-                            <div className="flex justify-between items-center pt-1">
-                              <span className="text-white/80 font-medium text-xs">Terminal Adicional (cada una)</span>
-                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$16.854</span>
+                            <div className="flex justify-between items-center pt-2">
+                              <span className="text-white/80 font-medium text-sm">Terminal Adicional (cada una)</span>
+                              <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$16.854</span>
                             </div>
                           </div>
-                          <p className="mt-3 text-[11px] font-semibold" style={{ color: '#33E8FF' }}>
+                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#33E8FF' }}>
                             * El valor manifestado es Mensual en concepto de alquiler del software.
                           </p>
                         </div>
+                        
+                        {/* Estructura FULL */}
+                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-4">
+                          <img
+                            src="/Estructura FULL.png"
+                            alt="Estructura FULL Maxirest"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.3)]"
+                          />
+                        </div>
+                      </motion.div>
 
+                      {/* --- XPRESS --- */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full flex flex-col gap-6"
+                      >
                         {/* Card XPRESS */}
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                           <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <h4 className="text-xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
-                          <p className="text-slate-300 text-xs mb-3 font-medium leading-relaxed">
+                          <h4 className="text-2xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
+                          <p className="text-slate-300 text-sm mb-4 font-medium leading-relaxed">
                             La versión XPRESS brinda todos los Módulos y funcionalidades completas del software para operar como Punto de Venta. No cuenta con Compras ni Stock.
                           </p>
                           <div className="flex flex-col gap-2">
                             <div className="flex justify-between items-center border-b border-slate-700/50 pb-2">
-                              <span className="text-white font-bold text-sm">Sistema MAXIREST BASE</span>
-                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$85.860</span>
+                              <span className="text-white font-bold text-base">Sistema MAXIREST BASE</span>
+                              <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$85.860</span>
                             </div>
-                            <div className="flex justify-between items-center pt-1">
-                              <span className="text-white/80 font-medium text-xs">Terminal Adicional (cada una)</span>
-                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$11.236</span>
+                            <div className="flex justify-between items-center pt-2">
+                              <span className="text-white/80 font-medium text-sm">Terminal Adicional (cada una)</span>
+                              <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$11.236</span>
                             </div>
                           </div>
-                          <p className="mt-3 text-[11px] font-semibold" style={{ color: '#33E8FF' }}>
+                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#33E8FF' }}>
                             * El valor manifestado es Mensual en concepto de alquiler del software.
                           </p>
                         </div>
-                      </motion.div>
-
-                      {/* ─── Columna DER: Imágenes Estructura ─── */}
-                      <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.18, type: "spring", damping: 20 }}
-                        className="flex flex-col gap-4 w-full lg:w-[75%] lg:-mr-12"
-                      >
-                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-3">
-                          <img
-                            src="/Estructura FULL.png"
-                            alt="Estructura FULL Maxirest"
-                            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
-                          />
-                        </div>
-                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-3">
+                        
+                        {/* Estructura XPRESS */}
+                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-4">
                           <img
                             src="/Estrcutura Xpress.png"
                             alt="Estructura XPRESS Maxirest"
-                            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.3)]"
                           />
                         </div>
                       </motion.div>
