@@ -543,43 +543,53 @@ export default function ErpPage() {
                       className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
                     >
                       {/* Tarjeta FULL-PRO */}
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(51,232,255,0.25)] transition-shadow duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
                         <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
                         <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
-                          La versión FULL brinda todos los Módulos y submódulos del MAXIREST.
+                          La versión FULL brinda todos los Módulos y funcionalidades completas del software.
                         </p>
                         
                         <div className="flex flex-col gap-4">
                           <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                            <span className="text-white font-bold text-lg md:text-xl">Sistema Maxirest</span>
-                            <span className="text-orange-400 font-black text-xl md:text-2xl drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]">$130.899 Final</span>
+                            <span className="text-white font-bold text-lg md:text-xl">Sistema MAXIREST BASE</span>
+                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$130.899</span>
                           </div>
                           <div className="flex justify-between items-center pt-1">
-                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional</span>
-                            <span className="text-orange-400/90 font-bold text-lg md:text-xl">$16.854 Final</span>
+                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional (cada una)</span>
+                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$16.854</span>
                           </div>
                         </div>
+
+                        <p className="mt-5 text-xs font-semibold tracking-wide leading-snug" style={{ color: '#33E8FF' }}>
+                          * El valor manifestado es Mensual en concepto de alquiler del software.
+                        </p>
                       </div>
 
                       {/* Tarjeta XPRESS */}
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(51,232,255,0.25)] transition-shadow duration-500">
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
                         <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
                         <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
-                          La versión XPRESS brinda los Módulos y submódulos junto con las funcionalidades de Punto de ventas sin Compras ni Stock entre otros.
+                          La versión XPRESS brinda todos los Módulos y funcionalidades completas del software para operar como Punto de Venta. No cuenta con Compras ni Stock.
                         </p>
                         
                         <div className="flex flex-col gap-4">
                           <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                            <span className="text-white font-bold text-lg md:text-xl">Sistema Maxirest</span>
-                            <span className="text-orange-400 font-black text-xl md:text-2xl drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]">$85.860 Final</span>
+                            <span className="text-white font-bold text-lg md:text-xl">Sistema MAXIREST BASE</span>
+                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$85.860</span>
                           </div>
                           <div className="flex justify-between items-center pt-1">
-                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional</span>
-                            <span className="text-orange-400/90 font-bold text-lg md:text-xl">$11.236 Final</span>
+                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional (cada una)</span>
+                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$11.236</span>
                           </div>
                         </div>
+
+                        <p className="mt-5 text-xs font-semibold tracking-wide leading-snug" style={{ color: '#33E8FF' }}>
+                          * El valor manifestado es Mensual en concepto de alquiler del software.
+                        </p>
                       </div>
                     </motion.div>
                   )}
