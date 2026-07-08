@@ -656,14 +656,77 @@ export default function ErpPage() {
                     transition={{ duration: 0.4 }}
                     className="flex flex-col items-center gap-5 w-full pb-8"
                   >
-                    <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver">
+                    <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver a opciones">
                       <img src="/Implementaciones Maxirest.png" alt="Implementaciones Maxirest"
-                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.7)] hover:scale-105 transition-transform duration-300"
-                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }} />
+                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] hover:scale-105 transition-transform duration-300"
+                        style={{ mixBlendMode: 'screen', maxHeight: '36vh', maxWidth: '80%' }} />
                     </div>
-                    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] w-full max-w-2xl">
-                      <h4 className="text-2xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">IMPLEMENTACIONES</h4>
-                      <p className="text-slate-300 text-lg font-medium">Detalle de implementaciones disponible próximamente...</p>
+                    
+                    <div className="flex flex-col gap-10 w-full max-w-5xl mx-auto items-center mt-4">
+                      {/* Título de Implementación */}
+                      <div className="w-full text-center">
+                        <h3 className="text-[#33E8FF] text-2xl md:text-3xl font-black uppercase tracking-widest drop-shadow-[0_0_12px_rgba(51,232,255,0.7)]">
+                          Instalación, configuración y puesta en marcha. Llave en mano.
+                        </h3>
+                      </div>
+
+                      {/* --- FULL PRO --- */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="w-full"
+                      >
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                          <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+                            <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">PRO FULL</span></h4>
+                            <div className="flex items-center gap-3">
+                              <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                              <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$250.000 <span className="text-xl">+ IVA</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* --- XPRESS --- */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full"
+                      >
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                          <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+                            <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</span></h4>
+                            <div className="flex items-center gap-3">
+                              <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                              <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$200.000 <span className="text-xl">+ IVA</span></span>
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+
+                      {/* --- TEXTO INFORMATIVO --- */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                        className="w-full mt-4"
+                      >
+                        <div className="border-l-4 border-[#33E8FF] bg-[#33E8FF]/5 p-5 rounded-r-xl">
+                          <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium">
+                            Los valores incluyen las parametrizaciones generales para el funcionamiento inicial del software junto con toda la Carta Menú del local. Además, está incluida la configuración de cada PC con respecto al MAXIREST y las comanderas necesarias junto con la Factura Electrónica.
+                          </p>
+                          <p className="mt-3 text-[#33E8FF] font-black text-sm md:text-base tracking-wider uppercase">
+                            ACTIVIDADES IT DESARROLLADAS DE MANERA PRESENCIAL.
+                          </p>
+                        </div>
+                      </motion.div>
+
                     </div>
                   </motion.div>
                 )}
