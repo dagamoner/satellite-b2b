@@ -455,17 +455,15 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent p-4 md:p-8"
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent p-4 md:p-6"
             onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
           >
             {/* Botón Regresar */}
-            <button 
+            <button
               onClick={() => { setMostrarInstanciaB(false); setMostrarPreciosB(false); }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
             >
-              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">
-                REGRESAR
-              </span>
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
                 <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
                 <img src="/logo_eco.jpg.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
@@ -473,161 +471,225 @@ export default function ErpPage() {
             </button>
 
             <motion.div
-              initial={{ scale: 0.8, y: 20 }}
+              initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.8, y: 20 }}
+              exit={{ scale: 0.9, y: 20 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative max-w-7xl w-full flex flex-col items-center justify-start z-10 mt-8 h-full max-h-[85vh] overflow-y-auto overflow-x-hidden custom-scrollbar"
+              className="relative max-w-7xl w-full flex flex-col items-center z-10 mt-16 h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <h2 className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-8 shrink-0">
-                INSTANCIA B - MAXIREST
-              </h2>
-              
-              <div className={`flex flex-col ${mostrarPreciosB ? 'lg:flex-row' : ''} items-center lg:items-start justify-center gap-8 md:gap-12 w-full transition-all duration-700`}>
-                
-                {/* Columna de Imágenes (Opciones) */}
-                <div className={`relative flex flex-col items-center justify-start gap-8 ${mostrarPreciosB ? 'w-full lg:w-[45%]' : 'w-full max-w-3xl'} transition-all duration-700`}>
-                  
-                  {/* 1. Licencias Maxirest */}
-                  <div className="relative w-full group flex justify-center">
-                    <img
-                      src="/Licencias Maxirest.png"
-                      alt="Licencias Maxirest"
-                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'licencias' ? false : 'licencias')}
-                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'licencias' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
-                      style={{ mixBlendMode: 'screen' }}
-                    />
-                    {!mostrarPreciosB && (
+              <AnimatePresence mode="wait">
+
+                {/* ── Estado inicial: título + 3 logos ── */}
+                {!mostrarPreciosB && (
+                  <motion.div
+                    key="selector"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.35 }}
+                    className="flex flex-col items-center gap-6 w-full max-w-3xl pb-8"
+                  >
+                    <h2 className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)]">
+                      INSTANCIA B - MAXIREST
+                    </h2>
+                    {/* Licencias */}
+                    <div className="relative w-full flex justify-center group">
+                      <img
+                        src="/Licencias Maxirest.png"
+                        alt="Licencias Maxirest"
+                        onClick={() => setMostrarPreciosB('licencias')}
+                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_40px_rgba(51,232,255,0.9)]"
+                        style={{ mixBlendMode: 'screen' }}
+                      />
                       <motion.div
-                        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.7, 0.3] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="absolute inset-0 border-2 border-cyan-400 rounded-2xl pointer-events-none opacity-50"
+                        animate={{ scale: [1, 1.08, 1], opacity: [0.25, 0.65, 0.25] }}
+                        transition={{ duration: 2.2, repeat: Infinity }}
+                        className="absolute inset-0 border-2 border-cyan-400 rounded-2xl pointer-events-none"
                         style={{ filter: 'blur(6px)' }}
                       />
-                    )}
-                  </div>
+                    </div>
+                    {/* Implementaciones */}
+                    <div className="w-full flex justify-center">
+                      <img
+                        src="/Implementaciones Maxirest.png"
+                        alt="Implementaciones Maxirest"
+                        onClick={() => setMostrarPreciosB('implementaciones')}
+                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.25)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                        style={{ mixBlendMode: 'screen' }}
+                      />
+                    </div>
+                    {/* Capacitaciones */}
+                    <div className="w-full flex justify-center">
+                      <img
+                        src="/Capacitaciones MAXIREST.png"
+                        alt="Capacitaciones MAXIREST"
+                        onClick={() => setMostrarPreciosB('capacitaciones')}
+                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.25)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                        style={{ mixBlendMode: 'screen' }}
+                      />
+                    </div>
+                  </motion.div>
+                )}
 
-                  {/* 2. Implementaciones Maxirest */}
-                  <div className="relative w-full group flex justify-center">
-                    <img
-                      src="/Implementaciones Maxirest.png"
-                      alt="Implementaciones Maxirest"
-                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'implementaciones' ? false : 'implementaciones')}
-                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'implementaciones' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
-                      style={{ mixBlendMode: 'screen' }}
-                    />
-                  </div>
-
-                  {/* 3. Capacitaciones MAXIREST */}
-                  <div className="relative w-full group flex justify-center">
-                    <img
-                      src="/Capacitaciones MAXIREST.png"
-                      alt="Capacitaciones MAXIREST"
-                      onClick={() => setMostrarPreciosB(mostrarPreciosB === 'capacitaciones' ? false : 'capacitaciones')}
-                      className={`w-full h-auto max-h-[25vh] lg:max-h-[30vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 ${mostrarPreciosB === 'capacitaciones' ? 'drop-shadow-[0_0_40px_rgba(51,232,255,0.8)] scale-105' : 'drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]'}`}
-                      style={{ mixBlendMode: 'screen' }}
-                    />
-                  </div>
-                </div>
-
-                {/* Panel Derecho de Detalles */}
-                <AnimatePresence mode="wait">
-                  {mostrarPreciosB === 'licencias' && (
-                    <motion.div 
-                      key="licencias-panel"
-                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                      transition={{ duration: 0.6, type: "spring" }}
-                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
+                {/* ── LICENCIAS: logo centrado + cards izq + estructuras der ── */}
+                {mostrarPreciosB === 'licencias' && (
+                  <motion.div
+                    key="licencias-layout"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="flex flex-col items-center w-full gap-4 pb-8"
+                  >
+                    {/* Logo centrado arriba — clic vuelve al selector */}
+                    <motion.div
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ duration: 0.4 }}
+                      className="flex justify-center w-full cursor-pointer"
+                      onClick={() => setMostrarPreciosB(false)}
+                      title="Volver a opciones"
                     >
-                      {/* Tarjeta FULL-PRO */}
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(51,232,255,0.25)] transition-shadow duration-500">
-                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
-                        <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
-                          La versión FULL brinda todos los Módulos y funcionalidades completas del software.
-                        </p>
-                        
-                        <div className="flex flex-col gap-4">
-                          <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                            <span className="text-white font-bold text-lg md:text-xl">Sistema MAXIREST BASE</span>
-                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$130.899</span>
+                      <img
+                        src="/Licencias Maxirest.png"
+                        alt="Licencias Maxirest"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] hover:scale-105 transition-transform duration-300"
+                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }}
+                      />
+                    </motion.div>
+
+                    {/* Fila inferior: izquierda cards · derecha estructuras */}
+                    <div className="flex flex-col lg:flex-row items-stretch gap-4 w-full">
+
+                      {/* ─── Columna IZQ: Cards de precios ─── */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1, type: "spring", damping: 20 }}
+                        className="flex flex-col gap-4 w-full lg:w-[46%]"
+                      >
+                        {/* Card FULL-PRO */}
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                          <h4 className="text-xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
+                          <p className="text-slate-300 text-xs mb-3 font-medium leading-relaxed">
+                            La versión FULL brinda todos los Módulos y funcionalidades completas del software.
+                          </p>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex justify-between items-center border-b border-slate-700/50 pb-2">
+                              <span className="text-white font-bold text-sm">Sistema MAXIREST BASE</span>
+                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$130.899</span>
+                            </div>
+                            <div className="flex justify-between items-center pt-1">
+                              <span className="text-white/80 font-medium text-xs">Terminal Adicional (cada una)</span>
+                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$16.854</span>
+                            </div>
                           </div>
-                          <div className="flex justify-between items-center pt-1">
-                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional (cada una)</span>
-                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$16.854</span>
-                          </div>
+                          <p className="mt-3 text-[11px] font-semibold" style={{ color: '#33E8FF' }}>
+                            * El valor manifestado es Mensual en concepto de alquiler del software.
+                          </p>
                         </div>
 
-                        <p className="mt-5 text-xs font-semibold tracking-wide leading-snug" style={{ color: '#33E8FF' }}>
-                          * El valor manifestado es Mensual en concepto de alquiler del software.
-                        </p>
-                      </div>
-
-                      {/* Tarjeta XPRESS */}
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-6 md:p-8 rounded-2xl relative overflow-hidden group shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_60px_rgba(51,232,255,0.25)] transition-shadow duration-500">
-                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
-                        <p className="text-slate-300 text-sm md:text-base mb-6 font-medium tracking-wide leading-relaxed">
-                          La versión XPRESS brinda todos los Módulos y funcionalidades completas del software para operar como Punto de Venta. No cuenta con Compras ni Stock.
-                        </p>
-                        
-                        <div className="flex flex-col gap-4">
-                          <div className="flex justify-between items-center border-b border-slate-700/50 pb-3">
-                            <span className="text-white font-bold text-lg md:text-xl">Sistema MAXIREST BASE</span>
-                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$85.860</span>
+                        {/* Card XPRESS */}
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-5 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                          <h4 className="text-xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
+                          <p className="text-slate-300 text-xs mb-3 font-medium leading-relaxed">
+                            La versión XPRESS brinda todos los Módulos y funcionalidades completas del software para operar como Punto de Venta. No cuenta con Compras ni Stock.
+                          </p>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex justify-between items-center border-b border-slate-700/50 pb-2">
+                              <span className="text-white font-bold text-sm">Sistema MAXIREST BASE</span>
+                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$85.860</span>
+                            </div>
+                            <div className="flex justify-between items-center pt-1">
+                              <span className="text-white/80 font-medium text-xs">Terminal Adicional (cada una)</span>
+                              <span className="text-orange-400 font-black text-2xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$11.236</span>
+                            </div>
                           </div>
-                          <div className="flex justify-between items-center pt-1">
-                            <span className="text-white/80 font-medium text-base md:text-lg">Terminal Adicional (cada una)</span>
-                            <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_14px_rgba(249,115,22,0.7)]">$11.236</span>
-                          </div>
+                          <p className="mt-3 text-[11px] font-semibold" style={{ color: '#33E8FF' }}>
+                            * El valor manifestado es Mensual en concepto de alquiler del software.
+                          </p>
                         </div>
+                      </motion.div>
 
-                        <p className="mt-5 text-xs font-semibold tracking-wide leading-snug" style={{ color: '#33E8FF' }}>
-                          * El valor manifestado es Mensual en concepto de alquiler del software.
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
+                      {/* ─── Columna DER: Imágenes Estructura ─── */}
+                      <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.5, delay: 0.18, type: "spring", damping: 20 }}
+                        className="flex flex-col gap-4 w-full lg:w-[54%]"
+                      >
+                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-2">
+                          <img
+                            src="/Estructura FULL.png"
+                            alt="Estructura FULL Maxirest"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
+                            style={{ maxHeight: '29vh' }}
+                          />
+                        </div>
+                        <div className="flex-1 flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-2">
+                          <img
+                            src="/Estrcutura Xpress.png"
+                            alt="Estructura XPRESS Maxirest"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.2)]"
+                            style={{ maxHeight: '29vh' }}
+                          />
+                        </div>
+                      </motion.div>
 
-                  {mostrarPreciosB === 'implementaciones' && (
-                    <motion.div 
-                      key="implementaciones-panel"
-                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                      transition={{ duration: 0.6, type: "spring" }}
-                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
-                    >
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] min-h-[400px]">
-                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-4 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">IMPLEMENTACIONES</h4>
-                        <p className="text-slate-300 text-lg font-medium tracking-wide">Detalle de implementaciones disponible próximamente...</p>
-                      </div>
-                    </motion.div>
-                  )}
+                    </div>
+                  </motion.div>
+                )}
 
-                  {mostrarPreciosB === 'capacitaciones' && (
-                    <motion.div 
-                      key="capacitaciones-panel"
-                      initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                      animate={{ opacity: 1, x: 0, scale: 1 }}
-                      exit={{ opacity: 0, x: 20, scale: 0.95 }}
-                      transition={{ duration: 0.6, type: "spring" }}
-                      className="w-full lg:w-[55%] flex flex-col gap-6 mt-8 lg:mt-0"
-                    >
-                      <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl flex flex-col items-center justify-center text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] min-h-[400px]">
-                        <h4 className="text-2xl md:text-3xl font-black text-[#33E8FF] mb-4 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">CAPACITACIONES</h4>
-                        <p className="text-slate-300 text-lg font-medium tracking-wide">Planes de capacitación disponibles próximamente...</p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {/* ── IMPLEMENTACIONES ── */}
+                {mostrarPreciosB === 'implementaciones' && (
+                  <motion.div
+                    key="implementaciones-layout"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col items-center gap-5 w-full pb-8"
+                  >
+                    <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver">
+                      <img src="/Implementaciones Maxirest.png" alt="Implementaciones Maxirest"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.7)] hover:scale-105 transition-transform duration-300"
+                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }} />
+                    </div>
+                    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] w-full max-w-2xl">
+                      <h4 className="text-2xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">IMPLEMENTACIONES</h4>
+                      <p className="text-slate-300 text-lg font-medium">Detalle de implementaciones disponible próximamente...</p>
+                    </div>
+                  </motion.div>
+                )}
 
-              </div>
+                {/* ── CAPACITACIONES ── */}
+                {mostrarPreciosB === 'capacitaciones' && (
+                  <motion.div
+                    key="capacitaciones-layout"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col items-center gap-5 w-full pb-8"
+                  >
+                    <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver">
+                      <img src="/Capacitaciones MAXIREST.png" alt="Capacitaciones MAXIREST"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.7)] hover:scale-105 transition-transform duration-300"
+                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }} />
+                    </div>
+                    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] w-full max-w-2xl">
+                      <h4 className="text-2xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">CAPACITACIONES</h4>
+                      <p className="text-slate-300 text-lg font-medium">Planes de capacitación disponibles próximamente...</p>
+                    </div>
+                  </motion.div>
+                )}
+
+              </AnimatePresence>
             </motion.div>
           </motion.div>
         )}
