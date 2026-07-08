@@ -680,11 +680,20 @@ export default function ErpPage() {
                         <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                           <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-                            <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">PRO FULL</span></h4>
-                            <div className="flex items-center gap-3">
-                              <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
-                              <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$250.000 <span className="text-xl">+ IVA</span></span>
+                          <div className="flex flex-col w-full gap-3 relative z-10">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-2 border-b border-slate-700/50 pb-3">
+                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">PRO FULL</span></h4>
+                              <div className="flex items-center gap-3">
+                                <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                                <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$250.000 <span className="text-xl">+ IVA</span></span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-1">
+                              <span className="text-white/80 font-medium text-lg tracking-wide">Terminal Adicional PRO - FULL</span>
+                              <div className="flex items-center gap-3">
+                                <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                                <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$95.000 <span className="text-lg">+ IVA</span></span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -700,11 +709,20 @@ export default function ErpPage() {
                         <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
                           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                           <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <div className="flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-                            <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</span></h4>
-                            <div className="flex items-center gap-3">
-                              <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
-                              <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$200.000 <span className="text-xl">+ IVA</span></span>
+                          <div className="flex flex-col w-full gap-3 relative z-10">
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-2 border-b border-slate-700/50 pb-3">
+                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</span></h4>
+                              <div className="flex items-center gap-3">
+                                <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                                <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$200.000 <span className="text-xl">+ IVA</span></span>
+                              </div>
+                            </div>
+                            <div className="flex flex-col md:flex-row justify-between items-center gap-2 pt-1">
+                              <span className="text-white/80 font-medium text-lg tracking-wide">Terminal Adicional XPRESS</span>
+                              <div className="flex items-center gap-3">
+                                <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
+                                <span className="text-orange-400 font-black text-2xl md:text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$75.000 <span className="text-lg">+ IVA</span></span>
+                              </div>
                             </div>
                           </div>
                         </div>
