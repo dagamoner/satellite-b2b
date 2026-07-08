@@ -555,12 +555,12 @@ export default function ErpPage() {
                         src="/Licencias Maxirest.png"
                         alt="Licencias Maxirest"
                         className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] hover:scale-105 transition-transform duration-300"
-                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }}
+                        style={{ mixBlendMode: 'screen', maxHeight: '36vh', maxWidth: '80%' }}
                       />
                     </motion.div>
 
                     {/* Fila inferior: izquierda cards · derecha estructuras */}
-                    <div className="flex flex-col lg:flex-row items-stretch gap-4 w-full">
+                    <div className="flex flex-col lg:flex-row items-start justify-start gap-4 w-full">
 
                       {/* ─── Columna IZQ: Cards de precios ─── */}
                       <motion.div
