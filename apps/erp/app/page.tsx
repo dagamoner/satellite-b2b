@@ -154,10 +154,12 @@ const SatelliteOrbit = ({ isHidden }: { isHidden: boolean }) => (
 );
 
 export default function ErpPage() {
-  const [showInfo, setShowInfo] = useState(true);
+  const [showInfo, setShowInfo] = useState(false);
+  const [showAuditoria, setShowAuditoria] = useState(false);
   const [mostrarInstanciaA, setMostrarInstanciaA] = useState(false);
   const [mostrarInstanciaB, setMostrarInstanciaB] = useState(false);
   const [mostrarPreciosB, setMostrarPreciosB] = useState<string | boolean>(false);
+  const [moduloSeleccionado, setModuloSeleccionado] = useState("");
   
   const isModalOpen = mostrarInstanciaA || mostrarInstanciaB;
 
@@ -255,7 +257,7 @@ export default function ErpPage() {
               <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
                 <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
                 <img
-                  src="/logo_eco.jpg.jpg"
+                  src="/ecosistema.jpg"
                   alt="Ecosistema"
                   className="w-full h-full object-cover rounded-full relative z-10"
                   style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)' }}
@@ -293,37 +295,111 @@ export default function ErpPage() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className={`flex flex-col items-center gap-6 max-w-3xl w-full ${isModalOpen ? 'pointer-events-none' : ''}`}
         >
-          {/* Maxirest Info - Sin fondo */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-6 mb-4 w-full cursor-pointer hover:scale-105 transition-transform duration-300"
-            onClick={() => setShowInfo(!showInfo)}
-          >
-            <div className={`bg-white rounded-full p-2 shadow-[0_0_25px_rgba(249,115,22,0.3)] shrink-0 flex items-center justify-center relative group transition-shadow duration-300 ${showInfo ? 'shadow-[0_0_40px_rgba(249,115,22,0.6)]' : ''}`}>
-              <div className={`absolute inset-0 rounded-full bg-orange-500 blur-xl transition-opacity duration-300 ${showInfo ? 'opacity-80' : 'opacity-0 group-hover:opacity-60'}`}></div>
-              <img
-                src="/logo_maxirest.jpg"
-                alt="Maxirest"
-                className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full relative z-10"
-              />
-            </div>
-            <div className="flex flex-col items-center md:items-start text-center md:text-left">
-              <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
-                Software Gastronómico <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
-              </h2>
-              <span className="text-white font-bold text-base md:text-lg tracking-widest mt-2 mb-2 opacity-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
-                Potenciamos tu proyecto gastronómico al siguiente nivel
-              </span>
-              <span className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest mt-2 mb-1 uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
-                AGENTES OFICIALES.
-              </span>
-              <span className="text-slate-100 text-sm md:text-base font-bold tracking-[0.2em] mt-1 uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
-                Provincia de Mendoza y Alrededores
-              </span>
-            </div>
-          </motion.div>
+          {/* Main Info Blocks */}
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-x-6 md:gap-x-10 gap-y-10 md:gap-y-14 items-start w-full max-w-5xl mx-auto mb-8 px-4 md:px-0">
+            
+            {/* --- MAXIREST ROW --- */}
+            {!showAuditoria && (
+              <>
+                {/* Logo Maxirest */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+                  className="flex justify-center w-full md:w-auto"
+                >
+                  <div 
+                    className={`bg-white rounded-full p-2 shadow-[0_0_25px_rgba(249,115,22,0.3)] flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105 ${showInfo ? 'shadow-[0_0_40px_rgba(249,115,22,0.6)]' : ''}`}
+                    onClick={() => {
+                      setShowInfo(!showInfo);
+                      setShowAuditoria(false);
+                    }}
+                  >
+                    <img
+                      src="/logo_maxirest.jpg"
+                      alt="Maxirest"
+                      className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full relative z-10"
+                    />
+                  </div>
+                </motion.div>
+                
+                {/* Text Maxirest */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="flex flex-col items-center md:items-start text-center md:text-left cursor-pointer transition-transform duration-300 hover:scale-105 md:pt-3"
+                  onClick={() => {
+                    setShowInfo(!showInfo);
+                    setShowAuditoria(false);
+                  }}
+                >
+                  <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
+                    Software Gastronómico <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
+                  </h2>
+                  <span className="text-white font-bold text-base md:text-lg tracking-widest mt-2 mb-2 opacity-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
+                    Potenciamos tu proyecto gastronómico al siguiente nivel
+                  </span>
+                  <span className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest mt-2 mb-1 uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
+                    AGENTES OFICIALES.
+                  </span>
+                  <span className="text-slate-100 text-sm md:text-base font-bold tracking-[0.2em] mt-1 uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
+                    Provincia de Mendoza y Alrededores
+                  </span>
+                </motion.div>
+              </>
+            )}
+
+            {/* --- AUDITORIA ROW --- */}
+            {!showInfo && (
+              <>
+                {/* Logo Auditoria */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  className="flex justify-center w-full md:w-auto md:mt-2"
+                >
+                  <div 
+                    className="cursor-pointer transition-all duration-300 hover:scale-105 flex items-center justify-center w-36 md:w-44"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowAuditoria(!showAuditoria);
+                      setShowInfo(false);
+                    }}
+                    title="Auditoría y Consultoría Gastronómica"
+                  >
+                    <img
+                      src="/Logo MR Consultoria Gast.png"
+                      alt="MR Consultoria Gastronómica"
+                      className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+                      style={{ mixBlendMode: 'screen' }}
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Text Auditoria */}
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: 0.5 }}
+                  className="flex flex-col items-center md:items-start text-center md:text-left cursor-pointer transition-transform duration-300 hover:scale-105 md:pt-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowAuditoria(!showAuditoria);
+                    setShowInfo(false);
+                  }}
+                >
+                  <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
+                    EL FUTURO DE LA GESTIÓN GASTRONÓMICA
+                  </h2>
+                  <p className="text-white font-bold text-sm md:text-[15px] tracking-wide mt-3 mb-2 leading-[1.7] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)] w-full" style={{ textAlign: "justify", textAlignLast: "left" }}>
+                    Auditoria & Consultoria con un equipo interdisciplinario gastronomico y sistematico que junto a herramientas de IT + IA = optimización de procesos en base a los puntos de dolor, control de toda la gestión gastronomica del local e integración tecnológica de vanguardia para llevar su restaurante al siguiente nivel de rentabilidad y excelencia.
+                  </p>
+                </motion.div>
+              </>
+            )}
+          </div>
 
           <AnimatePresence>
             {showInfo && (
@@ -426,7 +502,7 @@ export default function ErpPage() {
               </span>
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
                 <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
-                <img src="/logo_eco.jpg.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
               </div>
             </button>
 
@@ -479,7 +555,7 @@ export default function ErpPage() {
               <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
               <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
                 <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
-                <img src="/logo_eco.jpg.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
               </div>
             </button>
 
@@ -500,48 +576,68 @@ export default function ErpPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.35 }}
-                    className="flex flex-col items-center gap-6 w-full max-w-3xl pb-8"
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col w-full max-w-5xl mx-auto pb-16 pt-0 -mt-6 px-4"
                   >
-                    <h2 className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)]">
+                    <motion.h2 
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-2 text-center self-center"
+                    >
                       INSTANCIA B - MAXIREST
-                    </h2>
-                    {/* Licencias */}
-                    <div className="relative w-full flex justify-center group">
+                    </motion.h2>
+
+                    {/* Licencias (Orientado a la Izquierda) */}
+                    <motion.div 
+                      initial={{ opacity: 0, x: -40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
+                      className="relative w-full md:w-[88%] flex justify-start self-start group z-10"
+                    >
+                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
                       <img
                         src="/Licencias Maxirest.png"
                         alt="Licencias Maxirest"
                         onClick={() => setMostrarPreciosB('licencias')}
-                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_40px_rgba(51,232,255,0.9)]"
+                        className="w-full h-auto max-h-[30vh] object-contain object-left cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
                         style={{ mixBlendMode: 'screen' }}
                       />
-                      <motion.div
-                        animate={{ scale: [1, 1.08, 1], opacity: [0.25, 0.65, 0.25] }}
-                        transition={{ duration: 2.2, repeat: Infinity }}
-                        className="absolute inset-0 border-2 border-cyan-400 rounded-2xl pointer-events-none"
-                        style={{ filter: 'blur(6px)' }}
-                      />
-                    </div>
-                    {/* Implementaciones */}
-                    <div className="w-full flex justify-center">
+                    </motion.div>
+
+                    {/* Implementaciones (Orientado al Medio) */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 40 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
+                      className="relative w-full md:w-[88%] flex justify-center self-center group -mt-4 md:-mt-10 z-20"
+                    >
+                      <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
                       <img
                         src="/Implementaciones Maxirest.png"
                         alt="Implementaciones Maxirest"
                         onClick={() => setMostrarPreciosB('implementaciones')}
-                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.25)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                        className="w-full h-auto max-h-[30vh] object-contain object-center cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:drop-shadow-[0_0_35px_rgba(249,115,22,0.8)] relative z-10"
                         style={{ mixBlendMode: 'screen' }}
                       />
-                    </div>
-                    {/* Capacitaciones */}
-                    <div className="w-full flex justify-center">
+                    </motion.div>
+
+                    {/* Capacitaciones (Orientado a la Derecha) */}
+                    <motion.div 
+                      initial={{ opacity: 0, x: 40 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.7, delay: 0.55, ease: "easeOut" }}
+                      className="relative w-full md:w-[88%] flex justify-end self-end group -mt-4 md:-mt-10 z-30"
+                    >
+                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
                       <img
                         src="/Capacitaciones MAXIREST.png"
                         alt="Capacitaciones MAXIREST"
                         onClick={() => setMostrarPreciosB('capacitaciones')}
-                        className="w-full h-auto max-h-[26vh] object-contain cursor-pointer transition-all duration-500 hover:scale-105 drop-shadow-[0_0_20px_rgba(51,232,255,0.25)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                        className="w-full h-auto max-h-[30vh] object-contain object-right cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
                         style={{ mixBlendMode: 'screen' }}
                       />
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
 
@@ -770,16 +866,156 @@ export default function ErpPage() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.4 }}
-                    className="flex flex-col items-center gap-5 w-full pb-8"
+                    className="flex flex-col items-center w-full pb-12 px-4"
                   >
-                    <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver">
-                      <img src="/Capacitaciones MAXIREST.png" alt="Capacitaciones MAXIREST"
-                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.7)] hover:scale-105 transition-transform duration-300"
-                        style={{ mixBlendMode: 'screen', maxHeight: '18vh', maxWidth: '52%' }} />
+                    {/* Logo principal */}
+                    <div className="flex items-center justify-center w-full cursor-pointer -mt-20 md:-mt-24 mb-0 relative z-10" onClick={() => setMostrarPreciosB(false)} title="Volver">
+                      <img src="/Leyenda Capacitaciones.png" alt="Leyenda Capacitaciones"
+                        className="object-contain w-full h-auto drop-shadow-[0_0_30px_rgba(51,232,255,0.7)] hover:drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] transition-all duration-500"
+                        style={{ mixBlendMode: 'screen', maxHeight: '75vh' }} />
                     </div>
-                    <div className="bg-slate-900/60 backdrop-blur-xl border border-cyan-500/30 p-8 rounded-2xl text-center shadow-[0_0_30px_rgba(0,0,0,0.5)] w-full max-w-2xl">
-                      <h4 className="text-2xl font-black text-[#33E8FF] mb-3 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">CAPACITACIONES</h4>
-                      <p className="text-slate-300 text-lg font-medium">Planes de capacitación disponibles próximamente...</p>
+
+                    {/* Selector de módulos */}
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 -mt-24 md:-mt-48 mb-4 w-full max-w-4xl mx-auto p-5 rounded-2xl bg-slate-900/60 border border-cyan-500/30 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.4)] relative z-10">
+                      <h4 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)] text-center">
+                        ¿Qué MÓDULOS querés aprender?
+                      </h4>
+                      <div className="relative min-w-[280px]">
+                        <select 
+                          className="appearance-none w-full bg-[#33E8FF] text-slate-900 font-bold tracking-wider px-5 py-3 pr-12 rounded-xl border-2 border-cyan-400 outline-none hover:bg-[#5ae6ff] focus:bg-[#5ae6ff] focus:shadow-[0_0_20px_rgba(51,232,255,0.6)] transition-all duration-300 cursor-pointer text-sm"
+                          value={moduloSeleccionado}
+                          onChange={(e) => setModuloSeleccionado(e.target.value)}
+                        >
+                          <option value="" disabled className="font-bold text-white bg-slate-900">Seleccioná una opción...</option>
+                          <option value="adicion-ventas" className="font-bold text-white bg-slate-900">ADICIÓN & VENTAS</option>
+                          <option value="compras" className="font-bold text-white bg-slate-900">COMPRAS</option>
+                          <option value="stock" className="font-bold text-white bg-slate-900">STOCK</option>
+                          <option value="personal-auditorias" className="font-bold text-white bg-slate-900">PERSONAL & AUDITORIAS</option>
+                        </select>
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-900">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Detalle de Capacitación Seleccionada */}
+                    {moduloSeleccionado && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="w-full max-w-4xl mx-auto -mt-2 mb-6 relative z-10 px-4 md:px-0"
+                      >
+                        <div className="text-center px-4">
+                          <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium">
+                            Importe Modulo <span style={{ color: '#33E8FF' }} className="font-bold">{
+                              moduloSeleccionado === 'adicion-ventas' ? 'VENTAS & ADICION' :
+                              moduloSeleccionado === 'stock' ? 'STOCK' :
+                              moduloSeleccionado === 'compras' ? 'COMPRAS' :
+                              moduloSeleccionado === 'personal-auditorias' ? 'PERSONAL & AUDITORIAS' : ''
+                            }</span> <span className="text-xl md:text-2xl font-black text-white drop-shadow-md">$95000 + IVA</span> (Remoto)
+                          </p>
+                          <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
+                            Sin limite de personas ni tiempo, el objetivo es adquirir el conocimiento.
+                          </p>
+                          <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
+                            Si desea dicha capacitaciòn de manera <span style={{ color: '#33E8FF' }} className="font-bold drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">PRESENCIAL</span> se debe sumar <span className="text-xl md:text-2xl font-black text-white drop-shadow-md">$50000 + IVA</span>.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {/* Lista de módulos adquiridos */}
+                    {moduloSeleccionado && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="w-full max-w-4xl mx-auto mb-6 px-4 md:px-0 text-left bg-slate-900/40 p-6 rounded-xl border border-[#33E8FF]/20"
+                      >
+                        <h5 className="text-[#33E8FF] font-black text-xl mb-4 drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
+                          Módulos Adquiridos:
+                        </h5>
+                        <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-slate-200 font-bold text-base md:text-lg">
+                          {(
+                            moduloSeleccionado === 'adicion-ventas' ? ["Adición", "Punto de Venta", "Carta / Menu", "Ventas", "Tesorería", "Personal", "Seguridad", "Mantenimiento", "Configuraciones", "Caja Adición", "Caja Mayor", "Estadísticas", "Clientes", "Ctas Ctes Clientes"] :
+                            moduloSeleccionado === 'stock' ? ["Insumos", "Stock", "Recetas de Artículos", "Recetas de Insumos", "Seguridad", "Mantenimiento", "Configuraciones", "Estadísticas"] :
+                            moduloSeleccionado === 'compras' ? ["Ingreso de Órdenes de Compra", "Ingreso de Compras", "Órdenes de Pago", "Insumos", "Caja Adición", "Caja Mayor", "Seguridad", "Mantenimiento", "Configuraciones", "Estadísticas", "Balances", "Proveedores", "Cuentas Corrientes Proveedores"] :
+                            moduloSeleccionado === 'personal-auditorias' ? ["Personal", "Seguridad", "Mantenimiento", "Configuraciones", "Estadísticas", "Claves del Sistema", "Caja Adición", "Ingreso del Personal"] : []
+                          ).map((mod, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <svg className="w-5 h-5 text-[#33E8FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                              {mod}
+                            </li>
+                          ))}
+                        </ul>
+                      </motion.div>
+                    )}
+
+                    {/* Fila Horizontal de Capacitaciones */}
+                    <div className="flex flex-wrap justify-center gap-2 md:gap-4 w-full max-w-7xl mx-auto items-center mt-2">
+                      {[
+                        { src: "/CAJA ADICION.png", alt: "Caja Adicion" },
+                        { src: "/CAJA MAYOR.png", alt: "Caja Mayor" },
+                        { src: "/PUNTO DE VENTA.png", alt: "Punto de Venta" },
+                        { src: "/3. Carta menu.png", alt: "Carta menu" },
+                        { src: "/4. Ventas.png", alt: "Ventas" },
+                        { src: "/5. Tesoreria.png", alt: "Tesoreria" },
+                        { src: "/6. Compras.png", alt: "Compras" },
+                        { src: "/7. Balances.png", alt: "Balances" },
+                        { src: "/8. Stock.png", alt: "Stock" },
+                        { src: "/9. Personal.png", alt: "Personal" },
+                        { src: "/10. Seguridad.png", alt: "Seguridad" },
+                        { src: "/11. mANTENIMIENTO.png", alt: "Mantenimiento" },
+                        { src: "/12. Configuraciones.png", alt: "Configuraciones" },
+                        { src: "/13. Caja.png", alt: "Caja" },
+                        { src: "/14. Estadisticas.png", alt: "Estadisticas" },
+                        { src: "/15. Auditorias.png", alt: "Auditorias" },
+                        { src: "/16. Claves del Sistema.png", alt: "Claves del Sistema" },
+                        { src: "/PROVEEDORES.png", alt: "Proveedores" },
+                        { src: "/CLIENTES.png", alt: "Clientes" },
+                        { src: "/INSUMOS.png", alt: "Insumos" },
+                        { src: "/RECETAS DE INSUMOS.png", alt: "Recetas de Insumos" },
+                        { src: "/RECETAS DE ARTICULOS.png", alt: "Recetas de Artículos" },
+                        { src: "/ctas ctes clientes.png", alt: "Ctas Ctes Clientes" },
+                      ].filter(item => {
+                        if (moduloSeleccionado === 'adicion-ventas') {
+                          return [
+                            "Caja Adicion", "Punto de Venta", "Carta menu", "Ventas", "Tesoreria",
+                            "Personal", "Seguridad", "Mantenimiento", "Configuraciones",
+                            "Caja Mayor", "Estadisticas", "Clientes", "Ctas Ctes Clientes"
+                          ].includes(item.alt);
+                        } else if (moduloSeleccionado === 'stock') {
+                          return [
+                            "Insumos", "Stock", "Recetas de Artículos", "Recetas de Insumos",
+                            "Seguridad", "Mantenimiento", "Configuraciones", "Estadisticas"
+                          ].includes(item.alt);
+                        } else if (moduloSeleccionado === 'compras') {
+                          return [
+                            "Compras", "Insumos", "Caja Adicion", "Caja Mayor", 
+                            "Seguridad", "Mantenimiento", "Configuraciones", "Estadisticas", 
+                            "Balances", "Proveedores"
+                          ].includes(item.alt);
+                        } else if (moduloSeleccionado === 'personal-auditorias') {
+                          return [
+                            "Personal", "Seguridad", "Mantenimiento", "Configuraciones", 
+                            "Estadisticas", "Claves del Sistema", "Caja Adicion", "Auditorias"
+                          ].includes(item.alt);
+                        }
+                        return true;
+                      }).map((item, idx) => (
+                        <div key={idx} className="relative group w-[80%] sm:w-[45%] md:w-[30%] lg:w-[22%] flex justify-center p-3">
+                          <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-xl" />
+                          <div className="w-full flex justify-center">
+                            <img
+                              src={item.src}
+                              alt={item.alt}
+                              className="w-full h-auto object-contain transition-all duration-500 hover:scale-105 rounded-xl border-2 border-[#33E8FF] shadow-[0_0_15px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.9)]"
+                              style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </motion.div>
                 )}
@@ -792,9 +1028,17 @@ export default function ErpPage() {
 
       {/* Footer mínimo */}
       <footer className="relative z-10 text-center py-6 border-t border-white/5">
-        <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">
+        <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-2">
           © 2026 MR Technology · Software ERP / SAAS Empresarial
         </p>
+        <a 
+          href="https://github.com/dagamoner/satellite-b2b" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-xs text-[#33E8FF] hover:text-white transition-colors duration-300 font-medium"
+        >
+          https://github.com/dagamoner/satellite-b2b
+        </a>
       </footer>
     </main>
   );

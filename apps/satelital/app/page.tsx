@@ -462,7 +462,7 @@ export default function MarketingPage() {
               <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
                 <div className="absolute inset-0 bg-[#33E8FF] rounded-full blur-[15px] opacity-30 group-hover/eco:opacity-70 transition-opacity duration-300 pointer-events-none" />
                 <img
-                  src="/logo_eco.jpg.jpg"
+                  src="/ecosistema.jpg"
                   alt="Ecosistema"
                   className="w-full h-full object-cover rounded-full relative z-10"
                   style={{ mixBlendMode: 'screen', WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', maskImage: 'radial-gradient(circle at center, black 55%, transparent 70%)', filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.7)) brightness(1.2)' }}
