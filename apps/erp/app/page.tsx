@@ -295,93 +295,6 @@ export default function ErpPage() {
           transition={{ duration: 0.5, ease: "easeOut" }}
           className={`flex flex-col items-center gap-6 max-w-3xl w-full ${isModalOpen ? 'pointer-events-none' : ''}`}
         >
-          {/* ── HERO INSTANCIA B ── */}
-          <motion.div
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
-            className="w-full max-w-5xl mx-auto mb-10 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 px-4 md:px-0"
-          >
-            {/* Imagen Instancia B */}
-            <div className="relative flex items-center justify-center shrink-0">
-              {/* Glow aura */}
-              <div className="absolute inset-0 rounded-full bg-[#33E8FF] blur-[60px] opacity-20 animate-pulse pointer-events-none scale-125" />
-              <motion.img
-                src="/ir instancia B.png"
-                alt="Instancia B - Maxirest"
-                className="relative z-10 w-36 md:w-48 h-auto object-contain drop-shadow-[0_0_30px_rgba(51,232,255,0.6)]"
-                style={{ mixBlendMode: "screen", filter: "brightness(1.15) contrast(1.1)" }}
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              />
-            </div>
-
-            {/* Textos futuristas */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
-              {/* Badge */}
-              <div className="flex items-center gap-2 mb-1">
-                <span className="h-px w-8 bg-gradient-to-r from-transparent to-[#33E8FF]" />
-                <span className="text-[10px] font-black tracking-[0.35em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)]">
-                  MAXIREST · SUITE EMPRESARIAL
-                </span>
-                <span className="h-px w-8 bg-gradient-to-l from-transparent to-[#33E8FF]" />
-              </div>
-
-              {/* Título principal */}
-              <h1 className="text-2xl md:text-4xl font-black tracking-tight leading-tight">
-                <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">INSTANCIA </span>
-                <span
-                  className="text-transparent bg-clip-text"
-                  style={{ backgroundImage: "linear-gradient(135deg, #33E8FF 0%, #0ea5e9 50%, #33E8FF 100%)" }}
-                >
-                  B
-                </span>
-              </h1>
-
-              {/* Subtítulo */}
-              <p className="text-white/80 font-bold text-sm md:text-base tracking-widest uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.2)]">
-                Gestión Full · Multi-sede · Control Total
-              </p>
-
-              {/* Descripción */}
-              <p className="text-slate-300 text-xs md:text-sm leading-relaxed max-w-md font-medium tracking-wide mt-1">
-                La solución más avanzada de <span className="text-[#33E8FF] font-black">MAXIREST</span> para operaciones gastronómicas de alto volumen. Módulos integrados, reporting en tiempo real y escalabilidad sin límites.
-              </p>
-
-              {/* CTA */}
-              <motion.button
-                onClick={() => setMostrarInstanciaB(true)}
-                className="mt-3 relative group flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-black tracking-[0.25em] uppercase overflow-hidden cursor-pointer outline-none"
-                style={{ border: "1px solid rgba(51,232,255,0.4)", background: "rgba(51,232,255,0.07)" }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.97 }}
-              >
-                <span className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-full" />
-                <span className="relative z-10 text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)]">
-                  EXPLORAR INSTANCIA B
-                </span>
-                <svg className="relative z-10 w-3.5 h-3.5 text-[#33E8FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              </motion.button>
-            </div>
-          </motion.div>
-
-          {/* Separador luminoso */}
-          <div className="w-full max-w-5xl mx-auto mb-8 px-4 md:px-0 flex items-center gap-4">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-              className="text-[#33E8FF] opacity-60"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3 drop-shadow-[0_0_6px_rgba(51,232,255,1)]">
-                <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
-              </svg>
-            </motion.div>
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
-          </div>
-
           {/* Main Info Blocks */}
           <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-x-6 md:gap-x-10 gap-y-10 md:gap-y-14 items-start w-full max-w-5xl mx-auto mb-8 px-4 md:px-0">
             
@@ -656,7 +569,7 @@ export default function ErpPage() {
             >
               <AnimatePresence mode="wait">
 
-                {/* ── Estado inicial: título + 3 logos ── */}
+                {/* ── Estado inicial: imagen hero + título + 3 logos ── */}
                 {!mostrarPreciosB && (
                   <motion.div
                     key="selector"
@@ -666,13 +579,82 @@ export default function ErpPage() {
                     transition={{ duration: 0.4 }}
                     className="flex flex-col w-full max-w-5xl mx-auto pb-16 pt-0 -mt-6 px-4"
                   >
-                    <motion.h2 
+
+                    {/* ── HERO Instancia B ── */}
+                    <motion.div
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6 }}
-                      className="text-[#33E8FF] font-black text-3xl md:text-4xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-2 text-center self-center"
+                      transition={{ duration: 0.7, ease: "easeOut" }}
+                      className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-6 w-full"
                     >
-                      INSTANCIA B - MAXIREST
+                      {/* Imagen con glow y levitación */}
+                      <div className="relative flex items-center justify-center shrink-0">
+                        <div className="absolute inset-0 rounded-full bg-[#33E8FF] blur-[55px] opacity-25 animate-pulse pointer-events-none scale-110" />
+                        <motion.img
+                          src="/ir instancia B.png"
+                          alt="Instancia B - Maxirest"
+                          className="relative z-10 w-32 md:w-44 h-auto object-contain drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                          style={{ mixBlendMode: "screen", filter: "brightness(1.15) contrast(1.1)" }}
+                          animate={{ y: [0, -9, 0] }}
+                          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        />
+                      </div>
+
+                      {/* Textos futuristas */}
+                      <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
+                        {/* Badge */}
+                        <div className="flex items-center gap-2">
+                          <span className="h-px w-6 bg-gradient-to-r from-transparent to-[#33E8FF] opacity-80" />
+                          <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)]">
+                            MAXIREST · SUITE EMPRESARIAL
+                          </span>
+                          <span className="h-px w-6 bg-gradient-to-l from-transparent to-[#33E8FF] opacity-80" />
+                        </div>
+
+                        {/* Título */}
+                        <h2 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
+                          <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.25)]">INSTANCIA </span>
+                          <span
+                            className="text-transparent bg-clip-text"
+                            style={{ backgroundImage: "linear-gradient(135deg, #33E8FF 0%, #0ea5e9 40%, #33E8FF 100%)" }}
+                          >
+                            B
+                          </span>
+                        </h2>
+
+                        {/* Subtítulo */}
+                        <p className="text-white/75 font-bold text-xs md:text-sm tracking-[0.2em] uppercase">
+                          Gestión Full · Multi-sede · Control Total
+                        </p>
+
+                        {/* Descripción */}
+                        <p className="text-slate-300 text-xs leading-relaxed max-w-sm font-medium tracking-wide mt-1">
+                          La solución más avanzada de <span className="text-[#33E8FF] font-black">MAXIREST</span> para operaciones gastronómicas de alto volumen. Licencias, implementaciones y capacitaciones integradas.
+                        </p>
+
+                        {/* Separador decorativo */}
+                        <div className="flex items-center gap-3 mt-1 w-full">
+                          <div className="flex-1 h-px bg-gradient-to-r from-[#33E8FF]/40 to-transparent" />
+                          <motion.svg
+                            viewBox="0 0 24 24" fill="#33E8FF"
+                            className="w-2.5 h-2.5 opacity-70 drop-shadow-[0_0_5px_rgba(51,232,255,1)]"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                          >
+                            <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
+                          </motion.svg>
+                          <div className="flex-1 h-px bg-gradient-to-l from-[#33E8FF]/40 to-transparent" />
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    <motion.h2
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.15 }}
+                      className="text-[#33E8FF] font-black text-xl md:text-2xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-2 text-center self-center"
+                    >
+                      SELECCIONÁ TU OPCIÓN
                     </motion.h2>
 
                     {/* Licencias (Orientado a la Izquierda) */}
