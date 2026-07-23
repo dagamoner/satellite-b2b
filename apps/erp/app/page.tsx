@@ -622,16 +622,6 @@ export default function ErpPage() {
                           </span>
                         </h2>
 
-                        {/* Subtítulo */}
-                        <p className="text-white/75 font-bold text-xs md:text-sm tracking-[0.2em] uppercase">
-                          Gestión Full · Multi-sede · Control Total
-                        </p>
-
-                        {/* Descripción */}
-                        <p className="text-slate-300 text-xs leading-relaxed max-w-sm font-medium tracking-wide mt-1">
-                          La solución más avanzada de <span className="text-[#33E8FF] font-black">MAXIREST</span> para operaciones gastronómicas de alto volumen. Licencias, implementaciones y capacitaciones integradas.
-                        </p>
-
                         {/* Separador decorativo */}
                         <div className="flex items-center gap-3 mt-1 w-full">
                           <div className="flex-1 h-px bg-gradient-to-r from-[#33E8FF]/40 to-transparent" />
@@ -657,56 +647,61 @@ export default function ErpPage() {
                       SELECCIONÁ TU OPCIÓN
                     </motion.h2>
 
-                    {/* Licencias (Orientado a la Izquierda) */}
-                    <motion.div 
-                      initial={{ opacity: 0, x: -40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
-                      className="relative w-full md:w-[88%] flex justify-start self-start group z-10"
-                    >
-                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
-                      <img
-                        src="/Licencias Maxirest.png"
-                        alt="Licencias Maxirest"
+                    {/* ── 3 opciones en grid horizontal ── */}
+                    <div className="grid grid-cols-3 gap-4 md:gap-8 w-full mt-4">
+
+                      {/* Licencias */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+                        className="relative flex flex-col items-center justify-center group cursor-pointer"
                         onClick={() => setMostrarPreciosB('licencias')}
-                        className="w-full h-auto max-h-[30vh] object-contain object-left cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
-                        style={{ mixBlendMode: 'screen' }}
-                      />
-                    </motion.div>
+                      >
+                        <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                        <img
+                          src="/Licencias Maxirest.png"
+                          alt="Licencias Maxirest"
+                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
+                          style={{ mixBlendMode: 'screen' }}
+                        />
+                      </motion.div>
 
-                    {/* Implementaciones (Orientado al Medio) */}
-                    <motion.div 
-                      initial={{ opacity: 0, y: 40 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.7, delay: 0.35, ease: "easeOut" }}
-                      className="relative w-full md:w-[88%] flex justify-center self-center group -mt-4 md:-mt-10 z-20"
-                    >
-                      <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
-                      <img
-                        src="/Implementaciones Maxirest.png"
-                        alt="Implementaciones Maxirest"
+                      {/* Implementaciones */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                        className="relative flex flex-col items-center justify-center group cursor-pointer"
                         onClick={() => setMostrarPreciosB('implementaciones')}
-                        className="w-full h-auto max-h-[30vh] object-contain object-center cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:drop-shadow-[0_0_35px_rgba(249,115,22,0.8)] relative z-10"
-                        style={{ mixBlendMode: 'screen' }}
-                      />
-                    </motion.div>
+                      >
+                        <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                        <img
+                          src="/Implementaciones Maxirest.png"
+                          alt="Implementaciones Maxirest"
+                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:drop-shadow-[0_0_35px_rgba(249,115,22,0.8)] relative z-10"
+                          style={{ mixBlendMode: 'screen' }}
+                        />
+                      </motion.div>
 
-                    {/* Capacitaciones (Orientado a la Derecha) */}
-                    <motion.div 
-                      initial={{ opacity: 0, x: 40 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.7, delay: 0.55, ease: "easeOut" }}
-                      className="relative w-full md:w-[88%] flex justify-end self-end group -mt-4 md:-mt-10 z-30"
-                    >
-                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[40px] transition-opacity duration-500 rounded-full" />
-                      <img
-                        src="/Capacitaciones MAXIREST.png"
-                        alt="Capacitaciones MAXIREST"
+                      {/* Capacitaciones */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.45, ease: "easeOut" }}
+                        className="relative flex flex-col items-center justify-center group cursor-pointer"
                         onClick={() => setMostrarPreciosB('capacitaciones')}
-                        className="w-full h-auto max-h-[30vh] object-contain object-right cursor-pointer transition-all duration-500 hover:scale-[1.03] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
-                        style={{ mixBlendMode: 'screen' }}
-                      />
-                    </motion.div>
+                      >
+                        <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                        <img
+                          src="/Capacitaciones MAXIREST.png"
+                          alt="Capacitaciones MAXIREST"
+                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
+                          style={{ mixBlendMode: 'screen' }}
+                        />
+                      </motion.div>
+
+                    </div>
                   </motion.div>
                 )}
 
