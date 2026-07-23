@@ -787,6 +787,201 @@ export default function MarketingPage() {
          <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
          <div className="flex justify-center gap-10 text-sm mb-10 font-semibold">
             <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-justify text-white text-[12px] font-extrabold tracking-[0.1em] md:tracking-wide -mt-22 md:-mt-[12.5rem] mb-6 max-w-3xl mx-auto px-4 leading-relaxed drop-shadow-sm text-balance"
+                style={{ fontFamily: "'Inter', sans-serif", textAlignLast: 'center' }}
+              >
+                A disposición todas nuestras <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">SOLUCIONES</span> para enfrentar los desafíos de tu <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">EMPRESA</span> con <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">ESTRATEGIA</span>, <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">INNOVACIÓN</span> y <span className="text-[#33E8FF] font-black drop-shadow-[0_0_8px_rgba(51,232,255,0.4)]">COMPROMISO</span>.
+              </motion.p>
+            )}
+          </AnimatePresence>
+          {/* Logos row — hover limpio, escala suave, tooltip a la derecha */}
+          <div
+            className="relative flex items-center justify-center gap-2 md:gap-4 w-full z-30 flex-wrap md:flex-nowrap"
+            style={{ minHeight: '22rem', padding: '2.5rem 4rem', marginTop: '-3rem' }}
+          >
+            {[
+              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png" },
+              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", url: "https://informatica.mrtechnology.it.com", tip: "/Problemas con Tecnologia.png" },
+              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png" },
+              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png" },
+              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png" }
+            ].map((logo, i) => {
+              const isSelected = clickedEcosistema === i;
+              const anySelected = clickedEcosistema !== null;
+              const isOther = anySelected && !isSelected;
+
+              return (
+                  <div
+                  key={i}
+                  className="relative flex-shrink-0 flex items-center justify-center"
+                  onClick={(e) => {
+                    if (clickedEcosistema !== i) {
+                      e.preventDefault();
+                      setClickedEcosistema(i);
+                    }
+                  }}
+                  style={{ 
+                    padding: '1rem',
+                    opacity: isOther ? 0 : 1,
+                    transition: 'opacity 0.4s ease-in-out',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <a
+                    href={logo.url}
+                    rel="noopener noreferrer"
+                    style={{ display: 'block', textDecoration: 'none', cursor: 'pointer' }}
+                  >
+                    <img
+                      src={`/${logo.src}`}
+                      alt={logo.alt}
+                      style={{
+                        mixBlendMode: 'screen',
+                        filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))',
+                        width: 'clamp(140px, 16vw, 224px)',
+                        height: 'clamp(140px, 16vw, 224px)',
+                        objectFit: 'contain',
+                        position: 'relative',
+                        zIndex: 10,
+                        display: 'block',
+                        transition: 'filter 0.5s ease',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.filter = 'drop-shadow(0 0 20px rgba(51,232,255,0.3)) brightness(1.1)'}
+                      onMouseLeave={(e) => e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))'}
+                    />
+                  </a>
+
+                  {/* Tooltip / Cartel a la derecha o izquierda */}
+                  <AnimatePresence>
+                    {isSelected && (
+                      <motion.div
+                        key={`tip-${i}`}
+                        initial={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
+                        animate={{ opacity: 1, x: 0, y: "-50%" }}
+                        exit={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
+                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+                        className="absolute z-50 flex items-center justify-center"
+                        style={{
+                          [i >= 2 ? 'right' : 'left']: 'calc(100% + 1rem)',
+                          top: '50%',
+                          height: 'clamp(140px, 16vw, 224px)', // Mismo tamaño exacto del logo
+                          width: 'clamp(220px, 30vw, 450px)',  // Ancho explícito para evitar colapso
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <a
+                          href={logo.url}
+                          rel="noopener noreferrer"
+                          style={{ display: 'block', height: '100%', width: '100%' }}
+                        >
+                          <img
+                            src={logo.tip}
+                            alt="Información del Ecosistema"
+                            className="w-full h-full object-contain rounded-xl"
+                            style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)' }}
+                          />
+                        </a>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+
+
+          {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
+          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
+             <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
+             <div className="flex flex-col items-center gap-6">
+               {/* WhatsApp (Top) */}
+               <div className="relative group shrink-0 flex items-center">
+                 <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                 <a 
+                    href="https://wa.me/5492616518318" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                  >
+                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
+                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                    <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                  </a>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-[#01c164] group-hover:drop-shadow-[0_0_12px_rgba(1,193,100,0.9)] font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
+               </div>
+               
+               <div className="flex gap-40 justify-center w-full relative">
+                 {/* LinkedIn (Left) */}
+                 <div className="relative group shrink-0 flex items-center">
+                   <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                   <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">www.linkedin.com/in/mrtech2026</span>
+                   <a 
+                      href="https://www.linkedin.com/in/mrtech2026" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                      <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                    </a>
+                 </div>
+
+                 {/* Instagram (Right) */}
+                 <div className="relative group shrink-0 flex items-center">
+                   <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                   <a 
+                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
+                      target="_blank" 
+                      rel="noreferrer" 
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                    >
+                      <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
+                      <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                      <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
+                    </a>
+                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
+                 </div>
+               </div>
+               
+               {/* Email (Bottom) */}
+               <div className="relative group shrink-0 flex items-center">
+                 <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                 <a 
+                    href="mailto:mr@mrestudioinformatico.com" 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
+                  >
+                    <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#ef4444] opacity-40 animate-pulse pointer-events-none" />
+                    <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
+                    <img src="/logo mail.png" alt="Email" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110 relative z-10" />
+                  </a>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
+               </div>
+             </div>
+             
+             <div className="mt-12 flex flex-col items-center gap-2">
+                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">ZONA CUYO - Provincia de Mendoza</p>
+                <p className="tracking-[0.2em] font-black text-[18px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
+             </div>
+          </div>
+
+
+        </motion.div>
+
+      </section>
+
+
+      {/* Footer */}
+      <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-20 px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
+         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
+         
+         <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
+         <div className="flex justify-center gap-10 text-sm mb-10 font-semibold">
+            <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
             <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
             <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
          </div>
@@ -794,7 +989,7 @@ export default function MarketingPage() {
          {/* GitHub Repository Link */}
          <div className="flex flex-col items-center gap-2 mb-10">
            <a
-             href="https://github.com/dagamoner/satellite-b2b"
+             href="https://github.com/dagamoner/satellite-b2b.git"
              target="_blank"
              rel="noopener noreferrer"
              className="group flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-[#33E8FF]/40 transition-all duration-300"
@@ -805,13 +1000,11 @@ export default function MarketingPage() {
                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
              </svg>
              <span className="text-xs font-mono tracking-wider text-slate-400 group-hover:text-[#33E8FF] transition-colors duration-300">
-               https://github.com/dagamoner/satellite-b2b
+               https://github.com/dagamoner/satellite-b2b.git
              </span>
            </a>
          </div>
 
-         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
-      </footer>
 
       </main>
   );
