@@ -187,6 +187,13 @@ const SatelliteOrbit = ({ onClick }: { onClick: () => void }) => {
     </motion.div>
   );
 };
+const ecosystemLogos = [
+  { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png", color: "#33E8FF" },
+  { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", url: "https://informatica.mrtechnology.it.com", tip: "/Problemas con Tecnologia.png", color: "#60a5fa" },
+  { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png", color: "#f97316", hasMaxirest: true },
+  { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png", color: "#a78bfa" },
+  { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png", color: "#22c55e" }
+];
 
 export default function MarketingPage() {
   const [isLeadModalOpen, setIsLeadModalOpen] = useState(false);
@@ -232,18 +239,6 @@ export default function MarketingPage() {
     triggerConjunction();
   };
 
-  useEffect(() => {
-    setMounted(true);
-    orbitStartRef.current = Date.now();
-  }, []);
-
-  // The action when logos are selected is now handled directly in the onClick/onTouchEnd handlers.
-
-  // Automatic effect: when satellite passes Earth zone (~42s into each 120s cycle)
-  useEffect(() => {
-    if (!mounted || theme === 'light') return;
-
-    const CYCLE_MS = 60_000;
     // Satellite is near the Earth (upper-right) at ~21s into cycle, again at ~42.5s (return arc)
     const TRIGGER_OFFSETS = [21_000, 42_500];
 
@@ -801,13 +796,7 @@ export default function MarketingPage() {
             className="relative flex items-center justify-center gap-2 md:gap-4 w-full z-30 flex-wrap md:flex-nowrap"
             style={{ minHeight: '22rem', padding: '2.5rem 4rem', marginTop: '-3rem' }}
           >
-            {[
-              { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png" },
-              { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", url: "https://informatica.mrtechnology.it.com", tip: "/Problemas con Tecnologia.png" },
-              { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png" },
-              { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png" },
-              { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png" }
-            ].map((logo, i) => {
+            {ecosystemLogos.map((logo, i) => {
               const isSelected = clickedEcosistema === i;
               const anySelected = clickedEcosistema !== null;
               const isOther = anySelected && !isSelected;
@@ -862,27 +851,42 @@ export default function MarketingPage() {
                         animate={{ opacity: 1, x: 0, y: "-50%" }}
                         exit={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
                         transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                        className="absolute z-50 flex items-center justify-center"
+                        className="absolute z-50 flex items-center justify-center gap-4"
                         style={{
                           [i >= 2 ? 'right' : 'left']: 'calc(100% + 1rem)',
                           top: '50%',
                           height: 'clamp(140px, 16vw, 224px)', // Mismo tamaño exacto del logo
-                          width: 'clamp(220px, 30vw, 450px)',  // Ancho explícito para evitar colapso
+                          width: logo.hasMaxirest ? 'clamp(380px, 50vw, 650px)' : 'clamp(220px, 30vw, 450px)',
                           cursor: 'pointer',
                         }}
                       >
-                        <a
-                          href={logo.url}
-                          rel="noopener noreferrer"
-                          style={{ display: 'block', height: '100%', width: '100%' }}
-                        >
-                          <img
-                            src={logo.tip}
-                            alt="Información del Ecosistema"
-                            className="w-full h-full object-contain rounded-xl"
-                            style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)' }}
-                          />
-                        </a>
+                         {/* If ERP, display maxirest logo here */}
+                         {logo.hasMaxirest && (
+                            <div className="h-full flex-shrink-0 flex items-center justify-center" style={{ width: 'clamp(120px, 15vw, 180px)' }}>
+                               <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
+                            </div>
+                         )}
+
+                         <a
+                           href={logo.url}
+                           rel="noopener noreferrer"
+                           className="flex flex-col items-center justify-center gap-2 h-full w-full"
+                         >
+                           {/* Label superior */}
+                           <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.hasMaxirest ? 'white' : logo.color }}>
+                             {logo.hasMaxirest ? (
+                                <>SOFTWARE ERP / SAAS EMPRESARIAL & GASTRONOMICO <span style={{ color: '#f97316' }}>MAXIREST</span></>
+                             ) : (
+                                logo.alt
+                             )}
+                           </div>
+                           <img
+                             src={logo.tip}
+                             alt="Información del Ecosistema"
+                             className="w-full h-auto object-contain rounded-xl"
+                             style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)', maxHeight: 'calc(100% - 2rem)' }}
+                           />
+                         </a>
                       </motion.div>
                     )}
                   </AnimatePresence>
