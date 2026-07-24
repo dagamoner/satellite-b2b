@@ -687,25 +687,14 @@ export default function MarketingPage() {
                           cursor: 'pointer',
                         }}
                       >
-                         {/* If ERP, display maxirest logo here */}
-                         {logo.hasMaxirest && (
-                            <div className="h-full flex-shrink-0 flex items-center justify-center" style={{ width: 'clamp(120px, 15vw, 180px)' }}>
-                               <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
-                            </div>
-                         )}
-
                          <a
                            href={logo.url}
                            rel="noopener noreferrer"
                            className="flex flex-col items-center justify-center gap-2 h-full w-full"
                          >
                            {/* Label superior */}
-                           <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.hasMaxirest ? 'white' : logo.color }}>
-                             {logo.hasMaxirest ? (
-                                <>SOFTWARE ERP / SAAS EMPRESARIAL & GASTRONOMICO <span style={{ color: '#f97316' }}>MAXIREST</span></>
-                             ) : (
-                                logo.alt
-                             )}
+                           <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.color }}>
+                             {logo.alt}
                            </div>
                            <img
                              src={logo.tip}
@@ -714,6 +703,13 @@ export default function MarketingPage() {
                              style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)', maxHeight: 'calc(100% - 2rem)' }}
                            />
                          </a>
+
+                         {/* If ERP, display maxirest logo here on the right */}
+                         {logo.hasMaxirest && (
+                            <div className="h-full flex-shrink-0 flex items-center justify-center" style={{ width: 'clamp(120px, 15vw, 180px)' }}>
+                               <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
+                            </div>
+                         )}
                       </motion.div>
                     )}
                   </AnimatePresence>
