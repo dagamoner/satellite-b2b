@@ -309,7 +309,7 @@ export default function ErpPage() {
                   className="flex justify-center w-full md:w-auto"
                 >
                   <div 
-                    className={`bg-white rounded-full p-2 shadow-[0_0_25px_rgba(249,115,22,0.3)] flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105 ${showInfo ? 'shadow-[0_0_40px_rgba(249,115,22,0.6)]' : ''}`}
+                    className="flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
                     onClick={() => {
                       setShowInfo(!showInfo);
                       setShowAuditoria(false);
@@ -318,7 +318,7 @@ export default function ErpPage() {
                     <img
                       src="/logo maxirest ONE.png"
                       alt="Maxirest ONE"
-                      className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full relative z-10"
+                      className={`w-48 md:w-56 h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)] ${showInfo ? 'drop-shadow-[0_0_25px_rgba(249,115,22,0.8)]' : ''}`}
                     />
                   </div>
                 </motion.div>
