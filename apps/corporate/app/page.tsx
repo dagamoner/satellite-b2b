@@ -674,28 +674,37 @@ export default function MarketingPage() {
                     {isSelected && (
                       <motion.div
                         key={`tip-${i}`}
-                        initial={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
+                        initial={{ opacity: 0, x: i >= 3 ? -20 : 20, y: "-50%" }}
                         animate={{ opacity: 1, x: 0, y: "-50%" }}
-                        exit={{ opacity: 0, x: i >= 2 ? -20 : 20, y: "-50%" }}
+                        exit={{ opacity: 0, x: i >= 3 ? -20 : 20, y: "-50%" }}
                         transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
                         className="absolute z-50 flex items-center justify-center gap-4"
                         style={{
-                          [i >= 2 ? 'right' : 'left']: 'calc(100% + 1rem)',
+                          [i >= 3 ? 'right' : 'left']: 'calc(100% + 1rem)',
                           top: '50%',
                           height: 'clamp(140px, 16vw, 224px)', // Mismo tamaño exacto del logo
                           width: logo.hasMaxirest ? 'clamp(380px, 50vw, 650px)' : 'clamp(220px, 30vw, 450px)',
                           cursor: 'pointer',
                         }}
                       >
+                         {/* If ERP, display maxirest logo here on the left (closest to main logo) */}
+                         {logo.hasMaxirest && (
+                            <div className="h-full flex-shrink-0 flex items-center justify-center" style={{ width: 'clamp(120px, 15vw, 180px)' }}>
+                               <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
+                            </div>
+                         )}
+
                          <a
                            href={logo.url}
                            rel="noopener noreferrer"
                            className="flex flex-col items-center justify-center gap-2 h-full w-full"
                          >
                            {/* Label superior */}
-                           <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.color }}>
-                             {logo.alt}
-                           </div>
+                           {!logo.hasMaxirest && (
+                             <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.color }}>
+                               {logo.alt}
+                             </div>
+                           )}
                            <img
                              src={logo.tip}
                              alt="Información del Ecosistema"
@@ -703,13 +712,6 @@ export default function MarketingPage() {
                              style={{ filter: 'drop-shadow(0 0 20px rgba(51,232,255,0.25)) brightness(1.05)', maxHeight: 'calc(100% - 2rem)' }}
                            />
                          </a>
-
-                         {/* If ERP, display maxirest logo here on the right */}
-                         {logo.hasMaxirest && (
-                            <div className="h-full flex-shrink-0 flex items-center justify-center" style={{ width: 'clamp(120px, 15vw, 180px)' }}>
-                               <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
-                            </div>
-                         )}
                       </motion.div>
                     )}
                   </AnimatePresence>
