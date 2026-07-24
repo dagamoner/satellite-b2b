@@ -316,8 +316,8 @@ export default function ErpPage() {
                     }}
                   >
                     <img
-                      src="/logo_maxirest.jpg"
-                      alt="Maxirest"
+                      src="/logo maxirest ONE.png"
+                      alt="Maxirest ONE"
                       className="h-24 w-24 md:h-28 md:w-28 object-contain rounded-full relative z-10"
                     />
                   </div>

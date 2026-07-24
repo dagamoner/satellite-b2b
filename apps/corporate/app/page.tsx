@@ -692,12 +692,7 @@ export default function MarketingPage() {
                            rel="noopener noreferrer"
                            className="flex flex-col items-center justify-center gap-2 h-full w-full"
                          >
-                           {/* Label superior - Oculto para ERP como solicitó el usuario */}
-                           {!logo.hasMaxirest && (
-                             <div className="text-center font-black text-sm md:text-lg uppercase drop-shadow-md leading-tight" style={{ color: logo.color }}>
-                               {logo.alt}
-                             </div>
-                           )}
+
                            <img
                              src={logo.tip}
                              alt="Información del Ecosistema"
