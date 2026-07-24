@@ -451,7 +451,7 @@ export default function ErpPage() {
                     <button 
                       onClick={() => setMostrarInstanciaB(true)}
                       className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                      style={{ top: '65%', right: '-18%', width: '18%' }}
+                      style={{ top: '35%', right: '-18%', width: '18%' }}
                       title="Ver Instancia B"
                     >
                       <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
@@ -467,15 +467,15 @@ export default function ErpPage() {
                     <button 
                       onClick={() => setMostrarInstanciaC(true)}
                       className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                      style={{ top: '95%', right: '-18%', width: '18%' }}
+                      style={{ top: '65%', right: '-18%', width: '18%' }}
                       title="Ver Instancia C"
                     >
-                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                      <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
                       <img 
                         src="/ir instancia B.png" 
                         alt="Ir a Instancia C"
-                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2) hue-rotate(45deg)' }}
+                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)]"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2) sepia(1) hue-rotate(-50deg) saturate(3)' }}
                       />
                       <span className="absolute inset-0 flex items-center justify-center text-white font-black text-xl z-20 pointer-events-none drop-shadow-[0_0_5px_black]">C</span>
                     </button>
@@ -604,7 +604,7 @@ export default function ErpPage() {
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.7, ease: "easeOut" }}
-                      className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-6 w-full"
+                      className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-6 w-full mt-12 md:mt-24"
                     >
                       {/* Imagen con glow y levitación */}
                       <div className="relative flex items-center justify-center shrink-0">
@@ -1141,9 +1141,9 @@ export default function ErpPage() {
               }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
             >
-              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
-              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
-                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+              <span className="text-white group-hover:text-[#f97316] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#f97316] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(249,115,22,0.2)] group-hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
+                <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
                 <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
               </div>
             </button>
@@ -1174,15 +1174,15 @@ export default function ErpPage() {
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.7, ease: "easeOut" }}
-                      className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-6 w-full"
+                      className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 mb-6 w-full mt-12 md:mt-24"
                     >
                       {/* Imagen con glow y levitación */}
                       <div className="relative flex items-center justify-center shrink-0">
-                        <div className="absolute inset-0 rounded-full bg-[#33E8FF] blur-[55px] opacity-25 animate-pulse pointer-events-none scale-110" />
+                        <div className="absolute inset-0 rounded-full bg-[#f97316] blur-[55px] opacity-25 animate-pulse pointer-events-none scale-110" />
                         <motion.img
                           src="/ir instancia B.png"
                           alt="Instancia C - Maxirest"
-                          className="relative z-10 w-32 md:w-44 h-auto object-contain drop-shadow-[0_0_35px_rgba(51,232,255,0.7)]"
+                          className="relative z-10 w-32 md:w-44 h-auto object-contain drop-shadow-[0_0_35px_rgba(249,115,22,0.7)]"
                           style={{ mixBlendMode: "screen", filter: "brightness(1.15) contrast(1.1)" }}
                           animate={{ y: [0, -9, 0] }}
                           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -1193,11 +1193,11 @@ export default function ErpPage() {
                       <div className="flex flex-col items-center md:items-start text-center md:text-left gap-2">
                         {/* Badge */}
                         <div className="flex items-center gap-2">
-                          <span className="h-px w-6 bg-gradient-to-r from-transparent to-[#33E8FF] opacity-80" />
-                          <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)]">
-                            MAXIREST ONE - NUEVA GENERACIÓN
+                          <span className="h-px w-6 bg-gradient-to-r from-transparent to-[#f97316] opacity-80" />
+                          <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#f97316] drop-shadow-[0_0_8px_rgba(249,115,22,0.9)]">
+                            MAXIREST ONE - CRECIMIENTO
                           </span>
-                          <span className="h-px w-6 bg-gradient-to-l from-transparent to-[#33E8FF] opacity-80" />
+                          <span className="h-px w-6 bg-gradient-to-l from-transparent to-[#f97316] opacity-80" />
                         </div>
 
                         {/* Título */}
@@ -1205,28 +1205,28 @@ export default function ErpPage() {
                           <span className="text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.25)]">INSTANCIA </span>
                           <span
                             className="text-transparent bg-clip-text"
-                            style={{ backgroundImage: "linear-gradient(135deg, #33E8FF 0%, #0ea5e9 40%, #33E8FF 100%)" }}
+                            style={{ backgroundImage: "linear-gradient(135deg, #f97316 0%, #ea580c 40%, #f97316 100%)" }}
                           >
                             C
                           </span>
                         </h2>
 
-                        <p className="text-[#33E8FF] font-bold text-lg md:text-xl tracking-wide drop-shadow-[0_0_5px_rgba(51,232,255,0.6)]">
+                        <p className="text-[#f97316] font-bold text-lg md:text-xl tracking-wide drop-shadow-[0_0_5px_rgba(249,115,22,0.6)]">
                           La revolución digital gastronómica.
                         </p>
 
                         {/* Separador decorativo */}
                         <div className="flex items-center gap-3 mt-1 w-full">
-                          <div className="flex-1 h-px bg-gradient-to-r from-[#33E8FF]/40 to-transparent" />
+                          <div className="flex-1 h-px bg-gradient-to-r from-[#f97316]/40 to-transparent" />
                           <motion.svg
-                            viewBox="0 0 24 24" fill="#33E8FF"
-                            className="w-2.5 h-2.5 opacity-70 drop-shadow-[0_0_5px_rgba(51,232,255,1)]"
+                            viewBox="0 0 24 24" fill="#f97316"
+                            className="w-2.5 h-2.5 opacity-70 drop-shadow-[0_0_5px_rgba(249,115,22,1)]"
                             animate={{ rotate: [0, 360] }}
                             transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
                           >
                             <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
                           </motion.svg>
-                          <div className="flex-1 h-px bg-gradient-to-l from-[#33E8FF]/40 to-transparent" />
+                          <div className="flex-1 h-px bg-gradient-to-l from-[#f97316]/40 to-transparent" />
                         </div>
                       </div>
                     </motion.div>
@@ -1235,7 +1235,7 @@ export default function ErpPage() {
                       initial={{ opacity: 0, y: -20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.15 }}
-                      className="text-[#33E8FF] font-black text-xl md:text-2xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)] mb-2 text-center self-center"
+                      className="text-[#f97316] font-black text-xl md:text-2xl tracking-[0.2em] uppercase drop-shadow-[0_0_15px_rgba(249,115,22,0.8)] mb-2 text-center self-center"
                     >
                       SELECCIONÁ TU OPCIÓN
                     </motion.h2>
@@ -1251,11 +1251,11 @@ export default function ErpPage() {
                         className="relative flex flex-col items-center justify-center group cursor-pointer"
                         onClick={() => setMostrarPreciosB('licencias')}
                       >
-                        <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                        <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
                         <img
                           src="/Licencias Maxirest.png"
                           alt="Licencias Maxirest"
-                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
+                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:drop-shadow-[0_0_35px_rgba(249,115,22,0.8)] relative z-10"
                           style={{ mixBlendMode: 'screen' }}
                         />
                       </motion.div>
@@ -1285,11 +1285,11 @@ export default function ErpPage() {
                         className="relative flex flex-col items-center justify-center group cursor-pointer"
                         onClick={() => setMostrarPreciosB('capacitaciones')}
                       >
-                        <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
+                        <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-[30px] transition-opacity duration-500 rounded-2xl pointer-events-none" />
                         <img
                           src="/Capacitaciones MAXIREST.png"
                           alt="Capacitaciones MAXIREST"
-                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(51,232,255,0.3)] hover:drop-shadow-[0_0_35px_rgba(51,232,255,0.8)] relative z-10"
+                          className="w-full h-auto object-contain transition-all duration-500 hover:scale-[1.05] drop-shadow-[0_0_15px_rgba(249,115,22,0.3)] hover:drop-shadow-[0_0_35px_rgba(249,115,22,0.8)] relative z-10"
                           style={{ mixBlendMode: 'screen' }}
                         />
                       </motion.div>
@@ -1320,7 +1320,7 @@ export default function ErpPage() {
                       <img
                         src="/Licencias Maxirest.png"
                         alt="Licencias Maxirest"
-                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] hover:scale-105 transition-transform duration-300"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(249,115,22,0.9)] hover:scale-105 transition-transform duration-300"
                         style={{ mixBlendMode: 'screen', maxHeight: '36vh', maxWidth: '80%' }}
                       />
                     </motion.div>
@@ -1336,10 +1336,10 @@ export default function ErpPage() {
                         className="w-full flex flex-col gap-6"
                       >
                         {/* Card FULL-PRO */}
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
-                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <h4 className="text-2xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">FULL-PRO</h4>
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-orange-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(249,115,22,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-orange-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#f97316]/30 transition-all duration-500 pointer-events-none" />
+                          <h4 className="text-2xl font-black text-[#f97316] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]">FULL-PRO</h4>
                           <p className="text-slate-300 text-sm mb-4 font-medium leading-relaxed">
                             La versión FULL brinda todos los Módulos y funcionalidades completas del software.
                           </p>
@@ -1353,17 +1353,17 @@ export default function ErpPage() {
                               <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$16.854</span>
                             </div>
                           </div>
-                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#33E8FF' }}>
+                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#f97316' }}>
                             * El valor manifestado es Mensual en concepto de alquiler del software.
                           </p>
                         </div>
                         
                         {/* Estructura FULL */}
-                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-4">
+                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-orange-500/20 bg-slate-900/40 p-4">
                           <img
                             src="/Estructura FULL.png"
                             alt="Estructura FULL Maxirest"
-                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.3)]"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(249,115,22,0.3)]"
                           />
                         </div>
                       </motion.div>
@@ -1376,10 +1376,10 @@ export default function ErpPage() {
                         className="w-full flex flex-col gap-6"
                       >
                         {/* Card XPRESS */}
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
-                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
-                          <h4 className="text-2xl font-black text-[#33E8FF] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</h4>
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-orange-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(249,115,22,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-orange-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#f97316]/30 transition-all duration-500 pointer-events-none" />
+                          <h4 className="text-2xl font-black text-[#f97316] mb-2 tracking-widest drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]">XPRESS</h4>
                           <p className="text-slate-300 text-sm mb-4 font-medium leading-relaxed">
                             La versión XPRESS brinda todos los Módulos y funcionalidades completas del software para operar como Punto de Venta. No cuenta con Compras ni Stock.
                           </p>
@@ -1393,17 +1393,17 @@ export default function ErpPage() {
                               <span className="text-orange-400 font-black text-3xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$11.236</span>
                             </div>
                           </div>
-                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#33E8FF' }}>
+                          <p className="mt-4 text-[12px] font-semibold" style={{ color: '#f97316' }}>
                             * El valor manifestado es Mensual en concepto de alquiler del software.
                           </p>
                         </div>
                         
                         {/* Estructura XPRESS */}
-                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-cyan-500/20 bg-slate-900/40 p-4">
+                        <div className="w-full flex items-center justify-center rounded-2xl overflow-hidden border border-orange-500/20 bg-slate-900/40 p-4">
                           <img
                             src="/Estrcutura Xpress.png"
                             alt="Estructura XPRESS Maxirest"
-                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.3)]"
+                            className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(249,115,22,0.3)]"
                           />
                         </div>
                       </motion.div>
@@ -1424,14 +1424,14 @@ export default function ErpPage() {
                   >
                     <div className="flex justify-center w-full cursor-pointer" onClick={() => setMostrarPreciosB(false)} title="Volver a opciones">
                       <img src="/Implementaciones Maxirest.png" alt="Implementaciones Maxirest"
-                        className="object-contain drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] hover:scale-105 transition-transform duration-300"
+                        className="object-contain drop-shadow-[0_0_40px_rgba(249,115,22,0.9)] hover:scale-105 transition-transform duration-300"
                         style={{ mixBlendMode: 'screen', maxHeight: '36vh', maxWidth: '80%' }} />
                     </div>
                     
                     <div className="flex flex-col gap-10 w-full max-w-5xl mx-auto items-center mt-4">
                       {/* Título de Implementación */}
                       <div className="w-full text-center">
-                        <h3 className="text-[#33E8FF] text-2xl md:text-3xl font-black uppercase tracking-widest drop-shadow-[0_0_12px_rgba(51,232,255,0.7)]">
+                        <h3 className="text-[#f97316] text-2xl md:text-3xl font-black uppercase tracking-widest drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">
                           Instalación, configuración y puesta en marcha. Llave en mano.
                         </h3>
                       </div>
@@ -1443,12 +1443,12 @@ export default function ErpPage() {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="w-full"
                       >
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
-                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-orange-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(249,115,22,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-orange-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#f97316]/30 transition-all duration-500 pointer-events-none" />
                           <div className="flex flex-col w-full gap-3 relative z-10">
                             <div className="flex flex-col md:flex-row justify-between items-center gap-2 border-b border-slate-700/50 pb-3">
-                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">PRO FULL</span></h4>
+                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#f97316] drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]">PRO FULL</span></h4>
                               <div className="flex items-center gap-3">
                                 <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
                                 <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$250.000 <span className="text-xl">+ IVA</span></span>
@@ -1472,12 +1472,12 @@ export default function ErpPage() {
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="w-full"
                       >
-                        <div className="bg-slate-900/65 backdrop-blur-xl border border-cyan-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.22)] transition-shadow duration-500">
-                          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-cyan-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#33E8FF]/30 transition-all duration-500 pointer-events-none" />
+                        <div className="bg-slate-900/65 backdrop-blur-xl border border-orange-500/30 p-6 rounded-2xl relative overflow-hidden group shadow-[0_0_28px_rgba(0,0,0,0.5)] hover:shadow-[0_0_55px_rgba(249,115,22,0.22)] transition-shadow duration-500">
+                          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 via-orange-400/8 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          <div className="absolute inset-0 rounded-2xl ring-0 group-hover:ring-1 group-hover:ring-[#f97316]/30 transition-all duration-500 pointer-events-none" />
                           <div className="flex flex-col w-full gap-3 relative z-10">
                             <div className="flex flex-col md:flex-row justify-between items-center gap-2 border-b border-slate-700/50 pb-3">
-                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.8)]">XPRESS</span></h4>
+                              <h4 className="text-2xl font-black text-white tracking-widest">Sistema Maxirest <span className="text-[#f97316] drop-shadow-[0_0_8px_rgba(249,115,22,0.8)]">XPRESS</span></h4>
                               <div className="flex items-center gap-3">
                                 <span className="text-slate-300 font-bold uppercase text-sm">Importe</span>
                                 <span className="text-orange-400 font-black text-3xl md:text-4xl drop-shadow-[0_0_12px_rgba(249,115,22,0.7)]">$200.000 <span className="text-xl">+ IVA</span></span>
@@ -1501,11 +1501,11 @@ export default function ErpPage() {
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="w-full mt-4"
                       >
-                        <div className="border border-[#33E8FF]/30 bg-[#33E8FF]/5 p-6 rounded-xl text-center">
+                        <div className="border border-[#f97316]/30 bg-[#f97316]/5 p-6 rounded-xl text-center">
                           <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium" style={{ textAlign: "justify", textAlignLast: "center" }}>
                             Los valores incluyen las parametrizaciones generales para el funcionamiento inicial del software junto con toda la Carta Menú del local. Además, está incluida la configuración de cada PC con respecto al MAXIREST y las comanderas necesarias junto con la Factura Electrónica.
                           </p>
-                          <p className="mt-4 text-[#33E8FF] font-black text-sm md:text-base tracking-wider uppercase text-center">
+                          <p className="mt-4 text-[#f97316] font-black text-sm md:text-base tracking-wider uppercase text-center">
                             ACTIVIDADES IT DESARROLLADAS DE MANERA PRESENCIAL.
                           </p>
                         </div>
@@ -1528,18 +1528,18 @@ export default function ErpPage() {
                     {/* Logo principal */}
                     <div className="flex items-center justify-center w-full cursor-pointer -mt-20 md:-mt-24 mb-0 relative z-10" onClick={() => setMostrarPreciosB(false)} title="Volver">
                       <img src="/Leyenda Capacitaciones.png" alt="Leyenda Capacitaciones"
-                        className="object-contain w-full h-auto drop-shadow-[0_0_30px_rgba(51,232,255,0.7)] hover:drop-shadow-[0_0_40px_rgba(51,232,255,0.9)] transition-all duration-500"
+                        className="object-contain w-full h-auto drop-shadow-[0_0_30px_rgba(249,115,22,0.7)] hover:drop-shadow-[0_0_40px_rgba(249,115,22,0.9)] transition-all duration-500"
                         style={{ mixBlendMode: 'screen', maxHeight: '75vh' }} />
                     </div>
 
                     {/* Selector de módulos */}
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 -mt-24 md:-mt-48 mb-4 w-full max-w-4xl mx-auto p-5 rounded-2xl bg-slate-900/60 border border-cyan-500/30 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.4)] relative z-10">
-                      <h4 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)] text-center">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 -mt-24 md:-mt-48 mb-4 w-full max-w-4xl mx-auto p-5 rounded-2xl bg-slate-900/60 border border-orange-500/30 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.4)] relative z-10">
+                      <h4 className="text-[#f97316] font-black text-lg md:text-xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(249,115,22,0.6)] text-center">
                         ¿Qué MÓDULOS querés aprender?
                       </h4>
                       <div className="relative min-w-[280px]">
                         <select 
-                          className="appearance-none w-full bg-[#33E8FF] text-slate-900 font-bold tracking-wider px-5 py-3 pr-12 rounded-xl border-2 border-cyan-400 outline-none hover:bg-[#5ae6ff] focus:bg-[#5ae6ff] focus:shadow-[0_0_20px_rgba(51,232,255,0.6)] transition-all duration-300 cursor-pointer text-sm"
+                          className="appearance-none w-full bg-[#f97316] text-slate-900 font-bold tracking-wider px-5 py-3 pr-12 rounded-xl border-2 border-orange-400 outline-none hover:bg-[#5ae6ff] focus:bg-[#5ae6ff] focus:shadow-[0_0_20px_rgba(249,115,22,0.6)] transition-all duration-300 cursor-pointer text-sm"
                           value={moduloSeleccionado}
                           onChange={(e) => setModuloSeleccionado(e.target.value)}
                         >
@@ -1564,7 +1564,7 @@ export default function ErpPage() {
                       >
                         <div className="text-center px-4">
                           <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium">
-                            Importe Modulo <span style={{ color: '#33E8FF' }} className="font-bold">{
+                            Importe Modulo <span style={{ color: '#f97316' }} className="font-bold">{
                               moduloSeleccionado === 'adicion-ventas' ? 'VENTAS & ADICION' :
                               moduloSeleccionado === 'stock' ? 'STOCK' :
                               moduloSeleccionado === 'compras' ? 'COMPRAS' :
@@ -1575,7 +1575,7 @@ export default function ErpPage() {
                             Sin limite de personas ni tiempo, el objetivo es adquirir el conocimiento.
                           </p>
                           <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
-                            Si desea dicha capacitaciòn de manera <span style={{ color: '#33E8FF' }} className="font-bold drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">PRESENCIAL</span> se debe sumar <span className="text-xl md:text-2xl font-black text-white drop-shadow-md">$50000 + IVA</span>.
+                            Si desea dicha capacitaciòn de manera <span style={{ color: '#f97316' }} className="font-bold drop-shadow-[0_0_8px_rgba(249,115,22,0.6)]">PRESENCIAL</span> se debe sumar <span className="text-xl md:text-2xl font-black text-white drop-shadow-md">$50000 + IVA</span>.
                           </p>
                         </div>
                       </motion.div>
@@ -1586,9 +1586,9 @@ export default function ErpPage() {
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="w-full max-w-4xl mx-auto mb-6 px-4 md:px-0 text-left bg-slate-900/40 p-6 rounded-xl border border-[#33E8FF]/20"
+                        className="w-full max-w-4xl mx-auto mb-6 px-4 md:px-0 text-left bg-slate-900/40 p-6 rounded-xl border border-[#f97316]/20"
                       >
-                        <h5 className="text-[#33E8FF] font-black text-xl mb-4 drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
+                        <h5 className="text-[#f97316] font-black text-xl mb-4 drop-shadow-[0_0_8px_rgba(249,115,22,0.6)]">
                           Módulos Adquiridos:
                         </h5>
                         <ul className="grid grid-cols-2 md:grid-cols-3 gap-3 text-slate-200 font-bold text-base md:text-lg">
@@ -1599,7 +1599,7 @@ export default function ErpPage() {
                             moduloSeleccionado === 'personal-auditorias' ? ["Personal", "Seguridad", "Mantenimiento", "Configuraciones", "Estadísticas", "Claves del Sistema", "Caja Adición", "Ingreso del Personal"] : []
                           ).map((mod, i) => (
                             <li key={i} className="flex items-center gap-2">
-                              <svg className="w-5 h-5 text-[#33E8FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <svg className="w-5 h-5 text-[#f97316]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                               </svg>
                               {mod}
@@ -1662,12 +1662,12 @@ export default function ErpPage() {
                         return true;
                       }).map((item, idx) => (
                         <div key={idx} className="relative group w-[80%] sm:w-[45%] md:w-[30%] lg:w-[22%] flex justify-center p-3">
-                          <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-xl" />
+                          <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-300 rounded-xl" />
                           <div className="w-full flex justify-center">
                             <img
                               src={item.src}
                               alt={item.alt}
-                              className="w-full h-auto object-contain transition-all duration-500 hover:scale-105 rounded-xl border-2 border-[#33E8FF] shadow-[0_0_15px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.9)]"
+                              className="w-full h-auto object-contain transition-all duration-500 hover:scale-105 rounded-xl border-2 border-[#f97316] shadow-[0_0_15px_rgba(249,115,22,0.4)] hover:shadow-[0_0_35px_rgba(249,115,22,0.9)]"
                               style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) contrast(1.1)' }}
                             />
                           </div>
