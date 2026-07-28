@@ -540,14 +540,14 @@ export default function ErpPage() {
                   style={{ mixBlendMode: 'screen' }}
                 />
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-1">02. AUDITORÍA OPERATIVA</span>
+                  <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-1">01. AUDITORÍA OPERATIVA</span>
                   <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight leading-tight">El Futuro de la Gestión<br/><span className="text-[#33E8FF] drop-shadow-[0_0_12px_rgba(51,232,255,0.8)]">Gastronómica</span></h2>
                   <p className="text-slate-400 text-sm md:text-base mt-2 font-medium max-w-xl">Auditoría & Consultoría con un equipo interdisciplinario gastronómico e IT para llevar tu restaurante al siguiente nivel de rentabilidad.</p>
                 </div>
               </motion.div>
 
-              {/* Tab Buttons */}
-              <div className="flex flex-wrap gap-2 md:gap-4 mb-8">
+              {/* Tab Buttons + CTA inline */}
+              <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-8">
                 {(['que-es', 'para-que', 'primer-paso'] as const).map((tab, i) => {
                   const labels = ['¿Qué es?', '¿Para qué sirve?', 'El Primer Paso Obligatorio'];
                   return (
@@ -564,6 +564,26 @@ export default function ErpPage() {
                     </button>
                   );
                 })}
+
+                {/* CTA: solo visible cuando está activa la pestaña Primer Paso */}
+                <AnimatePresence>
+                  {auditTab === 'primer-paso' && (
+                    <motion.a
+                      key="cta-comenzamos"
+                      href="https://www.mrtechnology.it.com/#whatsapp-contact"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, scale: 0.85, x: 20 }}
+                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.85, x: 20 }}
+                      transition={{ duration: 0.4, ease: 'easeOut' }}
+                      className="ml-auto flex flex-col items-center justify-center gap-0.5 px-6 py-3 rounded-2xl font-black uppercase text-slate-900 bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_25px_rgba(51,232,255,0.55)] hover:shadow-[0_0_45px_rgba(51,232,255,0.9)] cursor-pointer select-none shrink-0"
+                    >
+                      <span className="text-sm md:text-base tracking-[0.12em] leading-tight">COMENZAMOS</span>
+                      <span className="text-[8px] md:text-[9px] tracking-[0.15em] leading-tight font-bold opacity-80">AUDITORÍA, TECNOLOGÍA & CONSULTORÍA</span>
+                    </motion.a>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Panel Content */}
@@ -683,18 +703,7 @@ export default function ErpPage() {
                       <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
                         Este es el primer paso obligatorio para detectar las fallas. Una vez que tengamos el mapa de puntos rojos sobre la mesa, recién ahí podemos diseñar el plan de acción a medida para solucionar el desorden de raíz, proteger tu plata y devolverte la rentabilidad.
                       </p>
-                      {/* CTA */}
-                      <div className="mt-2 flex justify-center">
-                        <a
-                          href="https://www.mrtechnology.it.com/#whatsapp-contact"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group/cta flex items-center gap-3 px-8 py-4 rounded-full font-black tracking-widest uppercase text-sm text-slate-900 bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(51,232,255,0.5)] hover:shadow-[0_0_50px_rgba(51,232,255,0.9)]"
-                        >
-                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.93 16.572c-.26.734-.956 1.327-1.585 1.498-.63.17-1.435.217-2.188-.014-1.29-.392-2.522-1.02-3.566-1.85-1.044-.832-1.944-1.86-2.59-3.044-.645-1.184-.989-2.524-.988-3.872.001-1.348.347-2.688.992-3.872s1.546-2.212 2.59-3.044c.44-.35.938-.615 1.45-.762.51-.146 1.06-.19 1.592-.115.531.074 1.048.282 1.489.61.441.327.806.765 1.054 1.271.249.507.374 1.07.37 1.64-.003.57-.134 1.13-.386 1.633-.252.502-.62.94-1.063 1.269l-.04.026c-.258.158-.507.3-.752.426.295.562.652 1.088 1.063 1.566.414.483.878.915 1.384 1.285.272-.206.56-.395.854-.563.294-.168.6-.313.914-.43.312-.118.643-.21.98-.27.337-.06.682-.09 1.026-.086.344.004.686.04 1.022.11.334.07.66.18.966.325-.044.74-.166 1.476-.388 2.183z"/></svg>
-                          Comenzar Diagnóstico
-                        </a>
-                      </div>
+                      {/* CTA removido del panel: ahora est\u00e1 junto a los tabs */}
                     </div>
                   </motion.div>
                 )}
@@ -703,7 +712,7 @@ export default function ErpPage() {
               {/* Footer tag */}
               <div className="mt-10 flex items-center gap-4">
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
-                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/60">02. AUDITORÍA OPERATIVA · MR CONSULTORÍA GASTRONÓMICA</span>
+                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/60">01. AUDITORÍA OPERATIVA · MR CONSULTORÍA GASTRONÓMICA</span>
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
               </div>
 
