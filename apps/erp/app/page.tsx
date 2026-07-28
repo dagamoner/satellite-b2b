@@ -156,6 +156,8 @@ const SatelliteOrbit = ({ isHidden }: { isHidden: boolean }) => (
 export default function ErpPage() {
   const [showInfo, setShowInfo] = useState(false);
   const [showAuditoria, setShowAuditoria] = useState(false);
+  const [auditTab, setAuditTab] = useState<'que-es' | 'para-que' | 'primer-paso'>('que-es');
+  const [auditKeysOpen, setAuditKeysOpen] = useState(false);
   const [mostrarInstanciaA, setMostrarInstanciaA] = useState(false);
   const [mostrarInstanciaB, setMostrarInstanciaB] = useState(false);
   const [mostrarInstanciaC, setMostrarInstanciaC] = useState(false);
@@ -163,7 +165,7 @@ export default function ErpPage() {
   const [mostrarPreciosC, setMostrarPreciosC] = useState<string | boolean>(false);
   const [moduloSeleccionado, setModuloSeleccionado] = useState("");
   
-  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC;
+  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC || showAuditoria;
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-50 font-sans overflow-x-hidden relative">
@@ -475,7 +477,7 @@ export default function ErpPage() {
                         src="/ir instancia C.png" 
                         alt="Ir a Instancia C"
                         className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)]"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                        style={{ mixBlendMode: 'screen' }}
                       />
                     </button>
                   </div>
@@ -500,6 +502,215 @@ export default function ErpPage() {
           </AnimatePresence>
         </motion.div>
       </section>
+
+      {/* ── Modal Auditoría & Consultoría ── */}
+      <AnimatePresence>
+        {showAuditoria && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-start justify-start bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+          >
+            {/* Botón Regresar */}
+            <button
+              onClick={() => { setShowAuditoria(false); setAuditKeysOpen(false); setAuditTab('que-es'); }}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
+                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <div className="w-full max-w-5xl mx-auto px-4 md:px-8 pt-24 pb-16">
+
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="flex flex-col md:flex-row items-center gap-6 mb-10"
+              >
+                <img
+                  src="/Logo MR Consultoria Gast.png"
+                  alt="MR Consultoria Gastronómica"
+                  className="w-28 md:w-36 h-auto object-contain drop-shadow-[0_0_25px_rgba(51,232,255,0.6)]"
+                  style={{ mixBlendMode: 'screen' }}
+                />
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                  <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-1">02. AUDITORÍA OPERATIVA</span>
+                  <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight leading-tight">El Futuro de la Gestión<br/><span className="text-[#33E8FF] drop-shadow-[0_0_12px_rgba(51,232,255,0.8)]">Gastronómica</span></h2>
+                  <p className="text-slate-400 text-sm md:text-base mt-2 font-medium max-w-xl">Auditoría & Consultoría con un equipo interdisciplinario gastronómico e IT para llevar tu restaurante al siguiente nivel de rentabilidad.</p>
+                </div>
+              </motion.div>
+
+              {/* Tab Buttons */}
+              <div className="flex flex-wrap gap-2 md:gap-4 mb-8">
+                {(['que-es', 'para-que', 'primer-paso'] as const).map((tab, i) => {
+                  const labels = ['¿Qué es?', '¿Para qué sirve?', 'El Primer Paso Obligatorio'];
+                  return (
+                    <button
+                      key={tab}
+                      onClick={() => setAuditTab(tab)}
+                      className={`relative px-5 py-2.5 rounded-xl font-black text-xs md:text-sm tracking-widest uppercase transition-all duration-300 border ${
+                        auditTab === tab
+                          ? 'bg-[#33E8FF]/15 border-[#33E8FF]/60 text-[#33E8FF] drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]'
+                          : 'border-white/10 text-slate-400 hover:border-white/30 hover:text-white'
+                      }`}
+                    >
+                      {labels[i]}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Panel Content */}
+              <AnimatePresence mode="wait">
+                {auditTab === 'que-es' && (
+                  <motion.div
+                    key="que-es"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.35 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md">
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed mb-5" style={{ textAlign: 'justify' }}>
+                        Es una intervención profesional de 3 a 4 horas en tu local, realizada de forma estratégica en tu turno fuerte. Nuestro gran valor diferencial acá es la objetividad absoluta: al ser un servicio tercerizado y externo, no tenemos contaminación visual, ni vicios de rutina, ni compromisos de amiguismo con el personal. Miramos lo que el día a día ya no te deja ver.
+                      </p>
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Para tu tranquilidad, la auditoría no interfiere ni frena tu despacho. El trabajo se inicia un tiempo antes de que explote el movimiento de clientes. Hacemos breves entrevistas individuales con empleados clave en frío. Una vez que el local abre sus puertas, nos movemos en modo <span className="text-[#33E8FF] font-bold">'sombra'</span>: observamos y registramos el flujo real del negocio en vivo sin interrumpir a nadie.
+                      </p>
+                    </div>
+
+                    {/* 6 Claves */}
+                    <div className="bg-slate-900/40 border border-[#33E8FF]/20 rounded-2xl overflow-hidden">
+                      <button
+                        onClick={() => setAuditKeysOpen(!auditKeysOpen)}
+                        className="w-full flex items-center justify-between px-6 py-4 group hover:bg-[#33E8FF]/5 transition-all duration-300"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="text-[#33E8FF] text-xl">★</span>
+                          <span className="font-black tracking-widest uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.7)]">6 Claves de la Auditoría</span>
+                        </div>
+                        <motion.svg
+                          viewBox="0 0 24 24" fill="none" stroke="#33E8FF" strokeWidth="2.5" className="w-5 h-5"
+                          animate={{ rotate: auditKeysOpen ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="m6 9 6 6 6-6" />
+                        </motion.svg>
+                      </button>
+
+                      <AnimatePresence>
+                        {auditKeysOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.4, ease: 'easeInOut' }}
+                            className="overflow-hidden"
+                          >
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 border-t border-white/10">
+                              {[
+                                { color: '#00f0ff', title: 'Gestión de Costos', desc: 'Analizamos la brecha real entre lo presupuestado y lo que se sirve en el plato.', icon: <path d="M18 20V10M12 20V4M6 20v-6" strokeLinecap="round" strokeLinejoin="round" /> },
+                                { color: '#00ff88', title: 'Circuito de Compras', desc: 'Evaluamos el control físico de la mercadería frente a lo facturado por los proveedores.', icon: <><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0" /></> },
+                                { color: '#0077ff', title: 'Servicio y Salón', desc: 'Evaluamos los tiempos críticos de atención y la efectividad de venta del personal.', icon: <><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></> },
+                                { color: '#ffaa00', title: 'Control de Caja', desc: 'Auditamos la transparencia y los procesos en el flujo diario del efectivo.', icon: <><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></> },
+                                { color: '#ff0055', title: 'Estándares de Higiene', desc: 'Verificamos el cumplimiento normativo, preventivo y operativo del local.', icon: <><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="M9 11l2 2 4-4" /></> },
+                                { color: '#a800ff', title: 'Liderazgo', desc: 'Evaluamos la autonomía del negocio y el desempeño real de los mandos medios.', icon: <><circle cx="12" cy="8" r="7" /><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" /></> },
+                              ].map((key, i) => (
+                                <motion.div
+                                  key={i}
+                                  initial={{ opacity: 0, y: 12 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: i * 0.07, duration: 0.35 }}
+                                  className="flex gap-4 items-start p-4 rounded-xl bg-slate-900/50 border border-white/5 hover:border-white/15 transition-all duration-300 group/key"
+                                >
+                                  <div className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center" style={{ background: `${key.color}18`, boxShadow: `0 0 14px ${key.color}44` }}>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke={key.color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                      {key.icon}
+                                    </svg>
+                                  </div>
+                                  <div>
+                                    <h4 className="font-black text-white text-sm mb-1" style={{ textShadow: `0 0 10px ${key.color}55` }}>{key.title}</h4>
+                                    <p className="text-slate-400 text-xs leading-relaxed">{key.desc}</p>
+                                  </div>
+                                </motion.div>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </motion.div>
+                )}
+
+                {auditTab === 'para-que' && (
+                  <motion.div
+                    key="para-que"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md flex flex-col gap-5">
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Sirve para sacar a la luz los puntos ciegos por donde se te está yendo la ganancia sin que te des cuenta. Podés tener el local lleno de clientes, pero si las operaciones están desordenadas, estás moviendo mucha caja pero perdiendo rentabilidad.
+                      </p>
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Esta auditoría te sirve para entender que las fugas de dinero no ocurren solo por un plato mal costeado. Ocurren cuando la falta de manuales de procedimientos hace que el personal trabaje sin un estándar claro, cuando una mala selección de personal rompe la eficiencia del equipo, o cuando el descuido en los controles bromatológicos te expone a multas y a la pérdida de mercadería valiosa. <span className="text-[#33E8FF] font-bold">El objetivo es ponerle un número exacto a ese impacto y saber con precisión dónde estás parado.</span>
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+
+                {auditTab === 'primer-paso' && (
+                  <motion.div
+                    key="primer-paso"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.35 }}
+                  >
+                    <div className="bg-slate-900/60 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md flex flex-col gap-5">
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Es fundamental entender que la auditoría es el diagnóstico, no la solución. Es el análisis clínico que nos dice exactamente dónde está la infección. <span className="text-[#33E8FF] font-bold">Ningún médico te va a operar ni a medicar sin hacerte estudios previos;</span> en un negocio gastronómico funciona igual.
+                      </p>
+                      <p className="text-slate-200 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Este es el primer paso obligatorio para detectar las fallas. Una vez que tengamos el mapa de puntos rojos sobre la mesa, recién ahí podemos diseñar el plan de acción a medida para solucionar el desorden de raíz, proteger tu plata y devolverte la rentabilidad.
+                      </p>
+                      {/* CTA */}
+                      <div className="mt-2 flex justify-center">
+                        <a
+                          href="https://www.mrtechnology.it.com/#whatsapp-contact"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative group/cta flex items-center gap-3 px-8 py-4 rounded-full font-black tracking-widest uppercase text-sm text-slate-900 bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(51,232,255,0.5)] hover:shadow-[0_0_50px_rgba(51,232,255,0.9)]"
+                        >
+                          <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.93 16.572c-.26.734-.956 1.327-1.585 1.498-.63.17-1.435.217-2.188-.014-1.29-.392-2.522-1.02-3.566-1.85-1.044-.832-1.944-1.86-2.59-3.044-.645-1.184-.989-2.524-.988-3.872.001-1.348.347-2.688.992-3.872s1.546-2.212 2.59-3.044c.44-.35.938-.615 1.45-.762.51-.146 1.06-.19 1.592-.115.531.074 1.048.282 1.489.61.441.327.806.765 1.054 1.271.249.507.374 1.07.37 1.64-.003.57-.134 1.13-.386 1.633-.252.502-.62.94-1.063 1.269l-.04.026c-.258.158-.507.3-.752.426.295.562.652 1.088 1.063 1.566.414.483.878.915 1.384 1.285.272-.206.56-.395.854-.563.294-.168.6-.313.914-.43.312-.118.643-.21.98-.27.337-.06.682-.09 1.026-.086.344.004.686.04 1.022.11.334.07.66.18.966.325-.044.74-.166 1.476-.388 2.183z"/></svg>
+                          Comenzar Diagnóstico
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Footer tag */}
+              <div className="mt-10 flex items-center gap-4">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
+                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/60">02. AUDITORÍA OPERATIVA · MR CONSULTORÍA GASTRONÓMICA</span>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Modal / Lightbox para Instancia A */}
       <AnimatePresence>
