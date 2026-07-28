@@ -754,8 +754,8 @@ export default function ErpPage() {
                 transition={{ duration: 0.65 }}
                 className="mb-14 text-center"
               >
-                <span className="inline-block text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-3">03. PROPUESTA</span>
-                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+                <span className="inline-block text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-3">02. PROPUESTA</span>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-3">
                   Auditoría,{" "}
                   <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #33E8FF 0%, #0ea5e9 50%, #33E8FF 100%)' }}>
                     Tecnología
@@ -765,32 +765,73 @@ export default function ErpPage() {
                     Consultoría
                   </span>
                 </h2>
+                {/* LA FUSIÓN PERFECTA */}
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <div className="h-px w-10 bg-gradient-to-r from-transparent to-[#33E8FF]/60" />
+                  <span className="text-xs md:text-sm font-black tracking-[0.3em] uppercase" style={{ backgroundImage: 'linear-gradient(90deg, #33E8FF, #f97316)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', filter: 'drop-shadow(0 0 8px rgba(51,232,255,0.5))' }}>
+                    LA FUSIÓN PERFECTA
+                  </span>
+                  <div className="h-px w-10 bg-gradient-to-l from-transparent to-[#f97316]/60" />
+                </div>
                 <p className="text-slate-400 text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed">
-                  Una propuesta integral que transforma la gestión gastronómica desde adentro:
-                  diagnóstico, tecnología y estrategia en un único ecosistema.
+                  Gastronomía tradicional impulsada por tecnología y auditorías de precisión.
                 </p>
               </motion.div>
 
-              {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {/* Cards — 3 columnas */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
 
-                {/* Card 1: Integración Tecnológica */}
+                {/* Card 1: Auditoría de Calidad - IZQUIERDA */}
                 <motion.div
                   initial={{ opacity: 0, y: 32 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.15 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
                   className="relative group rounded-2xl overflow-hidden"
                 >
-                  {/* Glass background */}
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#a855f7]/25 rounded-2xl transition-all duration-500 group-hover:border-[#a855f7]/55" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#a855f7] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#a855f7]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  <div className="absolute -inset-1 bg-[#a855f7]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
+                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(168,85,247,0.08)', boxShadow: '0 0 30px rgba(168,85,247,0.2)' }}>
+                      <div className="absolute inset-0 rounded-2xl bg-[#a855f7]/10 blur-lg" />
+                      <img
+                        src="/Logo Auditoria Operativa.png"
+                        alt="Auditoría de Calidad"
+                        className="w-10 h-10 object-contain relative z-10"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(168,85,247,0.8))' }}
+                      />
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                        Auditoría de Calidad
+                      </h3>
+                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Evaluamos minuciosamente cada eslabón de la cadena operativa: desde el ingreso de materia prima hasta la entrega en mesa. Detectamos mermas, desvíos en recetas y fallas operativas críticas.
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {['Cadena Operativa', 'Mermas', 'Recetas'].map(tag => (
+                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#a855f7] border border-[#a855f7]/30 bg-[#a855f7]/8">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Card 2: Integración Tecnológica - CENTRO */}
+                <motion.div
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="relative group rounded-2xl overflow-hidden"
+                >
                   <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#33E8FF]/25 rounded-2xl transition-all duration-500 group-hover:border-[#33E8FF]/55" />
-                  {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#33E8FF] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                  {/* Glow on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#33E8FF]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
 
-                  <div className="relative z-10 p-7 md:p-9 flex flex-col items-start gap-5">
-                    {/* Icon */}
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
                     <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(51,232,255,0.08)', boxShadow: '0 0 30px rgba(51,232,255,0.2)' }}>
                       <div className="absolute inset-0 rounded-2xl bg-[#33E8FF]/10 blur-lg" />
                       <img
@@ -800,44 +841,35 @@ export default function ErpPage() {
                         style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(51,232,255,0.8))' }}
                       />
                     </div>
-
-                    <div className="flex flex-col gap-3">
-                      <h3 className="text-xl md:text-2xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.3)]">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.3)]">
                         Integración Tecnológica
                       </h3>
-                      <p className="text-slate-300 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
                         Diseñamos e implementamos el ecosistema digital ideal para su marca (POS, KDS, ERP). Integramos datos operativos para una toma de decisiones informada, rápida y automatizada.
                       </p>
                     </div>
-
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2 mt-1">
                       {['POS', 'KDS', 'ERP', 'Automatización'].map(tag => (
-                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#33E8FF] border border-[#33E8FF]/30 bg-[#33E8FF]/8">
-                          {tag}
-                        </span>
+                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#33E8FF] border border-[#33E8FF]/30 bg-[#33E8FF]/8">{tag}</span>
                       ))}
                     </div>
                   </div>
                 </motion.div>
 
-                {/* Card 2: Consultoría Estratégica */}
+                {/* Card 3: Consultoría Estratégica - DERECHA */}
                 <motion.div
                   initial={{ opacity: 0, y: 32 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="relative group rounded-2xl overflow-hidden"
                 >
-                  {/* Glass background */}
                   <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#f97316]/25 rounded-2xl transition-all duration-500 group-hover:border-[#f97316]/55" />
-                  {/* Top accent line */}
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f97316] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
-                  {/* Glow on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[#f97316]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#f97316]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
 
-                  <div className="relative z-10 p-7 md:p-9 flex flex-col items-start gap-5">
-                    {/* Icon */}
+                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
                     <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(249,115,22,0.08)', boxShadow: '0 0 30px rgba(249,115,22,0.2)' }}>
                       <div className="absolute inset-0 rounded-2xl bg-[#f97316]/10 blur-lg" />
                       <img
@@ -847,22 +879,17 @@ export default function ErpPage() {
                         style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(249,115,22,0.8))' }}
                       />
                     </div>
-
-                    <div className="flex flex-col gap-3">
-                      <h3 className="text-xl md:text-2xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
                         Consultoría Estratégica
                       </h3>
-                      <p className="text-slate-300 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
                         Ingeniería de menús, fijación de precios, reestructuración financiera y diseño de planes de expansión. Acompañamos a los gerentes y dueños a lograr rentabilidad sustentable.
                       </p>
                     </div>
-
-                    {/* Tags */}
                     <div className="flex flex-wrap gap-2 mt-1">
                       {['Ingeniería de Menús', 'Precios', 'Expansión', 'Rentabilidad'].map(tag => (
-                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#f97316] border border-[#f97316]/30 bg-[#f97316]/8">
-                          {tag}
-                        </span>
+                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#f97316] border border-[#f97316]/30 bg-[#f97316]/8">{tag}</span>
                       ))}
                     </div>
                   </div>
@@ -908,7 +935,7 @@ export default function ErpPage() {
               {/* Footer tag */}
               <div className="mt-12 flex items-center gap-4">
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/20 to-transparent" />
-                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/50">03. PROPUESTA · MR CONSULTORÍA GASTRONÓMICA</span>
+                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/50">02. PROPUESTA · MR CONSULTORÍA GASTRONÓMICA</span>
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/20 to-transparent" />
               </div>
 
