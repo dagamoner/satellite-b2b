@@ -158,6 +158,7 @@ export default function ErpPage() {
   const [showAuditoria, setShowAuditoria] = useState(false);
   const [auditTab, setAuditTab] = useState<'que-es' | 'para-que' | 'primer-paso'>('que-es');
   const [auditKeysOpen, setAuditKeysOpen] = useState(false);
+  const [mostrarPropuesta, setMostrarPropuesta] = useState(false);
   const [mostrarInstanciaA, setMostrarInstanciaA] = useState(false);
   const [mostrarInstanciaB, setMostrarInstanciaB] = useState(false);
   const [mostrarInstanciaC, setMostrarInstanciaC] = useState(false);
@@ -165,7 +166,7 @@ export default function ErpPage() {
   const [mostrarPreciosC, setMostrarPreciosC] = useState<string | boolean>(false);
   const [moduloSeleccionado, setModuloSeleccionado] = useState("");
   
-  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC || showAuditoria;
+  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC || showAuditoria || mostrarPropuesta;
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-50 font-sans overflow-x-hidden relative">
@@ -568,11 +569,9 @@ export default function ErpPage() {
                 {/* CTA: solo visible cuando está activa la pestaña Primer Paso */}
                 <AnimatePresence>
                   {auditTab === 'primer-paso' && (
-                    <motion.a
+                    <motion.button
                       key="cta-comenzamos"
-                      href="https://www.mrtechnology.it.com/#whatsapp-contact"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      onClick={() => setMostrarPropuesta(true)}
                       initial={{ opacity: 0, scale: 0.85, x: 20 }}
                       animate={{ opacity: 1, scale: 1, x: 0 }}
                       exit={{ opacity: 0, scale: 0.85, x: 20 }}
@@ -581,7 +580,7 @@ export default function ErpPage() {
                     >
                       <span className="text-sm md:text-base tracking-[0.12em] leading-tight">COMENZAMOS</span>
                       <span className="text-[8px] md:text-[9px] tracking-[0.15em] leading-tight font-bold opacity-80">AUDITORÍA, TECNOLOGÍA & CONSULTORÍA</span>
-                    </motion.a>
+                    </motion.button>
                   )}
                 </AnimatePresence>
               </div>
@@ -714,6 +713,203 @@ export default function ErpPage() {
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
                 <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/60">01. AUDITORÍA OPERATIVA · MR CONSULTORÍA GASTRONÓMICA</span>
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Modal PROPUESTA ── */}
+      <AnimatePresence>
+        {mostrarPropuesta && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex flex-col items-start justify-start bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+          >
+            {/* Halo de fondo decorativo */}
+            <div className="pointer-events-none fixed top-[-15%] left-[-10%] w-[700px] h-[500px] bg-[#33E8FF]/6 blur-[140px] rounded-full" />
+            <div className="pointer-events-none fixed bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-[#f97316]/6 blur-[140px] rounded-full" />
+
+            {/* Botón Regresar */}
+            <button
+              onClick={() => setMostrarPropuesta(false)}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[220] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
+                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <div className="w-full max-w-5xl mx-auto px-4 md:px-8 pt-24 pb-20 relative z-10">
+
+              {/* Header */}
+              <motion.div
+                initial={{ opacity: 0, y: -24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.65 }}
+                className="mb-14 text-center"
+              >
+                <span className="inline-block text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-3">03. PROPUESTA</span>
+                <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-4">
+                  Auditoría,{" "}
+                  <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #33E8FF 0%, #0ea5e9 50%, #33E8FF 100%)' }}>
+                    Tecnología
+                  </span>
+                  {" "}&amp;{" "}
+                  <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #f97316 100%)' }}>
+                    Consultoría
+                  </span>
+                </h2>
+                <p className="text-slate-400 text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed">
+                  Una propuesta integral que transforma la gestión gastronómica desde adentro:
+                  diagnóstico, tecnología y estrategia en un único ecosistema.
+                </p>
+              </motion.div>
+
+              {/* Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+                {/* Card 1: Integración Tecnológica */}
+                <motion.div
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.15 }}
+                  className="relative group rounded-2xl overflow-hidden"
+                >
+                  {/* Glass background */}
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#33E8FF]/25 rounded-2xl transition-all duration-500 group-hover:border-[#33E8FF]/55" />
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#33E8FF] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  <div className="absolute -inset-1 bg-[#33E8FF]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+
+                  <div className="relative z-10 p-7 md:p-9 flex flex-col items-start gap-5">
+                    {/* Icon */}
+                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(51,232,255,0.08)', boxShadow: '0 0 30px rgba(51,232,255,0.2)' }}>
+                      <div className="absolute inset-0 rounded-2xl bg-[#33E8FF]/10 blur-lg" />
+                      <img
+                        src="/Logo Integracion Tecnologica.png"
+                        alt="Integración Tecnológica"
+                        className="w-10 h-10 object-contain relative z-10"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(51,232,255,0.8))' }}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      <h3 className="text-xl md:text-2xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.3)]">
+                        Integración Tecnológica
+                      </h3>
+                      <p className="text-slate-300 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Diseñamos e implementamos el ecosistema digital ideal para su marca (POS, KDS, ERP). Integramos datos operativos para una toma de decisiones informada, rápida y automatizada.
+                      </p>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {['POS', 'KDS', 'ERP', 'Automatización'].map(tag => (
+                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#33E8FF] border border-[#33E8FF]/30 bg-[#33E8FF]/8">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Card 2: Consultoría Estratégica */}
+                <motion.div
+                  initial={{ opacity: 0, y: 32 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="relative group rounded-2xl overflow-hidden"
+                >
+                  {/* Glass background */}
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#f97316]/25 rounded-2xl transition-all duration-500 group-hover:border-[#f97316]/55" />
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f97316] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* Glow on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#f97316]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+                  <div className="absolute -inset-1 bg-[#f97316]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+
+                  <div className="relative z-10 p-7 md:p-9 flex flex-col items-start gap-5">
+                    {/* Icon */}
+                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(249,115,22,0.08)', boxShadow: '0 0 30px rgba(249,115,22,0.2)' }}>
+                      <div className="absolute inset-0 rounded-2xl bg-[#f97316]/10 blur-lg" />
+                      <img
+                        src="/Logo Consultoria Estrategica.png"
+                        alt="Consultoría Estratégica"
+                        className="w-10 h-10 object-contain relative z-10"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(249,115,22,0.8))' }}
+                      />
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      <h3 className="text-xl md:text-2xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
+                        Consultoría Estratégica
+                      </h3>
+                      <p className="text-slate-300 text-sm md:text-base leading-relaxed" style={{ textAlign: 'justify' }}>
+                        Ingeniería de menús, fijación de precios, reestructuración financiera y diseño de planes de expansión. Acompañamos a los gerentes y dueños a lograr rentabilidad sustentable.
+                      </p>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {['Ingeniería de Menús', 'Precios', 'Expansión', 'Rentabilidad'].map(tag => (
+                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#f97316] border border-[#f97316]/30 bg-[#f97316]/8">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+
+              </div>
+
+              {/* Separador + CTA WhatsApp */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="mt-12 flex flex-col items-center gap-6"
+              >
+                <div className="flex items-center gap-4 w-full max-w-md">
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
+                  <motion.div
+                    animate={{ rotate: [0, 360], scale: [0.8, 1.2, 0.8] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                    className="text-[#33E8FF]"
+                  >
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 drop-shadow-[0_0_8px_rgba(51,232,255,1)]">
+                      <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
+                    </svg>
+                  </motion.div>
+                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
+                </div>
+
+                <a
+                  href="https://www.mrtechnology.it.com/#whatsapp-contact"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 px-8 py-4 rounded-full font-black tracking-widest uppercase text-sm text-slate-900 bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_30px_rgba(51,232,255,0.5)] hover:shadow-[0_0_55px_rgba(51,232,255,0.9)]"
+                >
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 shrink-0">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.93 16.572c-.26.734-.956 1.327-1.585 1.498-.63.17-1.435.217-2.188-.014-1.29-.392-2.522-1.02-3.566-1.85-1.044-.832-1.944-1.86-2.59-3.044-.645-1.184-.989-2.524-.988-3.872.001-1.348.347-2.688.992-3.872s1.546-2.212 2.59-3.044c.44-.35.938-.615 1.45-.762.51-.146 1.06-.19 1.592-.115.531.074 1.048.282 1.489.61.441.327.806.765 1.054 1.271.249.507.374 1.07.37 1.64-.003.57-.134 1.13-.386 1.633-.252.502-.62.94-1.063 1.269l-.04.026c-.258.158-.507.3-.752.426.295.562.652 1.088 1.063 1.566.414.483.878.915 1.384 1.285.272-.206.56-.395.854-.563.294-.168.6-.313.914-.43.312-.118.643-.21.98-.27.337-.06.682-.09 1.026-.086.344.004.686.04 1.022.11.334.07.66.18.966.325-.044.74-.166 1.476-.388 2.183z"/>
+                  </svg>
+                  Hablemos por WhatsApp
+                </a>
+              </motion.div>
+
+              {/* Footer tag */}
+              <div className="mt-12 flex items-center gap-4">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/20 to-transparent" />
+                <span className="text-[9px] font-black tracking-[0.3em] uppercase text-[#33E8FF]/50">03. PROPUESTA · MR CONSULTORÍA GASTRONÓMICA</span>
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/20 to-transparent" />
               </div>
 
             </div>
