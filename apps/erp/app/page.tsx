@@ -793,28 +793,30 @@ export default function ErpPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-[#a855f7]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#a855f7]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
 
-                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
-                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(168,85,247,0.08)', boxShadow: '0 0 30px rgba(168,85,247,0.2)' }}>
-                      <div className="absolute inset-0 rounded-2xl bg-[#a855f7]/10 blur-lg" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Logo Banner */}
+                    <div className="w-full h-36 md:h-44 relative flex items-center justify-center overflow-hidden rounded-t-2xl border-b border-[#a855f7]/20" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(168,85,247,0.05))' }}>
                       <img
                         src="/Logo Auditoria Operativa.png"
-                        alt="Auditoría de Calidad"
-                        className="w-10 h-10 object-contain relative z-10"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(168,85,247,0.8))' }}
+                        alt="Auditor\u00eda de Calidad"
+                        className="w-full h-full object-contain p-2 transition-transform duration-700 group-hover:scale-110"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(168,85,247,0.4))' }}
                       />
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
-                        Auditoría de Calidad
-                      </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
-                        Evaluamos minuciosamente cada eslabón de la cadena operativa: desde el ingreso de materia prima hasta la entrega en mesa. Detectamos mermas, desvíos en recetas y fallas operativas críticas.
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {['Cadena Operativa', 'Mermas', 'Recetas'].map(tag => (
-                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#a855f7] border border-[#a855f7]/30 bg-[#a855f7]/8">{tag}</span>
-                      ))}
+                    <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(168,85,247,0.3)]">
+                          Auditor\u00eda de Calidad
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
+                          Evaluamos minuciosamente cada eslab\u00f3n de la cadena operativa: desde el ingreso de materia prima hasta la entrega en mesa. Detectamos mermas, desv\u00edos en recetas y fallas operativas cr\u00edticas.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-auto pt-2">
+                        {['Cadena Operativa', 'Mermas', 'Recetas'].map(tag => (
+                          <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#a855f7] border border-[#a855f7]/30 bg-[#a855f7]/8">{tag}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -831,28 +833,30 @@ export default function ErpPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#33E8FF]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
 
-                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
-                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(51,232,255,0.08)', boxShadow: '0 0 30px rgba(51,232,255,0.2)' }}>
-                      <div className="absolute inset-0 rounded-2xl bg-[#33E8FF]/10 blur-lg" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Logo Banner */}
+                    <div className="w-full h-36 md:h-44 relative flex items-center justify-center overflow-hidden rounded-t-2xl border-b border-[#33E8FF]/20" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(51,232,255,0.05))' }}>
                       <img
                         src="/Logo Integracion Tecnologica.png"
-                        alt="Integración Tecnológica"
-                        className="w-10 h-10 object-contain relative z-10"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(51,232,255,0.8))' }}
+                        alt="Integraci\u00f3n Tecnol\u00f3gica"
+                        className="w-full h-full object-contain p-2 transition-transform duration-700 group-hover:scale-110"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(51,232,255,0.4))' }}
                       />
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.3)]">
-                        Integración Tecnológica
-                      </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
-                        Diseñamos e implementamos el ecosistema digital ideal para su marca (POS, KDS, ERP). Integramos datos operativos para una toma de decisiones informada, rápida y automatizada.
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {['POS', 'KDS', 'ERP', 'Automatización'].map(tag => (
-                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#33E8FF] border border-[#33E8FF]/30 bg-[#33E8FF]/8">{tag}</span>
-                      ))}
+                    <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.3)]">
+                          Integraci\u00f3n Tecnol\u00f3gica
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
+                          Dise\u00f1amos e implementamos el ecosistema digital ideal para su marca (POS, KDS, ERP). Integramos datos operativos para una toma de decisiones informada, r\u00e1pida y automatizada.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-auto pt-2">
+                        {['POS', 'KDS', 'ERP', 'Automatizaci\u00f3n'].map(tag => (
+                          <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#33E8FF] border border-[#33E8FF]/30 bg-[#33E8FF]/8">{tag}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -869,28 +873,30 @@ export default function ErpPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-[#f97316]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#f97316]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
 
-                  <div className="relative z-10 p-6 md:p-8 flex flex-col items-start gap-4">
-                    <div className="relative flex items-center justify-center w-16 h-16 rounded-2xl" style={{ background: 'rgba(249,115,22,0.08)', boxShadow: '0 0 30px rgba(249,115,22,0.2)' }}>
-                      <div className="absolute inset-0 rounded-2xl bg-[#f97316]/10 blur-lg" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Logo Banner */}
+                    <div className="w-full h-36 md:h-44 relative flex items-center justify-center overflow-hidden rounded-t-2xl border-b border-[#f97316]/20" style={{ background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(249,115,22,0.05))' }}>
                       <img
                         src="/Logo Consultoria Estrategica.png"
-                        alt="Consultoría Estratégica"
-                        className="w-10 h-10 object-contain relative z-10"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.3) drop-shadow(0 0 8px rgba(249,115,22,0.8))' }}
+                        alt="Consultor\u00eda Estrat\u00e9gica"
+                        className="w-full h-full object-contain p-2 transition-transform duration-700 group-hover:scale-110"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.1) drop-shadow(0 0 10px rgba(249,115,22,0.4))' }}
                       />
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
-                        Consultoría Estratégica
-                      </h3>
-                      <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
-                        Ingeniería de menús, fijación de precios, reestructuración financiera y diseño de planes de expansión. Acompañamos a los gerentes y dueños a lograr rentabilidad sustentable.
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-1">
-                      {['Ingeniería de Menús', 'Precios', 'Expansión', 'Rentabilidad'].map(tag => (
-                        <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#f97316] border border-[#f97316]/30 bg-[#f97316]/8">{tag}</span>
-                      ))}
+                    <div className="p-6 md:p-8 flex flex-col flex-1 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <h3 className="text-lg md:text-xl font-black text-white tracking-wide drop-shadow-[0_0_8px_rgba(249,115,22,0.3)]">
+                          Consultor\u00eda Estrat\u00e9gica
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed" style={{ textAlign: 'justify' }}>
+                          Ingenier\u00eda de men\u00fas, fijaci\u00f3n de precios, reestructuraci\u00f3n financiera y dise\u00f1o de planes de expansi\u00f3n. Acompa\u00f1amos a los gerentes y due\u00f1os a lograr rentabilidad sustentable.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-auto pt-2">
+                        {['Ingenier\u00eda de Men\u00fas', 'Precios', 'Expansi\u00f3n', 'Rentabilidad'].map(tag => (
+                          <span key={tag} className="px-3 py-1 rounded-full text-[10px] font-black tracking-widest uppercase text-[#f97316] border border-[#f97316]/30 bg-[#f97316]/8">{tag}</span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
