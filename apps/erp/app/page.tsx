@@ -1688,14 +1688,6 @@ export default function ErpPage() {
         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-2">
           © 2026 MR Technology · Software ERP / SAAS Empresarial
         </p>
-        <a 
-          href="https://github.com/dagamoner/satellite-b2b" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="text-xs text-[#33E8FF] hover:text-white transition-colors duration-300 font-medium"
-        >
-          https://github.com/dagamoner/satellite-b2b
-        </a>
       </footer>
     </main>
   );
