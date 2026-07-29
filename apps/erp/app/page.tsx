@@ -1406,9 +1406,7 @@ export default function ErpPage() {
                           <p className="text-slate-200 text-sm md:text-base leading-relaxed font-medium" style={{ textAlign: "justify", textAlignLast: "center" }}>
                             Los valores incluyen las parametrizaciones generales para el funcionamiento inicial del software junto con toda la Carta Menú del local. Además, está incluida la configuración de cada PC con respecto al MAXIREST y las comanderas necesarias junto con la Factura Electrónica.
                           </p>
-                          <p className="mt-4 text-[#33E8FF] font-black text-sm md:text-base tracking-wider uppercase text-center">
-                            ACTIVIDADES IT DESARROLLADAS DE MANERA PRESENCIAL.
-                          </p>
+
                         </div>
                       </motion.div>
 
@@ -1475,9 +1473,7 @@ export default function ErpPage() {
                           <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
                             Sin limite de personas ni tiempo, el objetivo es adquirir el conocimiento.
                           </p>
-                          <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
-                            Si desea dicha capacitaciòn de manera <span style={{ color: '#33E8FF' }} className="font-bold drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">PRESENCIAL</span> se debe sumar <span className="text-xl md:text-2xl font-black text-white drop-shadow-md">$50000 + IVA</span>.
-                          </p>
+
                         </div>
                       </motion.div>
                     )}
