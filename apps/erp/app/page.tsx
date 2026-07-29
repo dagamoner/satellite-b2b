@@ -1891,7 +1891,7 @@ export default function ErpPage() {
                           {tipsTab === 'varios' && (
                             <div className="flex flex-col items-center justify-center py-10 gap-6">
                               <p className="text-slate-400 text-center max-w-lg leading-relaxed">
-                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
+                                Fin de AUDITORIA !!!. Asegurate de haber completado bien el check list de ser correcto y recorda las observaciones de ser necesarias, un solo clic y tendras tu reporte de inmediato.
                               </p>
                               <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
                                 Generar Reporte Virtual
@@ -2084,7 +2084,7 @@ export default function ErpPage() {
                           {mrTechTab === 'varios' && (
                             <div className="flex flex-col items-center justify-center py-10 gap-6">
                               <p className="text-slate-400 text-center max-w-lg leading-relaxed">
-                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
+                                Fin de AUDITORIA !!!. Asegurate de haber completado bien el check list de ser correcto y recorda las observaciones de ser necesarias, un solo clic y tendras tu reporte de inmediato.
                               </p>
                               <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
                                 Generar Reporte Virtual
