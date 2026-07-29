@@ -713,16 +713,7 @@ export default function ErpPage() {
               </AnimatePresence>
 
 
-              {/* Botón Ejecuta tu propia auditoria */}
-              <div className="mt-8 flex justify-center">
-                <button
-                  onClick={() => setShowTipsAuditoria(true)}
-                  className="group relative px-6 py-3 rounded-2xl bg-[#020617] border border-[#33E8FF]/30 hover:border-[#33E8FF] transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.15)] hover:shadow-[0_0_25px_rgba(51,232,255,0.4)]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#33E8FF]/0 via-[#33E8FF]/10 to-[#33E8FF]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                  <span className="relative z-10 font-black tracking-widest text-[#33E8FF] uppercase text-sm md:text-base">Ejecuta tu propia AUDITORIA</span>
-                </button>
-              </div>
+
 
               {/* Footer tag */}
               <div className="mt-10 flex items-center gap-4">
@@ -940,6 +931,13 @@ export default function ErpPage() {
                   <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#33E8FF]/30 to-transparent" />
                 </div>
 
+                <button
+                  onClick={() => setShowTipsAuditoria(true)}
+                  className="group relative w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full font-black tracking-widest uppercase text-sm text-[#33E8FF] bg-[#020617] border border-[#33E8FF]/30 hover:border-[#33E8FF] hover:bg-white hover:text-slate-900 transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.15)] hover:shadow-[0_0_35px_rgba(51,232,255,0.6)]"
+                >
+                  Ejecuta tu propia AUDITORIA
+                </button>
+
                 <a
                   href="https://www.mrtechnology.it.com/#whatsapp-contact"
                   target="_blank"
@@ -955,16 +953,6 @@ export default function ErpPage() {
               </motion.div>
 
 
-              {/* Botón Ejecuta tu propia auditoria */}
-              <div className="mt-8 flex justify-center">
-                <button
-                  onClick={() => setShowTipsAuditoria(true)}
-                  className="group relative px-6 py-3 rounded-2xl bg-[#020617] border border-[#33E8FF]/30 hover:border-[#33E8FF] transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.15)] hover:shadow-[0_0_25px_rgba(51,232,255,0.4)]"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#33E8FF]/0 via-[#33E8FF]/10 to-[#33E8FF]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
-                  <span className="relative z-10 font-black tracking-widest text-[#33E8FF] uppercase text-sm md:text-base">Ejecuta tu propia AUDITORIA</span>
-                </button>
-              </div>
 
               {/* Footer tag */}
               <div className="mt-12 flex items-center gap-4">
@@ -1771,7 +1759,7 @@ export default function ErpPage() {
                     className={`text-left px-5 py-3 rounded-xl font-black text-xs tracking-widest uppercase transition-all duration-300 border ${
                       tipsTab === tab.id
                         ? 'bg-[#33E8FF]/15 border-[#33E8FF]/60 text-[#33E8FF] shadow-[0_0_15px_rgba(51,232,255,0.2)]'
-                        : 'border-transparent text-slate-400 hover:bg-white/5 hover:text-white'
+                        : 'border-transparent text-slate-400 hover:bg-white hover:text-slate-900'
                     }`}
                   >
                     {tab.label}
