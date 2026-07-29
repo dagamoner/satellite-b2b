@@ -825,8 +825,7 @@ export default function MarketingPage() {
             <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
             <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
          </div>
-
-
+         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-4">https://github.com/dagamoner/satellite-b2b.git</p>
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
       </main>
