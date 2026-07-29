@@ -165,12 +165,19 @@ export default function ErpPage() {
   const [showTipsAuditoria, setShowTipsAuditoria] = useState(false);
   const [tipsTab, setTipsTab] = useState('intro');
   const [tipsObsOpen, setTipsObsOpen] = useState<Record<string, boolean>>({});
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [mrTechPassword, setMrTechPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [showAuditoriaMRTech, setShowAuditoriaMRTech] = useState(false);
+  const [mrTechTab, setMrTechTab] = useState('intro');
+  const [mrTechObsOpen, setMrTechObsOpen] = useState<Record<string, boolean>>({});
+
 
   const [mostrarPreciosB, setMostrarPreciosB] = useState<string | boolean>(false);
   const [mostrarPreciosC, setMostrarPreciosC] = useState<string | boolean>(false);
   const [moduloSeleccionado, setModuloSeleccionado] = useState("");
   
-  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC || showAuditoria || mostrarPropuesta || showTipsAuditoria;
+  const isModalOpen = mostrarInstanciaA || mostrarInstanciaB || mostrarInstanciaC || showAuditoria || mostrarPropuesta || showTipsAuditoria || showAuditoriaMRTech || showPasswordModal;
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-50 font-sans overflow-x-hidden relative">
@@ -937,6 +944,14 @@ export default function ErpPage() {
                 >
                   Ejecuta tu propia AUDITORIA
                 </button>
+
+                <button
+                  onClick={() => setShowPasswordModal(true)}
+                  className="group relative w-full flex items-center justify-center gap-3 px-8 py-4 mt-4 rounded-full font-black tracking-widest uppercase text-sm text-[#020617] bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)]"
+                >
+                  AUDITORIA MR Tech
+                </button>
+
 
                 <a
                   href="https://www.mrtechnology.it.com/#whatsapp-contact"
@@ -1897,6 +1912,271 @@ export default function ErpPage() {
         )}
       </AnimatePresence>
 
+{/* ── Modal AUDITORIA MR TECH ── */}
+
+      <AnimatePresence>
+        {showAuditoriaMRTech && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[250] flex flex-col bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+          >
+            <div className="pointer-events-none fixed top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#33E8FF]/5 blur-[120px] rounded-full" />
+            
+            {/* Botón Regresar */}
+            <button
+              onClick={() => { setShowAuditoriaMRTech(false); setMrTechTab('intro'); setMrTechObsOpen({}); }}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[260] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#33E8FF] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(51,232,255,0.2)] group-hover:shadow-[0_0_20px_rgba(51,232,255,0.6)]">
+                <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <div className="w-full max-w-6xl mx-auto px-4 md:px-8 pt-20 pb-16 flex flex-col md:flex-row gap-8">
+              
+              {/* Sidebar Tabs */}
+              <div className="w-full md:w-64 flex-shrink-0 flex flex-col gap-2">
+                <h2 className="text-2xl font-black text-white tracking-widest mb-6 border-b border-white/10 pb-4">
+                  AUDITORÍA<br/><span className="text-[#33E8FF]">MR TECH</span>
+                </h2>
+                
+                {[
+                  { id: 'intro', label: 'Introducción' },
+                  { id: 'ventas', label: 'Ventas' },
+                  { id: 'pedidos', label: 'Pedidos / Compras' },
+                  { id: 'stock', label: 'Stock' },
+                  { id: 'caja', label: 'Caja' },
+                  { id: 'limpieza', label: 'Limpieza' },
+                  { id: 'encargado', label: 'Encargado' },
+                  { id: 'rrhh', label: 'RRHH' },
+                  { id: 'varios', label: 'Varios' }
+                ].map(tab => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setMrTechTab(tab.id)}
+                    className={`text-left px-5 py-3 rounded-xl font-black text-xs tracking-widest uppercase transition-all duration-300 border ${
+                      mrTechTab === tab.id
+                        ? 'bg-[#33E8FF]/15 border-[#33E8FF]/60 text-[#33E8FF] shadow-[0_0_15px_rgba(51,232,255,0.2)]'
+                        : 'border-transparent text-slate-400 hover:bg-white hover:text-slate-900'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Main Content Area */}
+              <div className="flex-1 bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-10 min-h-[500px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mrTechTab}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="flex flex-col gap-6"
+                  >
+                    {/* Contenido Dinámico por Tab */}
+                    {mrTechTab === 'intro' && (
+                      <>
+                        <h3 className="text-2xl font-black text-white tracking-wide mb-4">INTRODUCCIÓN</h3>
+                        <div className="flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                          <p><strong className="text-[#33E8FF]">Tiempo aprox:</strong> 3 o 4 horas de acuerdo a turnos y horarios determinados para la misma.</p>
+                          <p><strong className="text-[#33E8FF]">Personal implicado:</strong> Jefe cocina, cocinero referente, encargado, cajero, jefe de mozos o mozo referente.</p>
+                          <p><strong className="text-[#33E8FF]">Horarios:</strong> inicio de turno fuerte hasta primeras ventas.</p>
+                        </div>
+                      </>
+                    )}
+
+                    {mrTechTab !== 'intro' && (
+                      <>
+                        <h3 className="text-2xl font-black text-white tracking-wide mb-4 uppercase">{mrTechTab.replace('-', ' ')}</h3>
+                        <div className="flex flex-col gap-3">
+                          {/* Lista de Checkboxes generada */}
+                          {mrTechTab === 'ventas' && ['Recepción de cliente.', 'Tiempo de atención y armado de mesas.', 'Inicio de venta, presentación', 'Conocimiento de carta.', 'Sugerencias del día.', 'Atención a la mesa y re-venta. (Continuo)', 'Cierre de venta, encuesta, QR Reseña, etc.'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+                          
+                          {mrTechTab === 'pedidos' && ['Circuito de pedidos.', 'Recepción de mercadería.', 'Cuentas corrientes y pagos.', 'Producción y almacenamiento correcto.', 'Rotación y rotulado de mercadería.', 'Sugerencias del chef para rotar mercadería.'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'stock' && ['Recetas y subrecetas.', 'Procesos de producción y elaboración de platos.', 'Inventarios.', 'Mermas', 'Movimiento de stock/Remitos. (Desperdicios, platos devueltos, perdidas)', 'Menú personal/consumos internos.'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'caja' && ['Cierres X.', 'Gastos/Ingresos.', 'Pago personal eventual/completo.', 'Procedimientos de apertura y cierre de caja.'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'limpieza' && ['Orden y limpieza cocina', 'Orden y limpieza barra/heladeras', 'Limpieza y orden de salón', 'Limpieza baños.', 'Planillas para bromatología (Limpieza y temperaturas de heladera)'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'encargado' && ['Preparación de salón.', 'Distribución de plazas.', 'Comunicación cocina/salón', 'Briefing', 'Función operativa.', 'Distribución y control de tareas.', 'Armado y comunicación de reservas'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'rrhh' && ['Entrevistas', 'Capacitación', 'Sueldos e Incentivos', 'Manuales de Procedimientos', 'Incentivos', 'Uniformes', 'Organigrama', 'Evaluaciones'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
+
+                          {mrTechTab === 'varios' && (
+                            <div className="flex flex-col items-center justify-center py-10 gap-6">
+                              <p className="text-slate-400 text-center max-w-lg leading-relaxed">
+                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
+                              </p>
+                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
+                                Generar Reporte Virtual
+                              </button>
+                            </div>
+                          )}
+
+                          {mrTechTab !== 'varios' && (
+                            <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-4">
+                              <label className="inline-flex items-center gap-3 cursor-pointer select-none self-start bg-[#33E8FF]/10 border border-[#33E8FF]/30 rounded-full px-5 py-2.5 hover:bg-[#33E8FF]/20 transition-all">
+                                <input 
+                                  type="checkbox" 
+                                  className="w-4 h-4 accent-[#33E8FF] cursor-pointer" 
+                                  checked={mrTechObsOpen[mrTechTab] || false}
+                                  onChange={(e) => setMrTechObsOpen({ ...mrTechObsOpen, [mrTechTab]: e.target.checked })}
+                                />
+                                <span className="text-[#33E8FF] font-black text-[11px] uppercase tracking-widest">Agregar Observaciones</span>
+                              </label>
+
+                              <AnimatePresence>
+                                {mrTechObsOpen[mrTechTab] && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: 'auto', opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    className="overflow-hidden"
+                                  >
+                                    <textarea 
+                                      maxLength={100} 
+                                      placeholder="Escriba las observaciones aquí (máx 100 caracteres)..." 
+                                      className="w-full h-24 bg-black/40 border border-[#33E8FF]/50 text-white p-4 rounded-xl font-medium text-sm focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all resize-none"
+                                    />
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+
+      {/* ── Modal CONTRASEÑA MR TECH ── */}
+      <AnimatePresence>
+        {showPasswordModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020617]/95 backdrop-blur-md p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="relative w-full max-w-md bg-slate-900/60 border border-[#33E8FF]/30 p-8 rounded-3xl shadow-[0_0_40px_rgba(51,232,255,0.15)] flex flex-col items-center gap-6 text-center"
+            >
+              <button
+                onClick={() => { setShowPasswordModal(false); setPasswordError(false); setMrTechPassword(''); }}
+                className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+              
+              <div className="w-16 h-16 rounded-full bg-[#33E8FF]/10 flex items-center justify-center border border-[#33E8FF]/30 shadow-[0_0_15px_rgba(51,232,255,0.3)]">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#33E8FF" strokeWidth="2" className="w-8 h-8"><path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              </div>
+              
+              <div className="flex flex-col gap-2">
+                <h3 className="text-xl font-black text-white tracking-widest uppercase">Acceso Restringido</h3>
+                <p className="text-slate-400 text-sm">Ingrese la contraseña para acceder a la Auditoría MR Tech</p>
+              </div>
+
+              <div className="w-full flex flex-col gap-3">
+                <input
+                  type="password"
+                  value={mrTechPassword}
+                  onChange={(e) => { setMrTechPassword(e.target.value); setPasswordError(false); }}
+                  placeholder="Contraseña..."
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      if (mrTechPassword === 'mrtech26&') {
+                        setShowPasswordModal(false);
+                        setShowAuditoriaMRTech(true);
+                        setMrTechPassword('');
+                        setPasswordError(false);
+                      } else {
+                        setPasswordError(true);
+                      }
+                    }
+                  }}
+                  className={`w-full bg-black/40 border ${passwordError ? 'border-red-500' : 'border-[#33E8FF]/50'} text-white p-4 rounded-xl font-medium text-center focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all`}
+                />
+                <AnimatePresence>
+                  {passwordError && (
+                    <motion.span initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} className="text-red-500 text-xs font-bold uppercase tracking-wider">Contraseña incorrecta</motion.span>
+                  )}
+                </AnimatePresence>
+                <button
+                  onClick={() => {
+                    if (mrTechPassword === 'mrtech26&') {
+                      setShowPasswordModal(false);
+                      setShowAuditoriaMRTech(true);
+                      setMrTechPassword('');
+                      setPasswordError(false);
+                    } else {
+                      setPasswordError(true);
+                    }
+                  }}
+                  className="w-full mt-2 bg-[#33E8FF] hover:bg-white text-slate-900 font-black tracking-widest uppercase py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.4)]"
+                >
+                  Ingresar
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
+
   );
 }
