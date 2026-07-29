@@ -184,13 +184,13 @@ export default function ErpPage() {
 
       {/* Fondo universo */}
       <SpaceBackground />
-      <SatelliteOrbit isHidden={isModalOpen} />
+      <SatelliteOrbit isHidden={false} />
 
       {/* Tierra — esquina superior derecha */}
       <motion.div
         className="fixed top-[-16vw] right-[-16vw] z-[1] pointer-events-none"
         initial={{ opacity: 0, rotate: 0 }}
-        animate={{ opacity: isModalOpen ? 0 : 0.6, rotate: 360 }}
+        animate={{ opacity: 0.6, rotate: 360 }}
         transition={{
           opacity: { duration: 0.5 },
           rotate: { duration: 600, ease: "linear", repeat: Infinity },
@@ -213,7 +213,7 @@ export default function ErpPage() {
       {/* Sello de agua - logo */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: isModalOpen ? 0 : 0.07 }}
+        animate={{ opacity: 0.07 }}
         transition={{ duration: 0.5 }}
         aria-hidden="true"
         className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center"
@@ -522,7 +522,7 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex flex-col items-start justify-start bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+            className="fixed inset-0 z-[100] flex flex-col items-start justify-start bg-[#020617]/40 backdrop-blur-md overflow-y-auto"
           >
             {/* Botón Regresar */}
             <button
@@ -741,7 +741,7 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex flex-col items-start justify-start bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+            className="fixed inset-0 z-[200] flex flex-col items-start justify-start bg-[#020617]/40 backdrop-blur-md overflow-y-auto"
           >
             {/* Halo de fondo decorativo */}
             <div className="pointer-events-none fixed top-[-15%] left-[-10%] w-[700px] h-[500px] bg-[#33E8FF]/6 blur-[140px] rounded-full" />
@@ -1733,7 +1733,7 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[250] flex flex-col bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+            className="fixed inset-0 z-[250] flex flex-col bg-[#020617]/40 backdrop-blur-md overflow-y-auto"
           >
             <div className="pointer-events-none fixed top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#33E8FF]/5 blur-[120px] rounded-full" />
             
@@ -1920,7 +1920,7 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[250] flex flex-col bg-[#020617]/98 backdrop-blur-2xl overflow-y-auto"
+            className="fixed inset-0 z-[250] flex flex-col bg-[#020617]/40 backdrop-blur-md overflow-y-auto"
           >
             <div className="pointer-events-none fixed top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[#33E8FF]/5 blur-[120px] rounded-full" />
             
@@ -2107,7 +2107,7 @@ export default function ErpPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020617]/95 backdrop-blur-md p-4"
+            className="fixed inset-0 z-[300] flex items-center justify-center bg-[#020617]/40 backdrop-blur-md p-4"
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
