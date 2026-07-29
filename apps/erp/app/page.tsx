@@ -582,7 +582,7 @@ export default function ErpPage() {
                   {auditTab === 'primer-paso' && (
                     <motion.button
                       key="cta-comenzamos"
-                      onClick={() => setMostrarPropuesta(true)}
+                      onClick={() => { setShowAuditoria(false); setMostrarPropuesta(true); }}
                       initial={{ opacity: 0, scale: 0.85, x: 20 }}
                       animate={{ opacity: 1, scale: 1, x: 0 }}
                       exit={{ opacity: 0, scale: 0.85, x: 20 }}
@@ -749,7 +749,7 @@ export default function ErpPage() {
 
             {/* Botón Regresar */}
             <button
-              onClick={() => setMostrarPropuesta(false)}
+              onClick={() => { setMostrarPropuesta(false); setShowAuditoria(true); }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[220] cursor-pointer"
             >
               <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
@@ -939,14 +939,14 @@ export default function ErpPage() {
                 </div>
 
                 <button
-                  onClick={() => setShowTipsAuditoria(true)}
+                  onClick={() => { setMostrarPropuesta(false); setShowTipsAuditoria(true); }}
                   className="group relative w-full flex items-center justify-center gap-3 px-8 py-4 rounded-full font-black tracking-widest uppercase text-sm text-[#33E8FF] bg-[#020617] border border-[#33E8FF]/30 hover:border-[#33E8FF] hover:bg-white hover:text-slate-900 transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.15)] hover:shadow-[0_0_35px_rgba(51,232,255,0.6)]"
                 >
                   Ejecuta tu propia AUDITORIA
                 </button>
 
                 <button
-                  onClick={() => setShowPasswordModal(true)}
+                  onClick={() => { setMostrarPropuesta(false); setShowPasswordModal(true); }}
                   className="group relative w-full flex items-center justify-center gap-3 px-8 py-4 mt-4 rounded-full font-black tracking-widest uppercase text-sm text-[#020617] bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)]"
                 >
                   AUDITORIA MR Tech
@@ -1739,7 +1739,7 @@ export default function ErpPage() {
             
             {/* Botón Regresar */}
             <button
-              onClick={() => { setShowTipsAuditoria(false); setTipsTab('intro'); setTipsObsOpen({}); }}
+              onClick={() => { setShowTipsAuditoria(false); setMostrarPropuesta(true); setTipsTab('intro'); setTipsObsOpen({}); }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[260] cursor-pointer"
             >
               <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
@@ -1926,7 +1926,7 @@ export default function ErpPage() {
             
             {/* Botón Regresar */}
             <button
-              onClick={() => { setShowAuditoriaMRTech(false); setMrTechTab('intro'); setMrTechObsOpen({}); }}
+              onClick={() => { setShowAuditoriaMRTech(false); setMostrarPropuesta(true); setMrTechTab('intro'); setMrTechObsOpen({}); }}
               className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[260] cursor-pointer"
             >
               <span className="text-white group-hover:text-[#33E8FF] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
@@ -2116,7 +2116,7 @@ export default function ErpPage() {
               className="relative w-full max-w-md bg-slate-900/60 border border-[#33E8FF]/30 p-8 rounded-3xl shadow-[0_0_40px_rgba(51,232,255,0.15)] flex flex-col items-center gap-6 text-center"
             >
               <button
-                onClick={() => { setShowPasswordModal(false); setPasswordError(false); setMrTechPassword(''); }}
+                onClick={() => { setShowPasswordModal(false); setMostrarPropuesta(true); setPasswordError(false); setMrTechPassword(''); }}
                 className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path d="M6 18L18 6M6 6l12 12"/></svg>
