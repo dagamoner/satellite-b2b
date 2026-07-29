@@ -1798,49 +1798,49 @@ export default function ErpPage() {
                         <h3 className="text-2xl font-black text-white tracking-wide mb-4 uppercase">{tipsTab.replace('-', ' ')}</h3>
                         <div className="flex flex-col gap-3">
                           {/* Lista de Checkboxes generada */}
-                          {tipsTab === 'ventas' && ['Recepción de cliente.', 'Tiempo de atención y armado de mesas.', 'Inicio de venta, presentación', 'Conocimiento de carta.', 'Sugerencias del día.', 'Atención a la mesa y re-venta. (Continuo)', 'Cierre de venta, encuesta, QR Reseña, etc.'].map((item, i) => (
+                          {tipsTab === 'ventas' && ['Recepción de cliente.', 'Tiempo de atención y armado de mesas.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
                           
-                          {tipsTab === 'pedidos' && ['Circuito de pedidos.', 'Recepción de mercadería.', 'Cuentas corrientes y pagos.', 'Producción y almacenamiento correcto.', 'Rotación y rotulado de mercadería.', 'Sugerencias del chef para rotar mercadería.'].map((item, i) => (
+                          {tipsTab === 'pedidos' && ['Circuito de pedidos.', 'Recepción de mercadería.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
-                          {tipsTab === 'stock' && ['Recetas y subrecetas.', 'Procesos de producción y elaboración de platos.', 'Inventarios.', 'Mermas', 'Movimiento de stock/Remitos. (Desperdicios, platos devueltos, perdidas)', 'Menú personal/consumos internos.'].map((item, i) => (
+                          {tipsTab === 'stock' && ['Recetas y subrecetas.', 'Procesos de producción y elaboración de platos.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
-                          {tipsTab === 'caja' && ['Cierres X.', 'Gastos/Ingresos.', 'Pago personal eventual/completo.', 'Procedimientos de apertura y cierre de caja.'].map((item, i) => (
+                          {tipsTab === 'caja' && ['Cierres X.', 'Gastos/Ingresos.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
-                          {tipsTab === 'limpieza' && ['Orden y limpieza cocina', 'Orden y limpieza barra/heladeras', 'Limpieza y orden de salón', 'Limpieza baños.', 'Planillas para bromatología (Limpieza y temperaturas de heladera)'].map((item, i) => (
+                          {tipsTab === 'limpieza' && ['Orden y limpieza cocina', 'Orden y limpieza barra/heladeras'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
-                          {tipsTab === 'encargado' && ['Preparación de salón.', 'Distribución de plazas.', 'Comunicación cocina/salón', 'Briefing', 'Función operativa.', 'Distribución y control de tareas.', 'Armado y comunicación de reservas'].map((item, i) => (
+                          {tipsTab === 'encargado' && ['Preparación de salón.', 'Distribución de plazas.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
-                          {tipsTab === 'rrhh' && ['Entrevistas', 'Capacitación', 'Sueldos e Incentivos', 'Manuales de Procedimientos', 'Incentivos', 'Uniformes', 'Organigrama', 'Evaluaciones'].map((item, i) => (
+                          {tipsTab === 'rrhh' && ['Entrevistas', 'Capacitación'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
                               <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
@@ -2110,7 +2110,7 @@ export default function ErpPage() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6"><path d="M6 18L18 6M6 6l12 12"/></svg>
               </button>
               
-              <div className="w-24 h-24 flex items-center justify-center mb-2 drop-shadow-[0_0_15px_rgba(51,232,255,0.5)]">
+              <div className="w-40 h-40 flex items-center justify-center mb-2 drop-shadow-[0_0_15px_rgba(51,232,255,0.5)]">
                 <img src="/logo-ciberseguridad.jpg" alt="Ciberseguridad" className="w-full h-full object-contain" style={{ mixBlendMode: 'screen' }} />
               </div>
               
