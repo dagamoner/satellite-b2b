@@ -1789,6 +1789,12 @@ export default function ErpPage() {
                     {tipsTab === 'intro' && (
                       <>
                         <h3 className="text-2xl font-black text-white tracking-wide mb-4">INTRODUCCIÓN</h3>
+                        <div className="flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                          <p>¿Sabes que puntos de dolor tiene tu local? Que porcentaje tenes cubierto con tips aplicados y que porcentaje en puntos de dolor que no has podido resolver.</p>
+                          <p>La auditoria nos refleja con un rapido y dinamico check list que determines como esta parado el local actualmente.</p>
+                          <p>Versión resumida de AUDITORIA para que entiendas el procedimiento y alcance de las mismas, la AUDITORIA full es desarrollada por personal de MR Tech idoneo y calificado para este tipo de actividades.</p>
+                          <p>Una buena base de AUDITORIA y sus resultados, nos permite desarrollar la CONSULTORIA a MEDIDA para tu local.</p>
+                        </div>
                       </>
                     )}
 
@@ -1846,19 +1852,14 @@ export default function ErpPage() {
                             </label>
                           ))}
 
-                          {tipsTab === 'varios' && (
-                            <div className="flex flex-col items-center justify-center py-10 gap-6">
-                              <p className="text-slate-400 text-center max-w-lg leading-relaxed">
-                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
-                              </p>
-                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
-                                Generar Reporte Virtual
-                              </button>
-                            </div>
-                          )}
+                          {tipsTab === 'varios' && ['Tareas de Administración', 'Comunicación (redes, pagina)'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
 
-                          {tipsTab !== 'varios' && (
-                            <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-4">
+                          <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-4">
                               <label className="inline-flex items-center gap-3 cursor-pointer select-none self-start bg-[#33E8FF]/10 border border-[#33E8FF]/30 rounded-full px-5 py-2.5 hover:bg-[#33E8FF]/20 transition-all">
                                 <input 
                                   type="checkbox" 
@@ -1885,6 +1886,16 @@ export default function ErpPage() {
                                   </motion.div>
                                 )}
                               </AnimatePresence>
+                            </div>
+
+                          {tipsTab === 'varios' && (
+                            <div className="flex flex-col items-center justify-center py-10 gap-6">
+                              <p className="text-slate-400 text-center max-w-lg leading-relaxed">
+                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
+                              </p>
+                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
+                                Generar Reporte Virtual
+                              </button>
                             </div>
                           )}
                         </div>
@@ -1971,6 +1982,12 @@ export default function ErpPage() {
                     {mrTechTab === 'intro' && (
                       <>
                         <h3 className="text-2xl font-black text-white tracking-wide mb-4">INTRODUCCIÓN</h3>
+                        <div className="flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                          <p>¿Sabes que puntos de dolor tiene tu local? Que porcentaje tenes cubierto con tips aplicados y que porcentaje en puntos de dolor que no has podido resolver.</p>
+                          <p>La auditoria nos refleja con un rapido y dinamico check list que determines como esta parado el local actualmente.</p>
+                          <p>Versión resumida de AUDITORIA para que entiendas el procedimiento y alcance de las mismas, la AUDITORIA full es desarrollada por personal de MR Tech idoneo y calificado para este tipo de actividades.</p>
+                          <p>Una buena base de AUDITORIA y sus resultados, nos permite desarrollar la CONSULTORIA a MEDIDA para tu local.</p>
+                        </div>
                       </>
                     )}
 
@@ -2028,19 +2045,14 @@ export default function ErpPage() {
                             </label>
                           ))}
 
-                          {mrTechTab === 'varios' && (
-                            <div className="flex flex-col items-center justify-center py-10 gap-6">
-                              <p className="text-slate-400 text-center max-w-lg leading-relaxed">
-                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
-                              </p>
-                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
-                                Generar Reporte Virtual
-                              </button>
-                            </div>
-                          )}
+                          {mrTechTab === 'varios' && ['Tareas de Administración', 'Comunicación (redes, pagina)'].map((item, i) => (
+                            <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
+                            </label>
+                          ))}
 
-                          {mrTechTab !== 'varios' && (
-                            <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-4">
+                          <div className="mt-6 pt-6 border-t border-white/10 flex flex-col gap-4">
                               <label className="inline-flex items-center gap-3 cursor-pointer select-none self-start bg-[#33E8FF]/10 border border-[#33E8FF]/30 rounded-full px-5 py-2.5 hover:bg-[#33E8FF]/20 transition-all">
                                 <input 
                                   type="checkbox" 
@@ -2067,6 +2079,16 @@ export default function ErpPage() {
                                   </motion.div>
                                 )}
                               </AnimatePresence>
+                            </div>
+
+                          {mrTechTab === 'varios' && (
+                            <div className="flex flex-col items-center justify-center py-10 gap-6">
+                              <p className="text-slate-400 text-center max-w-lg leading-relaxed">
+                                Ha llegado al final de la auditoría. Asegúrese de haber completado y registrado observaciones en cada una de las secciones anteriores.
+                              </p>
+                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
+                                Generar Reporte Virtual
+                              </button>
                             </div>
                           )}
                         </div>
