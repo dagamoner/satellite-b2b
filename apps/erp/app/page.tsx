@@ -479,7 +479,11 @@ export default function ErpPage() {
 
                     {/* Botón Ir Instancia C */}
                     <button 
-                      onClick={() => setMostrarInstanciaC(true)}
+                      onClick={() => {
+                        setShowInfo(false);
+                        setShowAuditoria(true);
+                        setAuditTab('que-es');
+                      }}
                       className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
                       style={{ top: '65%', right: '-18%', width: '18%' }}
                       title="Ver Instancia C"
@@ -488,8 +492,8 @@ export default function ErpPage() {
                       <img 
                         src="/ir instancia C.png" 
                         alt="Ir a Instancia C"
-                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)]"
-                        style={{ mixBlendMode: 'screen' }}
+                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)] scale-[1.15]"
+                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
                       />
                     </button>
                   </div>
@@ -1785,11 +1789,6 @@ export default function ErpPage() {
                     {tipsTab === 'intro' && (
                       <>
                         <h3 className="text-2xl font-black text-white tracking-wide mb-4">INTRODUCCIÓN</h3>
-                        <div className="flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed">
-                          <p><strong className="text-[#33E8FF]">Tiempo aprox:</strong> 3 o 4 horas de acuerdo a turnos y horarios determinados para la misma.</p>
-                          <p><strong className="text-[#33E8FF]">Personal implicado:</strong> Jefe cocina, cocinero referente, encargado, cajero, jefe de mozos o mozo referente.</p>
-                          <p><strong className="text-[#33E8FF]">Horarios:</strong> inicio de turno fuerte hasta primeras ventas.</p>
-                        </div>
                       </>
                     )}
 
@@ -1972,11 +1971,6 @@ export default function ErpPage() {
                     {mrTechTab === 'intro' && (
                       <>
                         <h3 className="text-2xl font-black text-white tracking-wide mb-4">INTRODUCCIÓN</h3>
-                        <div className="flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed">
-                          <p><strong className="text-[#33E8FF]">Tiempo aprox:</strong> 3 o 4 horas de acuerdo a turnos y horarios determinados para la misma.</p>
-                          <p><strong className="text-[#33E8FF]">Personal implicado:</strong> Jefe cocina, cocinero referente, encargado, cajero, jefe de mozos o mozo referente.</p>
-                          <p><strong className="text-[#33E8FF]">Horarios:</strong> inicio de turno fuerte hasta primeras ventas.</p>
-                        </div>
                       </>
                     )}
 
