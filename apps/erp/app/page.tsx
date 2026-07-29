@@ -541,7 +541,7 @@ export default function ErpPage() {
                   style={{ mixBlendMode: 'screen' }}
                 />
                 <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <span className="text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-1">01. AUDITORÍA OPERATIVA</span>
+
                   <h2 className="text-2xl md:text-4xl font-black text-white tracking-tight leading-tight">El Futuro de la Gestión<br/><span className="text-[#33E8FF] drop-shadow-[0_0_12px_rgba(51,232,255,0.8)]">Gastronómica</span></h2>
                   <p className="text-slate-400 text-sm md:text-base mt-2 font-medium max-w-xl">Auditoría & Consultoría con un equipo interdisciplinario gastronómico e IT para llevar tu restaurante al siguiente nivel de rentabilidad.</p>
                 </div>
@@ -578,7 +578,7 @@ export default function ErpPage() {
                       transition={{ duration: 0.4, ease: 'easeOut' }}
                       className="ml-auto flex flex-col items-center justify-center gap-0.5 px-6 py-3 rounded-2xl font-black uppercase text-slate-900 bg-[#33E8FF] hover:bg-white transition-all duration-300 shadow-[0_0_25px_rgba(51,232,255,0.55)] hover:shadow-[0_0_45px_rgba(51,232,255,0.9)] cursor-pointer select-none shrink-0"
                     >
-                      <span className="text-sm md:text-base tracking-[0.12em] leading-tight">COMENZAMOS</span>
+                      <span className="text-sm md:text-base tracking-[0.12em] leading-tight">ANALIZAMOS</span>
                       <span className="text-[8px] md:text-[9px] tracking-[0.15em] leading-tight font-bold opacity-80">AUDITORÍA, TECNOLOGÍA & CONSULTORÍA</span>
                     </motion.button>
                   )}
@@ -754,7 +754,7 @@ export default function ErpPage() {
                 transition={{ duration: 0.65 }}
                 className="mb-14 text-center"
               >
-                <span className="inline-block text-[9px] font-black tracking-[0.4em] uppercase text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.9)] mb-3">02. PROPUESTA</span>
+
                 <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight mb-3">
                   Auditoría,{" "}
                   <span className="text-transparent bg-clip-text" style={{ backgroundImage: 'linear-gradient(135deg, #33E8FF 0%, #0ea5e9 50%, #33E8FF 100%)' }}>
@@ -788,7 +788,7 @@ export default function ErpPage() {
                   transition={{ duration: 0.6, delay: 0.1 }}
                   className="relative group rounded-2xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#a855f7]/25 rounded-2xl transition-all duration-500 group-hover:border-[#a855f7]/55" />
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border-2 border-[#a855f7]/80 rounded-2xl transition-all duration-500 group-hover:border-[#a855f7]" />
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#a855f7] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#a855f7]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#a855f7]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
@@ -828,7 +828,7 @@ export default function ErpPage() {
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="relative group rounded-2xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#33E8FF]/25 rounded-2xl transition-all duration-500 group-hover:border-[#33E8FF]/55" />
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border-2 border-[#33E8FF]/80 rounded-2xl transition-all duration-500 group-hover:border-[#33E8FF]" />
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#33E8FF] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#33E8FF]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
@@ -868,7 +868,7 @@ export default function ErpPage() {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="relative group rounded-2xl overflow-hidden"
                 >
-                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border border-[#f97316]/25 rounded-2xl transition-all duration-500 group-hover:border-[#f97316]/55" />
+                  <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-xl border-2 border-[#f97316]/80 rounded-2xl transition-all duration-500 group-hover:border-[#f97316]" />
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#f97316] to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-br from-[#f97316]/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
                   <div className="absolute -inset-1 bg-[#f97316]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
