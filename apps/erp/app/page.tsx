@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import jsPDF from "jspdf";
 
 /* ── Fondo del universo (igual que corporate) ── */
 const SpaceBackground = () => {
@@ -165,6 +166,94 @@ export default function ErpPage() {
   const [showTipsAuditoria, setShowTipsAuditoria] = useState(false);
   const [tipsTab, setTipsTab] = useState('intro');
   const [tipsObsOpen, setTipsObsOpen] = useState<Record<string, boolean>>({});
+
+  const [tipsObsText, setTipsObsText] = useState<Record<string, string>>({});
+  const [tipsSelections, setTipsSelections] = useState<Record<string, string[]>>({});
+  const [mrTechObsText, setMrTechObsText] = useState<Record<string, string>>({});
+  const [mrTechSelections, setMrTechSelections] = useState<Record<string, string[]>>({});
+  const [reportEmpresa, setReportEmpresa] = useState('');
+  const [reportResponsable, setReportResponsable] = useState('');
+
+  const handleCheckboxChange = (
+    setState: React.Dispatch<React.SetStateAction<Record<string, string[]>>>,
+    tab: string,
+    item: string,
+    checked: boolean
+  ) => {
+    setState((prev) => {
+      const current = prev[tab] || [];
+      if (checked) {
+        if (!current.includes(item)) return { ...prev, [tab]: [...current, item] };
+        return prev;
+      } else {
+        return { ...prev, [tab]: current.filter((i) => i !== item) };
+      }
+    });
+  };
+
+  const generatePDF = (type: 'tips' | 'mrTech') => {
+    const doc = new jsPDF();
+    const isMrTech = type === 'mrTech';
+    const title = isMrTech ? 'Reporte Virtual - Auditoría MR Tech' : 'Reporte Virtual - Tips Auditoría';
+    const selections = isMrTech ? mrTechSelections : tipsSelections;
+    const obsText = isMrTech ? mrTechObsText : tipsObsText;
+    const sections = ['ventas', 'pedidos', 'stock', 'caja', 'limpieza', 'encargado', 'rrhh', 'varios'];
+
+    const logoUrl = '/Logo WEB MR Tech.png';
+    const img = new window.Image();
+    img.src = logoUrl;
+    img.onload = () => {
+      doc.addImage(img, 'PNG', 15, 10, 40, 20);
+      
+      doc.setFontSize(10);
+      doc.text(`Fecha: ${new Date().toLocaleDateString('es-AR')}`, 130, 15);
+      doc.text(`Empresa: ${reportEmpresa || 'No especificada'}`, 130, 22);
+      doc.text(`Responsable: ${reportResponsable || 'No especificado'}`, 130, 29);
+      
+      doc.setFontSize(16);
+      doc.text(title, 15, 45);
+      
+      let y = 55;
+      doc.setFontSize(12);
+
+      sections.forEach(sec => {
+        const secSelections = selections[sec] || [];
+        const secObs = obsText[sec] || '';
+        
+        if (secSelections.length > 0 || secObs.trim() !== '') {
+          if (y > 270) { doc.addPage(); y = 20; }
+          
+          doc.setFont('helvetica', 'bold');
+          doc.text(sec.toUpperCase(), 15, y);
+          y += 8;
+          
+          doc.setFont('helvetica', 'normal');
+          secSelections.forEach(item => {
+            if (y > 280) { doc.addPage(); y = 20; }
+            const lines = doc.splitTextToSize(`- ${item}`, 180);
+            doc.text(lines, 15, y);
+            y += 6 * lines.length;
+          });
+          
+          if (secObs.trim() !== '') {
+            if (y > 270) { doc.addPage(); y = 20; }
+            doc.setFont('helvetica', 'italic');
+            const obsLines = doc.splitTextToSize(`Observaciones: ${secObs}`, 180);
+            doc.text(obsLines, 15, y);
+            y += 6 * obsLines.length;
+            doc.setFont('helvetica', 'normal');
+          }
+          y += 5;
+        }
+      });
+      
+      doc.save(`Reporte_Virtual_${new Date().getTime()}.pdf`);
+    };
+    img.onerror = () => {
+      alert("Error cargando el logo para el PDF. Intente nuevamente.");
+    };
+  };
+
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [mrTechPassword, setMrTechPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
@@ -1801,56 +1890,56 @@ export default function ErpPage() {
                           {/* Lista de Checkboxes generada */}
                           {tipsTab === 'ventas' && ['Recepción de cliente.', 'Tiempo de atención y armado de mesas.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
                           
                           {tipsTab === 'pedidos' && ['Circuito de pedidos.', 'Recepción de mercadería.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'stock' && ['Recetas y subrecetas.', 'Procesos de producción y elaboración de platos.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'caja' && ['Cierres X.', 'Gastos/Ingresos.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'limpieza' && ['Orden y limpieza cocina', 'Orden y limpieza barra/heladeras'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'encargado' && ['Preparación de salón.', 'Distribución de plazas.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'rrhh' && ['Entrevistas', 'Capacitación'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {tipsTab === 'varios' && ['Tareas de Administración', 'Comunicación (redes, pagina)'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
@@ -1877,7 +1966,7 @@ export default function ErpPage() {
                                     <textarea 
                                       maxLength={100} 
                                       placeholder="Escriba las observaciones aquí (máx 100 caracteres)..." 
-                                      className="w-full h-24 bg-black/40 border border-[#33E8FF]/50 text-white p-4 rounded-xl font-medium text-sm focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all resize-none"
+                                      value={tipsObsText[tipsTab] || ''} onChange={(e) => setTipsObsText({ ...tipsObsText, [tipsTab]: e.target.value })} className="w-full h-24 bg-black/40 border border-[#33E8FF]/50 text-white p-4 rounded-xl font-medium text-sm focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all resize-none"
                                     />
                                   </motion.div>
                                 )}
@@ -1889,9 +1978,21 @@ export default function ErpPage() {
                               <p className="text-slate-400 text-center max-w-lg leading-relaxed">
                                 Fin de AUDITORIA !!!. Asegurate de haber completado bien el check list de ser correcto y recorda las observaciones de ser necesarias, un solo clic y tendras tu reporte de inmediato.
                               </p>
-                              <button className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
+                              
+                              <div className="w-full flex flex-col md:flex-row gap-4 mb-4">
+                                <div className="flex-1">
+                                  <label className="text-xs text-[#33E8FF] font-bold uppercase tracking-widest mb-1 block">Empresa:</label>
+                                  <input type="text" value={reportEmpresa} onChange={(e) => setReportEmpresa(e.target.value)} placeholder="Nombre de la empresa" className="w-full bg-black/40 border border-[#33E8FF]/30 text-white p-3 rounded-lg focus:outline-none focus:border-[#33E8FF] transition-all" />
+                                </div>
+                                <div className="flex-1">
+                                  <label className="text-xs text-[#33E8FF] font-bold uppercase tracking-widest mb-1 block">Responsable:</label>
+                                  <input type="text" value={reportResponsable} onChange={(e) => setReportResponsable(e.target.value)} placeholder="Nombre del responsable" className="w-full bg-black/40 border border-[#33E8FF]/30 text-white p-3 rounded-lg focus:outline-none focus:border-[#33E8FF] transition-all" />
+                                </div>
+                              </div>
+                              <button onClick={() => generatePDF('mrTech')} className="px-8 py-4 bg-[#33E8FF] text-slate-900 font-black rounded-xl uppercase tracking-[0.2em] shadow-[0_0_20px_rgba(51,232,255,0.4)] hover:shadow-[0_0_35px_rgba(51,232,255,0.8)] hover:scale-105 hover:bg-white transition-all duration-300">
                                 Generar Reporte Virtual
                               </button>
+
                             </div>
                           )}
                         </div>
@@ -1994,56 +2095,56 @@ export default function ErpPage() {
                           {/* Lista de Checkboxes generada */}
                           {mrTechTab === 'ventas' && ['Recepción de cliente.', 'Tiempo de atención y armado de mesas.', 'Inicio de venta, presentación', 'Conocimiento de carta.', 'Sugerencias del día.', 'Atención a la mesa y re-venta. (Continuo)', 'Cierre de venta, encuesta, QR Reseña, etc.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(tipsSelections[tipsTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setTipsSelections, tipsTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
                           
                           {mrTechTab === 'pedidos' && ['Circuito de pedidos.', 'Recepción de mercadería.', 'Cuentas corrientes y pagos.', 'Producción y almacenamiento correcto.', 'Rotación y rotulado de mercadería.', 'Sugerencias del chef para rotar mercadería.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'stock' && ['Recetas y subrecetas.', 'Procesos de producción y elaboración de platos.', 'Inventarios.', 'Mermas', 'Movimiento de stock/Remitos. (Desperdicios, platos devueltos, perdidas)', 'Menú personal/consumos internos.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'caja' && ['Cierres X.', 'Gastos/Ingresos.', 'Pago personal eventual/completo.', 'Procedimientos de apertura y cierre de caja.'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'limpieza' && ['Orden y limpieza cocina', 'Orden y limpieza barra/heladeras', 'Limpieza y orden de salón', 'Limpieza baños.', 'Planillas para bromatología (Limpieza y temperaturas de heladera)'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'encargado' && ['Preparación de salón.', 'Distribución de plazas.', 'Comunicación cocina/salón', 'Briefing', 'Función operativa.', 'Distribución y control de tareas.', 'Armado y comunicación de reservas'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'rrhh' && ['Entrevistas', 'Capacitación', 'Sueldos e Incentivos', 'Manuales de Procedimientos', 'Incentivos', 'Uniformes', 'Organigrama', 'Evaluaciones'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
 
                           {mrTechTab === 'varios' && ['Tareas de Administración', 'Comunicación (redes, pagina)'].map((item, i) => (
                             <label key={i} className="flex items-center gap-4 p-3 rounded-lg hover:bg-white/5 cursor-pointer transition-colors border border-transparent hover:border-white/10 group">
-                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" />
+                              <input type="checkbox" className="w-5 h-5 accent-[#33E8FF] rounded bg-slate-800 border-white/20 cursor-pointer" checked={(mrTechSelections[mrTechTab] || []).includes(item)} onChange={(e) => handleCheckboxChange(setMrTechSelections, mrTechTab, item, e.target.checked)} />
                               <span className="text-slate-300 group-hover:text-white transition-colors text-sm">{item}</span>
                             </label>
                           ))}
@@ -2070,7 +2171,7 @@ export default function ErpPage() {
                                     <textarea 
                                       maxLength={100} 
                                       placeholder="Escriba las observaciones aquí (máx 100 caracteres)..." 
-                                      className="w-full h-24 bg-black/40 border border-[#33E8FF]/50 text-white p-4 rounded-xl font-medium text-sm focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all resize-none"
+                                      value={mrTechObsText[mrTechTab] || ''} onChange={(e) => setMrTechObsText({ ...mrTechObsText, [mrTechTab]: e.target.value })} className="w-full h-24 bg-black/40 border border-[#33E8FF]/50 text-white p-4 rounded-xl font-medium text-sm focus:outline-none focus:border-[#33E8FF] focus:ring-1 focus:ring-[#33E8FF] transition-all resize-none"
                                     />
                                   </motion.div>
                                 )}
