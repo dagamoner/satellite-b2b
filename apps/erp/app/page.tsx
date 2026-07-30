@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import jsPDF from "jspdf";
+
 
 /* ── Fondo del universo (igual que corporate) ── */
 const SpaceBackground = () => {
@@ -191,7 +191,8 @@ export default function ErpPage() {
     });
   };
 
-  const generatePDF = (type: 'tips' | 'mrTech') => {
+  const runGeneratePDF = (type: 'tips' | 'mrTech') => {
+    const { jsPDF } = (window as any).jspdf;
     const doc = new jsPDF();
     const isMrTech = type === 'mrTech';
     const title = isMrTech ? 'Reporte Virtual - Auditoría MR Tech' : 'Reporte Virtual - Tips Auditoría';
@@ -252,6 +253,21 @@ export default function ErpPage() {
     img.onerror = () => {
       alert("Error cargando el logo para el PDF. Intente nuevamente.");
     };
+  };
+
+  const generatePDF = (type: 'tips' | 'mrTech') => {
+    if (typeof window === 'undefined') return;
+    
+    if (!(window as any).jspdf) {
+      const script = document.createElement('script');
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+      script.onload = () => {
+        runGeneratePDF(type);
+      };
+      document.body.appendChild(script);
+    } else {
+      runGeneratePDF(type);
+    }
   };
 
   const [showPasswordModal, setShowPasswordModal] = useState(false);
