@@ -730,6 +730,72 @@ export default function MarketingPage() {
             })}
           </div>
 
+          </div>
+
+          {/* About MR Technology Section */}
+          <div className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 mt-16 md:mt-24 mb-20 relative z-20">
+            {/* Introducción */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16 max-w-4xl"
+            >
+              <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                En <span className="font-black text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">MR Technology</span> desarrollamos soluciones tecnológicas integrales orientadas a optimizar, proteger y potenciar la infraestructura informática de empresas, profesionales y organizaciones que buscan evolucionar hacia un entorno digital más eficiente, seguro e inteligente.
+              </p>
+              <p className="text-slate-300 text-lg md:text-xl leading-relaxed font-medium">
+                Combinamos innovación, automatización, conectividad y ciberseguridad para transformar la tecnología en una herramienta estratégica de crecimiento, productividad y evolución empresarial.
+              </p>
+            </motion.div>
+
+            {/* Tarjetas de Virtud y Misión */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
+              {/* Card Nuestra Virtud */}
+              <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="bg-slate-900/50 backdrop-blur-xl border border-[#33E8FF]/30 p-8 rounded-3xl shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_50px_rgba(51,232,255,0.15)] transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="w-20 h-20 rounded-full bg-[#33E8FF]/10 flex items-center justify-center mb-8 border-2 border-[#33E8FF]/50 drop-shadow-[0_0_15px_rgba(51,232,255,0.5)] group-hover:scale-110 transition-transform duration-500">
+                  {/* Icono Virtud (Escudo/Calidad) */}
+                  <svg className="w-10 h-10 text-[#33E8FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                </div>
+                <h3 className="text-3xl font-black text-[#33E8FF] uppercase tracking-[0.15em] mb-6 drop-shadow-[0_0_12px_rgba(51,232,255,0.8)]">Nuestra Virtud</h3>
+                <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium">
+                  Brindar soluciones tecnológicas de excelencia que permitan a nuestros clientes alcanzar nuevos niveles de productividad, conectividad, automatización y seguridad digital.
+                </p>
+              </motion.div>
+
+              {/* Card Nuestra Misión */}
+              <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="bg-slate-900/50 backdrop-blur-xl border border-[#33E8FF]/30 p-8 rounded-3xl shadow-[0_0_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_50px_rgba(51,232,255,0.15)] transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-[#33E8FF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="w-20 h-20 rounded-full bg-[#33E8FF]/10 flex items-center justify-center mb-8 border-2 border-[#33E8FF]/50 drop-shadow-[0_0_15px_rgba(51,232,255,0.5)] group-hover:scale-110 transition-transform duration-500">
+                  {/* Icono Misión (Cohete/Evolución) */}
+                  <svg className="w-10 h-10 text-[#33E8FF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <h3 className="text-3xl font-black text-[#33E8FF] uppercase tracking-[0.15em] mb-6 drop-shadow-[0_0_12px_rgba(51,232,255,0.8)]">Nuestra Misión</h3>
+                <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium">
+                  Convertirnos en un referente tecnológico nacional y LATAM, integrando innovación, inteligencia artificial y soluciones estratégicas para acompañar la evolución digital de empresas y organizaciones modernas. Basados en IA & Marcos de CiberSeguridad vitales para la innovación y seguridad de nuestros CLIENTES.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+
 
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
