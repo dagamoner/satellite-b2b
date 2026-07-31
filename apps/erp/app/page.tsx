@@ -1604,7 +1604,7 @@ export default function ErpPage() {
                     </div>
 
                     {/* Selector de módulos */}
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 -mt-24 md:-mt-48 mb-4 w-full max-w-4xl mx-auto p-5 rounded-2xl bg-slate-900/60 border border-cyan-500/30 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.4)] relative z-10">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 -mt-24 md:-mt-48 mb-2 w-full max-w-4xl mx-auto p-4 rounded-2xl bg-slate-900/60 border border-cyan-500/30 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.4)] relative z-10">
                       <h4 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)] text-center">
                         ¿Qué MÓDULOS querés aprender?
                       </h4>
@@ -1631,7 +1631,7 @@ export default function ErpPage() {
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="w-full max-w-4xl mx-auto -mt-2 mb-6 relative z-10 px-4 md:px-0"
+                        className="w-full max-w-4xl mx-auto -mt-2 mb-2 relative z-10 px-4 md:px-0"
                       >
                         {/* Imagen Capa del módulo seleccionado */}
                         <AnimatePresence mode="wait">
@@ -1641,7 +1641,7 @@ export default function ErpPage() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: -10 }}
                             transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="flex justify-center w-full mb-6"
+                            className="flex justify-center w-full mb-1"
                           >
                             <img
                               src={
