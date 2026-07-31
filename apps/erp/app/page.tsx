@@ -1334,6 +1334,73 @@ export default function ErpPage() {
                     {/* Layout de una columna: Cards y Estructuras intercaladas */}
                     <div className="flex flex-col gap-10 w-full max-w-5xl mx-auto items-center mt-4">
                       
+                      {/* --- MAXIREST ONE PROMO BLOCK --- */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 24 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.05 }}
+                        className="w-full flex flex-col items-center gap-6 mb-2"
+                      >
+                        {/* Logo + Leyenda en fila */}
+                        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 w-full">
+                          {/* Logo Maxirest ONE */}
+                          <motion.img
+                            src="/logo maxirest ONE.png"
+                            alt="Maxirest ONE"
+                            className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_30px_rgba(249,115,22,0.6)]"
+                            animate={{ filter: ["drop-shadow(0 0 20px rgba(249,115,22,0.5))", "drop-shadow(0 0 40px rgba(249,115,22,0.9))", "drop-shadow(0 0 20px rgba(249,115,22,0.5))"] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                          />
+                          {/* Leyenda derecha */}
+                          <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
+                            <div className="flex items-center gap-2">
+                              <span className="h-px w-8 bg-gradient-to-r from-transparent to-orange-400 opacity-80" />
+                              <span className="text-[9px] font-black tracking-[0.4em] uppercase text-orange-400 drop-shadow-[0_0_8px_rgba(249,115,22,0.9)]">
+                                NUEVA GENERACIÓN
+                              </span>
+                              <span className="h-px w-8 bg-gradient-to-l from-transparent to-orange-400 opacity-80" />
+                            </div>
+                            <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tight">
+                              Se viene algo{" "}
+                              <span className="text-transparent bg-clip-text" style={{ backgroundImage: "linear-gradient(135deg, #f97316 0%, #fb923c 50%, #f97316 100%)" }}>
+                                revolucionario.
+                              </span>
+                            </h3>
+                            <p className="text-[#33E8FF] font-bold text-base md:text-lg tracking-wide drop-shadow-[0_0_8px_rgba(51,232,255,0.6)] max-w-xs md:max-w-sm">
+                              Nueva Generación en tu Gestión Gastronómica
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Video ONE */}
+                        <div className="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border border-orange-500/30 shadow-[0_0_40px_rgba(249,115,22,0.2)] bg-slate-900/60 backdrop-blur-md">
+                          <video
+                            className="w-full h-auto"
+                            controls
+                            playsInline
+                            preload="metadata"
+                            style={{ display: "block" }}
+                          >
+                            <source src="/Video ONE.mp4" type="video/mp4" />
+                            Tu navegador no soporta el video.
+                          </video>
+                        </div>
+
+                        {/* Separador */}
+                        <div className="flex items-center gap-4 w-full max-w-3xl mt-2">
+                          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                          <motion.svg
+                            viewBox="0 0 24 24" fill="#33E8FF"
+                            className="w-3 h-3 opacity-70 drop-shadow-[0_0_6px_rgba(51,232,255,1)]"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                          >
+                            <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
+                          </motion.svg>
+                          <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                        </div>
+                      </motion.div>
+
                       {/* --- FULL PRO --- */}
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
