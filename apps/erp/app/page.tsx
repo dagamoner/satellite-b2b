@@ -1633,6 +1633,30 @@ export default function ErpPage() {
                         animate={{ opacity: 1, y: 0 }}
                         className="w-full max-w-4xl mx-auto -mt-2 mb-6 relative z-10 px-4 md:px-0"
                       >
+                        {/* Imagen Capa del módulo seleccionado */}
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={moduloSeleccionado}
+                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: -10 }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="flex justify-center w-full mb-6"
+                          >
+                            <img
+                              src={
+                                moduloSeleccionado === 'adicion-ventas' ? '/Capa ADI.png' :
+                                moduloSeleccionado === 'compras' ? '/Capa COMP.png' :
+                                moduloSeleccionado === 'stock' ? '/Capa STOCK.png' :
+                                moduloSeleccionado === 'personal-auditorias' ? '/Capa PERS.png' : ''
+                              }
+                              alt={`Capa ${moduloSeleccionado}`}
+                              className="w-full max-w-2xl h-auto object-contain drop-shadow-[0_0_25px_rgba(51,232,255,0.4)] rounded-xl"
+                              style={{ mixBlendMode: 'screen' }}
+                            />
+                          </motion.div>
+                        </AnimatePresence>
+
                         <div className="text-center px-4">
                           <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium">
                             Importe Modulo <span style={{ color: '#33E8FF' }} className="font-bold">{
@@ -1645,7 +1669,6 @@ export default function ErpPage() {
                           <p className="text-slate-200 text-base md:text-lg leading-relaxed font-medium mt-2">
                             Sin limite de personas ni tiempo, el objetivo es adquirir el conocimiento.
                           </p>
-
                         </div>
                       </motion.div>
                     )}
