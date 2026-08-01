@@ -732,14 +732,14 @@ export default function MarketingPage() {
 
 
           {/* About MR Technology Section */}
-          <div className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 mt-16 md:mt-24 mb-20 relative z-20">
+          <div className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 mt-2 md:mt-4 mb-20 relative z-20">
             {/* Introducción */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16 max-w-4xl"
+              className="text-center mb-12 max-w-4xl"
             >
               <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-6 font-medium">
                 En <span className="font-black text-[#33E8FF] drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">MR Technology</span> desarrollamos soluciones tecnológicas integrales orientadas a optimizar, proteger y potenciar la infraestructura informática de empresas, profesionales y organizaciones que buscan evolucionar hacia un entorno digital más eficiente, seguro e inteligente.

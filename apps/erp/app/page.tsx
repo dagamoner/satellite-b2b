@@ -1504,8 +1504,8 @@ export default function ErpPage() {
                     <div className="flex flex-col gap-10 w-full max-w-5xl mx-auto items-center mt-4">
                       {/* Título de Implementación */}
                       <div className="w-full text-center">
-                        <h3 className="text-[#33E8FF] text-2xl md:text-3xl font-black uppercase tracking-widest drop-shadow-[0_0_12px_rgba(51,232,255,0.7)]">
-                          Instalación, configuración y puesta en marcha. Llave en mano.
+                        <h3 className="text-[#33E8FF] text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-widest drop-shadow-[0_0_12px_rgba(51,232,255,0.7)] px-4 leading-tight">
+                          Consultoria & Auditoria PRESENCIAL en implementación del software & Hardware a traves de nuestro equipo interdisciplinario.
                         </h3>
                       </div>
 
