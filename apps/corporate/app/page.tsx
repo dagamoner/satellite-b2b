@@ -730,7 +730,6 @@ export default function MarketingPage() {
             })}
           </div>
 
-          </div>
 
           {/* About MR Technology Section */}
           <div className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto px-4 mt-16 md:mt-24 mb-20 relative z-20">
