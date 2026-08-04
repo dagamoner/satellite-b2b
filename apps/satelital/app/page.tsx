@@ -1126,14 +1126,14 @@ export default function MarketingPage() {
          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
          
          <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
-         <div className="flex justify-center gap-10 text-sm mb-16 font-semibold">
+         <div className="flex justify-center gap-10 text-sm mb-10 font-semibold">
             <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
             <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
             <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
          </div>
+         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-4">https://github.com/dagamoner/satellite-b2b.git</p>
          <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
       </footer>
     </main>
   );
 }
-
