@@ -98,7 +98,7 @@ export default function Page() {
         <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 tracking-tight uppercase mb-4 drop-shadow-[0_0_20px_rgba(56,189,248,0.4)]">
           Tecnología Informática (IT)
         </h1>
-        <p className="text-lg md:text-xl text-slate-400 max-w-2xl font-light leading-relaxed">
+        <p className="text-lg md:text-xl text-white font-bold max-w-2xl leading-relaxed drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
           Soluciones tecnológicas innovadoras para la transformación digital de tu empresa.
         </p>
 
@@ -108,9 +108,11 @@ export default function Page() {
       {/* ── SERVICIOS ── */}
       <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
         <div className="text-center mb-14">
-          <span className="text-xs font-bold tracking-[0.3em] text-blue-400 uppercase mb-3 block">Lo que ofrecemos</span>
-          <h2 className="text-3xl md:text-4xl font-black text-white">🛠 Nuestros Servicios</h2>
-          <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" />
+          <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF]/80 uppercase mb-3 block">Lo que ofrecemos</span>
+          <h2 className="text-3xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]">
+            🛠 Nuestros Servicios
+          </h2>
+          <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -267,12 +269,11 @@ export default function Page() {
                 glow: "rgba(0,180,216,0.25)",
               },
               {
-                img: null,
+                img: "/Micro 365 infra.png",
                 label: "Infraestructura",
                 items: ["Active Directory", "Exchange Onprem 2016/2019", "File Servers", "Azure IaaS"],
-                accent: "#5e60ce",
-                glow: "rgba(94,96,206,0.25)",
-                icon: "🏗️",
+                accent: "#33E8FF",
+                glow: "rgba(51,232,255,0.25)",
               },
             ].map((area) => (
               <div
@@ -288,18 +289,14 @@ export default function Page() {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${area.accent}15`;
                 }}
               >
-                {/* Image or icon */}
-                <div className="flex items-center justify-center h-36 bg-gradient-to-b from-white/5 to-transparent border-b border-white/5">
-                  {area.img ? (
-                    <img
-                      src={area.img}
-                      alt={area.label}
-                      className="h-24 object-contain drop-shadow-[0_0_20px_rgba(0,120,212,0.4)]"
-                      style={{ mixBlendMode: "screen" }}
-                    />
-                  ) : (
-                    <span className="text-6xl">{area.icon}</span>
-                  )}
+                {/* Image */}
+                <div className="flex items-center justify-center h-36 bg-gradient-to-b from-white/5 to-transparent border-b border-white/5 p-4">
+                  <img
+                    src={area.img}
+                    alt={area.label}
+                    className="max-h-24 w-auto max-w-[90%] object-contain drop-shadow-[0_0_20px_rgba(0,120,212,0.4)]"
+                    style={{ mixBlendMode: "screen" }}
+                  />
                 </div>
                 <div className="p-6">
                   <h4 className="font-black text-white text-lg mb-4" style={{ color: area.accent }}>
@@ -320,13 +317,13 @@ export default function Page() {
 
           {/* Ramas de Consultoría de Seguridad */}
           <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-[0.3em] text-blue-400 uppercase mb-3 block">
+            <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF]/80 uppercase mb-3 block">
               🛡 Consultoría Especializada
             </span>
-            <h3 className="text-2xl md:text-3xl font-black text-white">
+            <h3 className="text-2xl md:text-3xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]">
               Ramas de Consultoría de Seguridad
             </h3>
-            <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" />
+            <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -359,7 +356,7 @@ export default function Page() {
             ].map((rama) => (
               <div
                 key={rama.label}
-                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col"
                 style={{ boxShadow: `0 0 0 1px ${rama.accent}15` }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 40px ${rama.glow}, 0 0 0 1px ${rama.accent}40`;
@@ -368,32 +365,28 @@ export default function Page() {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${rama.accent}15`;
                 }}
               >
-                {/* Image */}
-                <div className="relative h-36 overflow-hidden">
+                {/* Image Container - Complete and uncropped image fitting */}
+                <div className="relative w-full h-36 bg-[#020617]/80 border-b border-white/5 p-3 flex items-center justify-center overflow-hidden">
                   <img
                     src={rama.img}
                     alt={rama.label}
-                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background: `linear-gradient(to top, #07111f 10%, transparent 60%)`,
-                    }}
+                    className="max-h-full max-w-full object-contain rounded-lg opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-md"
                   />
                 </div>
-                <div className="p-6">
-                  <h4 className="font-black text-lg mb-4" style={{ color: rama.accent }}>
-                    {rama.label}
-                  </h4>
-                  <ul className="space-y-2">
-                    {rama.items.map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-slate-300 text-sm leading-snug">
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: rama.accent }} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <h4 className="font-black text-lg mb-4" style={{ color: rama.accent }}>
+                      {rama.label}
+                    </h4>
+                    <ul className="space-y-2">
+                      {rama.items.map((item) => (
+                        <li key={item} className="flex items-start gap-2 text-slate-300 text-sm leading-snug">
+                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: rama.accent }} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             ))}
@@ -414,7 +407,7 @@ export default function Page() {
         </p>
         <button
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
-          className="mt-4 inline-flex items-center gap-2 text-blue-500 hover:text-blue-400 text-sm font-semibold transition-colors"
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-semibold transition-colors"
         >
           ← Volver al Ecosistema MR Technology
         </button>
