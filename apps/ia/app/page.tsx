@@ -93,13 +93,7 @@ export default function Page() {
       <section className="relative z-10 flex flex-col items-center justify-center text-center pt-40 md:pt-48 pb-16 px-4">
         <div className="max-w-5xl mx-auto flex flex-col items-center">
           
-          {/* Tagline / Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-violet-950/50 border border-violet-500/30 backdrop-blur-md mb-8 shadow-[0_0_20px_rgba(139,92,246,0.2)]">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_10px_#33E8FF]" />
-            <span className="text-[#33E8FF] font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
-              Consultoría &amp; Asesoramiento Tecnológico
-            </span>
-          </div>
+
 
           {/* Logo IA */}
           <div className="relative mb-8 group">
@@ -241,7 +235,7 @@ export default function Page() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center gap-2 mb-3">
               <span className="text-3xl">🔄</span>
-              <h2 className="text-2xl md:text-4xl font-black text-white tracking-wide uppercase text-center">
+              <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] tracking-wide uppercase text-center">
                 METODOLOGÍA DE TRABAJO
               </h2>
             </div>
