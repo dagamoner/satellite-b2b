@@ -98,21 +98,20 @@ export default function Page() {
         <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 tracking-tight uppercase mb-4 drop-shadow-[0_0_20px_rgba(56,189,248,0.4)]">
           Tecnología Informática (IT)
         </h1>
-        <p className="text-lg md:text-xl text-white font-bold max-w-2xl leading-relaxed drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+        <p className="text-lg md:text-xl text-white font-bold max-w-2xl leading-relaxed text-center drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
           Soluciones tecnológicas innovadoras para la transformación digital de tu empresa.
         </p>
 
-        <div className="mt-8 w-24 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent" />
+        <div className="mt-8 w-24 h-px bg-gradient-to-r from-transparent via-[#33E8FF] to-transparent" />
       </section>
 
-      {/* ── SERVICIOS ── */}
+      {/* ── SERVICIOS PROFESIONALES BRINDADOS ── */}
       <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
         <div className="text-center mb-14">
-          <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF]/80 uppercase mb-3 block">Lo que ofrecemos</span>
-          <h2 className="text-3xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]">
-            🛠 Nuestros Servicios
+          <h2 className="text-3xl md:text-5xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] uppercase tracking-wider text-center">
+            SERVICIOS PROFESIONALES BRINDADOS
           </h2>
-          <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
+          <div className="mt-4 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -174,7 +173,7 @@ export default function Page() {
           ].map((s) => (
             <div
               key={s.num}
-              className={`group relative bg-gradient-to-br ${s.color} border ${s.border} rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1`}
+              className={`group relative bg-gradient-to-br ${s.color} border ${s.border} rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 flex flex-col items-center text-center`}
               style={{ boxShadow: `0 0 0 0 ${s.glow}` }}
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 40px 0 ${s.glow}`;
@@ -183,42 +182,52 @@ export default function Page() {
                 (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 0 ${s.glow}`;
               }}
             >
-              <div className="flex items-start gap-4">
-                <span className="text-3xl mt-0.5">{s.icon}</span>
-                <div>
-                  <span className="text-[10px] font-bold tracking-[0.2em] text-slate-500 mb-1 block">{s.num}</span>
-                  <h3 className="text-white font-bold text-base mb-2 leading-tight">{s.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{s.desc}</p>
-                </div>
+              <div className="flex flex-col items-center text-center w-full">
+                <span className="text-4xl mb-3">{s.icon}</span>
+                <span className="text-[11px] font-black tracking-[0.25em] text-[#33E8FF] mb-2 block">{s.num}</span>
+                <h3 className="text-white font-bold text-lg mb-3 leading-snug text-center">{s.title}</h3>
+                <p className="text-white font-bold text-sm leading-relaxed text-center">{s.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── META Y VISIÓN ── */}
+      {/* ── NUESTRA VIRTUD Y NUESTRA MISIÓN ── */}
       <section className="relative z-10 py-20 px-4">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-          {/* Meta */}
-          <div className="relative bg-gradient-to-br from-blue-950/60 to-slate-950/80 border border-blue-500/25 rounded-3xl p-10 overflow-hidden">
+          {/* NUESTRA VIRTUD */}
+          <div className="relative bg-gradient-to-br from-blue-950/60 to-slate-950/80 border border-blue-500/25 rounded-3xl p-10 overflow-hidden flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/5 blur-3xl rounded-full pointer-events-none" />
-            <div className="text-4xl mb-4">🎯</div>
-            <h2 className="text-2xl font-black text-white mb-4">Nuestra Meta</h2>
-            <p className="text-slate-300 leading-relaxed">
+            <img
+              src="/VIRTUD.png"
+              alt="Nuestra Virtud"
+              className="h-20 md:h-24 w-auto object-contain mb-4 drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]"
+            />
+            <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
+              NUESTRA VIRTUD
+            </h2>
+            <p className="text-white font-bold leading-relaxed text-center">
               Brindar, desarrollar, implementar y capacitar en soluciones tecnológicas innovadoras que permitan{" "}
-              <strong className="text-blue-400">automatizar procesos</strong>, optimizar la gestión de la información
+              <span className="text-[#33E8FF]">automatizar procesos</span>, optimizar la gestión de la información
               digital y mejorar la eficiencia operativa en proyectos de sistemas, relevamientos y análisis técnicos.
             </p>
           </div>
 
-          {/* Visión */}
-          <div className="relative bg-gradient-to-br from-cyan-950/60 to-slate-950/80 border border-cyan-500/25 rounded-3xl p-10 overflow-hidden">
+          {/* NUESTRA MISIÓN */}
+          <div className="relative bg-gradient-to-br from-cyan-950/60 to-slate-950/80 border border-cyan-500/25 rounded-3xl p-10 overflow-hidden flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
-            <div className="text-4xl mb-4">👁</div>
-            <h2 className="text-2xl font-black text-white mb-4">Nuestra Visión</h2>
-            <p className="text-slate-300 leading-relaxed">
+            <img
+              src="/MISION.png"
+              alt="Nuestra Misión"
+              className="h-20 md:h-24 w-auto object-contain mb-4 drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]"
+            />
+            <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
+              NUESTRA MISIÓN
+            </h2>
+            <p className="text-white font-bold leading-relaxed text-center">
               Convertir la tecnología en una herramienta{" "}
-              <strong className="text-cyan-400">estratégica, ágil y eficiente</strong> para impulsar el crecimiento y la
+              <span className="text-[#33E8FF]">estratégica, ágil y eficiente</span> para impulsar el crecimiento y la
               transformación digital de nuestros clientes.
             </p>
           </div>
@@ -237,19 +246,19 @@ export default function Page() {
               className="h-20 md:h-28 object-contain mb-6 drop-shadow-[0_0_30px_rgba(0,120,215,0.5)]"
               style={{ mixBlendMode: "screen" }}
             />
-            <span className="text-xs font-bold tracking-[0.3em] text-blue-400 uppercase mb-3 block">☁ Microsoft 365</span>
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+            <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF] uppercase mb-3 block text-center">☁ Microsoft 365</span>
+            <h2 className="text-3xl md:text-4xl font-black text-white mb-4 text-center">
               Ecosistema Completo de Productividad
             </h2>
-            <p className="text-slate-400 max-w-xl text-lg">
+            <p className="text-white font-bold max-w-xl text-lg text-center leading-relaxed">
               Seguridad e infraestructura en base a{" "}
-              <span className="text-blue-300 font-semibold">consultoría & productos</span>.
+              <span className="text-[#33E8FF]">consultoría & productos</span>.
             </p>
-            <div className="mt-6 w-16 h-1 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400" />
+            <div className="mt-6 w-16 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
           </div>
 
           {/* Áreas Principales */}
-          <h3 className="text-center text-lg font-bold text-slate-300 uppercase tracking-widest mb-8">
+          <h3 className="text-center text-lg font-black text-white uppercase tracking-widest mb-8">
             Áreas Principales
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
@@ -278,7 +287,7 @@ export default function Page() {
             ].map((area) => (
               <div
                 key={area.label}
-                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col items-center text-center"
                 style={{
                   boxShadow: `0 0 0 1px ${area.accent}15`,
                 }}
@@ -290,7 +299,7 @@ export default function Page() {
                 }}
               >
                 {/* Image */}
-                <div className="flex items-center justify-center h-36 bg-gradient-to-b from-white/5 to-transparent border-b border-white/5 p-4">
+                <div className="flex items-center justify-center h-36 w-full bg-gradient-to-b from-white/5 to-transparent border-b border-white/5 p-4">
                   <img
                     src={area.img}
                     alt={area.label}
@@ -298,15 +307,15 @@ export default function Page() {
                     style={{ mixBlendMode: "screen" }}
                   />
                 </div>
-                <div className="p-6">
-                  <h4 className="font-black text-white text-lg mb-4" style={{ color: area.accent }}>
+                <div className="p-6 text-center w-full">
+                  <h4 className="font-black text-lg mb-4 text-center" style={{ color: area.accent }}>
                     {area.label}
                   </h4>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 flex flex-col items-center text-center">
                     {area.items.map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-slate-300 text-sm">
-                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: area.accent }} />
-                        {item}
+                      <li key={item} className="flex items-center justify-center gap-2 text-white font-bold text-sm text-center">
+                        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: area.accent }} />
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -317,10 +326,7 @@ export default function Page() {
 
           {/* Ramas de Consultoría de Seguridad */}
           <div className="text-center mb-12">
-            <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF]/80 uppercase mb-3 block">
-              🛡 Consultoría Especializada
-            </span>
-            <h3 className="text-2xl md:text-3xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]">
+            <h3 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] text-center uppercase tracking-wider">
               Ramas de Consultoría de Seguridad
             </h3>
             <div className="mt-4 mx-auto w-16 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
@@ -356,7 +362,7 @@ export default function Page() {
             ].map((rama) => (
               <div
                 key={rama.label}
-                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                className="group relative bg-[#07111f] border border-white/8 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col items-center text-center"
                 style={{ boxShadow: `0 0 0 1px ${rama.accent}15` }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 40px ${rama.glow}, 0 0 0 1px ${rama.accent}40`;
@@ -365,7 +371,7 @@ export default function Page() {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${rama.accent}15`;
                 }}
               >
-                {/* Image Container - Complete and uncropped image fitting */}
+                {/* Image Container */}
                 <div className="relative w-full h-36 bg-[#020617]/80 border-b border-white/5 p-3 flex items-center justify-center overflow-hidden">
                   <img
                     src={rama.img}
@@ -373,16 +379,16 @@ export default function Page() {
                     className="max-h-full max-w-full object-contain rounded-lg opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 drop-shadow-md"
                   />
                 </div>
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                <div className="p-6 flex-1 flex flex-col justify-between text-center w-full">
                   <div>
-                    <h4 className="font-black text-lg mb-4" style={{ color: rama.accent }}>
+                    <h4 className="font-black text-lg mb-4 text-center" style={{ color: rama.accent }}>
                       {rama.label}
                     </h4>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2.5 flex flex-col items-center text-center">
                       {rama.items.map((item) => (
-                        <li key={item} className="flex items-start gap-2 text-slate-300 text-sm leading-snug">
-                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-1.5" style={{ background: rama.accent }} />
-                          {item}
+                        <li key={item} className="flex items-center justify-center gap-2 text-white font-bold text-sm leading-snug text-center">
+                          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: rama.accent }} />
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -402,12 +408,12 @@ export default function Page() {
           className="h-10 object-contain mx-auto mb-4 opacity-60"
           style={{ mixBlendMode: "screen" }}
         />
-        <p className="text-slate-600 text-sm">
+        <p className="text-white font-bold text-sm">
           © {new Date().getFullYear()} MR Technology — Tecnología Informática (IT)
         </p>
         <button
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
-          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-semibold transition-colors"
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors"
         >
           ← Volver al Ecosistema MR Technology
         </button>
