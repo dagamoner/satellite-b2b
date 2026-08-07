@@ -237,7 +237,7 @@ export default function Page() {
             <img
               src="/Micro 365.png"
               alt="Microsoft 365"
-              className="h-20 md:h-28 object-contain mb-6 drop-shadow-[0_0_30px_rgba(0,120,215,0.5)]"
+              className="h-40 md:h-56 object-contain mb-6 drop-shadow-[0_0_40px_rgba(0,120,215,0.6)]"
               style={{ mixBlendMode: "screen" }}
             />
             <span className="text-xs font-bold tracking-[0.3em] text-[#33E8FF] uppercase mb-3 block text-center">☁ Microsoft 365</span>
@@ -365,8 +365,8 @@ export default function Page() {
                   (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 0 1px ${rama.accent}15`;
                 }}
               >
-                {/* Image Container */}
-                <div className="relative w-full h-36 bg-[#020617]/80 border-b border-white/5 p-3 flex items-center justify-center overflow-hidden">
+                {/* Image Container (Duplicated Size) */}
+                <div className="relative w-full h-64 md:h-72 bg-[#020617]/80 border-b border-white/5 p-4 flex items-center justify-center overflow-hidden">
                   <img
                     src={rama.img}
                     alt={rama.label}
@@ -391,6 +391,36 @@ export default function Page() {
               </div>
             ))}
           </div>
+
+          {/* ── M365 VIRTUD & MISIÓN ── */}
+          <div className="mt-20 max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+            {/* VIRTUD M365 */}
+            <div className="relative bg-gradient-to-br from-blue-950/70 to-slate-950/90 border border-blue-500/30 rounded-3xl p-8 md:p-10 overflow-hidden flex flex-col items-center text-center hover:border-blue-400/60 transition-all duration-300 shadow-[0_10px_30px_rgba(0,120,215,0.2)]">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
+              <img
+                src="/VIRTUD.png"
+                alt="Virtud Microsoft 365"
+                className="h-36 md:h-44 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
+              />
+              <p className="text-white font-bold text-base md:text-lg leading-relaxed text-center">
+                Brindamos un equipo interdisciplinario, profesional y de vanguardia que puede implementar todas las <span className="text-[#33E8FF]">AREAS PRINCIPALES</span> y <span className="text-[#33E8FF]">RAMAS DE CONSULTORIA DE SEGURIDAD</span> basada en <span className="text-[#33E8FF]">MICROSOFT 365</span>.
+              </p>
+            </div>
+
+            {/* MISIÓN M365 */}
+            <div className="relative bg-gradient-to-br from-cyan-950/70 to-slate-950/90 border border-cyan-500/30 rounded-3xl p-8 md:p-10 overflow-hidden flex flex-col items-center text-center hover:border-cyan-400/60 transition-all duration-300 shadow-[0_10px_30px_rgba(51,232,255,0.2)]">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
+              <img
+                src="/MISION.png"
+                alt="Misión Microsoft 365"
+                className="h-36 md:h-44 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
+              />
+              <p className="text-white font-bold text-base md:text-lg leading-relaxed text-center">
+                Implementar en la <span className="text-[#33E8FF]">EMPRESA</span> el ecosistema completo <span className="text-[#33E8FF]">MICROSOFT 365</span> junto con sus correspondientes <span className="text-[#33E8FF]">AUDITORIAS &amp; CONSULTORIAS</span>.
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
