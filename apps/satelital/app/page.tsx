@@ -1121,18 +1121,33 @@ export default function MarketingPage() {
          </div>
       </section>
 
-      {/* Footer */}
-      <footer className="relative z-10 bg-slate-100/90 dark:bg-[#000205]/90 backdrop-blur-3xl py-10 md:py-20 px-4 sm:px-6 border-t border-slate-300 dark:border-white/5 text-center text-slate-500">
-         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
-         
-         <p className="mb-12 mt-8 max-w-xl mx-auto font-light text-slate-600 dark:text-slate-400">Consulte disponibilidad y velocidades en su Zona. Implementación física, administrativa e IT especializada nivel 3.</p>
-         <div className="flex justify-center gap-10 text-sm mb-10 font-semibold">
-            <a href="#" className="hover:text-blue-400 transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-blue-400 transition-colors">Términos B2B</a>
-            <a href="#" className="hover:text-blue-400 transition-colors">SLA de Servicios Técnicos</a>
-         </div>
-         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-4">https://github.com/dagamoner/satellite-b2b.git</p>
-         <p className="text-xs uppercase tracking-widest text-slate-600 font-bold">© 2026 MR Technology. Todos los derechos reservados.</p>
+      {/* ── FOOTER ── */}
+      <footer className="relative z-10 py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
+        <img
+          src="/Logo WEB MR Tech.png"
+          alt="MR Technology"
+          className="h-10 object-contain mx-auto mb-3 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          style={{ mixBlendMode: "screen" }}
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+        />
+
+        {/* Leyenda Nueva Generación */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
+          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            Nueva Generación
+          </span>
+        </div>
+
+        <p className="text-white font-bold text-sm">
+          © {new Date().getFullYear()} MR Technology — Conectividad Satelital
+        </p>
+        <button
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
+        >
+          ← Volver al Ecosistema MR Technology
+        </button>
       </footer>
     </main>
   );

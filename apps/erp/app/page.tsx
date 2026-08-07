@@ -1837,11 +1837,33 @@ export default function ErpPage() {
         )}
       </AnimatePresence>
 
-{/* Footer mínimo */}
-      <footer className="relative z-10 text-center py-6 border-t border-white/5">
-        <p className="text-xs uppercase tracking-widest text-slate-600 font-bold mb-2">
-          © 2026 MR Technology · Software ERP / SAAS Empresarial
+      {/* ── FOOTER ── */}
+      <footer className="relative z-10 py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
+        <img
+          src="/Logo WEB MR Tech.png"
+          alt="MR Technology"
+          className="h-10 object-contain mx-auto mb-3 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          style={{ mixBlendMode: "screen" }}
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+        />
+
+        {/* Leyenda Nueva Generación */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
+          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            Nueva Generación
+          </span>
+        </div>
+
+        <p className="text-white font-bold text-sm">
+          © {new Date().getFullYear()} MR Technology — Software ERP / SAAS Empresarial
         </p>
+        <button
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
+        >
+          ← Volver al Ecosistema MR Technology
+        </button>
       </footer>
 
       {/* ── Modal TIPS DE AUDITORIA ── */}

@@ -4,11 +4,11 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="min-h-screen bg-[#020617] relative overflow-hidden flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#020617] relative overflow-hidden flex flex-col items-center justify-between p-4">
       {/* Background gradients and stars */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-[#020617] to-[#020617]"></div>
       
-            {/* Navigation (Sticky Header) */}
+      {/* Navigation (Sticky Header) */}
       <nav className="fixed top-0 w-full z-50 bg-[#020617]/95 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] py-2 transition-all duration-700">
         <div className="max-w-[90rem] mx-auto px-4 md:px-6 flex items-center justify-between h-16 md:h-20 transition-all duration-500">
 
@@ -77,7 +77,7 @@ export default function Page() {
       </nav>
       
       {/* Content */}
-      <div className="relative z-10 text-center max-w-3xl mx-auto flex flex-col items-center gap-8">
+      <div className="relative z-10 text-center max-w-3xl mx-auto flex flex-col items-center gap-8 pt-32 pb-12 flex-1 justify-center">
         <img 
           src="/Logo WEB MR Tech.png"
           alt="MR Technology" 
@@ -90,14 +90,39 @@ export default function Page() {
           ¡PRÓXIMAMENTE!
         </h1>
         
-        <p className="text-xl md:text-2xl text-slate-300 font-light mt-4 mb-8 max-w-2xl">
+        <p className="text-xl md:text-2xl text-slate-300 font-light max-w-2xl">
           Nuevas herramientas avanzadas de <strong>Ciberseguridad</strong> están en camino. ¡Mantenete atento!
         </p>
-
-        <Link href="https://www.mrtechnology.it.com" className="group relative inline-flex items-center justify-center px-8 py-3.5 text-base font-bold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-full hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600 shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:shadow-[0_0_30px_rgba(37,99,235,0.6)] uppercase tracking-wider">
-          Volver a MR Technology
-        </Link>
       </div>
+
+      {/* ── FOOTER ── */}
+      <footer className="relative z-10 w-full py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center mt-auto">
+        <img
+          src="/Logo WEB MR Tech.png"
+          alt="MR Technology"
+          className="h-10 object-contain mx-auto mb-3 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          style={{ mixBlendMode: "screen" }}
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+        />
+
+        {/* Leyenda Nueva Generación */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
+          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            Nueva Generación
+          </span>
+        </div>
+
+        <p className="text-white font-bold text-sm">
+          © {new Date().getFullYear()} MR Technology — Ciberseguridad
+        </p>
+        <button
+          onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
+        >
+          ← Volver al Ecosistema MR Technology
+        </button>
+      </footer>
     </div>
   );
 }
