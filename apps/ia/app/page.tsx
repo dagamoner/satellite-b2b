@@ -205,15 +205,17 @@ export default function Page() {
 
       {/* ── 🔄 METODOLOGÍA DE TRABAJO ── */}
       <section className="relative z-10 py-20 px-4 bg-[#050d1f]/70 border-t border-b border-white/5">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center justify-center gap-2 mb-3">
-              <span className="text-3xl">🔄</span>
-              <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] tracking-wide uppercase text-center">
-                METODOLOGÍA DE TRABAJO
-              </h2>
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <div className="text-center mb-16 flex flex-col items-center">
+            <div className="relative mb-6 group flex justify-center">
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600/30 via-cyan-500/30 to-blue-600/30 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <img
+                src="/Metodologia de trabajo.png"
+                alt="Metodología de Trabajo"
+                className="h-32 md:h-40 w-auto object-contain relative z-10 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)] hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            <p className="text-white font-bold text-base md:text-lg max-w-3xl mx-auto mt-4 leading-relaxed text-center">
+            <p className="text-white font-bold text-base md:text-lg max-w-3xl mx-auto mt-2 leading-relaxed text-center">
               Aplicamos metodologías modernas de gestión de proyectos, integrando herramientas de <span className="text-[#33E8FF]">Inteligencia Artificial</span> para optimizar cada etapa del ciclo de vida del proyecto:
             </p>
             <div className="mt-4 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-violet-500 to-[#33E8FF]" />
@@ -249,11 +251,13 @@ export default function Page() {
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-violet-500/10 blur-3xl rounded-full pointer-events-none" />
 
           <div className="relative z-10 flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 mb-4">
-              <span className="text-3xl">📈</span>
-              <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] uppercase tracking-wider text-center drop-shadow-[0_0_15px_rgba(51,232,255,0.4)]">
-                NUESTRA EXPERIENCIA
-              </h2>
+            <div className="relative mb-8 group flex justify-center">
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 via-violet-500/30 to-blue-600/30 rounded-3xl blur-2xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              <img
+                src="/Nuestra experiencia.png"
+                alt="Nuestra Experiencia"
+                className="h-32 md:h-40 w-auto object-contain relative z-10 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)] hover:scale-105 transition-transform duration-300"
+              />
             </div>
             
             <p className="text-white font-bold text-base md:text-xl max-w-3xl leading-relaxed text-center mb-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
