@@ -399,26 +399,26 @@ export default function Page() {
         <img
           src="/Logo WEB MR Tech.png"
           alt="MR Technology"
-          className="h-10 object-contain mx-auto mb-3 opacity-80 hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          className="h-10 object-contain mx-auto mb-4 opacity-80 hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
           style={{ mixBlendMode: "screen" }}
         />
-
-        {/* Leyenda Nueva Generación */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
-          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-            Nueva Generación
-          </span>
-        </div>
 
         <p className="text-white font-bold text-sm">
           © {new Date().getFullYear()} MR Technology — Tecnología Informática (IT)
         </p>
         <button
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
-          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-all duration-300 cursor-pointer group hover:scale-105"
         >
-          ← Volver al Ecosistema MR Technology
+          <div className="relative w-5 h-5 rounded-full overflow-hidden flex items-center justify-center shrink-0 border border-[#33E8FF]/40 shadow-[0_0_8px_rgba(51,232,255,0.4)]">
+            <img
+              src="/ecosistema.jpg"
+              alt="Ecosistema"
+              className="w-full h-full object-cover"
+              style={{ mixBlendMode: "screen", filter: "brightness(1.2) contrast(1.1)" }}
+            />
+          </div>
+          <span>Volver al Ecosistema MR Technology</span>
         </button>
       </footer>
     </div>

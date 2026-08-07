@@ -430,7 +430,7 @@ export default function ErpPage() {
                   className="flex justify-center w-full md:w-auto"
                 >
                   <div 
-                    className="flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
+                    className="flex flex-col items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
                     onClick={() => {
                       setShowInfo(!showInfo);
                       setShowAuditoria(false);
@@ -441,6 +441,9 @@ export default function ErpPage() {
                       alt="Maxirest ONE"
                       className={`w-72 md:w-80 h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)] ${showInfo ? 'drop-shadow-[0_0_25px_rgba(249,115,22,0.8)]' : ''}`}
                     />
+                    <span className="text-white font-bold text-sm md:text-base tracking-wide mt-2 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)] text-center">
+                      nueva generación
+                    </span>
                   </div>
                 </motion.div>
                 
@@ -1344,13 +1347,18 @@ export default function ErpPage() {
                         {/* Logo + Leyenda en fila */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 w-full">
                           {/* Logo Maxirest ONE */}
-                          <motion.img
-                            src="/logo maxirest ONE.png"
-                            alt="Maxirest ONE"
-                            className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_30px_rgba(249,115,22,0.6)]"
-                            animate={{ filter: ["drop-shadow(0 0 20px rgba(249,115,22,0.5))", "drop-shadow(0 0 40px rgba(249,115,22,0.9))", "drop-shadow(0 0 20px rgba(249,115,22,0.5))"] }}
-                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                          />
+                          <div className="flex flex-col items-center">
+                            <motion.img
+                              src="/logo maxirest ONE.png"
+                              alt="Maxirest ONE"
+                              className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_30px_rgba(249,115,22,0.6)]"
+                              animate={{ filter: ["drop-shadow(0 0 20px rgba(249,115,22,0.5))", "drop-shadow(0 0 40px rgba(249,115,22,0.9))", "drop-shadow(0 0 20px rgba(249,115,22,0.5))"] }}
+                              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            />
+                            <span className="text-white font-bold text-sm tracking-wide mt-2 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)] text-center">
+                              nueva generación
+                            </span>
+                          </div>
                           {/* Leyenda derecha */}
                           <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
                             <div className="flex items-center gap-2">
@@ -1842,27 +1850,27 @@ export default function ErpPage() {
         <img
           src="/Logo WEB MR Tech.png"
           alt="MR Technology"
-          className="h-10 object-contain mx-auto mb-3 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+          className="h-10 object-contain mx-auto mb-4 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
           style={{ mixBlendMode: "screen" }}
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
         />
-
-        {/* Leyenda Nueva Generación */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
-          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
-            Nueva Generación
-          </span>
-        </div>
 
         <p className="text-white font-bold text-sm">
           © {new Date().getFullYear()} MR Technology — Software ERP / SAAS Empresarial
         </p>
         <button
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
-          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-all duration-300 cursor-pointer group hover:scale-105"
         >
-          ← Volver al Ecosistema MR Technology
+          <div className="relative w-5 h-5 rounded-full overflow-hidden flex items-center justify-center shrink-0 border border-[#33E8FF]/40 shadow-[0_0_8px_rgba(51,232,255,0.4)]">
+            <img
+              src="/ecosistema.jpg"
+              alt="Ecosistema"
+              className="w-full h-full object-cover"
+              style={{ mixBlendMode: "screen", filter: "brightness(1.2) contrast(1.1)" }}
+            />
+          </div>
+          <span>Volver al Ecosistema MR Technology</span>
         </button>
       </footer>
 
