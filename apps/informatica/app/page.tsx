@@ -204,9 +204,6 @@ export default function Page() {
               alt="Nuestra Virtud"
               className="h-40 md:h-48 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
             />
-            <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
-              NUESTRA VIRTUD
-            </h2>
             <p className="text-white font-bold leading-relaxed text-center">
               Brindar, desarrollar, implementar y capacitar en soluciones tecnológicas innovadoras que permitan{" "}
               <span className="text-[#33E8FF]">automatizar procesos</span>, optimizar la gestión de la información
@@ -222,9 +219,6 @@ export default function Page() {
               alt="Nuestra Misión"
               className="h-40 md:h-48 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
             />
-            <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
-              NUESTRA MISIÓN
-            </h2>
             <p className="text-white font-bold leading-relaxed text-center">
               Convertir la tecnología en una herramienta{" "}
               <span className="text-[#33E8FF]">estratégica, ágil y eficiente</span> para impulsar el crecimiento y la
@@ -401,19 +395,28 @@ export default function Page() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="relative z-10 py-10 px-4 border-t border-white/5 text-center">
+      <footer className="relative z-10 py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
         <img
           src="/Logo WEB MR Tech.png"
           alt="MR Technology"
-          className="h-10 object-contain mx-auto mb-4 opacity-60"
+          className="h-10 object-contain mx-auto mb-3 opacity-80 hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
           style={{ mixBlendMode: "screen" }}
         />
+
+        {/* Leyenda Nueva Generación */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
+          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            Nueva Generación
+          </span>
+        </div>
+
         <p className="text-white font-bold text-sm">
           © {new Date().getFullYear()} MR Technology — Tecnología Informática (IT)
         </p>
         <button
           onClick={() => { window.location.href = "https://www.mrtechnology.it.com"; }}
-          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors"
+          className="mt-4 inline-flex items-center gap-2 text-[#33E8FF] hover:text-[#33E8FF]/80 text-sm font-bold transition-colors cursor-pointer"
         >
           ← Volver al Ecosistema MR Technology
         </button>

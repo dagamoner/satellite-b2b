@@ -881,14 +881,23 @@ export default function MarketingPage() {
 
 
       {/* ── FOOTER ── */}
-      <footer className="relative z-10 py-10 px-4 border-t border-white/5 text-center">
+      <footer className="relative z-10 py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
         <img
           src="/Logo WEB MR Tech.png"
           alt="MR Technology"
-          className="h-10 object-contain mx-auto mb-4 opacity-60 cursor-pointer hover:opacity-100 transition-opacity"
+          className="h-10 object-contain mx-auto mb-3 opacity-80 cursor-pointer hover:opacity-100 transition-opacity drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
           style={{ mixBlendMode: "screen" }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         />
+
+        {/* Leyenda Nueva Generación */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-4 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+          <span className="w-2 h-2 rounded-full bg-[#33E8FF] animate-pulse shadow-[0_0_8px_#33E8FF]" />
+          <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]">
+            Nueva Generación
+          </span>
+        </div>
+
         <p className="text-white font-bold text-sm">
           © {new Date().getFullYear()} MR Technology — Transformación Digital Empresarial
         </p>
