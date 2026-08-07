@@ -719,11 +719,8 @@ export default function MarketingPage() {
                           cursor: 'pointer',
                         }}
                       >
-                         <div className="h-full flex-shrink-0 flex flex-col items-center justify-center w-full">
+                         <div className="h-full flex-shrink-0 flex items-center justify-center w-full">
                             <img src="/logo maxirest ONE.png" alt="Maxirest ONE" className="w-full h-auto object-contain drop-shadow-lg" />
-                            <span className="text-white font-bold text-xs md:text-sm tracking-wide mt-1 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)] text-center">
-                              nueva generación
-                            </span>
                          </div>
                       </motion.div>
                     )}

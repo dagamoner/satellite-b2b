@@ -430,7 +430,7 @@ export default function ErpPage() {
                   className="flex justify-center w-full md:w-auto"
                 >
                   <div 
-                    className="flex flex-col items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
+                    className="flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
                     onClick={() => {
                       setShowInfo(!showInfo);
                       setShowAuditoria(false);
@@ -441,9 +441,6 @@ export default function ErpPage() {
                       alt="Maxirest ONE"
                       className={`w-72 md:w-80 h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)] ${showInfo ? 'drop-shadow-[0_0_25px_rgba(249,115,22,0.8)]' : ''}`}
                     />
-                    <span className="text-white font-bold text-sm md:text-base tracking-wide mt-2 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)] text-center">
-                      nueva generación
-                    </span>
                   </div>
                 </motion.div>
                 
@@ -461,6 +458,9 @@ export default function ErpPage() {
                   <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
                     Software Gastronómico <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
                   </h2>
+                  <span className="text-white font-bold text-sm md:text-base tracking-[0.25em] uppercase mt-1 mb-1 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
+                    NUEVA GENERACIÓN
+                  </span>
                   <span className="text-white font-bold text-base md:text-lg tracking-widest mt-2 mb-2 opacity-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
                     Potenciamos tu proyecto gastronómico al siguiente nivel
                   </span>
@@ -1347,18 +1347,13 @@ export default function ErpPage() {
                         {/* Logo + Leyenda en fila */}
                         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10 w-full">
                           {/* Logo Maxirest ONE */}
-                          <div className="flex flex-col items-center">
-                            <motion.img
-                              src="/logo maxirest ONE.png"
-                              alt="Maxirest ONE"
-                              className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_30px_rgba(249,115,22,0.6)]"
-                              animate={{ filter: ["drop-shadow(0 0 20px rgba(249,115,22,0.5))", "drop-shadow(0 0 40px rgba(249,115,22,0.9))", "drop-shadow(0 0 20px rgba(249,115,22,0.5))"] }}
-                              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                            />
-                            <span className="text-white font-bold text-sm tracking-wide mt-2 drop-shadow-[0_0_6px_rgba(255,255,255,0.5)] text-center">
-                              nueva generación
-                            </span>
-                          </div>
+                          <motion.img
+                            src="/logo maxirest ONE.png"
+                            alt="Maxirest ONE"
+                            className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_30px_rgba(249,115,22,0.6)]"
+                            animate={{ filter: ["drop-shadow(0 0 20px rgba(249,115,22,0.5))", "drop-shadow(0 0 40px rgba(249,115,22,0.9))", "drop-shadow(0 0 20px rgba(249,115,22,0.5))"] }}
+                            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                          />
                           {/* Leyenda derecha */}
                           <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
                             <div className="flex items-center gap-2">
