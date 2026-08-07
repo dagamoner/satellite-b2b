@@ -127,13 +127,13 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ── ⚡ NUESTROS SERVICIOS ── */}
+      {/* ── ⚡ SERVICIOS PROFESIONALES BRINDADOS ── */}
       <section className="relative z-10 py-16 px-4 max-w-6xl mx-auto w-full">
         <div className="text-center mb-14">
           <div className="inline-flex items-center justify-center gap-2 mb-3">
             <span className="text-3xl">⚡</span>
             <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] uppercase tracking-wider text-center">
-              NUESTROS SERVICIOS
+              SERVICIOS PROFESIONALES BRINDADOS
             </h2>
           </div>
           <div className="mt-3 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-violet-500" />
@@ -185,44 +185,18 @@ export default function Page() {
                   SERVICIO 02
                 </span>
               </div>
-              <h3 className="text-2xl font-black text-white mb-4 text-left drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-                2. Implementación de Software de Gestión
+              <h3 className="text-2xl font-black text-white mb-6 text-left drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                2. Implementación de Software de Gestión basado en IA
               </h3>
-              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
-                Realizamos la instalación, configuración, parametrización, puesta en marcha y capacitación en las principales plataformas ERP del mercado:
-              </p>
-
-              {/* Plataformas Soportadas Grid */}
-              <div className="bg-black/40 border border-white/10 rounded-2xl p-5 backdrop-blur-md">
-                <div className="text-xs font-black tracking-[0.2em] text-[#33E8FF] uppercase mb-4 text-left">
-                  Plataformas de Gestión Soportadas
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {[
-                    { name: "TANGO GESTIÓN", tag: "ERP Líder" },
-                    { name: "BEJERMAN", tag: "Gestión Corporativa" },
-                    { name: "KUMBRE GESTIÓN", tag: "Administración Integral" },
-                    { name: "RED LINE", tag: "Control Operativo" },
-                    { name: "FLEXXUS", tag: "Solución Integral" },
-                  ].map((plat, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between px-4 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-[#33E8FF]/40 hover:bg-white/10 transition-all duration-200"
-                    >
-                      <span className="text-white font-extrabold text-sm md:text-base tracking-wide flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#33E8FF] shadow-[0_0_6px_#33E8FF]" />
-                        {plat.name}
-                      </span>
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider hidden sm:inline">
-                        {plat.tag}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+              
+              <div className="bg-black/50 border border-cyan-500/30 rounded-2xl p-6 md:p-8 backdrop-blur-md text-left shadow-[0_0_20px_rgba(51,232,255,0.1)]">
+                <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed">
+                  Realizamos todos los procesos de implementación, automatización, integración de cualquier software de gestión referido a cualquier rubro junto al desarrollo de una <strong className="text-[#33E8FF] font-black drop-shadow-[0_0_10px_rgba(51,232,255,0.6)]">ARQUITECTURA IA</strong> a medida de cada <strong className="text-white font-black">PROYECTO EMPRESARIAL</strong>.
+                </p>
               </div>
             </div>
             <div className="mt-8 pt-6 border-t border-white/5 flex items-center gap-2 text-xs font-bold text-cyan-300 uppercase tracking-widest">
-              <span>Parametrización &amp; Puesta en Marcha</span>
+              <span>Arquitectura &amp; Integración IA</span>
             </div>
           </div>
 

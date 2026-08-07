@@ -149,16 +149,21 @@ export default function CyberPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           
           {/* [C] CONFIDENCIALIDAD */}
-          <div className="relative group bg-gradient-to-br from-cyan-950/50 via-slate-900/80 to-blue-950/50 border border-cyan-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400/70 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)] flex flex-col items-center text-center">
+          <div className="relative group bg-gradient-to-br from-cyan-950/50 via-slate-900/80 to-blue-950/50 border border-cyan-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(51,232,255,0.3)] flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
-            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(51,232,255,0.3)]">
-              <span className="text-3xl">🔒</span>
+            
+            {/* Letra C Grande y Visible */}
+            <div className="w-24 h-24 rounded-3xl bg-cyan-500/10 border-2 border-cyan-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(51,232,255,0.35)] group-hover:scale-105 transition-transform duration-300">
+              <span className="text-6xl md:text-7xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.9)] tracking-tight">
+                C
+              </span>
             </div>
-            <span className="text-xs font-black tracking-[0.25em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20 mb-3">
+
+            <span className="text-xs font-black tracking-[0.25em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-4 py-1.5 rounded-full border border-[#33E8FF]/30 mb-3 shadow-[0_0_10px_rgba(51,232,255,0.2)]">
               PILAR C
             </span>
             <h3 className="text-xl md:text-2xl font-black text-white mb-4 uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              [C] CONFIDENCIALIDAD
+              CONFIDENCIALIDAD
             </h3>
             <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed text-center">
               Solo usuarios autorizados acceden a la información protegida, evitando accesos indebidos y filtraciones de datos sensibles.
@@ -166,16 +171,21 @@ export default function CyberPage() {
           </div>
 
           {/* [I] INTEGRIDAD */}
-          <div className="relative group bg-gradient-to-br from-emerald-950/50 via-slate-900/80 to-teal-950/50 border border-emerald-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400/70 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(16,185,129,0.25)] flex flex-col items-center text-center">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none" />
-            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-              <span className="text-3xl">🛡️</span>
+          <div className="relative group bg-gradient-to-br from-rose-950/50 via-slate-900/80 to-red-950/50 border border-rose-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-rose-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(244,63,94,0.3)] flex flex-col items-center text-center">
+            <div className="absolute top-0 right-0 w-36 h-36 bg-rose-500/10 blur-3xl rounded-full pointer-events-none" />
+            
+            {/* Letra I Grande y Visible */}
+            <div className="w-24 h-24 rounded-3xl bg-rose-500/10 border-2 border-rose-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(244,63,94,0.35)] group-hover:scale-105 transition-transform duration-300">
+              <span className="text-6xl md:text-7xl font-black text-[#FF3366] drop-shadow-[0_0_20px_rgba(255,51,102,0.9)] tracking-tight">
+                I
+              </span>
             </div>
-            <span className="text-xs font-black tracking-[0.25em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-3">
+
+            <span className="text-xs font-black tracking-[0.25em] text-rose-400 uppercase bg-rose-500/10 px-4 py-1.5 rounded-full border border-rose-500/30 mb-3 shadow-[0_0_10px_rgba(244,63,94,0.2)]">
               PILAR I
             </span>
             <h3 className="text-xl md:text-2xl font-black text-white mb-4 uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              [I] INTEGRIDAD
+              INTEGRIDAD
             </h3>
             <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed text-center">
               La información es exacta, completa y no ha sido alterada, garantizando la fiabilidad total de los registros y sistemas críticos.
@@ -183,16 +193,21 @@ export default function CyberPage() {
           </div>
 
           {/* [A] DISPONIBILIDAD */}
-          <div className="relative group bg-gradient-to-br from-blue-950/50 via-slate-900/80 to-purple-950/50 border border-blue-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400/70 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(59,130,246,0.25)] flex flex-col items-center text-center">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-blue-500/10 blur-3xl rounded-full pointer-events-none" />
-            <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-              <span className="text-3xl">⚡</span>
+          <div className="relative group bg-gradient-to-br from-emerald-950/50 via-slate-900/80 to-teal-950/50 border border-emerald-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(16,185,129,0.3)] flex flex-col items-center text-center">
+            <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none" />
+            
+            {/* Letra A Grande y Visible */}
+            <div className="w-24 h-24 rounded-3xl bg-emerald-500/10 border-2 border-emerald-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform duration-300">
+              <span className="text-6xl md:text-7xl font-black text-[#00E676] drop-shadow-[0_0_20px_rgba(0,230,118,0.9)] tracking-tight">
+                A
+              </span>
             </div>
-            <span className="text-xs font-black tracking-[0.25em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20 mb-3">
+
+            <span className="text-xs font-black tracking-[0.25em] text-emerald-400 uppercase bg-emerald-500/10 px-4 py-1.5 rounded-full border border-emerald-500/30 mb-3 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
               PILAR A
             </span>
             <h3 className="text-xl md:text-2xl font-black text-white mb-4 uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              [A] DISPONIBILIDAD
+              DISPONIBILIDAD
             </h3>
             <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed text-center">
               Los sistemas y datos están accesibles cuando se necesitan, asegurando continuidad operativa ininterrumpida y resiliencia empresarial.
