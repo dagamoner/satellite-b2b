@@ -108,7 +108,7 @@ export default function Page() {
       {/* ── SERVICIOS PROFESIONALES BRINDADOS ── */}
       <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
         <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-5xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] uppercase tracking-wider text-center">
+          <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] uppercase tracking-wider text-center">
             SERVICIOS PROFESIONALES BRINDADOS
           </h2>
           <div className="mt-4 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
@@ -202,7 +202,7 @@ export default function Page() {
             <img
               src="/VIRTUD.png"
               alt="Nuestra Virtud"
-              className="h-20 md:h-24 w-auto object-contain mb-4 drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]"
+              className="h-40 md:h-48 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
             />
             <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
               NUESTRA VIRTUD
@@ -220,7 +220,7 @@ export default function Page() {
             <img
               src="/MISION.png"
               alt="Nuestra Misión"
-              className="h-20 md:h-24 w-auto object-contain mb-4 drop-shadow-[0_0_20px_rgba(51,232,255,0.4)]"
+              className="h-40 md:h-48 w-auto object-contain mb-6 drop-shadow-[0_0_25px_rgba(51,232,255,0.4)]"
             />
             <h2 className="text-2xl font-black text-[#33E8FF] mb-4 uppercase tracking-wider text-center drop-shadow-[0_0_12px_rgba(51,232,255,0.4)]">
               NUESTRA MISIÓN
