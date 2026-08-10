@@ -217,69 +217,67 @@ export default function CyberPage() {
       {/* ── 🛡️ SECURETIA & VULSEEK - ALIANZA Y SERVICIOS AVANZADOS ── */}
       <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
         
-        {/* Banner de Alianza: SECURETIA + EXPERTOS EN SEGURIDAD (Izquierda) & VULSEEK (Derecha) */}
+        {/* Banner de Alianza: SECURETIA (Izquierda), EXPERTOS EN CIBERSEGURIDAD (Centro), VULSEEK (Derecha) */}
         <div className="relative bg-gradient-to-r from-blue-950/80 via-slate-900/90 to-red-950/80 border border-cyan-500/30 rounded-3xl p-8 md:p-12 mb-16 shadow-[0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden">
           <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-red-500/10 blur-3xl rounded-full pointer-events-none" />
           
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
             
-            {/* LADO IZQUIERDO: SECURETIA + EXPERTOS EN SEGURIDAD */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
+            {/* LADO IZQUIERDO: SOLO LOGO SECURETIA */}
+            <div className="flex items-center justify-center shrink-0">
               <img
                 src="/SECURETIA_clean.png"
                 alt="SECURETIA"
-                className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+                className="h-20 md:h-28 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
               />
-              <span className="text-sm md:text-base font-black tracking-[0.25em] text-[#33E8FF] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.8)]">
-                EXPERTOS EN SEGURIDAD
-              </span>
             </div>
 
-            {/* DIVIDER DE IMPACTO */}
-            <div className="hidden md:flex flex-col items-center justify-center px-4">
-              <div className="h-12 w-px bg-gradient-to-b from-transparent via-[#33E8FF]/50 to-transparent" />
-              <span className="text-[10px] font-black tracking-widest text-slate-400 my-2">ALIANZA ESTRATÉGICA</span>
-              <div className="h-12 w-px bg-gradient-to-b from-transparent via-red-500/50 to-transparent" />
+            {/* AL MEDIO: EXPERTOS EN CIBERSEGURIDAD + LEYENDA */}
+            <div className="flex flex-col items-center text-center max-w-2xl px-4 space-y-3">
+              <h3 className="text-2xl md:text-3xl font-black tracking-wider text-[#33E8FF] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)]">
+                EXPERTOS EN CIBERSEGURIDAD
+              </h3>
+              <p className="text-white font-bold text-base md:text-lg leading-relaxed text-center">
+                Desde hace más de 10 años nos comprometimos a ofrecer soluciones simples que ayuden a las organizaciones a mejorar sus capacidades de prevención, detección y respuesta contra ciberamenazas.
+              </p>
             </div>
 
             {/* LADO DERECHO: LOGO VULSEEK */}
-            <div className="flex flex-col items-center md:items-end text-center md:text-right">
+            <div className="flex items-center justify-center shrink-0">
               <img
                 src="/VULSEEK_clean.png"
                 alt="VULSEEK"
-                className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.5)]"
+                className="h-20 md:h-28 w-auto object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.5)]"
               />
             </div>
 
           </div>
         </div>
 
-        {/* ── GRIDA DE 4 CUADROS DE SEGURIDAD ── */}
+        {/* ── GRIDA DE 4 CUADROS DE SEGURIDAD (SIN BADGES, LOGOS DUPLICADOS EN TAMAÑO) ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Cuadro 1: Análisis de Vulnerabilidades */}
-          <div className="relative group bg-[#07111f] border border-cyan-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.25)] flex flex-col justify-between">
+          <div className="relative group bg-[#07111f] border border-cyan-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.25)] flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(51,232,255,0.3)]">
+              <div className="flex items-center gap-6 mb-6">
+                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(51,232,255,0.35)] group-hover:scale-105 transition-transform duration-300">
                   <img
                     src="/icon_vulnerabilidades.png"
                     alt="Análisis de Vulnerabilidades"
-                    className="w-10 h-10 object-contain drop-shadow-[0_0_10px_#33E8FF]"
+                    className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_#33E8FF]"
                   />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20">
-                    VULSEEK 01
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
                     Análisis de Vulnerabilidades
                   </h3>
                 </div>
               </div>
               
-              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
                 Identificación, clasificación y priorización proactiva de debilidades en la infraestructura y aplicaciones antes de que puedan ser explotadas.
               </p>
 
@@ -289,7 +287,7 @@ export default function CyberPage() {
                   "Evaluación de riesgos basada en impacto de negocio",
                   "Informes detallados con recomendaciones de remediación",
                 ].map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
                     <span className="text-[#33E8FF] font-black shrink-0 mt-0.5">■</span>
                     <span>{bullet}</span>
                   </li>
@@ -302,27 +300,25 @@ export default function CyberPage() {
           </div>
 
           {/* Cuadro 2: Penetration Testing */}
-          <div className="relative group bg-[#07111f] border border-red-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-red-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(239,68,68,0.25)] flex flex-col justify-between">
+          <div className="relative group bg-[#07111f] border border-red-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-red-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(239,68,68,0.25)] flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+              <div className="flex items-center gap-6 mb-6">
+                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(239,68,68,0.35)] group-hover:scale-105 transition-transform duration-300">
                   <img
                     src="/icon_pentesting.png"
                     alt="Penetration Testing"
-                    className="w-10 h-10 object-contain drop-shadow-[0_0_10px_#ef4444]"
+                    className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_#ef4444]"
                   />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-red-400 uppercase bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
-                    VULSEEK 02
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
                     Penetration Testing
                   </h3>
                 </div>
               </div>
               
-              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
                 Simulación controlada de ciberataques reales para evaluar la efectividad defensiva e identificar brechas de seguridad explotables.
               </p>
 
@@ -332,7 +328,7 @@ export default function CyberPage() {
                   "Explotación controlada para medir alcance real de intrusión",
                   "Reporte ejecutivo y técnico de mitigación inmediata",
                 ].map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
                     <span className="text-red-400 font-black shrink-0 mt-0.5">■</span>
                     <span>{bullet}</span>
                   </li>
@@ -345,23 +341,21 @@ export default function CyberPage() {
           </div>
 
           {/* Cuadro 3: Seguridad mobile */}
-          <div className="relative group bg-[#07111f] border border-blue-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)] flex flex-col justify-between">
+          <div className="relative group bg-[#07111f] border border-blue-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-blue-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)] flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                  <span className="text-3xl">📱</span>
+              <div className="flex items-center gap-6 mb-6">
+                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(59,130,246,0.35)] group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-6xl md:text-7xl">📱</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                    NUEVO SERVICIO
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
                     Seguridad mobile
                   </h3>
                 </div>
               </div>
               
-              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
                 Identificamos los vectores de ataque que un cibercriminal podría utilizar para vulnerar tus aplicaciones móbiles simulando situaciones de la vida real.
               </p>
 
@@ -371,7 +365,7 @@ export default function CyberPage() {
                   "Implementamos metodologías y herramientas de atacantes reales",
                   "Realizamos pruebas personalizadas para distintos tipos de ataque",
                 ].map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
                     <span className="text-blue-400 font-black shrink-0 mt-0.5">■</span>
                     <span>{bullet}</span>
                   </li>
@@ -384,17 +378,15 @@ export default function CyberPage() {
           </div>
 
           {/* Cuadro 4: SecDevOps */}
-          <div className="relative group bg-[#07111f] border border-emerald-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.25)] flex flex-col justify-between">
+          <div className="relative group bg-[#07111f] border border-emerald-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.25)] flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                  <span className="text-3xl">⚙️</span>
+              <div className="flex items-center gap-6 mb-6">
+                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-6xl md:text-7xl">⚙️</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                    NUEVO SERVICIO
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
                     SecDevOps
                   </h3>
                 </div>
@@ -410,7 +402,7 @@ export default function CyberPage() {
                   "Equipo experimentado en esta disciplina",
                   "Reducimos tus tiempos y costos de implementación",
                 ].map((bullet, idx) => (
-                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
                     <span className="text-emerald-400 font-black shrink-0 mt-0.5">■</span>
                     <span>{bullet}</span>
                   </li>
