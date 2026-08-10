@@ -428,12 +428,8 @@ export default function CyberPage() {
               rel="noopener noreferrer"
               className="group relative bg-gradient-to-br from-slate-900/90 to-[#07152b] border border-cyan-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)] cursor-pointer"
             >
-              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl md:text-3xl font-black tracking-widest text-[#33E8FF] drop-shadow-[0_0_10px_#33E8FF]">
-                    ADISTEC
-                  </span>
-                </div>
+              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors h-24">
+                <img src="/Logo ADISTEC.jpg" alt="ADISTEC" className="h-14 md:h-16 w-auto object-contain rounded-lg" />
               </div>
               <span className="text-xs font-bold text-cyan-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
                 Sitio Oficial Adistec ↗
@@ -447,13 +443,8 @@ export default function CyberPage() {
               rel="noopener noreferrer"
               className="group relative bg-gradient-to-br from-slate-900/90 to-[#1f0a0e] border border-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(239,68,68,0.25)] cursor-pointer"
             >
-              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 bg-red-600 rounded-sm shadow-[0_0_8px_#ef4444]" />
-                  <span className="text-2xl md:text-3xl font-black tracking-widest text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]">
-                    FORTINET
-                  </span>
-                </div>
+              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors h-24">
+                <img src="/Logo FortiNET.jpg" alt="FORTINET" className="h-14 md:h-16 w-auto object-contain rounded-lg" />
               </div>
               <span className="text-xs font-bold text-red-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
                 Sitio Oficial Fortinet ↗
@@ -492,9 +483,7 @@ export default function CyberPage() {
 
               {/* NSE 1 Badge Card */}
               <div className="mt-2 bg-gradient-to-r from-red-950/50 via-slate-900 to-slate-900 border border-red-500/30 rounded-xl p-4 flex items-center gap-4 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
-                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-xl shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-                  NSE 1
-                </div>
+                <img src="/NSE1.jpg" alt="NSE 1 Network Security Associate" className="w-14 h-14 object-contain rounded-lg border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.4)] shrink-0" />
                 <div className="text-left">
                   <div className="text-white font-extrabold text-sm tracking-wide">
                     Network Security Associate
