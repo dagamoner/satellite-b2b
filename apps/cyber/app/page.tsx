@@ -596,8 +596,12 @@ export default function CyberPage() {
             {/* INSTANCIA A */}
             <div className="relative group bg-[#07111f] border border-cyan-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.2)] flex flex-col justify-between text-center">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl">🔍</span>
+                <div className="mb-6 flex items-center justify-center">
+                  <img
+                    src="/isologo_consultoria.png"
+                    alt="Consultoría & Asesoramiento"
+                    className="h-32 md:h-40 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.6)] group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20">
                   INSTANCIA A
@@ -617,8 +621,12 @@ export default function CyberPage() {
             {/* INSTANCIA B */}
             <div className="relative group bg-[#07111f] border border-blue-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.2)] flex flex-col justify-between text-center">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl">📋</span>
+                <div className="mb-6 flex items-center justify-center">
+                  <img
+                    src="/isologo_documentacion.png"
+                    alt="Documentación Objetiva"
+                    className="h-32 md:h-40 w-auto object-contain drop-shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
                   INSTANCIA B
@@ -638,8 +646,12 @@ export default function CyberPage() {
             {/* INSTANCIA C */}
             <div className="relative group bg-[#07111f] border border-emerald-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.2)] flex flex-col justify-between text-center">
               <div>
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
-                  <span className="text-2xl">🌐</span>
+                <div className="mb-6 flex items-center justify-center">
+                  <img
+                    src="/isologo_marcos_iso_nist.png"
+                    alt="Proyectos bajo Marcos ISO & NIST"
+                    className="h-32 md:h-40 w-auto object-contain drop-shadow-[0_0_20px_rgba(16,185,129,0.6)] group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
                   INSTANCIA C
@@ -672,20 +684,15 @@ export default function CyberPage() {
           <div className="mt-3 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-red-500 via-[#33E8FF] to-blue-500" />
         </div>
 
-        {/* Strategic Partnerships (ADISTEC & FORTINET) */}
+        {/* Strategic Partnerships (ADISTEC & FORTINET - SIN HIPERVÍNCULOS) */}
         <div className="mb-16">
           <p className="text-center text-sm font-black text-slate-300 tracking-[0.2em] uppercase mb-8">
             En conjunto con líderes globales en ciberseguridad:
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {/* ADISTEC Card */}
-            <a
-              href="https://www.adistec.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative bg-gradient-to-br from-slate-900/90 to-[#07152b] border border-cyan-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)] cursor-pointer"
-            >
+            {/* ADISTEC Card (Estática sin Hipervínculo) */}
+            <div className="group relative bg-gradient-to-br from-slate-900/90 to-[#07152b] border border-cyan-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)]">
               <div className="w-full flex items-center justify-center py-6 px-8 bg-blue-950/80 rounded-2xl border border-blue-500/40 mb-4 group-hover:bg-blue-900/80 transition-colors shadow-[0_0_20px_rgba(51,232,255,0.3)]">
                 <img
                   src="/logo_adistec_official.png"
@@ -693,18 +700,13 @@ export default function CyberPage() {
                   className="h-14 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.6)]"
                 />
               </div>
-              <span className="text-xs font-bold text-cyan-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
-                Sitio Oficial Adistec ↗
+              <span className="text-xs font-black tracking-widest text-cyan-300 uppercase">
+                Partner Global de Distribución
               </span>
-            </a>
+            </div>
 
-            {/* FORTINET Card */}
-            <a
-              href="https://www.fortinet.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative bg-gradient-to-br from-slate-900/90 to-[#1f0a0e] border border-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(239,68,68,0.25)] cursor-pointer"
-            >
+            {/* FORTINET Card (Estática sin Hipervínculo) */}
+            <div className="group relative bg-gradient-to-br from-slate-900/90 to-[#1f0a0e] border border-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:shadow-[0_10px_40px_rgba(239,68,68,0.25)]">
               <div className="w-full flex items-center justify-center py-6 px-8 bg-white/95 rounded-2xl border border-white/40 mb-4 group-hover:bg-white transition-colors shadow-[0_0_25px_rgba(255,255,255,0.5)]">
                 <img
                   src="/logo_fortinet_raw.png"
@@ -712,10 +714,10 @@ export default function CyberPage() {
                   className="h-14 md:h-20 w-auto object-contain"
                 />
               </div>
-              <span className="text-xs font-bold text-red-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
-                Sitio Oficial Fortinet ↗
+              <span className="text-xs font-black tracking-widest text-red-300 uppercase">
+                Líder Mundial en Seguridad de Red
               </span>
-            </a>
+            </div>
           </div>
         </div>
 
