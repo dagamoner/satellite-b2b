@@ -152,7 +152,6 @@ export default function CyberPage() {
           <div className="relative group bg-gradient-to-br from-cyan-950/50 via-slate-900/80 to-blue-950/50 border border-cyan-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(51,232,255,0.3)] flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
             
-            {/* Letra C Grande y Visible */}
             <div className="w-24 h-24 rounded-3xl bg-cyan-500/10 border-2 border-cyan-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(51,232,255,0.35)] group-hover:scale-105 transition-transform duration-300">
               <span className="text-6xl md:text-7xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.9)] tracking-tight">
                 C
@@ -174,7 +173,6 @@ export default function CyberPage() {
           <div className="relative group bg-gradient-to-br from-rose-950/50 via-slate-900/80 to-red-950/50 border border-rose-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-rose-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(244,63,94,0.3)] flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-36 h-36 bg-rose-500/10 blur-3xl rounded-full pointer-events-none" />
             
-            {/* Letra I Grande y Visible */}
             <div className="w-24 h-24 rounded-3xl bg-rose-500/10 border-2 border-rose-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(244,63,94,0.35)] group-hover:scale-105 transition-transform duration-300">
               <span className="text-6xl md:text-7xl font-black text-[#FF3366] drop-shadow-[0_0_20px_rgba(255,51,102,0.9)] tracking-tight">
                 I
@@ -196,7 +194,6 @@ export default function CyberPage() {
           <div className="relative group bg-gradient-to-br from-emerald-950/50 via-slate-900/80 to-teal-950/50 border border-emerald-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(16,185,129,0.3)] flex flex-col items-center text-center">
             <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none" />
             
-            {/* Letra A Grande y Visible */}
             <div className="w-24 h-24 rounded-3xl bg-emerald-500/10 border-2 border-emerald-400/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform duration-300">
               <span className="text-6xl md:text-7xl font-black text-[#00E676] drop-shadow-[0_0_20px_rgba(0,230,118,0.9)] tracking-tight">
                 A
@@ -217,110 +214,212 @@ export default function CyberPage() {
         </div>
       </section>
 
-      {/* ── 🔒 SECURETIA & SERVICIOS PROFESIONALES ── */}
-      <section className="relative z-10 py-16 px-4 max-w-6xl mx-auto w-full">
+      {/* ── 🛡️ SECURETIA & VULSEEK - ALIANZA Y SERVICIOS AVANZADOS ── */}
+      <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
         
-        {/* Banner SECURETIA Integrado con Destello */}
-        <div className="relative group overflow-hidden bg-gradient-to-br from-cyan-950/40 via-slate-900/90 to-blue-950/40 border border-cyan-500/40 rounded-3xl p-8 md:p-10 mb-12 transition-all duration-500 hover:border-cyan-400 hover:shadow-[0_10px_50px_rgba(51,232,255,0.3)] flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
-          {/* Destellos de fondo (Glow Backdrops) */}
-          <div className="absolute -top-16 -left-16 w-64 h-64 bg-cyan-500/15 blur-3xl rounded-full pointer-events-none group-hover:bg-cyan-500/25 group-hover:scale-125 transition-all duration-500" />
-          <div className="absolute -bottom-16 -right-16 w-64 h-64 bg-blue-500/15 blur-3xl rounded-full pointer-events-none group-hover:bg-blue-500/25 group-hover:scale-125 transition-all duration-500" />
+        {/* Banner de Alianza: SECURETIA + EXPERTOS EN SEGURIDAD (Izquierda) & VULSEEK (Derecha) */}
+        <div className="relative bg-gradient-to-r from-blue-950/80 via-slate-900/90 to-red-950/80 border border-cyan-500/30 rounded-3xl p-8 md:p-12 mb-16 shadow-[0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-red-500/10 blur-3xl rounded-full pointer-events-none" />
           
-          {/* Logo SECURETIA Integrado */}
-          <div className="flex-shrink-0 relative group-hover:scale-105 transition-transform duration-300">
-            <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full pointer-events-none" />
-            <img 
-              src="/Logo SECURETIA.png" 
-              alt="SECURETIA" 
-              className="relative z-10 h-24 md:h-28 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]" 
-            />
-          </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            
+            {/* LADO IZQUIERDO: SECURETIA + EXPERTOS EN SEGURIDAD */}
+            <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-3">
+              <img
+                src="/SECURETIA_clean.png"
+                alt="SECURETIA"
+                className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+              />
+              <span className="text-sm md:text-base font-black tracking-[0.25em] text-[#33E8FF] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.8)]">
+                EXPERTOS EN SEGURIDAD
+              </span>
+            </div>
 
-          <div className="relative z-10 border-t md:border-t-0 md:border-l border-cyan-500/30 pt-6 md:pt-0 md:pl-8 flex flex-col justify-center max-w-2xl">
-            <h3 className="text-2xl md:text-3xl font-black text-[#33E8FF] tracking-wider uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.6)]">
-              EXPERTOS EN CIBERSEGURIDAD
-            </h3>
-            <p className="text-white font-bold text-lg md:text-xl mt-1 tracking-wide">
-              Partners en CUYO
-            </p>
-            <p className="text-slate-200 font-medium text-sm md:text-base mt-3 leading-relaxed">
-              Desde hace más de 10 años nos comprometimos a ofrecer soluciones simples que ayuden a las organizaciones a mejorar sus capacidades de prevención, detección y respuesta contra ciberamenazas.
-            </p>
+            {/* DIVIDER DE IMPACTO */}
+            <div className="hidden md:flex flex-col items-center justify-center px-4">
+              <div className="h-12 w-px bg-gradient-to-b from-transparent via-[#33E8FF]/50 to-transparent" />
+              <span className="text-[10px] font-black tracking-widest text-slate-400 my-2">ALIANZA ESTRATÉGICA</span>
+              <div className="h-12 w-px bg-gradient-to-b from-transparent via-red-500/50 to-transparent" />
+            </div>
+
+            {/* LADO DERECHO: LOGO VULSEEK */}
+            <div className="flex flex-col items-center md:items-end text-center md:text-right">
+              <img
+                src="/VULSEEK_clean.png"
+                alt="VULSEEK"
+                className="h-20 md:h-24 w-auto object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.5)]"
+              />
+            </div>
+
           </div>
         </div>
 
-        {/* Título de Servicios Brindados */}
-        <div className="text-center mb-12">
-          <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-wider">
-            SERVICIOS PROFESIONALES BRINDADOS
-          </h3>
-          <div className="mt-3 mx-auto w-20 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-rose-500" />
-        </div>
-
-        {/* 2 Cuadros Individuales con Destellos y Contorno CIA */}
+        {/* ── GRIDA DE 4 CUADROS DE SEGURIDAD ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
-          {/* Análisis de Vulnerabilidades */}
-          <div className="relative group overflow-hidden bg-gradient-to-br from-cyan-950/50 via-slate-900/80 to-blue-950/50 border border-cyan-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(51,232,255,0.3)] flex flex-col">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none group-hover:bg-cyan-500/25 group-hover:w-48 group-hover:h-48 transition-all duration-500" />
-            
-            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-400/50 flex items-center justify-center mb-6 text-[#33E8FF] shadow-[0_0_25px_rgba(51,232,255,0.35)] group-hover:scale-105 transition-transform duration-300">
-              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <circle cx="12" cy="12" r="10" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01" />
-              </svg>
+          {/* Cuadro 1: Análisis de Vulnerabilidades */}
+          <div className="relative group bg-[#07111f] border border-cyan-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(51,232,255,0.3)]">
+                  <img
+                    src="/icon_vulnerabilidades.png"
+                    alt="Análisis de Vulnerabilidades"
+                    className="w-10 h-10 object-contain drop-shadow-[0_0_10px_#33E8FF]"
+                  />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black tracking-[0.2em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20">
+                    VULSEEK 01
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                    Análisis de Vulnerabilidades
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+                Identificación, clasificación y priorización proactiva de debilidades en la infraestructura y aplicaciones antes de que puedan ser explotadas.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Escaneo automatizado y continuo de activos críticos",
+                  "Evaluación de riesgos basada en impacto de negocio",
+                  "Informes detallados con recomendaciones de remediación",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                    <span className="text-[#33E8FF] font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h4 className="text-xl md:text-2xl font-black text-white mb-3 border-b border-cyan-500/20 pb-3 uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              Análisis de Vulnerabilidades
-            </h4>
-            <p className="text-slate-200 font-medium text-sm md:text-base leading-relaxed mb-6">
-              Con este servicio podrás detectar problemas de seguridad en tu infraestructura que podrían ser utilizados por un atacante.
-            </p>
-            <ul className="space-y-3 mt-auto text-slate-200 text-sm md:text-base font-medium">
-              <li className="flex items-start gap-3">
-                <span className="text-[#33E8FF] text-lg leading-none">■</span>
-                <span>Proponemos un plan de acción ordenado y priorizado</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-[#33E8FF] text-lg leading-none">■</span>
-                <span>Mitigamos tus vulnerabilidades de forma efectiva</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-[#33E8FF] text-lg leading-none">■</span>
-                <span>Ayudamos a mejorar el nivel de seguridad de tu organización</span>
-              </li>
-            </ul>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-cyan-300 uppercase tracking-wider text-left">
+              Diagnóstico Proactivo de Riesgos
+            </div>
           </div>
 
-          {/* Penetration Testing */}
-          <div className="relative group overflow-hidden bg-gradient-to-br from-rose-950/50 via-slate-900/80 to-red-950/50 border border-rose-500/40 rounded-3xl p-8 transition-all duration-300 hover:border-rose-400 hover:-translate-y-1 hover:shadow-[0_10px_40px_rgba(244,63,94,0.3)] flex flex-col">
-            <div className="absolute top-0 right-0 w-36 h-36 bg-rose-500/10 blur-3xl rounded-full pointer-events-none group-hover:bg-rose-500/25 group-hover:w-48 group-hover:h-48 transition-all duration-500" />
-            
-            <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-400/50 flex items-center justify-center mb-6 text-rose-400 shadow-[0_0_25px_rgba(244,63,94,0.35)] group-hover:scale-105 transition-transform duration-300">
-              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+          {/* Cuadro 2: Penetration Testing */}
+          <div className="relative group bg-[#07111f] border border-red-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-red-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(239,68,68,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+                  <img
+                    src="/icon_pentesting.png"
+                    alt="Penetration Testing"
+                    className="w-10 h-10 object-contain drop-shadow-[0_0_10px_#ef4444]"
+                  />
+                </div>
+                <div>
+                  <span className="text-[10px] font-black tracking-[0.2em] text-red-400 uppercase bg-red-500/10 px-3 py-1 rounded-full border border-red-500/20">
+                    VULSEEK 02
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                    Penetration Testing
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+                Simulación controlada de ciberataques reales para evaluar la efectividad defensiva e identificar brechas de seguridad explotables.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Pruebas éticas ofensivas en redes, servidores y perímetro",
+                  "Explotación controlada para medir alcance real de intrusión",
+                  "Reporte ejecutivo y técnico de mitigación inmediata",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                    <span className="text-red-400 font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h4 className="text-xl md:text-2xl font-black text-white mb-3 border-b border-rose-500/20 pb-3 uppercase drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
-              Penetration Testing
-            </h4>
-            <p className="text-slate-200 font-medium text-sm md:text-base leading-relaxed mb-6">
-              Verificamos cuáles son los vectores de ataque que un cibercriminal podría utilizar para vulnerar tu infraestructura.
-            </p>
-            <ul className="space-y-3 mt-auto text-slate-200 text-sm md:text-base font-medium">
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 text-lg leading-none">■</span>
-                <span>Servicio adaptable a tus necesidades</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 text-lg leading-none">■</span>
-                <span>Realizamos pruebas personalizadas para ataques externos o internos</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-rose-400 text-lg leading-none">■</span>
-                <span>Brindamos reportes detallados y recomendaciones claras</span>
-              </li>
-            </ul>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-red-300 uppercase tracking-wider text-left">
+              Simulación de Ataque Ofensivo
+            </div>
+          </div>
+
+          {/* Cuadro 3: Seguridad mobile */}
+          <div className="relative group bg-[#07111f] border border-blue-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                  <span className="text-3xl">📱</span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-black tracking-[0.2em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+                    NUEVO SERVICIO
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                    Seguridad mobile
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+                Identificamos los vectores de ataque que un cibercriminal podría utilizar para vulnerar tus aplicaciones móbiles simulando situaciones de la vida real.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Servicio adaptable a tus necesidades",
+                  "Implementamos metodologías y herramientas de atacantes reales",
+                  "Realizamos pruebas personalizadas para distintos tipos de ataque",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                    <span className="text-blue-400 font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-blue-300 uppercase tracking-wider text-left">
+              Protección de Aplicaciones Móviles
+            </div>
+          </div>
+
+          {/* Cuadro 4: SecDevOps */}
+          <div className="relative group bg-[#07111f] border border-emerald-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                  <span className="text-3xl">⚙️</span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-black tracking-[0.2em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                    NUEVO SERVICIO
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-black text-white mt-1">
+                    SecDevOps
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+                Te ayudamos a incorporar los conocimientos y procesos necesarios para transformar tu metodología de trabajo y así incorporar buenas prácticas de seguridad al mismo.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Utilizamos las mejores prácticas",
+                  "Equipo experimentado en esta disciplina",
+                  "Reducimos tus tiempos y costos de implementación",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm leading-relaxed">
+                    <span className="text-emerald-400 font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-emerald-300 uppercase tracking-wider text-left">
+              Integración Continua Segura
+            </div>
           </div>
 
         </div>
@@ -342,8 +441,7 @@ export default function CyberPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Servicio 1 */}
-            <div className="relative group overflow-hidden bg-[#07111f] border border-cyan-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.3)] flex flex-col justify-between text-center">
-              <div className="absolute top-0 right-0 w-28 h-28 bg-cyan-500/10 blur-2xl rounded-full pointer-events-none group-hover:bg-cyan-500/25 transition-all duration-300" />
+            <div className="relative group bg-[#07111f] border border-cyan-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">🔍</span>
@@ -364,8 +462,7 @@ export default function CyberPage() {
             </div>
 
             {/* Servicio 2 */}
-            <div className="relative group overflow-hidden bg-[#07111f] border border-blue-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.3)] flex flex-col justify-between text-center">
-              <div className="absolute top-0 right-0 w-28 h-28 bg-blue-500/10 blur-2xl rounded-full pointer-events-none group-hover:bg-blue-500/25 transition-all duration-300" />
+            <div className="relative group bg-[#07111f] border border-blue-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">📋</span>
@@ -386,8 +483,7 @@ export default function CyberPage() {
             </div>
 
             {/* Servicio 3 */}
-            <div className="relative group overflow-hidden bg-[#07111f] border border-emerald-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.3)] flex flex-col justify-between text-center">
-              <div className="absolute top-0 right-0 w-28 h-28 bg-emerald-500/10 blur-2xl rounded-full pointer-events-none group-hover:bg-emerald-500/25 transition-all duration-300" />
+            <div className="relative group bg-[#07111f] border border-emerald-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">🌐</span>
@@ -423,7 +519,7 @@ export default function CyberPage() {
           <div className="mt-3 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-red-500 via-[#33E8FF] to-blue-500" />
         </div>
 
-        {/* Strategic Partnerships (ADISTEC & FORTINET) con Destellos y Logos Integrados */}
+        {/* Strategic Partnerships (ADISTEC & FORTINET) */}
         <div className="mb-16">
           <p className="text-center text-sm font-black text-slate-300 tracking-[0.2em] uppercase mb-8">
             En conjunto con líderes globales en ciberseguridad:
@@ -435,17 +531,16 @@ export default function CyberPage() {
               href="https://www.adistec.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-[#07152b] to-slate-900 border border-cyan-500/40 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(51,232,255,0.3)] cursor-pointer"
+              className="group relative bg-gradient-to-br from-slate-900/90 to-[#07152b] border border-cyan-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)] cursor-pointer"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/15 blur-2xl rounded-full pointer-events-none group-hover:bg-cyan-500/30 transition-all duration-300" />
-              <div className="w-full flex items-center justify-center py-4 px-6 relative z-10 mb-4 h-24">
-                <img 
-                  src="/Logo ADISTEC.jpg" 
-                  alt="ADISTEC" 
-                  className="h-16 md:h-20 w-auto object-contain rounded-xl drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] group-hover:scale-105 transition-transform duration-300" 
-                />
+              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl md:text-3xl font-black tracking-widest text-[#33E8FF] drop-shadow-[0_0_10px_#33E8FF]">
+                    ADISTEC
+                  </span>
+                </div>
               </div>
-              <span className="text-xs font-bold text-cyan-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors relative z-10">
+              <span className="text-xs font-bold text-cyan-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
                 Sitio Oficial Adistec ↗
               </span>
             </a>
@@ -455,17 +550,17 @@ export default function CyberPage() {
               href="https://www.fortinet.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-[#1f0a0e] to-slate-900 border border-red-500/40 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(239,68,68,0.3)] cursor-pointer"
+              className="group relative bg-gradient-to-br from-slate-900/90 to-[#1f0a0e] border border-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(239,68,68,0.25)] cursor-pointer"
             >
-              <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/15 blur-2xl rounded-full pointer-events-none group-hover:bg-red-500/30 transition-all duration-300" />
-              <div className="w-full flex items-center justify-center py-4 px-6 relative z-10 mb-4 h-24">
-                <img 
-                  src="/Logo FortiNET.jpg" 
-                  alt="FORTINET" 
-                  className="h-16 md:h-20 w-auto object-contain rounded-xl drop-shadow-[0_0_20px_rgba(239,68,68,0.4)] group-hover:scale-105 transition-transform duration-300" 
-                />
+              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-4 h-4 bg-red-600 rounded-sm shadow-[0_0_8px_#ef4444]" />
+                  <span className="text-2xl md:text-3xl font-black tracking-widest text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.6)]">
+                    FORTINET
+                  </span>
+                </div>
               </div>
-              <span className="text-xs font-bold text-red-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors relative z-10">
+              <span className="text-xs font-bold text-red-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
                 Sitio Oficial Fortinet ↗
               </span>
             </a>
@@ -502,7 +597,9 @@ export default function CyberPage() {
 
               {/* NSE 1 Badge Card */}
               <div className="mt-2 bg-gradient-to-r from-red-950/50 via-slate-900 to-slate-900 border border-red-500/30 rounded-xl p-4 flex items-center gap-4 shadow-[0_0_20px_rgba(239,68,68,0.2)]">
-                <img src="/NSE1.jpg" alt="NSE 1 Network Security Associate" className="w-14 h-14 object-contain rounded-lg border border-red-500/40 shadow-[0_0_15px_rgba(239,68,68,0.4)] shrink-0" />
+                <div className="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center text-white font-black text-xl shrink-0 shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                  NSE 1
+                </div>
                 <div className="text-left">
                   <div className="text-white font-extrabold text-sm tracking-wide">
                     Network Security Associate
