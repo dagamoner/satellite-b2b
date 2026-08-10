@@ -715,7 +715,7 @@ export default function CyberPage() {
                 />
               </div>
               <span className="text-xs font-black tracking-widest text-red-300 uppercase">
-                Líder Mundial en Seguridad de Red
+                Líder Mundial en Ciberseguridad
               </span>
             </div>
           </div>
@@ -732,7 +732,7 @@ export default function CyberPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            {/* 1. Introduction to the Threat Landscape 3.0 + NSE 1 Insignia */}
+            {/* 1. Introduction to the Threat Landscape 3.0 + NSE 1 Insignia (DUPLICADO EN TAMAÑO) */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -749,21 +749,24 @@ export default function CyberPage() {
                 </p>
               </div>
 
-              {/* NSE 1 Badge Card con Imagen Oficial */}
-              <div className="mt-2 bg-gradient-to-r from-red-950/50 via-slate-900 to-slate-900 border border-red-500/30 rounded-2xl p-4 flex items-center gap-5 shadow-[0_0_20px_rgba(239,68,68,0.25)]">
-                <div className="w-16 h-16 rounded-xl bg-white/95 border border-white/40 p-1 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+              {/* NSE 1 Badge Card con Imagen Oficial (DUPLICADO EN TAMAÑO) */}
+              <div className="mt-2 bg-gradient-to-r from-teal-950/60 via-slate-900 to-slate-900 border border-teal-500/40 rounded-2xl p-5 flex flex-col md:flex-row items-center gap-6 shadow-[0_0_30px_rgba(20,184,166,0.3)]">
+                <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl bg-white/95 border border-white/50 p-2 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(255,255,255,0.5)] group-hover:scale-105 transition-transform duration-300">
                   <img
-                    src="/nse1_clean.png"
-                    alt="NSE 1 Network Security Associate"
+                    src="/nse1_exam_v3.png"
+                    alt="NSE 1 Introduction to the Threat Landscape Exam v3.0"
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="text-left">
-                  <div className="text-white font-black text-base tracking-wide">
+                <div className="text-center md:text-left">
+                  <div className="text-white font-black text-lg md:text-xl tracking-wide leading-tight">
                     NSE 1 Network Security Associate
                   </div>
-                  <div className="text-xs text-red-300 font-bold mt-0.5">
-                    Fortinet Training Institute Certification
+                  <div className="text-sm text-teal-300 font-extrabold mt-1">
+                    Introduction to the Threat Landscape Exam v3.0
+                  </div>
+                  <div className="text-xs text-slate-400 font-bold mt-2">
+                    Fortinet Training Institute Official Certification
                   </div>
                 </div>
               </div>
