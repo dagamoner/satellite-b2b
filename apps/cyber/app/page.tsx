@@ -245,12 +245,12 @@ export default function CyberPage() {
               </p>
             </div>
 
-            {/* LADO DERECHO: LOGO VULSEEK */}
+            {/* LADO DERECHO: LOGO VULSEEK (DUPLICADO EN TAMAÑO) */}
             <div className="flex items-center justify-center shrink-0">
               <img
                 src="/VULSEEK_clean.png"
                 alt="VULSEEK"
-                className="h-20 md:h-28 w-auto object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.5)]"
+                className="h-40 md:h-56 w-auto object-contain drop-shadow-[0_0_35px_rgba(239,68,68,0.7)]"
               />
             </div>
 
@@ -505,14 +505,14 @@ export default function CyberPage() {
         {/* ── DETALLE PLATAFORMA VULSEEK ── */}
         <div className="mt-20 pt-16 border-t border-white/10 flex flex-col items-center">
           
-          {/* Logo VULSEEK Centralizado */}
+          {/* Logo VULSEEK Centralizado (DUPLICADO EN TAMAÑO) */}
           <div className="mb-12 flex flex-col items-center text-center">
             <img
               src="/VULSEEK_clean.png"
               alt="VULSEEK"
-              className="h-24 md:h-32 w-auto object-contain drop-shadow-[0_0_35px_rgba(239,68,68,0.6)] hover:scale-105 transition-transform duration-300"
+              className="h-48 md:h-64 w-auto object-contain drop-shadow-[0_0_45px_rgba(239,68,68,0.7)] hover:scale-105 transition-transform duration-300"
             />
-            <span className="text-xs md:text-sm font-black tracking-[0.25em] text-[#33E8FF] uppercase mt-3 drop-shadow-[0_0_10px_rgba(51,232,255,0.8)]">
+            <span className="text-xs md:text-sm font-black tracking-[0.25em] text-[#33E8FF] uppercase mt-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.8)]">
               PLATAFORMA INTEGRAL DE CIBERSEGURIDAD
             </span>
           </div>
@@ -578,14 +578,14 @@ export default function CyberPage() {
         </div>
       </section>
 
-      {/* ── 🛠 SERVICIOS ESPECIALIZADOS ── */}
+      {/* ── 🛠 SERVICIOS EMPRESARIALES ESPECIALIZADOS ── */}
       <section className="relative z-10 py-20 px-4 bg-[#050d1f]/70 border-t border-b border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <div className="inline-flex items-center justify-center gap-3 mb-3">
               <span className="text-3xl">🛠</span>
               <h2 className="text-2xl md:text-4xl font-black text-[#33E8FF] drop-shadow-[0_0_20px_rgba(51,232,255,0.4)] uppercase tracking-wider text-center">
-                SERVICIOS ESPECIALIZADOS
+                SERVICIOS EMPRESARIALES ESPECIALIZADOS
               </h2>
             </div>
             <div className="mt-3 mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-[#33E8FF] to-blue-500" />
@@ -593,14 +593,14 @@ export default function CyberPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             
-            {/* Servicio 1 */}
+            {/* INSTANCIA A */}
             <div className="relative group bg-[#07111f] border border-cyan-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">🔍</span>
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20">
-                  SERVICIO 01
+                  INSTANCIA A
                 </span>
                 <h3 className="text-xl font-black text-white mt-4 mb-4 text-center">
                   1. Consultoría &amp; Asesoramiento
@@ -614,14 +614,14 @@ export default function CyberPage() {
               </div>
             </div>
 
-            {/* Servicio 2 */}
+            {/* INSTANCIA B */}
             <div className="relative group bg-[#07111f] border border-blue-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-blue-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">📋</span>
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                  SERVICIO 02
+                  INSTANCIA B
                 </span>
                 <h3 className="text-xl font-black text-white mt-4 mb-4 text-center">
                   2. Documentación Objetiva
@@ -635,14 +635,14 @@ export default function CyberPage() {
               </div>
             </div>
 
-            {/* Servicio 3 */}
+            {/* INSTANCIA C */}
             <div className="relative group bg-[#07111f] border border-emerald-500/25 rounded-3xl p-8 transition-all duration-300 hover:border-emerald-400/60 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.2)] flex flex-col justify-between text-center">
               <div>
                 <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-6">
                   <span className="text-2xl">🌐</span>
                 </div>
                 <span className="text-[11px] font-black tracking-[0.25em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                  SERVICIO 03
+                  INSTANCIA C
                 </span>
                 <h3 className="text-xl font-black text-white mt-4 mb-4 text-center">
                   3. Proyectos bajo Marcos ISO &amp; NIST
@@ -686,11 +686,11 @@ export default function CyberPage() {
               rel="noopener noreferrer"
               className="group relative bg-gradient-to-br from-slate-900/90 to-[#07152b] border border-cyan-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-cyan-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(51,232,255,0.25)] cursor-pointer"
             >
-              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
+              <div className="w-full flex items-center justify-center py-6 px-8 bg-blue-950/80 rounded-2xl border border-blue-500/40 mb-4 group-hover:bg-blue-900/80 transition-colors shadow-[0_0_20px_rgba(51,232,255,0.3)]">
                 <img
-                  src="/logo_adistec_clean.png"
+                  src="/logo_adistec_official.png"
                   alt="ADISTEC"
-                  className="h-12 md:h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.6)]"
+                  className="h-14 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(51,232,255,0.6)]"
                 />
               </div>
               <span className="text-xs font-bold text-cyan-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
@@ -705,11 +705,11 @@ export default function CyberPage() {
               rel="noopener noreferrer"
               className="group relative bg-gradient-to-br from-slate-900/90 to-[#1f0a0e] border border-red-500/30 rounded-3xl p-6 md:p-8 flex flex-col items-center justify-between text-center transition-all duration-300 hover:border-red-400 hover:scale-[1.02] hover:shadow-[0_10px_40px_rgba(239,68,68,0.25)] cursor-pointer"
             >
-              <div className="w-full flex items-center justify-center py-4 px-6 bg-white/5 rounded-2xl border border-white/10 mb-4 group-hover:bg-white/10 transition-colors">
+              <div className="w-full flex items-center justify-center py-6 px-8 bg-white/95 rounded-2xl border border-white/40 mb-4 group-hover:bg-white transition-colors shadow-[0_0_25px_rgba(255,255,255,0.5)]">
                 <img
-                  src="/logo_fortinet_clean.png"
+                  src="/logo_fortinet_raw.png"
                   alt="FORTINET"
-                  className="h-12 md:h-16 w-auto object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]"
+                  className="h-14 md:h-20 w-auto object-contain"
                 />
               </div>
               <span className="text-xs font-bold text-red-300 tracking-wider flex items-center gap-2 group-hover:text-white transition-colors">
