@@ -721,18 +721,18 @@ export default function CyberPage() {
           </div>
         </div>
 
-        {/* ── MÓDULOS Y CERTIFICACIONES ── */}
+        {/* ── MÓDULOS Y CERTIFICACIONES FORTINET ── */}
         <div className="bg-[#050e1f]/80 border border-white/10 rounded-3xl p-8 md:p-12 backdrop-blur-xl shadow-2xl">
           <div className="text-center mb-12">
             <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-wider">
-              Módulos y Certificaciones
+              Módulos y Certificaciones FORTINET
             </h3>
             <div className="mt-3 mx-auto w-16 h-1 rounded-full bg-[#33E8FF]" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
-            {/* 1. Introduction to the Threat Landscape 3.0 + NSE 1 Insignia (DUPLICADO EN TAMAÑO) */}
+            {/* 1. Fortinet Certified Fundamentals Cybersecurity */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -742,31 +742,31 @@ export default function CyberPage() {
                   <span className="text-xs font-bold text-slate-400">Certificación Oficial</span>
                 </div>
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
-                  1. Introduction to the Threat Landscape 3.0
+                  Fortinet Certified Fundamentals Cybersecurity
                 </h4>
                 <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left mb-6">
-                  Certificación fundamental sobre el panorama actual y evolución de las amenazas cibernéticas globales.
+                  La certificación Fortinet Certified Fundamentals in Cybersecurity acredita que quien la obtiene domina las habilidades técnicas y los conocimientos necesarios para cualquier puesto de nivel inicial en ciberseguridad. El plan de estudios abarca el panorama actual de amenazas y los fundamentos de la ciberseguridad.
                 </p>
               </div>
 
-              {/* NSE 1 Badge Card con Imagen Oficial (DUPLICADO EN TAMAÑO) */}
+              {/* Fortinet Certified Fundamentals Badge Card */}
               <div className="mt-2 bg-gradient-to-r from-teal-950/60 via-slate-900 to-slate-900 border border-teal-500/40 rounded-2xl p-5 flex flex-col md:flex-row items-center gap-6 shadow-[0_0_30px_rgba(20,184,166,0.3)]">
                 <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl bg-white/95 border border-white/50 p-2 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(255,255,255,0.5)] group-hover:scale-105 transition-transform duration-300">
                   <img
-                    src="/nse1_exam_v3.png"
-                    alt="NSE 1 Introduction to the Threat Landscape Exam v3.0"
+                    src="/logo_fortifund.png"
+                    alt="Fortinet Certified Fundamentals Cybersecurity"
                     className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="text-center md:text-left">
                   <div className="text-white font-black text-lg md:text-xl tracking-wide leading-tight">
-                    NSE 1 Network Security Associate
+                    Fortinet Certified Fundamentals
                   </div>
                   <div className="text-sm text-teal-300 font-extrabold mt-1">
-                    Introduction to the Threat Landscape Exam v3.0
+                    Cybersecurity
                   </div>
-                  <div className="text-xs text-slate-400 font-bold mt-2">
-                    Fortinet Training Institute Official Certification
+                  <div className="text-xs text-slate-300 font-bold mt-2 uppercase tracking-wider">
+                    Certificación oficial FORTINET
                   </div>
                 </div>
               </div>
