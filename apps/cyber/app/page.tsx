@@ -216,29 +216,31 @@ export default function CyberPage() {
 
       {/* ── 🛡️ SECURETIA & VULSEEK - ALIANZA Y SERVICIOS AVANZADOS ── */}
       <section className="relative z-10 py-20 px-4 max-w-6xl mx-auto w-full">
-        
-        {/* Banner de Alianza: SECURETIA (Izquierda), EXPERTOS EN CIBERSEGURIDAD (Centro), VULSEEK (Derecha) */}
+        {/* Banner de Alianza: SECURETIA (Izquierda), EXPERTOS EN CIBERSEGURIDAD + PARTNERS (Centro), VULSEEK (Derecha) */}
         <div className="relative bg-gradient-to-r from-blue-950/80 via-slate-900/90 to-red-950/80 border border-cyan-500/30 rounded-3xl p-8 md:p-12 mb-16 shadow-[0_10px_40px_rgba(0,0,0,0.5)] overflow-hidden">
           <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-red-500/10 blur-3xl rounded-full pointer-events-none" />
           
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
             
-            {/* LADO IZQUIERDO: SOLO LOGO SECURETIA */}
-            <div className="flex items-center justify-center shrink-0">
+            {/* LADO IZQUIERDO: LOGO SECURETIA EN FONDO BLANCO DESTACADO */}
+            <div className="flex items-center justify-center shrink-0 bg-white/95 rounded-2xl p-4 md:p-5 border border-white/40 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:scale-105 transition-transform duration-300">
               <img
                 src="/SECURETIA_clean.png"
                 alt="SECURETIA"
-                className="h-20 md:h-28 w-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+                className="h-16 md:h-22 w-auto object-contain"
               />
             </div>
 
-            {/* AL MEDIO: EXPERTOS EN CIBERSEGURIDAD + LEYENDA */}
+            {/* AL MEDIO: EXPERTOS EN CIBERSEGURIDAD + PARTNERS + LEYENDA */}
             <div className="flex flex-col items-center text-center max-w-2xl px-4 space-y-3">
               <h3 className="text-2xl md:text-3xl font-black tracking-wider text-[#33E8FF] uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.8)]">
                 EXPERTOS EN CIBERSEGURIDAD
               </h3>
-              <p className="text-white font-bold text-base md:text-lg leading-relaxed text-center">
+              <div className="inline-block px-4 py-1.5 rounded-full bg-[#33E8FF]/10 border border-[#33E8FF]/30 text-[#33E8FF] font-black text-sm md:text-base uppercase tracking-widest drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] mb-1">
+                Partners SECURETIA &amp; VULSEEK
+              </div>
+              <p className="text-white font-bold text-base md:text-lg leading-relaxed text-center pt-1">
                 Desde hace más de 10 años nos comprometimos a ofrecer soluciones simples que ayuden a las organizaciones a mejorar sus capacidades de prevención, detección y respuesta contra ciberamenazas.
               </p>
             </div>
@@ -255,14 +257,13 @@ export default function CyberPage() {
           </div>
         </div>
 
-        {/* ── GRIDA DE 4 CUADROS DE SEGURIDAD (SIN BADGES, LOGOS DUPLICADOS EN TAMAÑO) ── */}
+        {/* ── GRIDA DE CUADROS DE SEGURIDAD (LOGOS DUPLICADOS EN TAMAÑO) ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Cuadro 1: Análisis de Vulnerabilidades */}
           <div className="relative group bg-[#07111f] border border-cyan-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.25)] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-6 mb-6">
-                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
                 <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(51,232,255,0.35)] group-hover:scale-105 transition-transform duration-300">
                   <img
                     src="/icon_vulnerabilidades.png"
@@ -303,7 +304,6 @@ export default function CyberPage() {
           <div className="relative group bg-[#07111f] border border-red-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-red-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(239,68,68,0.25)] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-6 mb-6">
-                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
                 <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(239,68,68,0.35)] group-hover:scale-105 transition-transform duration-300">
                   <img
                     src="/icon_pentesting.png"
@@ -344,9 +344,12 @@ export default function CyberPage() {
           <div className="relative group bg-[#07111f] border border-blue-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-blue-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(59,130,246,0.25)] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-6 mb-6">
-                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
                 <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(59,130,246,0.35)] group-hover:scale-105 transition-transform duration-300">
-                  <span className="text-6xl md:text-7xl">📱</span>
+                  <img
+                    src="/icon_mobile.png"
+                    alt="Seguridad mobile"
+                    className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_#3b82f6]"
+                  />
                 </div>
                 <div>
                   <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
@@ -381,9 +384,12 @@ export default function CyberPage() {
           <div className="relative group bg-[#07111f] border border-emerald-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-emerald-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(16,185,129,0.25)] flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-6 mb-6">
-                {/* Logo Duplicado en Tamaño (w-28 h-28) */}
                 <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-emerald-500/10 border-2 border-emerald-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(16,185,129,0.35)] group-hover:scale-105 transition-transform duration-300">
-                  <span className="text-6xl md:text-7xl">⚙️</span>
+                  <img
+                    src="/icon_secdevops.png"
+                    alt="SecDevOps"
+                    className="w-20 h-20 md:w-24 md:h-24 object-contain drop-shadow-[0_0_15px_#10b981]"
+                  />
                 </div>
                 <div>
                   <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
@@ -392,7 +398,7 @@ export default function CyberPage() {
                 </div>
               </div>
               
-              <p className="text-slate-200 font-bold text-base leading-relaxed mb-6 text-left">
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
                 Te ayudamos a incorporar los conocimientos y procesos necesarios para transformar tu metodología de trabajo y así incorporar buenas prácticas de seguridad al mismo.
               </p>
 
@@ -411,6 +417,78 @@ export default function CyberPage() {
             </div>
             <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-emerald-300 uppercase tracking-wider text-left">
               Integración Continua Segura
+            </div>
+          </div>
+
+          {/* Cuadro 5: Respuesta ante incidentes */}
+          <div className="relative group bg-[#07111f] border border-orange-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-orange-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(249,115,22,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-6 mb-6">
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-orange-500/10 border-2 border-orange-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(249,115,22,0.35)] group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-6xl md:text-7xl">🚨</span>
+                </div>
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
+                    Respuesta ante incidentes
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
+                Ayudamos a tu organización a recuperarse rápidamente después de un ciberataque, minimizando el impacto y restaurando las operaciones.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Restauramos tus operaciones rápidamente",
+                  "Brindamos un análisis detallado del ataque y evaluación de daños",
+                  "Intervenimos de manera rápida y efectiva para contener el incidente",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
+                    <span className="text-orange-400 font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-orange-300 uppercase tracking-wider text-left">
+              Gestión &amp; Contención de Crisis
+            </div>
+          </div>
+
+          {/* Cuadro 6: Consultoría & Soporte Especializado */}
+          <div className="relative group bg-[#07111f] border border-purple-500/30 rounded-3xl p-8 md:p-10 transition-all duration-300 hover:border-purple-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(168,85,247,0.25)] flex flex-col justify-between">
+            <div>
+              <div className="flex items-center gap-6 mb-6">
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-3xl bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(168,85,247,0.35)] group-hover:scale-105 transition-transform duration-300">
+                  <span className="text-6xl md:text-7xl">👨‍💻</span>
+                </div>
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
+                    Consultoría &amp; Soporte Especializado
+                  </h3>
+                </div>
+              </div>
+              
+              <p className="text-slate-200 font-bold text-base md:text-lg leading-relaxed mb-6 text-left">
+                Ofrecemos servicios de alto nivel con nuestro equipo de consultores expertos, otorgando soluciones puntuales para tu negocio en múltiples ámbitos de la ciberseguridad.
+              </p>
+
+              <ul className="space-y-3 text-left">
+                {[
+                  "Brindamos soporte de ciberseguridad",
+                  "Ofrecemos consultorías en infraestructuras de seguridad",
+                  "Desarrollamos políticas de seguridad y normativas",
+                ].map((bullet, idx) => (
+                  <li key={idx} className="flex items-start gap-3 text-slate-300 font-bold text-sm md:text-base leading-relaxed">
+                    <span className="text-purple-400 font-black shrink-0 mt-0.5">■</span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-8 pt-4 border-t border-white/5 text-xs font-bold text-purple-300 uppercase tracking-wider text-left">
+              Asesoramiento &amp; Normativas de Seguridad
             </div>
           </div>
 
