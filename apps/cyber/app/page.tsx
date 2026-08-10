@@ -217,6 +217,109 @@ export default function CyberPage() {
         </div>
       </section>
 
+      {/* ── 🔒 SECURETIA & SERVICIOS PROFESIONALES ── */}
+      <section className="relative z-10 py-16 px-4 max-w-6xl mx-auto w-full">
+        {/* Banner SECURETIA */}
+        <div className="relative overflow-hidden bg-slate-900/90 border border-cyan-500/30 rounded-3xl p-8 mb-12 shadow-[0_0_50px_rgba(51,232,255,0.15)] flex flex-col md:flex-row items-center justify-center gap-8 text-center md:text-left">
+          <div className="absolute -top-12 -left-12 w-48 h-48 bg-cyan-500/10 blur-3xl rounded-full pointer-events-none" />
+          <div className="flex-shrink-0 bg-cyan-950/40 p-4 rounded-2xl border border-cyan-500/20 shadow-[0_0_20px_rgba(51,232,255,0.2)]">
+            <img 
+              src="/Logo SECURETIA.png" 
+              alt="SECURETIA" 
+              className="h-16 md:h-20 w-auto object-contain" 
+              onError={(e) => { 
+                const target = e.currentTarget;
+                target.style.display = 'none';
+                if (target.nextElementSibling) {
+                  target.nextElementSibling.classList.remove('hidden');
+                }
+              }} 
+            />
+            <div className="hidden text-3xl font-black text-[#33E8FF] tracking-wider uppercase">SECURETIA</div>
+          </div>
+          <div className="border-t md:border-t-0 md:border-l border-cyan-500/30 pt-6 md:pt-0 md:pl-8 flex flex-col justify-center">
+            <h3 className="text-xl md:text-2xl font-extrabold text-[#33E8FF] tracking-widest uppercase drop-shadow-[0_0_15px_rgba(51,232,255,0.5)]">
+              EXPERTOS EN CIBERSEGURIDAD
+            </h3>
+            <p className="text-slate-300 font-medium text-base md:text-lg mt-1 tracking-wide">
+              Partners en CUYO
+            </p>
+          </div>
+        </div>
+
+        {/* Título de Servicios Brindados */}
+        <div className="text-center mb-12">
+          <h3 className="text-xl md:text-3xl font-black text-white uppercase tracking-wider">
+            SERVICIOS PROFESIONALES BRINDADOS
+          </h3>
+          <div className="mt-3 mx-auto w-20 h-1 rounded-full bg-gradient-to-r from-cyan-400 to-rose-500" />
+        </div>
+
+        {/* 2 Cuadros Individuales */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Análisis de Vulnerabilidades */}
+          <div className="relative group bg-slate-900/80 border border-cyan-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-cyan-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(51,232,255,0.25)] flex flex-col">
+            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/40 flex items-center justify-center mb-6 text-[#33E8FF] shadow-[0_0_20px_rgba(51,232,255,0.2)]">
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <circle cx="12" cy="12" r="10" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01" />
+              </svg>
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-3 border-b border-white/10 pb-3">
+              Análisis de Vulnerabilidades
+            </h4>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+              Con este servicio podrás detectar problemas de seguridad en tu infraestructura que podrían ser utilizados por un atacante.
+            </p>
+            <ul className="space-y-3 mt-auto text-slate-300 text-sm md:text-base font-medium">
+              <li className="flex items-start gap-3">
+                <span className="text-[#33E8FF] text-lg leading-none">■</span>
+                <span>Proponemos un plan de acción ordenado y priorizado</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#33E8FF] text-lg leading-none">■</span>
+                <span>Mitigamos tus vulnerabilidades de forma efectiva</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-[#33E8FF] text-lg leading-none">■</span>
+                <span>Ayudamos a mejorar el nivel de seguridad de tu organización</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Penetration Testing */}
+          <div className="relative group bg-slate-900/80 border border-rose-500/30 rounded-3xl p-8 transition-all duration-300 hover:border-rose-400 hover:-translate-y-1 hover:shadow-[0_10px_35px_rgba(244,63,94,0.25)] flex flex-col">
+            <div className="w-16 h-16 rounded-2xl bg-rose-500/10 border border-rose-500/40 flex items-center justify-center mb-6 text-rose-400 shadow-[0_0_20px_rgba(244,63,94,0.2)]">
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-3 border-b border-white/10 pb-3">
+              Penetration Testing
+            </h4>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6">
+              Verificamos cuáles son los vectores de ataque que un cibercriminal podría utilizar para vulnerar tu infraestructura.
+            </p>
+            <ul className="space-y-3 mt-auto text-slate-300 text-sm md:text-base font-medium">
+              <li className="flex items-start gap-3">
+                <span className="text-rose-400 text-lg leading-none">■</span>
+                <span>Servicio adaptable a tus necesidades</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-rose-400 text-lg leading-none">■</span>
+                <span>Realizamos pruebas personalizadas para ataques externos o internos</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-rose-400 text-lg leading-none">■</span>
+                <span>Brindamos reportes detallados y recomendaciones claras</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
       {/* ── 🛠 SERVICIOS ESPECIALIZADOS ── */}
       <section className="relative z-10 py-20 px-4 bg-[#050d1f]/70 border-t border-b border-white/5">
         <div className="max-w-6xl mx-auto">
