@@ -1,0 +1,53 @@
+{
+  "name": "with-tailwind",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --concurrency 16",
+    "lint": "turbo run lint",
+    "check-types": "turbo run check-types",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "turbo run generate"
+  },
+  "devDependencies": {
+    "@parcel/watcher": "^2.5.6",
+    "@prisma/client": "6.19.3",
+    "@tailwindcss/oxide": "^4.2.2",
+    "dotenv": "^17.4.2",
+    "lightningcss": "^1.32.0",
+    "prettier": "^3.6.0",
+    "prettier-plugin-tailwindcss": "^0.7.1",
+    "prisma": "6.19.3",
+    "turbo": "^2.9.6"
+  },
+  "optionalDependencies": {
+    "@parcel/watcher-linux-x64-glibc": "^2.5.6",
+    "@parcel/watcher-linux-x64-musl": "^2.5.6",
+    "@parcel/watcher-win32-x64": "^2.5.6",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.2.2",
+    "@tailwindcss/oxide-linux-x64-musl": "^4.2.2",
+    "lightningcss-linux-x64-gnu": "^1.32.0",
+    "lightningcss-linux-x64-musl": "^1.32.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "npm@11.6.2",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@types/pg": "^8.20.0",
+    "pg": "^8.20.0",
+    "zod": "^4.3.6"
+  },
+  "overrides": {
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "next": "16.2.0",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.1"
+  }
+}

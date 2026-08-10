@@ -1,0 +1,538 @@
+"use client";
+import { useState, useEffect } from "react";
+import { Button } from "@repo/ui/button";
+import { HARDCODED_LOCALIDADES } from "../lib/localidades";
+
+interface LeadFormModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  planInfo: {
+    type: "HARDWARE" | "PLAN" | "QUOTE" | "INFO";
+    title: string;
+    description: string;
+  } | null;
+}
+
+export default function LeadFormModal({ isOpen, onClose, planInfo }: LeadFormModalProps) {
+  const [formData, setFormData] = useState({
+    name: "",
+    razonSocial: "",
+    nombreFantasia: "",
+    email: "",
+    phone: "",
+    dni: "",
+    message: "",
+    cbu: "",
+    clientCategory: "HOGAREÑO",
+    rubro: "COMERCIAL",
+    province: "",
+    departamento: "",
+    city: "",
+    otherCity: "",
+    street: "",
+    houseNumber: "",
+    zipCode: "",
+    installationPrice: "",
+    planName: "",
+    antennaModel: "",
+  });
+  const [localities, setLocalities] = useState<string[]>([]);
+  const [loadingLocalities, setLoadingLocalities] = useState(false);
+  
+  const PROVINCIAS = [
+    "Buenos Aires", "Ciudad Autónoma de Buenos Aires", "Catamarca", "Chaco", "Chubut", 
+    "Córdoba", "Corrientes", "Entre Ríos", "Formosa", "Jujuy", "La Pampa", "La Rioja", 
+    "Mendoza", "Misiones", "Neuquén", "Río Negro", "Salta", "San Juan", "San Luis", 
+    "Santa Cruz", "Santa Fe", "Santiago del Estero", "Tierra del Fuego", "Tucumán"
+  ];
+
+  const DEPARTAMENTOS: Record<string, string[]> = {
+    "Mendoza": ["Ciudad de Mendoza (Capital)", "Godoy Cruz", "Guaymallén", "Las Heras", "Lavalle", "Luján de Cuyo", "Maipú", "Junín", "La Paz", "Rivadavia", "San Martín", "Santa Rosa", "San Carlos", "Tunuyán", "Tupungato", "General Alvear", "Malargüe", "San Rafael"],
+    "San Juan": ["25 de Mayo", "9 de Julio", "Albardón", "Angaco", "Calingasta", "Capital", "Caucete", "Chimbas", "Iglesia", "Jáchal", "Pocito", "Rawson", "Rivadavia", "San Martín", "Santa Lucía", "Sarmiento", "Ullum", "Valle Fértil", "Zonda"],
+    "San Luis": [
+      "Ayacucho: San Francisco del Monte de Oro",
+      "Belgrano: Los Manantiales",
+      "Chacabuco: Concarán",
+      "Coronel Pringles: La Toma",
+      "General Pedernera: Villa Mercedes",
+      "Gobernador Dupuy: Buena Esperanza",
+      "Juan Martín de Pueyrredón: San Luis (Capital)",
+      "Junín: Santa Rosa del Conlara",
+      "Libertador General San Martín: San Martín"
+    ]
+  };
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [generatedNumber, setGeneratedNumber] = useState("");
+
+  const isSpecialPlan = planInfo?.title === "Plan Full Estándar V4" || planInfo?.title === "Relevamiento IT - Planes Empresariales";
+
+  // Dynamic dropdown logic
+  const ANTENA_OPTIONS = [
+    { value: "Mini X", label: "Antena Mini X - $300.000 + IVA (o 3 cuotas de $100.000)" },
+    { value: "Estándar V4", label: "Antena Estándar V4 - $500.000 + IVA (o 3 cuotas de $166.666)" },
+    { value: "Itinerante", label: "Antena Itinerante - $300.000 + IVA (o 3 cuotas de $100.000)" },
+    { value: "A Definir", label: "A definir / Otro" }
+  ];
+
+  const getPlanOptions = (antena: string) => {
+    if (antena === "Mini X") return [
+      { value: "Plan Básico Mini", label: "Plan Básico Mini - $90.000 + IVA / mes" }
+    ];
+    if (antena === "Estándar V4") return [
+      { value: "Plan Básico Estándar V4", label: "Plan Básico Estándar V4 - $120.000 + IVA / mes" },
+      { value: "Plan Full Estándar V4", label: "Plan Full Estándar V4 - $200.000 + IVA / mes" }
+    ];
+    if (antena === "Itinerante") return [
+      { value: "Plan Itinerante / Roam", label: "Plan Itinerante / Roam - A Convenir" }
+    ];
+    return [
+      { value: "A Convenir", label: "A Convenir / Otros" }
+    ];
+  };
+
+  const getInstallationOptions = (antena: string) => {
+    if (antena === "Mini X") return [
+      { value: "Mini - Contado: $150.000 + IVA", label: "Instalación Mini: $150.000 + IVA (Efectivo)" },
+      { value: "Mini - 3 cuotas de $60.000 + IVA", label: "Instalación Mini: 3 cuotas de $60.000 + IVA" }
+    ];
+    if (antena === "Estándar V4") return [
+      { value: "V4 Premium - Contado: $200.000 + IVA", label: "Instalación V4 Premium: $200.000 + IVA (Efectivo)" },
+      { value: "V4 Premium - 3 cuotas de $80.000 + IVA", label: "Instalación V4 Premium: 3 cuotas de $80.000 + IVA" }
+    ];
+    if (antena === "Itinerante") return [
+      { value: "Sin Instalación", label: "Sin Instalación" },
+      { value: "A Convenir", label: "Instalación a Convenir" }
+    ];
+    return [
+      { value: "A Convenir", label: "A Convenir" },
+      { value: "Bonificado (100% OFF)", label: "Bonificado (100% OFF)" }
+    ];
+  };
+
+  // When Antenna changes, auto-select the first Plan and Installation Option
+  const handleAntennaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedAntena = e.target.value;
+    const firstPlan = getPlanOptions(selectedAntena)[0]?.value || "";
+    const firstInstallation = getInstallationOptions(selectedAntena)[0]?.value || "";
+    
+    setFormData({
+      ...formData,
+      antennaModel: selectedAntena,
+      planName: firstPlan,
+      installationPrice: firstInstallation
+    });
+  };
+
+  useEffect(() => {
+    const handlePopState = (e: PopStateEvent) => {
+      if (isOpen) {
+        onClose();
+      }
+    };
+
+    if (isOpen && !success) {
+      // Hacemos push de un estado ficticio para poder atrapar el evento "Volver atrás" del navegador o celular.
+      window.history.pushState({ leadModalIdx: window.history.length }, "");
+      window.addEventListener("popstate", handlePopState);
+    }
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [isOpen, success, onClose]);
+
+  useEffect(() => {
+    const fetchLocalities = async () => {
+      if (!formData.province) {
+        setLocalities([]);
+        return;
+      }
+
+      // Máscara / prefijo de celular según provincia
+      let phonePrefix = "+549";
+      if (formData.province === "Mendoza") phonePrefix = "+549261";
+      else if (formData.province === "San Juan") phonePrefix = "+549264";
+      else if (formData.province === "San Luis") phonePrefix = "+549266";
+
+      setFormData(prev => {
+        // Solo sobrescribimos si estaba vacío o si contenía un prefijo automático anterior sin más números
+        const currentPhone = prev.phone.trim();
+        let newPhone = currentPhone;
+        if (!currentPhone || currentPhone === "+549" || currentPhone === "+549261" || currentPhone === "+549264" || currentPhone === "+549266") {
+          newPhone = phonePrefix;
+        }
+
+        // Resetear departamento si cambió la provincia y auto-seleccionar el primero si hay
+        const deptos = DEPARTAMENTOS[formData.province] || [];
+        const newDepto = deptos.length > 0 ? (deptos[0] || "") : "";
+
+        return { ...prev, phone: newPhone, departamento: prev.province === formData.province ? prev.departamento : newDepto };
+      });
+      
+      
+      setLoadingLocalities(true);
+      let baseNames: string[] = [];
+
+      try {
+        if (HARDCODED_LOCALIDADES[formData.province]) {
+          baseNames = [...HARDCODED_LOCALIDADES[formData.province]!];
+        } else {
+          const res = await fetch(`https://apis.datos.gob.ar/georef/api/localidades?provincia=${encodeURIComponent(formData.province)}&campos=nombre&max=2000`);
+          if (res.ok) {
+            const data = await res.json();
+            baseNames = data.localidades.map((l: any) => l.nombre) as string[];
+          }
+        }
+
+        // Fetch custom locations from our DB
+        try {
+          const customRes = await fetch(`/api/locations?provincia=${encodeURIComponent(formData.province)}`);
+          if (customRes.ok) {
+            const customData = await customRes.json();
+            if (customData.localidades && Array.isArray(customData.localidades)) {
+              baseNames = [...baseNames, ...customData.localidades];
+            }
+          }
+        } catch (dbErr) {
+          console.error("Error fetching custom locations", dbErr);
+        }
+
+        // Quitar duplicados y ordenar
+        let names = Array.from(new Set(baseNames)).sort((a, b) => a.localeCompare(b));
+        names.push("Otra localidad");
+        setLocalities(names);
+        
+        // Auto-seleccionar la primera opción si la ciudad actual no está en la lista
+        if (names.length > 0 && !names.includes(formData.city)) {
+          setFormData(prev => ({ ...prev, city: names[0] || "" }));
+        }
+      } catch (error) {
+        console.error("Error al cargar localidades", error);
+        setLocalities(["Otra localidad"]);
+      } finally {
+        setLoadingLocalities(false);
+      }
+    };
+    
+    // Solo un debounce muy básico
+    const timeoutId = setTimeout(() => {
+      fetchLocalities();
+    }, 300);
+    return () => clearTimeout(timeoutId);
+  }, [formData.province]);
+
+  const handleManualClose = () => {
+    if (window.history.state && window.history.state.leadModalIdx) {
+      window.history.back();
+    } else {
+      onClose();
+    }
+  };
+
+  if (!isOpen || !planInfo) return null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (!formData.email.includes("@")) {
+      alert("Por favor, introduzca una dirección de correo electrónico válida que contenga el símbolo '@'.");
+      setLoading(false);
+      return;
+    }
+
+
+
+    try {
+      const normalizedDni = formData.dni.replace(/\D/g, "");
+
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          dni: normalizedDni,
+          type: planInfo.type,
+          // override planName directly from the form dropdown, not planInfo
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setSuccess(true);
+        setGeneratedNumber(data.contractNumber);
+        
+        // Pequeña pausa para que vean el éxito y luego redirección
+        setTimeout(() => {
+          let portalUrl = process.env.NEXT_PUBLIC_CLIENT_PORTAL_URL;
+          
+          if (!portalUrl) {
+            console.warn("NEXT_PUBLIC_CLIENT_PORTAL_URL no está configurada.");
+            alert("¡Solicitud enviada con éxito! Un asesor se contactará con usted a la brevedad.");
+            onClose();
+            return;
+          }
+
+          // Asegurar que la URL sea absoluta y tenga protocolo
+          let targetBase = portalUrl.trim();
+          if (!targetBase.startsWith("http")) {
+            targetBase = `https://${targetBase}`;
+          }
+          
+          // Eliminar barra final si existe para evitar dobles barras
+          if (targetBase.endsWith("/")) {
+            targetBase = targetBase.slice(0, -1);
+          }
+          
+          const params = new URLSearchParams({
+            p_dni: normalizedDni,
+          });
+
+          window.location.href = `${targetBase}/soporte/${data.ticketId}?${params.toString()}`;
+        }, 3000);
+      } else {
+        const errorMsg = data.message ? `Error: ${data.message}` : (data.error || "Error al procesar la solicitud");
+        alert(errorMsg);
+      }
+    } catch (error) {
+      alert("Error de conexión");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] p-4 md:p-8 bg-white/60 dark:bg-slate-950/95 backdrop-blur-3xl animate-in fade-in duration-500 overflow-y-auto flex flex-col items-center text-slate-900 dark:text-slate-50 transition-colors duration-500">
+      <div className="w-full max-w-7xl my-auto bg-white/80 dark:bg-slate-900/40 border border-black/10 dark:border-white/10 rounded-[2rem] md:rounded-[4rem] shadow-2xl dark:shadow-[0_0_100px_rgba(0,0,0,0.8)] relative overflow-hidden flex flex-col lg:flex-row min-h-fit transition-all duration-700">
+        {/* Glow Effects */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 opacity-50" />
+        <div className="absolute -top-32 -right-32 w-64 h-64 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none" />
+        
+        {success ? (
+          <div className="w-full py-20 px-10 text-center animate-in zoom-in duration-500 flex flex-col items-center justify-center">
+            <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+               <svg className="w-10 h-10 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+               </svg>
+            </div>
+            <h2 className="text-3xl font-black text-white uppercase tracking-tight mb-2">¡Solicitud Registrada!</h2>
+            
+            <div className="bg-slate-950/80 border border-emerald-500/20 rounded-2xl p-6 my-6">
+              <p className="text-slate-500 text-[10px] uppercase tracking-widest mb-2">Tu Número de Seguimiento</p>
+              <p className="text-2xl font-black text-emerald-400 font-mono tracking-wider">{generatedNumber}</p>
+            </div>
+
+            <p className="text-slate-400 text-sm font-medium px-4">
+              {isSpecialPlan 
+                ? "Tu solicitud de relevamiento está siendo procesada. Te estamos redirigiendo al portal..."
+                : "Estamos conectándote con el portal para completar los datos de tu antena..."}
+            </p>
+            
+            <div className="mt-8 flex justify-center">
+               <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex flex-col lg:flex-row min-h-[600px]">
+              <div className="lg:w-[35%] bg-slate-100/50 dark:bg-slate-950/40 p-6 md:p-12 border-r border-black/5 dark:border-white/5 flex flex-col justify-between relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="mb-8">
+                    <span className="text-[10px] font-black text-cyan-400 uppercase tracking-[0.3em] bg-cyan-500/10 px-4 py-1.5 rounded-full border border-cyan-500/20 mb-6 inline-block">
+                      {planInfo.type === 'QUOTE' ? 'Misión: Relevamiento' : 'ADQUISICIÓN INICIAL'}
+                    </span>
+                    <h2 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight leading-tight mb-8">
+                      {planInfo.title}
+                    </h2>
+                    <div className="h-1 w-20 bg-gradient-to-r from-cyan-400 to-blue-600 mb-10 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)]" />
+                  </div>
+                  
+                  <p className="text-white text-sm font-bold leading-relaxed mb-10">
+                    {planInfo.description}
+                  </p>
+
+                  <div className="mt-12 space-y-6">
+                    <div className="flex items-center gap-4 group">
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
+                        {planInfo.type === 'HARDWARE' ? (
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+                        ) : planInfo.type === 'PLAN' ? (
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        ) : (
+                          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Prioridad</p>
+                        <p className="text-slate-900 dark:text-white font-bold text-sm">ALTA - B2B Directo</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative z-10 pt-8 border-t border-white/5">
+                   <div className="flex items-center gap-3 mb-3">
+                      <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_12px_rgba(6,182,212,1)]" />
+                      <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Canal de Enlace Directo</span>
+                   </div>
+                   <p className="text-[12px] font-black text-cyan-400/80 uppercase tracking-wider">Cifrado de Punto a Punto Activo</p>
+                </div>
+              </div>
+
+              {/* Right Panel: Form */}
+              <div className="lg:w-[65%] p-6 sm:p-10 md:p-20 bg-white/20 dark:bg-slate-900/20 backdrop-blur-sm flex flex-col justify-center">
+                <div className="flex justify-between items-center mb-8 md:mb-16">
+                  <div>
+                    <h3 className="text-xl font-black text-[#33E8FF] uppercase tracking-[0.3em] leading-none mb-3 drop-shadow-md">
+                      {planInfo.type === 'QUOTE' ? 'DATOS DE SOLICITUD INICIAL DE RELEVAMIENTO:' : 'DATOS DE SOLICITUD INICIALES:'}
+                    </h3>
+                    <div className="h-0.5 w-16 bg-cyan-500/50 rounded-full" />
+                  </div>
+                  <button 
+                    type="button"
+                    onClick={handleManualClose}
+                    className="w-12 h-12 bg-black/5 dark:bg-white/5 hover:bg-red-500/20 hover:text-red-500 dark:hover:text-red-400 hover:border-red-500/30 rounded-2xl flex items-center justify-center text-slate-500 transition-all border border-black/10 dark:border-white/10 group active:scale-90"
+                  >
+                    <svg className="w-6 h-6 transition-transform group-hover:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                  </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-8 flex-1">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Razón Social</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.razonSocial}
+                        onChange={e => setFormData({...formData, razonSocial: e.target.value})}
+                        placeholder="Empresa S.A."
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre de Fantasía</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.nombreFantasia}
+                        onChange={e => setFormData({...formData, nombreFantasia: e.target.value})}
+                        placeholder="Mi Negocio"
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">CUIT / CUIL</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.dni}
+                        onChange={e => setFormData({...formData, dni: e.target.value})}
+                        placeholder="20345678901"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-mono font-bold shadow-2xl"
+                      />
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Nombre y Apellido Completo</label>
+                      <input 
+                        type="text" 
+                        required
+                        value={formData.name}
+                        onChange={e => setFormData({...formData, name: e.target.value})}
+                        placeholder="Juan Pérez"
+                        className="w-full bg-white/50 dark:bg-black/40 border border-black/10 dark:border-white/5 text-slate-900 dark:text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Rubro</label>
+                      <select 
+                        required
+                        value={formData.rubro}
+                        onChange={e => setFormData({...formData, rubro: e.target.value})}
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all font-bold shadow-2xl appearance-none"
+                      >
+                        <option value="GASTRONOMICO">GASTRONOMICO</option>
+                        <option value="HOTELERO">HOTELERO</option>
+                        <option value="COMERCIAL">COMERCIAL</option>
+                        <option value="EMPRESARIAL">EMPRESARIAL</option>
+                        <option value="INDUSTRIAL">INDUSTRIAL</option>
+                        <option value="RETAIL">RETAIL</option>
+                      </select>
+                    </div>
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Mail</label>
+                      <input 
+                        type="email" 
+                        required
+                        pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+                        value={formData.email}
+                        onChange={e => setFormData({...formData, email: e.target.value.trim()})}
+                        placeholder="correo@empresa.com"
+                        className={`w-full bg-black/40 border ${formData.email.length > 0 && !/[^@\s]+@[^@\s]+\.[^@\s]+/.test(formData.email) ? 'border-red-500/50 focus:border-red-500/50 focus:ring-red-500/10' : 'border-white/5 focus:border-cyan-500/50 focus:ring-cyan-500/5'} text-white rounded-2xl px-8 py-5 focus:ring-8 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div className="space-y-4">
+                      <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Celular</label>
+                      <input 
+                        type="tel" 
+                        required
+                        value={formData.phone}
+                        onChange={e => setFormData({...formData, phone: e.target.value})}
+                        placeholder="+54 9..."
+                        className="w-full bg-black/40 border border-white/5 text-white rounded-2xl px-8 py-5 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all placeholder:text-slate-800 font-bold shadow-2xl"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <label className="text-xs md:text-sm font-black text-white uppercase tracking-[0.2em] ml-1 drop-shadow-md">Observaciones</label>
+                    <textarea 
+                      rows={4}
+                      value={formData.message}
+                      onChange={e => setFormData({...formData, message: e.target.value})}
+                      placeholder="Describa brevemente el entorno de instalación..."
+                      className="w-full bg-black/40 border border-white/5 text-white rounded-3xl px-8 py-6 focus:border-cyan-500/50 focus:ring-8 focus:ring-cyan-500/5 outline-none transition-all resize-none placeholder:text-slate-800 text-sm font-medium shadow-2xl"
+                    />
+                  </div>
+
+                  <div className="pt-6 flex flex-col sm:flex-row gap-4">
+                    <button 
+                      type="submit"
+                      disabled={loading}
+                      className="flex-grow bg-white hover:bg-cyan-500 text-slate-950 hover:text-white font-black py-6 rounded-2xl transition-all shadow-2xl shadow-cyan-500/20 text-sm uppercase tracking-[0.3em] group active:scale-[0.98] border border-transparent hover:border-cyan-400/50"
+                    >
+                      {loading ? (
+                        <div className="flex items-center justify-center gap-3">
+                          <div className="w-5 h-5 border-3 border-slate-900 border-t-transparent animate-spin rounded-full" />
+                          <span>ESTABLECIENDO ENLACE...</span>
+                        </div>
+                      ) : "INICIAR PROCESO DE ALTA"}
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-center gap-3 opacity-40 hover:opacity-100 transition-opacity duration-500">
+                    <svg className="w-5 h-5 text-cyan-500" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    <span className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">CIBERSEGURIDAD - MR Tech</span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}

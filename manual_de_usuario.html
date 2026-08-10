@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Usuario - Sistema Satelital B2B - MR Technology</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #020617;
+      --bg-secondary: #0b1528;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #a855f7;
+      --accent-blue: #3b82f6;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #a855f7 100%);
+      --gradient-sidebar: linear-gradient(180deg, #0b1528 0%, #020617 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-size: 15px;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    /* Layout structure */
+    .app-container {
+      display: flex;
+      min-h: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 320px;
+      background: var(--gradient-sidebar);
+      border-right: 1px solid var(--border-color);
+      padding: 2.5rem 1.5rem;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 10;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+      padding-left: 0.5rem;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      color: white;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3);
+    }
+
+    .logo-text h2 {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .logo-text p {
+      font-size: 8px;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-item a {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.2rem;
+      border-radius: 14px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item a:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-item.active a {
+      color: white;
+      background: rgba(6, 182, 212, 0.1);
+      border-color: rgba(6, 182, 212, 0.25);
+      box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.05);
+    }
+
+    /* Content Area */
+    .main-content {
+      margin-left: 320px;
+      flex-grow: 1;
+      padding: 4rem 6rem;
+      max-width: 1200px;
+    }
+
+    /* Print Header (Visible only on print or web standalone view) */
+    .print-header-banner {
+      display: none;
+    }
+
+    /* Documentation styling */
+    .doc-section {
+      margin-bottom: 6rem;
+      scroll-margin-top: 4rem;
+    }
+
+    .doc-section h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+      position: relative;
+    }
+
+    .doc-section h1::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--gradient-primary);
+      margin-top: 1rem;
+      border-radius: 2px;
+    }
+
+    .doc-section h2 {
+      font-size: 1.8rem;
+      margin-top: 3rem;
+      margin-bottom: 1.2rem;
+      color: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .doc-section p {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .doc-section ul, .doc-section ol {
+      margin-bottom: 2rem;
+      padding-left: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .doc-section li {
+      margin-bottom: 0.75rem;
+      font-size: 1.05rem;
+    }
+
+    /* UI Cards Showcase */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2.5rem 0;
+    }
+
+    .feature-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(6, 182, 212, 0.3);
+      box-shadow: 0 10px 30px rgba(6, 182, 212, 0.05);
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+      opacity: 0.8;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      color: white;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .feature-card p {
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    /* Highlighting box styling */
+    .note-box {
+      background: rgba(6, 182, 212, 0.03);
+      border-left: 4px solid var(--accent-cyan);
+      border-radius: 0 16px 16px 0;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0;
+      border-top: 1px solid rgba(6, 182, 212, 0.05);
+      border-right: 1px solid rgba(6, 182, 212, 0.05);
+      border-bottom: 1px solid rgba(6, 182, 212, 0.05);
+    }
+
+    .note-box h4 {
+      color: var(--accent-cyan);
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .note-box p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+    }
+
+    .step-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin-top: 2rem;
+      position: relative;
+    }
+
+    .step-item {
+      position: relative;
+      padding-left: 3.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .step-item::before {
+      content: '';
+      position: absolute;
+      left: 17px;
+      top: 36px;
+      bottom: -36px;
+      width: 2px;
+      background: var(--border-color);
+    }
+
+    .step-item:last-child::before {
+      display: none;
+    }
+
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 900;
+      color: white;
+      font-size: 0.95rem;
+      box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+    }
+
+    .step-content h3 {
+      font-size: 1.15rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-content p {
+      margin-bottom: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Print manual export guidelines card */
+    .print-guide-card {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
+      border: 1px solid rgba(168, 85, 247, 0.15);
+      border-radius: 24px;
+      padding: 3rem;
+      margin-top: 4rem;
+    }
+
+    .print-guide-card h2 {
+      margin-top: 0;
+      color: white;
+      background: linear-gradient(to right, #a855f7, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Print styling definitions */
+    @media print {
+      @page {
+        size: A4;
+        margin: 1.5cm;
+      }
+
+      body {
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+        font-size: 12pt;
+      }
+
+      .sidebar {
+        display: none !important;
+      }
+
+      .main-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .print-header-banner {
+        display: block !important;
+        margin-bottom: 3cm;
+        border-bottom: 2px solid #0f172a;
+        padding-bottom: 1cm;
+        page-break-after: avoid;
+      }
+
+      .print-header-banner h1 {
+        font-size: 32pt;
+        color: #0f172a !important;
+        margin-bottom: 0.2cm;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+      }
+
+      .print-header-banner p {
+        font-size: 10pt;
+        color: #64748b !important;
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 0.3em;
+      }
+
+      .doc-section {
+        page-break-after: always;
+        margin-bottom: 2cm !important;
+      }
+
+      .doc-section:last-child {
+        page-break-after: avoid;
+      }
+
+      .doc-section h1 {
+        font-size: 24pt !important;
+        color: #0f172a !important;
+        -webkit-text-fill-color: initial !important;
+        margin-top: 1cm;
+        margin-bottom: 0.8cm;
+      }
+
+      .doc-section h2 {
+        font-size: 16pt !important;
+        color: #1e293b !important;
+        margin-top: 1.5cm;
+        margin-bottom: 0.6cm;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .doc-section p, .doc-section li {
+        color: #334155 !important;
+      }
+
+      .feature-card {
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        page-break-inside: avoid;
+      }
+
+      .feature-card h3 {
+        color: #0f172a !important;
+      }
+
+      .feature-card::before {
+        display: none;
+      }
+
+      .note-box {
+        background: #f1f5f9 !important;
+        border-left: 4px solid #0f172a !important;
+        border-top: 1px solid #e2e8f0 !important;
+        border-right: 1px solid #e2e8f0 !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        color: #1e293b !important;
+        page-break-inside: avoid;
+      }
+
+      .note-box h4 {
+        color: #0f172a !important;
+      }
+
+      .note-box p {
+        color: #334155 !important;
+      }
+
+      .step-item {
+        page-break-inside: avoid;
+      }
+
+      .step-number {
+        background: #0f172a !important;
+        color: #ffffff !important;
+        box-shadow: none !important;
+      }
+
+      .print-guide-card {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Navigation Sidebar (Interactive Screen Only) -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-badge">MR</div>
+        <div class="logo-text">
+          <h2>MR Technology</h2>
+          <p>Manual del Sistema</p>
+        </div>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active"><a href="#intro">1. Introducción</a></li>
+        <li class="nav-item"><a href="#noc">2. Monitoreo NOC</a></li>
+        <li class="nav-item"><a href="#leads">3. CRM - Leads</a></li>
+        <li class="nav-item"><a href="#accounts">4. CRM - Cuentas 360°</a></li>
+        <li class="nav-item"><a href="#billing">5. Facturas y Cobros</a></li>
+        <li class="nav-item"><a href="#chat">6. Chat Staff (DMs y Grupos)</a></li>
+        <li class="nav-item"><a href="#workflows">7. Flujos del Sistema</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Documentation Scroll Area -->
+    <main class="main-content">
+      
+      <!-- Static Cover Header for Print Layout -->
+      <div class="print-header-banner">
+        <h1>MANUAL DE USUARIO SISTEMA SATELITAL</h1>
+        <p>MR Technology • Centro de Operaciones de Red (NOC) y CRM</p>
+      </div>
+
+      <!-- SECTION 1: Introduction -->
+      <section id="intro" class="doc-section">
+        <h1>1. Introducción al Sistema</h1>
+        <p>El Sistema Satelital de MR Technology es una plataforma de software unificada y de alto rendimiento diseñada específicamente para coordinar y escalar la provisión de conectividad a internet de nivel empresarial y residencial a través de enlaces satelitales.</p>
+        
+        <p>Esta solución consolida en un único entorno de trabajo de alta gama las operaciones del Centro de Monitoreo de Red (NOC), el Ciclo de Ventas (CRM Leads), la administración técnica de clientes activos (Cuentas 360°), la facturación recurrente integrada y los canales internos de comunicación técnica en tiempo real para el personal.</p>
+
+        <div class="grid-cards">
+          <div class="feature-card">
+            <h3>🌐 Gestión NOC</h3>
+            <p>Monitoreo en tiempo real del estado de los terminales satelitales y distribución de tickets de soporte técnico a ingenieros en campo.</p>
+          </div>
+          <div class="feature-card">
+            <h3>📈 Pipeline CRM</h3>
+            <p>Control sobre la adquisición de leads de ventas, mapeo geográfico de factibilidad técnica y flujos de pre-calificación comercial.</p>
+          </div>
+          <div class="feature-card">
+            <h3>💳 Facturación Activa</h3>
+            <p>Control administrativo de abonos, cuentas de cobro recurrentes, estados de balance e integración informativa de pasarelas de pago.</p>
+          </div>
+        </div>
+
+        <div class="note-box">
+          <h4>💡 Sobre esta documentación</h4>
+          <p>Este documento está estructurado para capacitar tanto a ingenieros de red, personal comercial de ventas, personal administrativo de facturación como a técnicos de instalación. Para exportarlo a PDF, por favor siga las instrucciones de impresión en la última sección de esta página.</p>
+        </div>
+      </section>
+
+      <!-- SECTION 2: NOC Network Operations Center -->
+      <section id="noc" class="doc-section">
+        <h1>2. Monitoreo NOC y Soporte</h1>
+        <p>El Módulo NOC (Network Operations Center) actúa como la cabina de control operativo de MR Technology. Permite a los administradores y técnicos de red supervisar activamente la salud operacional de los terminales de usuario finales y gestionar incidentes de servicio rápidamente.</p>
+
+        <h2>Tablero de Control Principal (NOC Dashboard)</h2>
+        <p>El panel principal de control visualiza de forma instantánea indicadores clave de rendimiento (KPIs) de toda la infraestructura desplegada, tales como:</p>
+        <ul>
+          <li><strong>Disponibilidad General de Enlaces (SLA)</strong>: Porcentaje de tiempo de actividad acumulado de las antenas satelitales del ecosistema.</li>
+          <li><strong>Clientes Activos y En Servicio</strong>: Cantidad total de antenas online.</li>
+          <li><strong>Tasa de Fallos en Tiempo Real</strong>: Alertas instantáneas ante cortes de energía en antenas instaladas, degradación meteorológica en las señales de radio o desalineaciones de acimut.</li>
+          <li><strong>Tickets de Soporte Abiertos</strong>: Número de solicitudes con prioridades críticas, medias o bajas pendientes de resolución.</li>
+        </ul>
+
+        <h2>Módulo de Tickets de Soporte Técnico</h2>
+        <p>Cuando un enlace satelital experimenta atenuación de señal o el cliente reporta intermitencia, se inicia el protocolo de ticketera:</p>
+        <ol>
+          <li><strong>Apertura del Ticket</strong>: Se registra el cliente afectado, el síntoma de fallo (ej. "Atenuación por Nubosidad", "Falla de Router Local") y el nivel de criticidad.</li>
+          <li><strong>Asignación de Técnico en Campo</strong>: El despachador NOC asigna el ticket a un ingeniero técnico de campo disponible desde una lista reactiva.</li>
+          <li><strong>Registro de Bitácora Operativa</strong>: Tanto el personal del NOC como el técnico asignado pueden postear actualizaciones y mensajes interactivos dentro del ticket para rastrear los detalles del diagnóstico y la posterior resolución del servicio.</li>
+        </ol>
+      </section>
+
+      <!-- SECTION 3: CRM Módulo Leads -->
+      <section id="leads" class="doc-section">
+        <h1>3. Módulo CRM: Leads y Comercial</h1>
+        <p>El ciclo comercial se inicia en el panel de Leads. El objetivo de este módulo es centralizar las solicitudes de contratación y evaluar la viabilidad de instalación satelital para cada prospecto comercial.</p>
+
+        <h2>Funcionalidades Comerciales Clave</h2>
+        <ul>
+          <li><strong>Captura y Embudo de Conversión</strong>: Registro manual o recepción automática de leads capturados a través del landing de ventas de la empresa (incluyendo nombre de contacto, datos de la empresa, teléfono de contacto y correo electrónico).</li>
+          <li><strong>Coordenadas Exactas de Factibilidad Técnica</strong>: Dado que el internet satelital requiere una línea de vista completamente despejada al firmamento para la órbita de constelación, el sistema exige ingresar de forma precisa la <strong>Latitud</strong> y <strong>Longitud</strong> geográficas de la locación en un formato decimal estándar (ej. <code>-12.046374, -77.042793</code>).</li>
+          <li><strong>Calificación y Asignación</strong>: Clasificación del prospecto de ventas de acuerdo con la velocidad de ancho de banda requerida (B2B Corporativo, Residencial Premium o Enlace Industrial).</li>
+        </ul>
+
+        <div class="note-box">
+          <h4>📌 Importancia de las Coordenadas Geográficas</h4>
+          <p>Asegúrese siempre de validar las coordenadas con un receptor GPS o Google Maps. El ingreso erróneo de latitud y longitud impedirá al instalador localizar la antena correctamente o podría causar fallas en los cálculos automáticos de apuntamiento de la antena satelital.</p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: CRM Accounts 360° -->
+      <section id="accounts" class="doc-section">
+        <h1>4. CRM: Cuentas y Clientes 360°</h1>
+        <p>Una vez que el lead comercial completa su pre-calificación y se le realiza la instalación, se transforma en una <strong>Cuenta 360°</strong> activa. Este módulo unifica toda la información comercial, técnica y geográfica de un cliente en un solo panel consolidado.</p>
+
+        <h2>Ficha Integral del Cliente (Vista 360°)</h2>
+        <p>Al seleccionar cualquier cuenta activa en la interfaz de administración, el personal tiene acceso a las siguientes pestañas de datos:</p>
+        <ul>
+          <li><strong>Información Corporativa y de Contacto</strong>: Razón social, RUT/NIT, teléfono, email y dirección física de entrega del servicio.</li>
+          <li><strong>Detalles del Plan de Conectividad Contratado</strong>: Plan comercial asignado (ej. "Plan Enlace Simétrico 100 Mbps B2B"), tarifa mensual fijada en USD y fecha exacta del aniversario de facturación.</li>
+          <li><strong>Especificaciones Técnicas del Hardware Satelital</strong>: Modelo de la antena satelital asignada, número de serie único del terminal de red (ID Terminal), dirección IP estática o dinámica asignada a su router de distribución y versión de firmware operativa.</li>
+          <li><strong>Estado de Conexión y Monitoreo Remoto</strong>: Ping en tiempo real y latencia en milisegundos del cliente, reportados desde el sistema NOC hacia su ficha CRM para diagnósticos instantáneos sin cambiar de página.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 5: Invoicing and Billing -->
+      <section id="billing" class="doc-section">
+        <h1>5. Facturación, Cobros y Pasarela</h1>
+        <p>El Módulo de Facturas y Cobros garantiza la sostenibilidad financiera de MR Technology, automatizando el control de las obligaciones mensuales de cada enlace de comunicaciones activo.</p>
+
+        <h2>Control de Facturas Recurrentes</h2>
+        <p>El sistema genera mensualmente las facturas de cobro correspondientes a los servicios contratados por cada cliente. El personal administrativo tiene acceso a:</p>
+        <ul>
+          <li><strong>Pipeline de Estados Financieros</strong>: Vista rápida de facturas en estado <code>Pendiente de Pago</code>, <code>Pagada</code> o <code>Vencida</code>.</li>
+          <li><strong>Generación de Comprobantes de Pago</strong>: Registro manual de transferencias bancarias o cobros procesados offline por el equipo de finanzas.</li>
+          <li><strong>Resumen de Caja y Balances</strong>: Panel con las ganancias proyectadas frente a la recaudación real del mes en curso, permitiendo visualizar la tasa de morosidad.</li>
+        </ul>
+
+        <div class="note-box">
+          <h4>💳 Integración Informativa de la Pasarela de Pago</h4>
+          <p>De acuerdo con las directrices operativas actuales de MR Technology, la pasarela de pagos integrada en el portal de clientes se mantiene con fines informativos. Muestra a los clientes sus abonos sugeridos, fechas límites y métodos de pago oficiales de la empresa, simplificando la autogestión de cobros sin forzar comisiones bancarias automáticas innecesarias en esta fase.</p>
+        </div>
+      </section>
+
+      <!-- SECTION 6: Staff Chat (DMs and Groups) -->
+      <section id="chat" class="doc-section">
+        <h1>6. Chat Staff de Comunicación Interna</h1>
+        <p>El Módulo de Chat Staff es la red de comunicación interna en tiempo real para el equipo técnico y de ventas de MR Technology. Ha sido completamente rediseñado y expandido para brindar una experiencia de mensajería multi-room fluida y de nivel corporativo.</p>
+
+        <h2>Estructura del Ecosistema de Chat</h2>
+        <p>La nueva interfaz del Chat Staff se divide en una arquitectura robusta de 3 niveles de interacción en tiempo real:</p>
+        
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-number">G</div>
+            <div class="step-content">
+              <h3>Canal General (Global)</h3>
+              <p>Un espacio de chat abierto para todos los miembros registrados del staff (ADMIN, TECH, SALES). Ideal para anuncios globales, reportes de caída de red masivos, cambios en las guardias del NOC o alertas de clima espacial que afecten las transmisiones satelitales.</p>
+            </div>
+          </div>
+          
+          <div class="step-item">
+            <div class="step-number">DM</div>
+            <div class="step-content">
+              <h3>Chats Directos (1-a-1 Privados)</h3>
+              <p>Permite iniciar una conversación bidireccional completamente privada con cualquier otro usuario staff disponible en el sistema. Simplemente haga clic sobre cualquier usuario en el listado de <strong>"Contactos Staff"</strong> para crear instantáneamente el canal privado y comenzar a chatear.</p>
+            </div>
+          </div>
+          
+          <div class="step-item">
+            <div class="step-number">👥</div>
+            <div class="step-content">
+              <h3>Grupos Personalizados</h3>
+              <p>Canales privados grupales configurados a la medida de las necesidades operativas. A través del botón <strong>"➕ Grupo"</strong> en el sidebar, los usuarios pueden ingresar el nombre del grupo y marcar a múltiples técnicos y administradores para crear una sala exclusiva de coordinación.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2>Detalles Importantes de la UI y Scroll de Mensajes</h2>
+        <ul>
+          <li><strong>Autenticación y Seguridad de Miembros</strong>: A excepción del canal general, el acceso a los mensajes de chats directos (DMs) y grupos está cifrado y restringido únicamente a sus miembros. La API bloquea automáticamente accesos no autorizados con un error 403.</li>
+          <li><strong>Scroll Inteligente e Indicadores Laterales</strong>: Se resolvió la visualización del scroll incorporando una barra de desplazamiento optimizada y estilizada con colores HSL vibrantes de alta gama. La interfaz autodetecta si el usuario está leyendo mensajes anteriores, deteniendo el auto-scroll para permitir una lectura tranquila, y proporciona scroll fluido y reactivo al enviar un mensaje.</li>
+          <li><strong>Identificadores de Rol Premium</strong>: Los globos de conversación diferencian al remitente en base a su nivel de acceso dentro de la compañía, destacando en tonos cian a los <code>Administradores</code> y en tonos púrpuras a los <code>Técnicos / Vendedores</code> para una rápida jerarquización visual de la comunicación técnica.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 7: Key Workflows -->
+      <section id="workflows" class="doc-section">
+        <h1>7. Flujos de Trabajo Clave</h1>
+        <p>Para maximizar la eficiencia en el uso de la plataforma, a continuación se detallan los flujos operativos estándar paso a paso para los incidentes cotidianos de la empresa.</p>
+
+        <h2>Flujo A: Conversión de Lead a Cliente Activo</h2>
+        <ol>
+          <li>El lead se registra con sus datos de contacto y <strong>coordenadas geográficas exactas</strong> (Latitud/Longitud).</li>
+          <li>El equipo de ventas valida la viabilidad comercial y asigna un plan de megabytes adecuado.</li>
+          <li>El técnico realiza el apuntamiento físico de la antena en sitio. Al confirmarse el enlace exitoso en campo, se da de alta al cliente como una <strong>Cuenta 360°</strong> activa en el sistema.</li>
+          <li>El sistema genera automáticamente el perfil de hardware satelital (ID Terminal) y habilita la facturación recurrente.</li>
+        </ol>
+
+        <h2>Flujo B: Resolución de Caída de Enlace Satelital</h2>
+        <ol>
+          <li>El Centro de Monitoreo NOC detecta una desconexión (Loss of Signal) prolongada de una antena de cliente.</li>
+          <li>El NOC abre un ticket crítico asignándole la categoría "Corte de Enlace".</li>
+          <li>El despachador del NOC asigna el ticket a un técnico especializado que se encuentre geográficamente más cercano a la zona del cliente.</li>
+          <li>El técnico recibe la notificación en su móvil y procede a movilizarse al sitio del cliente para alineación física o cambio de hardware.</li>
+          <li>Durante la labor en campo, el técnico y el NOC se comunican directamente usando la mensajería interna del <strong>Chat Staff</strong> (creando un grupo de monitoreo temporal) para confirmar cuándo la antena vuelve a reportar telemetría verde en el dashboard.</li>
+          <li>Se reporta la resolución del ticket y se cierra el caso de soporte.</li>
+        </ol>
+
+        <!-- Print Guidelines Interactive Card -->
+        <div class="print-guide-card">
+          <h2>🖨️ ¿Desea guardar este manual en PDF?</h2>
+          <p>Este manual web ha sido especialmente formateado con reglas de diseño CSS profesionales para que se imprima de manera perfecta en páginas tamaño A4 de alta definición.</p>
+          <ul style="margin-top: 1rem; margin-bottom: 1.5rem;">
+            <li>Presione la combinación de teclas <strong>Ctrl + P</strong> en su navegador (o haga clic secundario y elija "Imprimir").</li>
+            <li>En la configuración de destino, seleccione la opción <strong>"Guardar como PDF"</strong>.</li>
+            <li>En opciones adicionales, asegúrese de marcar la casilla <strong>"Gráficos de fondo"</strong> (Background graphics) para conservar los degradados y colores corporativos premium en su documento PDF final.</li>
+            <li>Haga clic en Guardar y seleccione la ruta de su computador donde desea archivar el documento PDF.</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>

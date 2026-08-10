@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "@repo/tailwind-config";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Evitar scroll horizontal SIN romper position:fixed en desktop */
+/* overflow-x: clip es más seguro que hidden para fixed elements */
+body {
+  overflow-x: clip;
+}
+
+@keyframes slide-right {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1000px 0;
+  }
+}
