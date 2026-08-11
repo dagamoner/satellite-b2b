@@ -735,12 +735,6 @@ export default function CyberPage() {
             {/* 1. Fortinet Certified Fundamentals Cybersecurity */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-black tracking-[0.2em] text-[#33E8FF] uppercase bg-[#33E8FF]/10 px-3 py-1 rounded-full border border-[#33E8FF]/20">
-                    MÓDULO 01
-                  </span>
-                  <span className="text-xs font-bold text-slate-400">Certificación Oficial</span>
-                </div>
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
                   Fortinet Certified Fundamentals Cybersecurity
                 </h4>
@@ -772,58 +766,45 @@ export default function CyberPage() {
               </div>
             </div>
 
-            {/* 2. Getting Started in Cybersecurity 3.0 – Self-Paced */}
+            {/* Getting Started in Cybersecurity 3.0 – Self-Paced */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-black tracking-[0.2em] text-emerald-400 uppercase bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                    MÓDULO 02
-                  </span>
-                  <span className="text-xs font-bold text-slate-400">Auto-Administrado</span>
-                </div>
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
-                  2. Getting Started in Cybersecurity 3.0 – Self-Paced
+                  Getting Started in Cybersecurity 3.0 – Self-Paced
                 </h4>
                 <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left mb-6">
-                  Capacitación orientada a fortalecer conocimientos, prevención y respuesta estratégica frente a amenazas digitales modernas.
+                  La insignia «Introducción al panorama de amenazas 3.0» reconoce una comprensión fundamental del panorama de las amenazas cibernéticas. Quien obtiene esta insignia ha demostrado poseer conocimientos esenciales sobre las amenazas que ponen en peligro las redes informáticas, los actores maliciosos que se encuentran detrás de dichas amenazas y los principios de ciberseguridad que permiten proteger a los usuarios y a las redes.
                 </p>
               </div>
 
-              {/* 4 Focus Areas */}
-              <div>
-                <div className="text-xs font-black text-[#33E8FF] uppercase tracking-wider mb-3 text-left">
-                  Áreas de Enfoque:
+              {/* Introducción al panorama de amenazas 3.0 Badge Card */}
+              <div className="mt-2 bg-gradient-to-r from-cyan-950/60 via-slate-900 to-slate-900 border border-cyan-500/40 rounded-2xl p-5 flex flex-col md:flex-row items-center gap-6 shadow-[0_0_30px_rgba(51,232,255,0.25)]">
+                <div className="w-36 h-36 md:w-44 md:h-44 rounded-2xl bg-white/95 border border-white/50 p-2 flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(255,255,255,0.5)] group-hover:scale-105 transition-transform duration-300">
+                  <img
+                    src="/fortiland.png"
+                    alt="Introducción al panorama de amenazas 3.0"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { label: "Amenazas Internas", icon: "🏢", color: "border-orange-500/30 text-orange-300" },
-                    { label: "Amenazas Externas", icon: "🌐", color: "border-red-500/30 text-red-300" },
-                    { label: "Cloud Security", icon: "☁️", color: "border-cyan-500/30 text-cyan-300" },
-                    { label: "IoT Security", icon: "📡", color: "border-emerald-500/30 text-emerald-300" },
-                  ].map((area, idx) => (
-                    <div
-                      key={idx}
-                      className={`flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border ${area.color} text-xs font-extrabold`}
-                    >
-                      <span>{area.icon}</span>
-                      <span>{area.label}</span>
-                    </div>
-                  ))}
+                <div className="text-center md:text-left">
+                  <div className="text-white font-black text-lg md:text-xl tracking-wide leading-tight">
+                    Introducción al panorama
+                  </div>
+                  <div className="text-sm text-cyan-300 font-extrabold mt-1">
+                    de amenazas 3.0
+                  </div>
+                  <div className="text-xs text-slate-300 font-bold mt-2 uppercase tracking-wider">
+                    Insignia oficial FORTINET
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* 3. Fundamentos de Ciberseguridad */}
+            {/* Fundamentos de Ciberseguridad */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-black tracking-[0.2em] text-blue-400 uppercase bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                    MÓDULO 03
-                  </span>
-                  <span className="text-xs font-bold text-slate-400">Conceptual &amp; Práctico</span>
-                </div>
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
-                  3. Fundamentos de Ciberseguridad
+                  Fundamentos de Ciberseguridad
                 </h4>
                 <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left">
                   Bases conceptuales sólidas y prácticas esenciales para la protección, hardening y custodia de activos digitales corporativos.
@@ -834,17 +815,11 @@ export default function CyberPage() {
               </div>
             </div>
 
-            {/* 4. Panorámica de Amenazas a la Ciberseguridad */}
+            {/* Panorámica de Amenazas a la Ciberseguridad */}
             <div className="bg-[#030914] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col justify-between hover:border-[#33E8FF]/40 transition-all duration-300">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-black tracking-[0.2em] text-purple-400 uppercase bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">
-                    MÓDULO 04
-                  </span>
-                  <span className="text-xs font-bold text-slate-400">Análisis Global</span>
-                </div>
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
-                  4. Panorámica de Amenazas a la Ciberseguridad
+                  Panorámica de Amenazas a la Ciberseguridad
                 </h4>
                 <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left">
                   Análisis global y prospectivo de los vectores de ataque emergentes, malware avanzado y prevención proactiva de incidentes críticos.

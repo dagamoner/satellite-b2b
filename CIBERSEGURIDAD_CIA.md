@@ -42,14 +42,8 @@ Certificación fundamental sobre el panorama actual de amenazas cibernéticas.
 
 ![NSE 1 Network Security Associate](NSE1.jpg)
 
-#### 2. Getting Started in Cybersecurity 3.0 – Self-Paced
-Capacitación orientada a fortalecer conocimientos, prevención y respuesta frente a amenazas digitales modernas.
-
-*Áreas de enfoque:*
-- `Amenazas Internas`
-- `Amenazas Externas`
-- `Cloud`
-- `IoT`
+#### Getting Started in Cybersecurity 3.0 – Self-Paced
+La insignia «Introducción al panorama de amenazas 3.0» reconoce una comprensión fundamental del panorama de las amenazas cibernéticas. Quien obtiene esta insignia ha demostrado poseer conocimientos esenciales sobre las amenazas que ponen en peligro las redes informáticas, los actores maliciosos que se encuentran detrás de dichas amenazas y los principios de ciberseguridad que permiten proteger a los usuarios y a las redes.
 
 #### 3. Fundamentos de Ciberseguridad
 Bases conceptuales y prácticas esenciales para la protección de activos digitales.
