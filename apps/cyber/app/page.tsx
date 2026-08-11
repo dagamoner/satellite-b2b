@@ -806,10 +806,30 @@ export default function CyberPage() {
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
                   Fundamentos de Ciberseguridad
                 </h4>
-                <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left">
+                <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left mb-6">
                   Bases conceptuales sólidas y prácticas esenciales para la protección, hardening y custodia de activos digitales corporativos.
                 </p>
               </div>
+
+              {/* Diploma Fundamentos */}
+              <div className="relative group mt-2 rounded-xl overflow-hidden border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)] hover:border-blue-400 transition-all duration-500 bg-white/5 p-3 flex flex-col items-center justify-center">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-blue-500/20 blur-[40px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative z-10 w-full rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                  <img
+                    src="/Diplomafund.png"
+                    alt="Diploma Oficial Fundamentos"
+                    className="w-full h-auto object-cover group-hover:scale-[1.03] group-hover:brightness-110 transition-all duration-700"
+                  />
+                </div>
+                <div className="relative z-10 w-full mt-3 flex items-center justify-between px-1">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-blue-300/80">Certificado Oficial</span>
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  </span>
+                </div>
+              </div>
+
               <div className="mt-6 pt-4 border-t border-white/5 text-xs font-bold text-blue-300 uppercase tracking-wider text-left">
                 Defensa de Activos Críticos
               </div>
@@ -821,10 +841,30 @@ export default function CyberPage() {
                 <h4 className="text-lg md:text-xl font-black text-white mb-3 text-left">
                   Panorámica de Amenazas a la Ciberseguridad
                 </h4>
-                <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left">
+                <p className="text-slate-300 font-bold text-sm md:text-base leading-relaxed text-left mb-6">
                   Análisis global y prospectivo de los vectores de ataque emergentes, malware avanzado y prevención proactiva de incidentes críticos.
                 </p>
               </div>
+
+              {/* Diploma Panorámica */}
+              <div className="relative group mt-2 rounded-xl overflow-hidden border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] hover:border-purple-400 transition-all duration-500 bg-white/5 p-3 flex flex-col items-center justify-center">
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-purple-500/20 blur-[40px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="relative z-10 w-full rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                  <img
+                    src="/Diplomapano.png"
+                    alt="Diploma Oficial Panorámica"
+                    className="w-full h-auto object-cover group-hover:scale-[1.03] group-hover:brightness-110 transition-all duration-700"
+                  />
+                </div>
+                <div className="relative z-10 w-full mt-3 flex items-center justify-between px-1">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-purple-300/80">Certificado Oficial</span>
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+                  </span>
+                </div>
+              </div>
+
               <div className="mt-6 pt-4 border-t border-white/5 text-xs font-bold text-purple-300 uppercase tracking-wider text-left">
                 Inteligencia de Amenazas
               </div>
