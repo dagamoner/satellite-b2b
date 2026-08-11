@@ -814,7 +814,7 @@ export default function CyberPage() {
               {/* Diploma Fundamentos */}
               <div className="relative group mt-2 rounded-xl overflow-hidden border border-blue-500/30 shadow-[0_0_20px_rgba(59,130,246,0.2)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)] hover:border-blue-400 transition-all duration-500 bg-white/5 p-3 flex flex-col items-center justify-center">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-blue-500/20 blur-[40px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10 w-full rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                <div className="relative z-10 w-1/2 rounded-lg overflow-hidden border border-white/10 shadow-lg">
                   <img
                     src="/Diplomafund.png"
                     alt="Diploma Oficial Fundamentos"
@@ -849,7 +849,7 @@ export default function CyberPage() {
               {/* Diploma Panorámica */}
               <div className="relative group mt-2 rounded-xl overflow-hidden border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_35px_rgba(168,85,247,0.5)] hover:border-purple-400 transition-all duration-500 bg-white/5 p-3 flex flex-col items-center justify-center">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-3/4 bg-purple-500/20 blur-[40px] rounded-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="relative z-10 w-full rounded-lg overflow-hidden border border-white/10 shadow-lg">
+                <div className="relative z-10 w-1/2 rounded-lg overflow-hidden border border-white/10 shadow-lg">
                   <img
                     src="/Diplomapano.png"
                     alt="Diploma Oficial Panorámica"
