@@ -3,6 +3,145 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import LeadFormModal from "../components/LeadFormModal";
 import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
+
+/* ── ClientCarousel ─────────────────────────────────────────────────────── */
+const clients = [
+  { id: 1, src: "/L1_Michel.png",     name: "Michel" },
+  { id: 2, src: "/L2_Proal.png",      name: "Proal" },
+  { id: 3, src: "/L3_Abrasado.png",   name: "Abrasado Bodega Toneles" },
+  { id: 4, src: "/L4_AnnaBistro.png", name: "Anna Bistró" },
+  { id: 5, src: "/L5_Brillant.png",   name: "Brillat Savarin" },
+];
+
+function ClientCarousel() {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [offset, setOffset] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const LOGO_W = 200;   // px per logo slot
+  const LOGO_GAP = 32;  // px gap
+  const STEP = LOGO_W + LOGO_GAP;
+  const MAX_OFFSET = (clients.length - 1) * STEP;
+
+  const startAuto = useCallback(() => {
+    intervalRef.current = setInterval(() => {
+      setOffset(prev => (prev >= MAX_OFFSET ? 0 : prev + STEP));
+    }, 2800);
+  }, [MAX_OFFSET, STEP]);
+
+  const stopAuto = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  }, []);
+
+  useEffect(() => { startAuto(); return stopAuto; }, [startAuto, stopAuto]);
+
+  const handleClick = (id: number) => {
+    if (selected === id) {
+      setSelected(null);
+      startAuto();
+    } else {
+      setSelected(id);
+      stopAuto();
+    }
+  };
+
+  return (
+    <section className="w-full py-16 px-4 flex flex-col items-center gap-10 relative z-10">
+      {/* Title */}
+      <div className="text-center">
+        <h3
+          className="text-2xl md:text-3xl font-black uppercase tracking-[0.18em]"
+          style={{ color: "#33E8FF", textShadow: "0 0 18px rgba(51,232,255,0.55)" }}
+        >
+          Confiaron en la Transformación Digital
+        </h3>
+        <div className="mt-3 mx-auto w-20 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #33E8FF, transparent)" }} />
+      </div>
+
+      {/* Carousel */}
+      <div className="relative w-full max-w-5xl overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)" }}>
+        <div
+          className="flex gap-8 transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${offset}px)` }}
+        >
+          {clients.map(c => {
+            const isSelected = selected === c.id;
+            return (
+              <button
+                key={c.id}
+                onClick={() => handleClick(c.id)}
+                aria-label={c.name}
+                className="relative flex-shrink-0 rounded-2xl cursor-pointer transition-all duration-500 outline-none focus:outline-none"
+                style={{
+                  width: `${LOGO_W}px`,
+                  height: "120px",
+                  background: isSelected
+                    ? "rgba(51,232,255,0.08)"
+                    : "rgba(255,255,255,0.04)",
+                  border: isSelected
+                    ? "2px solid rgba(51,232,255,0.8)"
+                    : "2px solid rgba(255,255,255,0.10)",
+                  boxShadow: isSelected
+                    ? "0 0 32px rgba(51,232,255,0.55), 0 0 64px rgba(51,232,255,0.25), inset 0 0 20px rgba(51,232,255,0.10)"
+                    : "none",
+                  transform: isSelected ? "scale(1.13)" : "scale(1)",
+                }}
+              >
+                {/* Glow orb behind selected */}
+                {isSelected && (
+                  <span
+                    className="absolute inset-0 rounded-2xl pointer-events-none animate-pulse"
+                    style={{ background: "radial-gradient(ellipse at center, rgba(51,232,255,0.18) 0%, transparent 70%)" }}
+                  />
+                )}
+                <img
+                  src={c.src}
+                  alt={c.name}
+                  className="w-full h-full object-contain p-4 transition-all duration-500"
+                  style={{
+                    filter: isSelected
+                      ? "drop-shadow(0 0 12px rgba(51,232,255,0.7)) brightness(1.15)"
+                      : "brightness(0.85) grayscale(0.2)",
+                  }}
+                />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Dots */}
+      <div className="flex gap-2 items-center">
+        {clients.map(c => {
+          const active = Math.round(offset / STEP) === clients.indexOf(c);
+          const isSel = selected === c.id;
+          return (
+            <button
+              key={c.id}
+              onClick={() => handleClick(c.id)}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: active || isSel ? "24px" : "8px",
+                height: "8px",
+                background: isSel ? "#33E8FF" : active ? "rgba(51,232,255,0.6)" : "rgba(255,255,255,0.2)",
+                boxShadow: isSel ? "0 0 10px rgba(51,232,255,0.8)" : "none",
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* +150 counter */}
+      <p
+        className="text-lg md:text-xl font-black tracking-widest uppercase"
+        style={{ color: "rgba(255,255,255,0.7)", letterSpacing: "0.2em" }}
+      >
+        <span style={{ color: "#33E8FF", fontSize: "1.5rem", textShadow: "0 0 14px rgba(51,232,255,0.7)" }}>+150</span>
+        {" "}Empresas confían en MR Tech
+      </p>
+    </section>
+  );
+}
+
 const SpaceBackground = () => {
   useEffect(() => {
     const canvas = document.getElementById('space-canvas') as HTMLCanvasElement;
@@ -795,6 +934,9 @@ export default function MarketingPage() {
             </div>
           </div>
 
+
+          {/* ── CLIENTES QUE CONFIARON EN NOSOTROS ── */}
+          <ClientCarousel />
 
           {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
           <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
