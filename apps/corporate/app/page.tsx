@@ -41,7 +41,7 @@ function ClientCarousel() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-scroll 28s linear infinite;
+          animation: marquee-scroll 40s linear infinite;
         }
         .marquee-track.paused {
           animation-play-state: paused;
@@ -138,7 +138,7 @@ function ClientCarousel() {
         className="text-base md:text-lg font-black tracking-widest text-white drop-shadow-md"
         style={{ letterSpacing: "0.22em" }}
       >
-        <span style={{ fontSize: "1.4rem", fontWeight: 900, marginRight: "6px" }}>+200 EMPRESAS</span>
+        <span style={{ color: "#33E8FF", fontSize: "1.4rem", fontWeight: 900, textShadow: "0 0 14px rgba(51,232,255,0.7)", marginRight: "6px" }}>+200 EMPRESAS</span>
         confían en MR Tech
       </p>
     </section>
