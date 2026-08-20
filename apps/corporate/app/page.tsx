@@ -5,92 +5,96 @@ import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
 
 /* ── ClientCarousel ─────────────────────────────────────────────────────── */
-const clients = [
-  { id: 1, src: "/L1_Michel.png",     name: "Michel" },
-  { id: 2, src: "/L2_Proal.png",      name: "Proal" },
-  { id: 3, src: "/L3_Abrasado.png",   name: "Abrasado Bodega Toneles" },
-  { id: 4, src: "/L4_AnnaBistro.png", name: "Anna Bistró" },
-  { id: 5, src: "/L5_Brillant.png",   name: "Brillat Savarin" },
+// FASE 1 — Prueba con un solo logo: Michel
+const carouselClients = [
+  { id: 1, src: "/L1_Michel.png", name: "Michel" },
 ];
 
+// Duplicamos el array para el efecto de loop infinito
+const marqueeItems = [...carouselClients, ...carouselClients, ...carouselClients, ...carouselClients, ...carouselClients, ...carouselClients, ...carouselClients, ...carouselClients];
+
 function ClientCarousel() {
-  const [selected, setSelected] = useState<number | null>(null);
-  const [offset, setOffset] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const LOGO_W = 200;   // px per logo slot
-  const LOGO_GAP = 32;  // px gap
-  const STEP = LOGO_W + LOGO_GAP;
-  const MAX_OFFSET = (clients.length - 1) * STEP;
+  const [paused, setPaused] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const startAuto = useCallback(() => {
-    intervalRef.current = setInterval(() => {
-      setOffset(prev => (prev >= MAX_OFFSET ? 0 : prev + STEP));
-    }, 2800);
-  }, [MAX_OFFSET, STEP]);
-
-  const stopAuto = useCallback(() => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  }, []);
-
-  useEffect(() => { startAuto(); return stopAuto; }, [startAuto, stopAuto]);
-
-  const handleClick = (id: number) => {
-    if (selected === id) {
-      setSelected(null);
-      startAuto();
+  const handleLogoClick = (id: number) => {
+    if (selectedId === id && paused) {
+      // Segundo click en el mismo: deseleccionar y reanudar
+      setSelectedId(null);
+      setPaused(false);
     } else {
-      setSelected(id);
-      stopAuto();
+      // Primer click: seleccionar y pausar
+      setSelectedId(id);
+      setPaused(true);
     }
   };
 
   return (
-    <section className="w-full py-16 px-4 flex flex-col items-center gap-10 relative z-10">
-      {/* Title */}
-      <div className="text-center">
+    <section className="w-full py-14 flex flex-col items-center gap-8 relative z-10">
+      {/* Inject CSS keyframes */}
+      <style>{`
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee-track {
+          animation: marquee-scroll 14s linear infinite;
+        }
+        .marquee-track.paused {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      {/* Título */}
+      <div className="text-center px-4">
         <h3
           className="text-2xl md:text-3xl font-black uppercase tracking-[0.18em]"
           style={{ color: "#33E8FF", textShadow: "0 0 18px rgba(51,232,255,0.55)" }}
         >
           Confiaron en la Transformación Digital
         </h3>
-        <div className="mt-3 mx-auto w-20 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, transparent, #33E8FF, transparent)" }} />
+        <div
+          className="mt-3 mx-auto h-[3px] rounded-full"
+          style={{ width: "120px", background: "linear-gradient(90deg, transparent, #33E8FF, transparent)" }}
+        />
       </div>
 
-      {/* Carousel */}
-      <div className="relative w-full max-w-5xl overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)" }}>
-        <div
-          className="flex gap-8 transition-transform duration-700 ease-in-out"
-          style={{ transform: `translateX(-${offset}px)` }}
-        >
-          {clients.map(c => {
-            const isSelected = selected === c.id;
+      {/* Marquee container */}
+      <div
+        className="relative w-full overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)",
+        }}
+      >
+        {/* Track — duplicado para loop sin corte visible */}
+        <div className={`marquee-track flex gap-16 items-center${paused ? " paused" : ""}`} style={{ width: "max-content" }}>
+          {marqueeItems.map((c, idx) => {
+            const isSelected = selectedId === c.id && paused;
             return (
               <button
-                key={c.id}
-                onClick={() => handleClick(c.id)}
-                aria-label={c.name}
+                key={`${c.id}-${idx}`}
+                onClick={() => handleLogoClick(c.id)}
+                aria-label={`Cliente: ${c.name}`}
                 className="relative flex-shrink-0 rounded-2xl cursor-pointer transition-all duration-500 outline-none focus:outline-none"
                 style={{
-                  width: `${LOGO_W}px`,
-                  height: "120px",
-                  background: isSelected
-                    ? "rgba(51,232,255,0.08)"
-                    : "rgba(255,255,255,0.04)",
-                  border: isSelected
-                    ? "2px solid rgba(51,232,255,0.8)"
-                    : "2px solid rgba(255,255,255,0.10)",
+                  width: "180px",
+                  height: "110px",
+                  background: isSelected ? "rgba(51,232,255,0.07)" : "rgba(255,255,255,0.03)",
+                  border: isSelected ? "2px solid rgba(51,232,255,0.75)" : "2px solid rgba(255,255,255,0.08)",
                   boxShadow: isSelected
-                    ? "0 0 32px rgba(51,232,255,0.55), 0 0 64px rgba(51,232,255,0.25), inset 0 0 20px rgba(51,232,255,0.10)"
+                    ? "0 0 28px rgba(51,232,255,0.5), 0 0 60px rgba(51,232,255,0.22), inset 0 0 18px rgba(51,232,255,0.08)"
                     : "none",
-                  transform: isSelected ? "scale(1.13)" : "scale(1)",
+                  transform: isSelected ? "scale(1.12)" : "scale(1)",
                 }}
               >
-                {/* Glow orb behind selected */}
                 {isSelected && (
                   <span
-                    className="absolute inset-0 rounded-2xl pointer-events-none animate-pulse"
-                    style={{ background: "radial-gradient(ellipse at center, rgba(51,232,255,0.18) 0%, transparent 70%)" }}
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    style={{
+                      background: "radial-gradient(ellipse at center, rgba(51,232,255,0.16) 0%, transparent 70%)",
+                      animation: "pulse 2s ease-in-out infinite",
+                    }}
                   />
                 )}
                 <img
@@ -99,8 +103,8 @@ function ClientCarousel() {
                   className="w-full h-full object-contain p-4 transition-all duration-500"
                   style={{
                     filter: isSelected
-                      ? "drop-shadow(0 0 12px rgba(51,232,255,0.7)) brightness(1.15)"
-                      : "brightness(0.85) grayscale(0.2)",
+                      ? "drop-shadow(0 0 14px rgba(51,232,255,0.75)) brightness(1.2) invert(0)"
+                      : "brightness(0.8) grayscale(0.15)",
                   }}
                 />
               </button>
@@ -109,34 +113,20 @@ function ClientCarousel() {
         </div>
       </div>
 
-      {/* Dots */}
-      <div className="flex gap-2 items-center">
-        {clients.map(c => {
-          const active = Math.round(offset / STEP) === clients.indexOf(c);
-          const isSel = selected === c.id;
-          return (
-            <button
-              key={c.id}
-              onClick={() => handleClick(c.id)}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: active || isSel ? "24px" : "8px",
-                height: "8px",
-                background: isSel ? "#33E8FF" : active ? "rgba(51,232,255,0.6)" : "rgba(255,255,255,0.2)",
-                boxShadow: isSel ? "0 0 10px rgba(51,232,255,0.8)" : "none",
-              }}
-            />
-          );
-        })}
-      </div>
+      {/* Indicador de estado */}
+      {paused && (
+        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#33E8FF", textShadow: "0 0 10px rgba(51,232,255,0.6)" }}>
+          ● Carrusel pausado — clic nuevamente para continuar
+        </p>
+      )}
 
       {/* +150 counter */}
       <p
-        className="text-lg md:text-xl font-black tracking-widest uppercase"
-        style={{ color: "rgba(255,255,255,0.7)", letterSpacing: "0.2em" }}
+        className="text-base md:text-lg font-black tracking-widest uppercase"
+        style={{ color: "rgba(255,255,255,0.65)", letterSpacing: "0.22em" }}
       >
-        <span style={{ color: "#33E8FF", fontSize: "1.5rem", textShadow: "0 0 14px rgba(51,232,255,0.7)" }}>+150</span>
-        {" "}Empresas confían en MR Tech
+        <span style={{ color: "#33E8FF", fontSize: "1.4rem", fontWeight: 900, textShadow: "0 0 14px rgba(51,232,255,0.7)", marginRight: "6px" }}>+150</span>
+        Empresas confían en MR Tech
       </p>
     </section>
   );
