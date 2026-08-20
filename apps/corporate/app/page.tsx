@@ -5,9 +5,12 @@ import { SunnySkyBackground } from "../components/SunnySkyBackground";
 import { useTheme } from "next-themes";
 
 /* ── ClientCarousel ─────────────────────────────────────────────────────── */
-// FASE 1 — Prueba con un solo logo: Michel
 const carouselClients = [
   { id: 1, src: "/L1_Michel.png", name: "Michel" },
+  { id: 2, src: "/L2_Proal.png", name: "Proal" },
+  { id: 3, src: "/L3_Abrasado.png", name: "Abrasado" },
+  { id: 4, src: "/L4_AnnaBistro.png", name: "Anna Bistró" },
+  { id: 5, src: "/L5_Brillant.png", name: "Brillat Savarin" },
 ];
 
 // Duplicamos el array para el efecto de loop infinito
@@ -73,7 +76,7 @@ function ClientCarousel() {
         }}
       >
         {/* Track — duplicado para loop sin corte visible */}
-        <div className={`marquee-track flex gap-16 items-center${paused ? " paused" : ""}`} style={{ width: "max-content" }}>
+        <div className={`marquee-track flex gap-16 items-center${paused ? " paused" : ""} py-8`} style={{ width: "max-content" }}>
           {marqueeItems.map((c, idx) => {
             const isSelected = selectedId === c.id && paused;
             return (
@@ -130,13 +133,13 @@ function ClientCarousel() {
         </div>
       </div>
 
-      {/* +150 counter */}
+      {/* +200 counter */}
       <p
-        className="text-base md:text-lg font-black tracking-widest uppercase"
-        style={{ color: "rgba(255,255,255,0.65)", letterSpacing: "0.22em" }}
+        className="text-base md:text-lg font-black tracking-widest text-white drop-shadow-md"
+        style={{ letterSpacing: "0.22em" }}
       >
-        <span style={{ color: "#33E8FF", fontSize: "1.4rem", fontWeight: 900, textShadow: "0 0 14px rgba(51,232,255,0.7)", marginRight: "6px" }}>+150</span>
-        Empresas confían en MR Tech
+        <span style={{ fontSize: "1.4rem", fontWeight: 900, marginRight: "6px" }}>+200 EMPRESAS</span>
+        confían en MR Tech
       </p>
     </section>
   );
