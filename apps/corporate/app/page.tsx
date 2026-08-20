@@ -41,7 +41,7 @@ function ClientCarousel() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-scroll 14s linear infinite;
+          animation: marquee-scroll 28s linear infinite;
         }
         .marquee-track.paused {
           animation-play-state: paused;
@@ -95,8 +95,8 @@ function ClientCarousel() {
                   className="relative w-full rounded-2xl flex items-center justify-center transition-all duration-500"
                   style={{
                     height: "110px",
-                    background: isSelected ? "rgba(255,223,0,0.15)" : "rgba(255,240,150,0.08)",
-                    border: isSelected ? "2px solid rgba(255,223,0,0.8)" : "1px solid rgba(255,240,150,0.2)",
+                    background: isSelected ? "rgba(255,223,0,0.15)" : "rgba(235,235,235,0.95)",
+                    border: isSelected ? "2px solid rgba(255,223,0,0.8)" : "1px solid rgba(255,255,255,0.4)",
                     boxShadow: isSelected
                       ? "0 0 30px rgba(255,223,0,0.4), 0 0 60px rgba(255,223,0,0.2), inset 0 0 20px rgba(255,223,0,0.15)"
                       : "0 4px 20px rgba(0,0,0,0.3)",
