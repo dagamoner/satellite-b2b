@@ -80,11 +80,11 @@ function ClientCarousel() {
                 style={{
                   width: "180px",
                   height: "110px",
-                  background: isSelected ? "rgba(51,232,255,0.07)" : "rgba(255,255,255,0.03)",
-                  border: isSelected ? "2px solid rgba(51,232,255,0.75)" : "2px solid rgba(255,255,255,0.08)",
+                  background: isSelected ? "rgba(255,223,0,0.15)" : "rgba(255,240,150,0.08)",
+                  border: isSelected ? "2px solid rgba(255,223,0,0.8)" : "1px solid rgba(255,240,150,0.2)",
                   boxShadow: isSelected
-                    ? "0 0 28px rgba(51,232,255,0.5), 0 0 60px rgba(51,232,255,0.22), inset 0 0 18px rgba(51,232,255,0.08)"
-                    : "none",
+                    ? "0 0 30px rgba(255,223,0,0.4), 0 0 60px rgba(255,223,0,0.2), inset 0 0 20px rgba(255,223,0,0.15)"
+                    : "0 4px 20px rgba(0,0,0,0.3)",
                   transform: isSelected ? "scale(1.12)" : "scale(1)",
                 }}
               >
@@ -92,7 +92,7 @@ function ClientCarousel() {
                   <span
                     className="absolute inset-0 rounded-2xl pointer-events-none"
                     style={{
-                      background: "radial-gradient(ellipse at center, rgba(51,232,255,0.16) 0%, transparent 70%)",
+                      background: "radial-gradient(ellipse at center, rgba(255,223,0,0.25) 0%, transparent 70%)",
                       animation: "pulse 2s ease-in-out infinite",
                     }}
                   />
@@ -103,8 +103,8 @@ function ClientCarousel() {
                   className="w-full h-full object-contain p-4 transition-all duration-500"
                   style={{
                     filter: isSelected
-                      ? "drop-shadow(0 0 14px rgba(51,232,255,0.75)) brightness(1.2) invert(0)"
-                      : "brightness(0.8) grayscale(0.15)",
+                      ? "drop-shadow(0 0 16px rgba(255,223,0,0.6)) brightness(1.2)"
+                      : "brightness(0.95)",
                   }}
                 />
               </button>
@@ -112,13 +112,6 @@ function ClientCarousel() {
           })}
         </div>
       </div>
-
-      {/* Indicador de estado */}
-      {paused && (
-        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#33E8FF", textShadow: "0 0 10px rgba(51,232,255,0.6)" }}>
-          ● Carrusel pausado — clic nuevamente para continuar
-        </p>
-      )}
 
       {/* +150 counter */}
       <p
