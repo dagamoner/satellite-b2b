@@ -48,14 +48,19 @@ function ClientCarousel() {
       {/* Título */}
       <div className="text-center px-4">
         <h3
-          className="text-2xl md:text-3xl font-black uppercase tracking-[0.18em]"
-          style={{ color: "#33E8FF", textShadow: "0 0 18px rgba(51,232,255,0.55)" }}
+          className="text-2xl md:text-3xl font-black tracking-[0.05em]"
+          style={{ 
+            background: "linear-gradient(90deg, #33E8FF, #0055FF)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: "0 0 30px rgba(51,232,255,0.4)"
+          }}
         >
           Confiaron en la Transformación Digital
         </h3>
         <div
           className="mt-3 mx-auto h-[3px] rounded-full"
-          style={{ width: "120px", background: "linear-gradient(90deg, transparent, #33E8FF, transparent)" }}
+          style={{ width: "120px", background: "linear-gradient(90deg, transparent, #33E8FF, #0055FF, transparent)" }}
         />
       </div>
 
@@ -76,37 +81,49 @@ function ClientCarousel() {
                 key={`${c.id}-${idx}`}
                 onClick={() => handleLogoClick(c.id)}
                 aria-label={`Cliente: ${c.name}`}
-                className="relative flex-shrink-0 rounded-2xl cursor-pointer transition-all duration-500 outline-none focus:outline-none"
+                className="relative flex-shrink-0 flex flex-col items-center gap-3 cursor-pointer transition-all duration-500 outline-none focus:outline-none"
                 style={{
                   width: "180px",
-                  height: "110px",
-                  background: isSelected ? "rgba(255,223,0,0.15)" : "rgba(255,240,150,0.08)",
-                  border: isSelected ? "2px solid rgba(255,223,0,0.8)" : "1px solid rgba(255,240,150,0.2)",
-                  boxShadow: isSelected
-                    ? "0 0 30px rgba(255,223,0,0.4), 0 0 60px rgba(255,223,0,0.2), inset 0 0 20px rgba(255,223,0,0.15)"
-                    : "0 4px 20px rgba(0,0,0,0.3)",
                   transform: isSelected ? "scale(1.12)" : "scale(1)",
                 }}
               >
-                {isSelected && (
-                  <span
-                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                {/* Contenedor del Logo */}
+                <div 
+                  className="relative w-full rounded-2xl flex items-center justify-center transition-all duration-500"
+                  style={{
+                    height: "110px",
+                    background: isSelected ? "rgba(255,223,0,0.15)" : "rgba(255,240,150,0.08)",
+                    border: isSelected ? "2px solid rgba(255,223,0,0.8)" : "1px solid rgba(255,240,150,0.2)",
+                    boxShadow: isSelected
+                      ? "0 0 30px rgba(255,223,0,0.4), 0 0 60px rgba(255,223,0,0.2), inset 0 0 20px rgba(255,223,0,0.15)"
+                      : "0 4px 20px rgba(0,0,0,0.3)",
+                  }}
+                >
+                  {isSelected && (
+                    <span
+                      className="absolute inset-0 rounded-2xl pointer-events-none"
+                      style={{
+                        background: "radial-gradient(ellipse at center, rgba(255,223,0,0.25) 0%, transparent 70%)",
+                        animation: "pulse 2s ease-in-out infinite",
+                      }}
+                    />
+                  )}
+                  <img
+                    src={c.src}
+                    alt={c.name}
+                    className="w-full h-full object-contain p-4 transition-all duration-500 relative z-10"
                     style={{
-                      background: "radial-gradient(ellipse at center, rgba(255,223,0,0.25) 0%, transparent 70%)",
-                      animation: "pulse 2s ease-in-out infinite",
+                      filter: isSelected
+                        ? "drop-shadow(0 0 16px rgba(255,223,0,0.6)) brightness(1.2)"
+                        : "brightness(0.95)",
                     }}
                   />
-                )}
-                <img
-                  src={c.src}
-                  alt={c.name}
-                  className="w-full h-full object-contain p-4 transition-all duration-500"
-                  style={{
-                    filter: isSelected
-                      ? "drop-shadow(0 0 16px rgba(255,223,0,0.6)) brightness(1.2)"
-                      : "brightness(0.95)",
-                  }}
-                />
+                </div>
+                
+                {/* Nombre de la empresa en blanco */}
+                <span className="text-white font-bold text-sm tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  {c.name}
+                </span>
               </button>
             );
           })}
