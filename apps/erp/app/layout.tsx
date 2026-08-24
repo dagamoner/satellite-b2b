@@ -7,7 +7,7 @@ import { ThemeProvider } from "../components/ThemeProvider";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MR Technology - Conectividad Satelital B2B",
+  title: "MR Technology",
   description: "Servicios de internet satelital de alta velocidad para empresas y sectores rurales. Partner oficial de Starlink en Mendoza.",
 };
 

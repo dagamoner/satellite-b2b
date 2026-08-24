@@ -8,7 +8,7 @@ import { AuthProvider } from "./components/AuthProvider";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard - MR Technology",
+  title: "MR Technology",
   description: "Gestión Administrativa MR Technology",
 };
 

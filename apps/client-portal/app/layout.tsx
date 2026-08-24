@@ -8,7 +8,7 @@ import { AuthProvider } from "./components/AuthProvider";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Portal de Clientes - MR Technology",
+  title: "MR Technology",
   description: "Autogestión de Servicios Satelitales",
 };
 
