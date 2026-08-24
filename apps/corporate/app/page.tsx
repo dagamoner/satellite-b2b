@@ -11,6 +11,11 @@ const carouselClients = [
   { id: 3, src: "/L3_Abrasado.png", name: "Abrasado" },
   { id: 4, src: "/L4_AnnaBistro.png", name: "Anna Bistró" },
   { id: 5, src: "/L5_Brillant.png", name: "Brillat Savarin" },
+  { id: 6, src: "/L6_Bonafide_SJ.png", name: "Bonafide San Juan" },
+  { id: 7, src: "/L7_Bonafide_Mza.png", name: "Bonafide Mendoza" },
+  { id: 8, src: "/L8_Dantesco.png", name: "Dantesco" },
+  { id: 9, src: "/L9_Fuente_y_fonda.png", name: "Fuente y Fonda" },
+  { id: 10, src: "/L10_La_gringa_San_Rafael.png", name: "La Gringa San Rafael" },
 ];
 
 // Duplicamos el array para el efecto de loop infinito
