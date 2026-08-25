@@ -57,7 +57,7 @@ function ClientCarousel() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-scroll 40s linear infinite;
+          animation: marquee-scroll 90s linear infinite;
         }
         .marquee-track.paused {
           animation-play-state: paused;
