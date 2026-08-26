@@ -27,6 +27,11 @@ const carouselClients = [
   { id: 19, src: "/L19_GAIA_EXPERIENCE.png", name: "GAIA EXPERIENCE" },
   { id: 20, src: "/L20_LA_ROCA.png", name: "LA ROCA" },
   { id: 21, src: "/L21_VICENTE.png", name: "VICENTE" },
+  { id: 22, src: "/L22_ALOZ_SUSHI.png", name: "ALOZ SUSHI" },
+  { id: 23, src: "/L23_LA_LUCIA.png", name: "LA LUCIA" },
+  { id: 24, src: "/L24_REGGAE_CAFE_BAR.png", name: "REGGAE CAFE BAR" },
+  { id: 25, src: "/L25_BLAXON_CAFE.png", name: "BLAXON CAFE BAR" },
+  { id: 26, src: "/L26_LA_CASONA.png", name: "LA CASONA" },
 ];
 
 // Duplicamos el array para el efecto de loop infinito
