@@ -1035,9 +1035,9 @@ export default function MarketingPage() {
                </div>
              </div>
              
-             <div className="mt-12 flex flex-col items-center gap-2">
-                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase">ZONA CUYO - Provincia de Mendoza</p>
-                <p className="tracking-[0.2em] font-black text-[18px] drop-shadow-lg uppercase mt-2" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
+             <div className="mt-8 flex flex-col items-center gap-2">
+                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase text-center">ZONA CUYO - Provincia de Mendoza</p>
+                <p className="tracking-[0.2em] font-black text-[18px] drop-shadow-lg uppercase mt-2 text-center" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
              </div>
           </div>
 
@@ -1046,10 +1046,31 @@ export default function MarketingPage() {
 
       </section>
 
-
+      {/* ── LOGOS CLIENTES ── */}
+      <section className="relative z-10 py-6 border-t border-white/5 bg-black/10 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-wrap justify-center items-start gap-6 md:gap-12">
+            {[
+              { src: 'L29 HELADERIAS DEL PARQUE SAN JUAN.png', legend: 'HELADERIAS DEL PARQUE SAN JUAN' },
+              { src: 'L32 ESTANCIA SAN ALBERTO.png', legend: 'ESTANCIA SAN ALBERTO' },
+              { src: 'L31 CASARENA BODEGAS Y VIÑEDOOS.png', legend: 'CASARENA BODEGAS Y VIÑEDOS' },
+              { src: 'L30 RASTRO HUENTALA WINES.png', legend: 'RASTRO HUENTALA WINES' }
+            ].map((logo, idx) => (
+              <div key={idx} className="flex flex-col items-center group w-[130px] md:w-[160px]">
+                <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/5 border border-white/10 p-2 flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:bg-white/10 group-hover:shadow-[0_0_20px_rgba(51,232,255,0.2)]">
+                  <img src={`/${logo.src}`} alt={logo.legend} className="w-full h-full object-contain drop-shadow-md rounded-full" />
+                </div>
+                <span className="mt-4 text-white/70 text-[10px] md:text-xs font-semibold tracking-wider uppercase text-center transition-colors duration-300 group-hover:text-[#33E8FF] leading-snug">
+                  {logo.legend}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── FOOTER ── */}
-      <footer className="relative z-10 py-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
+      <footer className="relative z-10 pt-8 pb-12 px-4 border-t border-white/5 text-center flex flex-col items-center justify-center">
         <img
           src="/Logo WEB MR Tech.png"
           alt="MR Technology"
