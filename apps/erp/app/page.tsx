@@ -420,23 +420,23 @@ export default function ErpPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch w-full max-w-5xl mx-auto mb-12 px-4 md:px-0">
             {/* --- MAXIREST CARD --- */}
             <div 
-              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
+              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border-2 transition-all duration-500 cursor-pointer overflow-hidden ${
                 showInfo 
-                  ? 'border-[#f97316] bg-[#f97316]/10 shadow-[0_0_30px_rgba(249,115,22,0.3)] scale-[1.02]' 
-                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#f97316]/50 hover:bg-[#0f172a]/80 hover:shadow-[0_0_25px_rgba(249,115,22,0.15)]'
+                  ? 'border-[#f97316] bg-[#f97316]/20 shadow-[0_0_40px_rgba(249,115,22,0.5)] scale-[1.02]' 
+                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#f97316] hover:bg-[#f97316]/15 hover:shadow-[0_0_40px_rgba(249,115,22,0.3)]'
               }`}
               onClick={() => {
                 setShowInfo(!showInfo);
                 setShowAuditoria(false);
               }}
             >
-              <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-40 blur-[50px] transition-opacity duration-500 pointer-events-none" />
               
-              <div className="h-28 flex items-center justify-center mb-6 w-full">
+              <div className="h-56 flex items-center justify-center mb-6 w-full">
                 <img
                   src="/logo maxirest ONE.png"
                   alt="Maxirest ONE"
-                  className="max-h-full max-w-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+                  className="max-h-full max-w-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_25px_rgba(249,115,22,0.7)]"
                 />
               </div>
 
@@ -464,10 +464,10 @@ export default function ErpPage() {
 
             {/* --- AUDITORIA CARD --- */}
             <div 
-              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
+              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border-2 transition-all duration-500 cursor-pointer overflow-hidden ${
                 showAuditoria 
-                  ? 'border-[#33E8FF] bg-[#33E8FF]/10 shadow-[0_0_30px_rgba(51,232,255,0.3)] scale-[1.02]' 
-                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#33E8FF]/50 hover:bg-[#0f172a]/80 hover:shadow-[0_0_25px_rgba(51,232,255,0.15)]'
+                  ? 'border-[#33E8FF] bg-[#33E8FF]/20 shadow-[0_0_40px_rgba(51,232,255,0.5)] scale-[1.02]' 
+                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#33E8FF] hover:bg-[#33E8FF]/15 hover:shadow-[0_0_40px_rgba(51,232,255,0.3)]'
               }`}
               onClick={(e) => {
                 e.stopPropagation();
@@ -475,13 +475,13 @@ export default function ErpPage() {
                 setShowInfo(false);
               }}
             >
-              <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500 pointer-events-none" />
+              <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-40 blur-[50px] transition-opacity duration-500 pointer-events-none" />
               
-              <div className="h-28 flex items-center justify-center mb-6 w-full">
+              <div className="h-56 flex items-center justify-center mb-6 w-full">
                 <img
                   src="/Logo MR Consultoria Gast.png"
                   alt="MR Consultoria Gastronómica"
-                  className="max-h-full max-w-[80%] object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+                  className="max-h-full max-w-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_30px_rgba(51,232,255,0.7)]"
                   style={{ mixBlendMode: 'screen' }}
                 />
               </div>
