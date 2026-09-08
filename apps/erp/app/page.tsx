@@ -499,108 +499,121 @@ export default function ErpPage() {
               </div>
             </div>
           </div>
-
-          <AnimatePresence>
-            {showInfo && (
-              <motion.div
-                key="info-content"
-                initial={{ opacity: 0, height: 0, y: -20 }}
-                animate={{ opacity: 1, height: 'auto', y: 0 }}
-                exit={{ opacity: 0, height: 0, y: -20 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="flex flex-col items-center w-full"
-              >
-                {/* Nueva Sección de Solución Completa */}
-                <div className="flex flex-col items-center w-full max-w-[1200px] mb-8 mt-2 px-2">
-                  <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl text-center tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mb-4">
-                    La solución más completa para negocios gastronómicos
-                  </h3>
-                  
-                  {/* Contenedor relativo para la imagen principal y su overlay (Botón A) */}
-                  <div className="relative w-full max-w-4xl mx-auto flex justify-center">
-                    <img
-                      src="/Instancias Maxirest.png"
-                      alt="Instancias Maxirest"
-                      className="w-full object-contain relative z-10 pointer-events-none"
-                      style={{ 
-                        mixBlendMode: 'screen', 
-                        filter: 'brightness(1.2) contrast(1.1) drop-shadow(0 0 20px rgba(51,232,255,0.2))' 
-                      }}
-                    />
-                    
-                    {/* Botón Ir Instancia A (Overlay a la derecha arriba) */}
-                    <button 
-                      onClick={() => setMostrarInstanciaA(true)}
-                      className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                      style={{ top: '5%', right: '-18%', width: '18%' }}
-                      title="Ver Instancia A"
-                    >
-                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                      <img 
-                        src="/ir instancia A.png" 
-                        alt="Ir a Instancia A"
-                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                      />
-                    </button>
-
-                    {/* Botón Ir Instancia B (Overlay a la derecha abajo de Instancia A) */}
-                    <button 
-                      onClick={() => setMostrarInstanciaB(true)}
-                      className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                      style={{ top: '35%', right: '-18%', width: '18%' }}
-                      title="Ver Instancia B"
-                    >
-                      <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                      <img 
-                        src="/ir instancia B.png" 
-                        alt="Ir a Instancia B"
-                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                      />
-                    </button>
-
-                    {/* Botón Ir Instancia C */}
-                    <button 
-                      onClick={() => {
-                        setShowInfo(false);
-                        setShowAuditoria(true);
-                        setAuditTab('que-es');
-                      }}
-                      className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                      style={{ top: '65%', right: '-18%', width: '18%' }}
-                      title="Ver Instancia C"
-                    >
-                      <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                      <img 
-                        src="/ir instancia C.png" 
-                        alt="Ir a Instancia C"
-                        className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)] scale-[1.15]"
-                        style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Separador con destellos */}
-                <div className="flex items-center gap-4 w-full max-w-md">
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-                  <motion.div
-                    animate={{ rotate: [0, 360], scale: [0.8, 1.2, 0.8] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                    className="text-[#33E8FF]"
-                  >
-                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 drop-shadow-[0_0_8px_rgba(51,232,255,1)]">
-                      <path d="M12 0L13.5 8.5L22 10L13.5 11.5L12 20L10.5 11.5L2 10L10.5 8.5L12 0Z" />
-                    </svg>
-                  </motion.div>
-                  <div className="flex-1 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          </div>
         </motion.div>
       </section>
+
+      {/* ── Modal Maxirest ONE ── */}
+      <AnimatePresence>
+        {showInfo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-start bg-[#020617]/40 backdrop-blur-md overflow-y-auto"
+          >
+            {/* Botón Regresar */}
+            <button
+              onClick={() => setShowInfo(false)}
+              className="fixed top-6 right-6 md:top-10 md:right-10 flex items-center gap-3 group z-[120] cursor-pointer"
+            >
+              <span className="text-white group-hover:text-[#f97316] font-black text-sm md:text-base tracking-[0.2em] drop-shadow-md transition-colors duration-300">REGRESAR</span>
+              <div className="w-12 h-12 md:w-14 md:h-14 rounded-full relative flex items-center justify-center border border-white/20 group-hover:border-[#f97316] overflow-hidden transition-colors duration-300 shadow-[0_0_15px_rgba(249,115,22,0.2)] group-hover:shadow-[0_0_20px_rgba(249,115,22,0.6)]">
+                <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-30 blur-md transition-opacity duration-300" />
+                <img src="/ecosistema.jpg" alt="Regresar" className="w-full h-full object-cover relative z-10" style={{ mixBlendMode: 'screen' }} />
+              </div>
+            </button>
+
+            <div className="w-full max-w-5xl mx-auto px-4 md:px-8 pt-24 pb-16 flex flex-col items-center">
+              {/* Header inside modal */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="flex flex-col items-center gap-6 mb-10 text-center"
+              >
+                <img
+                  src="/logo maxirest ONE.png"
+                  alt="Maxirest ONE"
+                  className="w-48 md:w-64 h-auto object-contain drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]"
+                />
+                <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mt-4">
+                  La solución más completa para negocios gastronómicos
+                </h3>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative w-full max-w-4xl mx-auto flex justify-center mt-4"
+              >
+                <img
+                  src="/Instancias Maxirest.png"
+                  alt="Instancias Maxirest"
+                  className="w-full object-contain relative z-10 pointer-events-none"
+                  style={{ 
+                    mixBlendMode: 'screen', 
+                    filter: 'brightness(1.2) contrast(1.1) drop-shadow(0 0 20px rgba(51,232,255,0.2))' 
+                  }}
+                />
+                
+                {/* Botón Ir Instancia A (Overlay a la derecha arriba) */}
+                <button 
+                  onClick={() => setMostrarInstanciaA(true)}
+                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
+                  style={{ top: '5%', right: '-18%', width: '18%' }}
+                  title="Ver Instancia A"
+                >
+                  <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                  <img 
+                    src="/ir instancia A.png" 
+                    alt="Ir a Instancia A"
+                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
+                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                  />
+                </button>
+
+                {/* Botón Ir Instancia B (Overlay a la derecha abajo de Instancia A) */}
+                <button 
+                  onClick={() => setMostrarInstanciaB(true)}
+                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
+                  style={{ top: '35%', right: '-18%', width: '18%' }}
+                  title="Ver Instancia B"
+                >
+                  <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                  <img 
+                    src="/ir instancia B.png" 
+                    alt="Ir a Instancia B"
+                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
+                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                  />
+                </button>
+
+                {/* Botón Ir Instancia C */}
+                <button 
+                  onClick={() => {
+                    setShowInfo(false);
+                    setShowAuditoria(true);
+                    setAuditTab('que-es');
+                  }}
+                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
+                  style={{ top: '65%', right: '-18%', width: '18%' }}
+                  title="Ver Instancia C"
+                >
+                  <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
+                  <img 
+                    src="/ir instancia C.png" 
+                    alt="Ir a Instancia C"
+                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)] scale-[1.15]"
+                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
+                  />
+                </button>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Modal Auditoría & Consultoría ── */}
       <AnimatePresence>
