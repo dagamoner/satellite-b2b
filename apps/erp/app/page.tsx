@@ -417,112 +417,87 @@ export default function ErpPage() {
           className={`flex flex-col items-center gap-6 max-w-3xl w-full ${isModalOpen ? 'pointer-events-none' : ''}`}
         >
           {/* Main Info Blocks */}
-          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-x-6 md:gap-x-10 gap-y-10 md:gap-y-14 items-start w-full max-w-5xl mx-auto mb-8 px-4 md:px-0">
-            
-            {/* --- MAXIREST ROW --- */}
-            {!showAuditoria && (
-              <>
-                {/* Logo Maxirest */}
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="flex justify-center w-full md:w-auto"
-                >
-                  <div 
-                    className="flex items-center justify-center relative cursor-pointer transition-all duration-300 hover:scale-105"
-                    onClick={() => {
-                      setShowInfo(!showInfo);
-                      setShowAuditoria(false);
-                    }}
-                  >
-                    <img
-                      src="/logo maxirest ONE.png"
-                      alt="Maxirest ONE"
-                      className={`w-72 md:w-80 h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)] ${showInfo ? 'drop-shadow-[0_0_25px_rgba(249,115,22,0.8)]' : ''}`}
-                    />
-                  </div>
-                </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch w-full max-w-5xl mx-auto mb-12 px-4 md:px-0">
+            {/* --- MAXIREST CARD --- */}
+            <div 
+              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
+                showInfo 
+                  ? 'border-[#f97316] bg-[#f97316]/10 shadow-[0_0_30px_rgba(249,115,22,0.3)] scale-[1.02]' 
+                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#f97316]/50 hover:bg-[#0f172a]/80 hover:shadow-[0_0_25px_rgba(249,115,22,0.15)]'
+              }`}
+              onClick={() => {
+                setShowInfo(!showInfo);
+                setShowAuditoria(false);
+              }}
+            >
+              <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="h-28 flex items-center justify-center mb-6 w-full">
+                <img
+                  src="/logo maxirest ONE.png"
+                  alt="Maxirest ONE"
+                  className="max-h-full max-w-full object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+                />
+              </div>
+
+              <div className="relative z-10 flex flex-col items-center flex-1">
+                <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] mb-2">
+                  Software Gastronómico <span className="text-[#f97316] drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
+                </h2>
+                <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
+                  NUEVA GENERACIÓN
+                </span>
+                <p className="text-slate-300 font-medium text-sm md:text-base tracking-wide leading-relaxed mb-6 flex-1">
+                  Potenciamos tu proyecto gastronómico al siguiente nivel mediante tecnología líder en el mercado.
+                </p>
                 
-                {/* Text Maxirest */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col items-center md:items-start text-center md:text-left cursor-pointer transition-transform duration-300 hover:scale-105 md:pt-3"
-                  onClick={() => {
-                    setShowInfo(!showInfo);
-                    setShowAuditoria(false);
-                  }}
-                >
-                  <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
-                    Software Gastronómico <span className="text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]">MAXIREST</span>
-                  </h2>
-                  <span className="text-white font-bold text-sm md:text-base tracking-[0.25em] uppercase mt-1 mb-1 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
-                    NUEVA GENERACIÓN
+                <div className="mt-auto flex flex-col items-center">
+                  <span className="text-[#33E8FF] font-black text-sm tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)] mb-1">
+                    AGENTES OFICIALES
                   </span>
-                  <span className="text-white font-bold text-base md:text-lg tracking-widest mt-2 mb-2 opacity-100 drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
-                    Potenciamos tu proyecto gastronómico al siguiente nivel
-                  </span>
-                  <span className="text-[#33E8FF] font-black text-lg md:text-xl tracking-widest mt-2 mb-1 uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.6)]">
-                    AGENTES OFICIALES.
-                  </span>
-                  <span className="text-slate-100 text-sm md:text-base font-bold tracking-[0.2em] mt-1 uppercase drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">
+                  <span className="text-slate-400 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
                     Provincia de Mendoza y Alrededores
                   </span>
-                </motion.div>
-              </>
-            )}
+                </div>
+              </div>
+            </div>
 
-            {/* --- AUDITORIA ROW --- */}
-            {!showInfo && (
-              <>
-                {/* Logo Auditoria */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="flex justify-center w-full md:w-auto md:mt-2"
-                >
-                  <div 
-                    className="cursor-pointer transition-all duration-300 hover:scale-105 flex items-center justify-center w-36 md:w-44"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowAuditoria(!showAuditoria);
-                      setShowInfo(false);
-                    }}
-                    title="Auditoría y Consultoría Gastronómica"
-                  >
-                    <img
-                      src="/Logo MR Consultoria Gast.png"
-                      alt="MR Consultoria Gastronómica"
-                      className="w-full h-auto object-contain drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
-                      style={{ mixBlendMode: 'screen' }}
-                    />
-                  </div>
-                </motion.div>
+            {/* --- AUDITORIA CARD --- */}
+            <div 
+              className={`group relative flex flex-col items-center text-center p-8 rounded-[2rem] border transition-all duration-500 cursor-pointer overflow-hidden ${
+                showAuditoria 
+                  ? 'border-[#33E8FF] bg-[#33E8FF]/10 shadow-[0_0_30px_rgba(51,232,255,0.3)] scale-[1.02]' 
+                  : 'border-white/10 bg-[#0f172a]/60 hover:border-[#33E8FF]/50 hover:bg-[#0f172a]/80 hover:shadow-[0_0_25px_rgba(51,232,255,0.15)]'
+              }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowAuditoria(!showAuditoria);
+                setShowInfo(false);
+              }}
+            >
+              <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-500 pointer-events-none" />
+              
+              <div className="h-28 flex items-center justify-center mb-6 w-full">
+                <img
+                  src="/Logo MR Consultoria Gast.png"
+                  alt="MR Consultoria Gastronómica"
+                  className="max-h-full max-w-[80%] object-contain relative z-10 transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_20px_rgba(51,232,255,0.5)]"
+                  style={{ mixBlendMode: 'screen' }}
+                />
+              </div>
 
-                {/* Text Auditoria */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  className="flex flex-col items-center md:items-start text-center md:text-left cursor-pointer transition-transform duration-300 hover:scale-105 md:pt-4"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowAuditoria(!showAuditoria);
-                    setShowInfo(false);
-                  }}
-                >
-                  <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)]">
-                    EL FUTURO DE LA GESTIÓN GASTRONÓMICA
-                  </h2>
-                  <p className="text-white font-bold text-sm md:text-[15px] tracking-wide mt-3 mb-2 leading-[1.7] drop-shadow-[0_0_5px_rgba(255,255,255,0.3)] w-full" style={{ textAlign: "justify", textAlignLast: "left" }}>
-                    Auditoria & Consultoria con un equipo interdisciplinario gastronomico y sistematico que junto a herramientas de IT + IA = optimización de procesos en base a los puntos de dolor, control de toda la gestión gastronomica del local e integración tecnológica de vanguardia para llevar su restaurante al siguiente nivel de rentabilidad y excelencia.
-                  </p>
-                </motion.div>
-              </>
-            )}
+              <div className="relative z-10 flex flex-col items-center flex-1">
+                <h2 className="text-[#33E8FF] font-black text-lg md:text-xl tracking-[0.15em] uppercase drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] mb-2">
+                  EL FUTURO DE LA GESTIÓN GASTRONÓMICA
+                </h2>
+                <span className="text-white font-bold text-xs md:text-sm tracking-[0.25em] uppercase mb-4 drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]">
+                  Auditoría & Consultoría
+                </span>
+                <p className="text-slate-300 font-medium text-sm md:text-base tracking-wide leading-relaxed mb-4 flex-1">
+                  Equipo interdisciplinario con herramientas IT + IA para optimizar procesos, controlar operaciones y llevar tu restaurante al siguiente nivel de rentabilidad y excelencia.
+                </p>
+              </div>
+            </div>
           </div>
 
           <AnimatePresence>
