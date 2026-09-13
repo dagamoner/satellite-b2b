@@ -23,7 +23,7 @@ const securityHeaders = [
   },
   {
     key: 'Content-Security-Policy',
-    value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: https://gvjuegvbofpfhmvafhly.supabase.co; font-src 'self' data:; connect-src 'self' https://gvjuegvbofpfhmvafhly.supabase.co;"
+    value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' blob: data: https://gvjuegvbofpfhmvafhly.supabase.co; font-src 'self' data: https://fonts.gstatic.com; media-src 'self' blob:; connect-src 'self' https://gvjuegvbofpfhmvafhly.supabase.co; frame-src 'self';"
   }
 ];
 

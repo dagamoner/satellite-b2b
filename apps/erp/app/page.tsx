@@ -499,7 +499,7 @@ export default function ErpPage() {
               </div>
             </div>
           </div>
-          </div>
+
         </motion.div>
       </section>
 

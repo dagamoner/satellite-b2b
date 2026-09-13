@@ -123,6 +123,31 @@ export default function Page() {
             </p>
           </div>
 
+          {/* CTA Button */}
+          <div className="mt-10">
+            <Link 
+              href="/catalogo"
+              className="group inline-flex items-center justify-center px-8 md:px-12 py-5 md:py-6 rounded-full border-2 border-[#33E8FF] text-[#33E8FF] font-black text-lg md:text-2xl tracking-widest uppercase transition-all duration-300 hover:bg-[#33E8FF] hover:text-slate-900 hover:shadow-[0_0_50px_rgba(51,232,255,1)] hover:scale-105 focus:bg-[#33E8FF] focus:text-slate-900 focus:outline-none shadow-[0_0_25px_rgba(51,232,255,0.4)] bg-[#33E8FF]/5 backdrop-blur-md"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1.5" 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                className="w-8 h-8 md:w-10 md:h-10 mr-4 transition-transform duration-700 group-hover:rotate-180"
+              >
+                <circle cx="12" cy="12" r="3" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(30 12 12)" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(90 12 12)" />
+                <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(150 12 12)" />
+              </svg>
+              MR REAL ESTATE - CENI
+            </Link>
+          </div>
+
           <div className="mt-12 w-32 h-1 rounded-full bg-gradient-to-r from-transparent via-[#33E8FF] to-transparent" />
         </div>
       </section>
