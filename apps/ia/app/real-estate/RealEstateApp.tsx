@@ -544,13 +544,12 @@ export default function RealEstateApp() {
             )}
 
             {/* ════ VISTA INICIO ════ */}
-            <div style={{ display: view === "home-view" ? "block" : "none", height: "100%", width: "100%", position: "relative" }}>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, #e5e7eb 0%, rgba(51,232,255,0.5) 100%)", zIndex: -2 }} />
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "flex-start", width: "100%", height: "100%" }}>
-                <div style={{ width: "100%", height: "100%", overflow: "hidden", position: "relative", animation: "re-fadeInUp 1s ease forwards", zIndex: 1 }}>
+            <div style={{ display: view === "home-view" ? "block" : "none", height: "100%", width: "100%", position: "relative", overflow: "auto" }}>
+              <div style={{ position: "fixed", inset: 0, background: "linear-gradient(135deg, #e5e7eb 0%, rgba(51,232,255,0.5) 100%)", zIndex: -2 }} />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", minHeight: "100%", padding: "20px 0" }}>
+                <div style={{ width: "100%", maxWidth: "1200px", position: "relative", animation: "re-fadeInUp 1s ease forwards", zIndex: 1, overflow: "visible" }}>
                   <img src={A("Banner Principal WSP.png")} alt="Banner Principal" draggable={false}
-                    style={{ width: "100%", height: "100%", objectFit: "fill", objectPosition: "center", display: "block", filter: "brightness(1.1) contrast(1.1)" }} />
-                  <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%)", pointerEvents: "none" }} />
+                    style={{ width: "100%", height: "auto", objectFit: "contain", display: "block", margin: "0 auto", filter: "brightness(1.1) contrast(1.1)" }} />
                 </div>
               </div>
             </div>
