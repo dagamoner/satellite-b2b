@@ -364,12 +364,68 @@ export default function RealEstateApp() {
       padding-top: 40px;
     }
 
+    .re-splash {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: linear-gradient(135deg, #020813 0%, #000000 100%);
+      z-index: 99999; display: flex; flex-direction: row; align-items: stretch;
+      justify-content: space-between;
+      transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+      cursor: pointer;
+    }
+    .re-splash-left, .re-splash-right {
+      flex: 0 0 25vw; height: 100%; position: relative; opacity: 0; z-index: 2;
+    }
+    .re-splash-center {
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; perspective: 800px; z-index: 1;
+    }
+
+    .re-mobile-toast { display: none; }
+
+    @keyframes re-toastFade {
+      0% { opacity: 0; bottom: -20px; }
+      10% { opacity: 1; bottom: 20px; }
+      90% { opacity: 1; bottom: 20px; }
+      100% { opacity: 0; bottom: -20px; }
+    }
+
     @media (max-width: 768px) {
       .re-layout {
         flex-direction: column;
         overflow-y: auto;
-        height: auto;
-        min-height: 100vh;
+        height: 100vh;
+      }
+      .re-splash {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+      .re-splash-left, .re-splash-right {
+        flex: 0 0 30vh;
+        width: 100%;
+      }
+      .re-splash-center {
+        flex: 0 0 40vh;
+        width: 100%;
+      }
+      .re-mobile-toast {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(51,232,255,0.9);
+        color: #000;
+        padding: 14px 24px;
+        border-radius: 30px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 800;
+        font-size: 14px;
+        text-align: center;
+        z-index: 100000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        animation: re-toastFade 6s forwards;
+        pointer-events: none;
+        width: 85%;
+        justify-content: center;
       }
       .re-sidebar {
         width: 100%;
@@ -387,7 +443,7 @@ export default function RealEstateApp() {
       }
       .re-main-area {
         overflow: visible;
-        min-height: 80vh;
+        height: auto;
       }
       .re-ceni-flex {
         flex-direction: column;
@@ -429,6 +485,11 @@ export default function RealEstateApp() {
     <div id="re-root" style={{ position: "fixed", inset: 0, width: "100vw", height: "100vh", overflow: "hidden", fontFamily: "'Montserrat', sans-serif", background: "#000" }}>
       <style>{globalCSS}</style>
 
+      {/* TOAST MÓVIL RECOMENDACIÓN HORIZONTAL */}
+      <div className="re-mobile-toast">
+        GIRAR A HORIZONTAL PARA MEJOR PRESENTACIÓN
+      </div>
+
       {/* ── SVG Filter ── */}
       <svg style={{ width: 0, height: 0, position: "absolute" }} aria-hidden="true">
         <defs>
@@ -442,25 +503,15 @@ export default function RealEstateApp() {
           SPLASH SCREEN
       ════════════════════════════════════════════════════════════ */}
       {splashVisible && (
-        <div
-          onClick={() => setSplashVisible(false)}
-          style={{
-            position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
-            background: "linear-gradient(135deg, #020813 0%, #000000 100%)",
-            zIndex: 99999, display: "flex", flexDirection: "row", alignItems: "stretch",
-            justifyContent: "space-between",
-            transition: "opacity 1s ease-in-out, visibility 1s ease-in-out",
-            cursor: "pointer",
-          }}
-        >
+        <div onClick={() => setSplashVisible(false)} className="re-splash">
           {/* Lado Izquierdo: Mendoza */}
-          <div style={{ flex: "0 0 25vw", height: "100%", position: "relative", animation: "re-fadeInLeft 1.5s ease forwards", opacity: 0, boxShadow: "20px 0 50px rgba(0,0,0,0.9)", zIndex: 2 }}>
+          <div className="re-splash-left" style={{ animation: "re-fadeInLeft 1.5s ease forwards", boxShadow: "20px 0 50px rgba(0,0,0,0.9)" }}>
             <img src={A("Splash_Mendoza.jpg")} alt="Mendoza" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.9) contrast(1.2)" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, transparent 60%, #000000 100%)" }} />
           </div>
 
           {/* Centro: Órbita 3D */}
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", perspective: "800px", zIndex: 1 }}>
+          <div className="re-splash-center">
             <div style={{ position: "relative", width: "100%", height: "40vh", transformStyle: "preserve-3d", animation: "re-spinAxis 8s linear infinite", marginTop: "-5vh" }}>
               {/* Anillo */}
               <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%) rotateX(90deg)", width: "36vw", height: "36vw", border: "3px dashed rgba(51,232,255,0.4)", borderRadius: "50%", boxShadow: "0 0 40px rgba(51,232,255,0.4), inset 0 0 40px rgba(51,232,255,0.4)", boxSizing: "border-box" }} />
@@ -488,7 +539,7 @@ export default function RealEstateApp() {
           </div>
 
           {/* Lado Derecho: Floripa */}
-          <div style={{ flex: "0 0 25vw", height: "100%", position: "relative", animation: "re-fadeInRight 1.5s ease forwards", opacity: 0, boxShadow: "-20px 0 50px rgba(0,0,0,0.9)", zIndex: 2 }}>
+          <div className="re-splash-right" style={{ animation: "re-fadeInRight 1.5s ease forwards", boxShadow: "-20px 0 50px rgba(0,0,0,0.9)" }}>
             <img src={A("Splash_Floripa.jpg")} alt="Floripa" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.9) contrast(1.2)" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(270deg, transparent 60%, #000000 100%)" }} />
           </div>
