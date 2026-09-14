@@ -92,7 +92,7 @@ export default function CatalogoPage() {
           </h1>
 
           <div className="flex flex-col items-center w-full mt-8">
-            <div className="w-full max-w-xs relative group mb-10">
+            <div className="w-full max-w-sm relative group mb-10">
               {/* Glow effect behind the image */}
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/40 to-[#33E8FF]/40 rounded-3xl blur-lg opacity-40 group-hover:opacity-80 transition duration-700"></div>
               
@@ -108,12 +108,12 @@ export default function CatalogoPage() {
             {/* Back Button */}
             <Link 
               href="/"
-              className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 text-slate-300 font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30 backdrop-blur-md"
+              className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 text-slate-300 font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white hover:text-[#33E8FF] hover:border-white hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] backdrop-blur-md"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:-translate-x-1">
                 <path d="m15 18-6-6 6-6"/>
               </svg>
-              Volver a Inteligencia Artificial
+              REGRESAR A INTELIGENCIA ARTIFICIAL
             </Link>
           </div>
           
