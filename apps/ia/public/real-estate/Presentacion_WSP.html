@@ -87,12 +87,32 @@
       margin-bottom: 10px;
     }
 
-    .link {
-      font-size: 26px;
-      font-weight: 600;
-      color: #2362a8;
-      text-decoration: underline;
-      letter-spacing: 1px;
+    .link-box {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #33e8ff;
+      padding: 15px 40px;
+      border-radius: 50px;
+      margin-top: 10px;
+      box-shadow: 0 10px 20px rgba(51, 232, 255, 0.4);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .link-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 25px rgba(51, 232, 255, 0.6);
+      background-color: #ffffff;
+    }
+
+    .link-box .subtitle {
+      margin: 0;
+      color: #0a1e46;
+      transition: color 0.3s ease;
+    }
+
+    .link-box:hover .subtitle {
+      color: #33e8ff;
     }
   </style>
 </head>
@@ -103,8 +123,9 @@
 
     <div class="leyenda-container">
       <div class="leyenda">TU SUEÑO, NUESTRO DESAFIO !!!</div>
-      <div class="subtitle">Comenzamos 👇</div>
-      <a href="https://www.mrrealestate.com" class="link">hipervinculo</a>
+      <a href="https://ia.mrtechnology.it.com/catalogo" class="link-box">
+        <div class="subtitle">Comenzamos 👇</div>
+      </a>
     </div>
   </div>
 </body>
