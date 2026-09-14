@@ -91,16 +91,29 @@ export default function CatalogoPage() {
             MR Real Estate - CENI
           </h1>
 
-          <div className="w-full max-w-4xl relative group">
-            {/* Glow effect behind the image */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-[#33E8FF] rounded-3xl blur opacity-25 group-hover:opacity-75 transition duration-500"></div>
-            
-            <Link href="/real-estate" className="relative block rounded-3xl overflow-hidden bg-slate-900 border border-white/10 transition-transform duration-500 group-hover:scale-[1.02]">
-              <img
-                src="/real-estate/MR Real Estate - CENI.png"
-                alt="MR Real Estate - CENI"
-                className="w-full h-auto object-cover transition-opacity duration-500 hover:opacity-95"
-              />
+          <div className="flex flex-col items-center w-full mt-8">
+            <div className="w-full max-w-lg relative group mb-10">
+              {/* Glow effect behind the image */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/40 to-[#33E8FF]/40 rounded-3xl blur-lg opacity-40 group-hover:opacity-80 transition duration-700"></div>
+              
+              <Link href="/real-estate" className="relative block rounded-3xl overflow-hidden bg-[#050d1f] border border-white/10 transition-all duration-500 hover:border-[#33E8FF]/40 group-hover:scale-105 shadow-2xl">
+                <img
+                  src="/real-estate/MR Real Estate - CENI.png"
+                  alt="MR Real Estate - CENI"
+                  className="w-full h-auto object-cover transition-all duration-700 hover:scale-110 hover:opacity-90"
+                />
+              </Link>
+            </div>
+
+            {/* Back Button */}
+            <Link 
+              href="/"
+              className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/10 bg-white/5 text-slate-300 font-bold text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/10 hover:text-white hover:border-white/30 backdrop-blur-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300 group-hover:-translate-x-1">
+                <path d="m15 18-6-6 6-6"/>
+              </svg>
+              Volver a Inteligencia Artificial
             </Link>
           </div>
           
