@@ -92,7 +92,7 @@ export default function CatalogoPage() {
           </h1>
 
           <div className="flex flex-col items-center w-full mt-8">
-            <div className="w-full max-w-lg relative group mb-10">
+            <div className="w-full max-w-xs relative group mb-10">
               {/* Glow effect behind the image */}
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/40 to-[#33E8FF]/40 rounded-3xl blur-lg opacity-40 group-hover:opacity-80 transition duration-700"></div>
               
