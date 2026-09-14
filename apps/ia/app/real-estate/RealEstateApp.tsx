@@ -304,6 +304,109 @@ export default function RealEstateApp() {
       border-color: #FFFFFF;
       box-shadow: 0 0 20px rgba(255,255,255,0.8);
     }
+
+    /* RESPONSIVE LAYOUT CLASSES */
+    .re-layout {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background: transparent;
+      position: relative;
+    }
+    .re-sidebar {
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      z-index: 50;
+      flex-shrink: 0;
+      position: relative;
+      background: rgba(51,232,255,0.35);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow-y: auto;
+    }
+    .re-sidebar-nav {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 1.5vw 2vh 1.5vw;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .re-main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+    .re-ceni-flex {
+      width: 100%;
+      height: 85vh;
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      padding: 12px 16px;
+      box-sizing: border-box;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .re-proyectos-flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3%;
+      width: 100%;
+      height: 85vh;
+      padding-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .re-layout {
+        flex-direction: column;
+        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+      }
+      .re-sidebar {
+        width: 100%;
+        height: auto;
+        padding-bottom: 20px;
+      }
+      .re-sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .re-sidebar-nav > div {
+        flex: 1 1 45%;
+        margin-bottom: 5px;
+      }
+      .re-main-area {
+        overflow: visible;
+        min-height: 80vh;
+      }
+      .re-ceni-flex {
+        flex-direction: column;
+        height: auto;
+        min-height: 85vh;
+      }
+      .re-ceni-flex > div {
+        min-height: 300px;
+      }
+      .re-proyectos-flex {
+        flex-direction: column;
+        height: auto;
+        padding-bottom: 50px;
+      }
+      .re-proyecto-wrapper {
+        width: 90% !important;
+        margin-bottom: 40px;
+      }
+    }
   `;
 
   /* ── Helpers de flags ── */
@@ -395,17 +498,17 @@ export default function RealEstateApp() {
       {/* ════════════════════════════════════════════════════════════
           DASHBOARD LAYOUT (Sidebar + Main)
       ════════════════════════════════════════════════════════════ */}
-      <div style={{ display: "flex", height: "100vh", width: "100vw", overflow: "hidden", background: "transparent", position: "relative" }}>
+      <div className="re-layout">
 
         {/* ░░ SIDEBAR ░░ */}
-        <aside style={{ width: "250px", display: "flex", flexDirection: "column", zIndex: 50, flexShrink: 0, position: "relative", background: "rgba(51,232,255,0.35)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
+        <aside className="re-sidebar">
           {/* Logo */}
           <div style={{ padding: "4vh 2vw", textAlign: "center", borderBottom: "1px solid rgba(51,232,255,0.1)" }}>
             <img src={A("Logo_MR_Tech.jpg")} alt="MR Tech" style={{ height: "160px", width: "160px", borderRadius: "50%", boxShadow: "0 0 25px rgba(51,232,255,0.8)", clipPath: "circle(47%)" }} />
           </div>
 
           {/* Tabs de navegación */}
-          <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px", padding: "0 1.5vw 2vh 1.5vw", alignItems: "center", marginBottom: 0 }}>
+          <nav className="re-sidebar-nav">
             {/* INICIO */}
             <div className={tabCls("home-view")} onClick={() => switchView("home-view")} style={{ cursor: "pointer" }}>
               <img src={A(SOLAPA_INICIO(lang))} alt="Inicio" />
@@ -452,7 +555,7 @@ export default function RealEstateApp() {
         </aside>
 
         {/* ░░ MAIN CONTENT ░░ */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", position: "relative" }}>
+        <div className="re-main-area">
 
           {/* HEADER SUPERIOR */}
           <header style={{ height: "60px", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 2vw", zIndex: 40, position: "relative", background: "rgba(51,232,255,0.35)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
@@ -556,7 +659,7 @@ export default function RealEstateApp() {
 
             {/* ════ VISTA CENI ════ */}
             <div style={{ display: view === "ceni-view" ? "block" : "none", position: "relative", zIndex: 1 }}>
-              <div style={{ width: "100%", height: "85vh", display: "flex", flexDirection: "row", gap: "16px", padding: "12px 16px", boxSizing: "border-box", alignItems: "stretch", justifyContent: "center" }}>
+              <div className="re-ceni-flex">
                 {/* PDF */}
                 <div style={{ flex: "1 1 0", minWidth: 0, display: "flex", flexDirection: "column", borderRadius: "14px", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(51,232,255,0.18)" }}>
                   <iframe src={A("Presentación Comercial CENI.pdf") + "#toolbar=0&navpanes=0&scrollbar=0"} style={{ width: "100%", height: "100%", border: "none", display: "block" }} />
@@ -570,7 +673,7 @@ export default function RealEstateApp() {
 
             {/* ════ VISTA PROYECTOS ════ */}
             <div style={{ display: view === "proyectos-view" ? "block" : "none", position: "relative", zIndex: 1 }}>
-              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "3%", width: "100%", height: "85vh", paddingTop: "40px" }}>
+              <div className="re-proyectos-flex">
                 {/* Mar do Norte */}
                 <div className="re-proyecto-wrapper" style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "46%", height: "85%", gap: "40px" }}>
                   <h2 className="re-proyecto-title">MAR DO NORTE STUDIOS</h2>
