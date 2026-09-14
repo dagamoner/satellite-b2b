@@ -630,9 +630,17 @@ export default function RealEstateApp() {
                 </svg>
               </div>
               {/* Fullscreen */}
-              <div onClick={toggleFullScreen} style={{ cursor: "pointer", padding: "4px 8px", marginLeft: "15px", borderRadius: "4px", border: "1px solid rgba(51,232,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s" }} title="Pantalla Completa">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#33E8FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <div onClick={toggleFullScreen} style={{ cursor: "pointer", padding: "4px 8px", marginLeft: "15px", borderRadius: "4px", border: "2px solid rgba(51,232,255,0.6)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s" }} title="Pantalla Completa">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#33E8FF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                </svg>
+              </div>
+              {/* Salir de la App */}
+              <div onClick={() => window.location.href = "https://ia.mrtechnology.it.com/catalogo"} style={{ cursor: "pointer", padding: "4px 8px", marginLeft: "10px", borderRadius: "4px", border: "2px solid rgba(255,77,77,0.6)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s" }} title="Salir de la App">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
               </div>
               {/* Mensaje bienvenida */}
@@ -699,7 +707,6 @@ export default function RealEstateApp() {
 
             {/* ════ VISTA INICIO ════ */}
             <div style={{ display: view === "home-view" ? "block" : "none", height: "100%", width: "100%", position: "relative", overflow: "auto" }}>
-              <div style={{ position: "fixed", inset: 0, background: "linear-gradient(135deg, #e5e7eb 0%, rgba(51,232,255,0.5) 100%)", zIndex: -2 }} />
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%", minHeight: "100%", padding: "20px 0" }}>
                 <div style={{ width: "100%", maxWidth: "1200px", position: "relative", animation: "re-fadeInUp 1s ease forwards", zIndex: 1, overflow: "visible" }}>
                   <img src={A("Banner Principal WSP.png")} alt="Banner Principal" draggable={false}
