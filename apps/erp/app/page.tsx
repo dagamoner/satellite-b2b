@@ -540,6 +540,9 @@ export default function ErpPage() {
                 <h3 className="text-[#33E8FF] font-black text-xl md:text-2xl tracking-widest uppercase drop-shadow-[0_0_8px_rgba(51,232,255,0.5)] mt-4">
                   La solución más completa para negocios gastronómicos
                 </h3>
+                <h4 className="text-[#33E8FF] font-black text-base md:text-lg tracking-widest uppercase mt-6 drop-shadow-[0_0_8px_rgba(51,232,255,0.5)]">
+                  Seleccionar la INSTANCIA que desea ingresar:
+                </h4>
               </motion.div>
 
               <motion.div
@@ -558,114 +561,34 @@ export default function ErpPage() {
                   }}
                 />
                 
-                {/* Botón Ir Instancia A (Overlay a la derecha arriba) */}
+                {/* ZONAS CLICKABLES INVISIBLES SOBRE LA IMAGEN PRINCIPAL */}
+                {/* Zona Instancia A (Tercio superior) */}
                 <button 
                   onClick={() => setMostrarInstanciaA(true)}
-                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                  style={{ top: '5%', right: '-18%', width: '18%' }}
-                  title="Ver Instancia A"
-                >
-                  <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                  <img 
-                    src="/ir instancia A.png" 
-                    alt="Ir a Instancia A"
-                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
-                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                  />
-                </button>
+                  className="absolute left-0 w-full z-[50] cursor-pointer outline-none transition-all duration-300 hover:bg-[#33E8FF]/10 rounded-2xl"
+                  style={{ top: '0', height: '33.33%' }}
+                  title="Ingresar a Instancia A (Proyecto)"
+                />
 
-                {/* Botón Ir Instancia B (Overlay a la derecha abajo de Instancia A) */}
+                {/* Zona Instancia B (Tercio medio) */}
                 <button 
                   onClick={() => setMostrarInstanciaB(true)}
-                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                  style={{ top: '35%', right: '-18%', width: '18%' }}
-                  title="Ver Instancia B"
-                >
-                  <div className="absolute inset-0 bg-[#33E8FF] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                  <img 
-                    src="/ir instancia B.png" 
-                    alt="Ir a Instancia B"
-                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(51,232,255,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(51,232,255,1)]"
-                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                  />
-                </button>
+                  className="absolute left-0 w-full z-[50] cursor-pointer outline-none transition-all duration-300 hover:bg-[#33E8FF]/10 rounded-2xl"
+                  style={{ top: '33.33%', height: '33.33%' }}
+                  title="Ingresar a Instancia B (Maxirest)"
+                />
 
-                {/* Botón Ir Instancia C */}
+                {/* Zona Instancia C (Tercio inferior) */}
                 <button 
                   onClick={() => {
                     setShowInfo(false);
                     setShowAuditoria(true);
                     setAuditTab('que-es');
                   }}
-                  className="absolute z-[50] group flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer outline-none"
-                  style={{ top: '65%', right: '-18%', width: '18%' }}
-                  title="Ver Instancia C"
-                >
-                  <div className="absolute inset-0 bg-[#f97316] opacity-0 group-hover:opacity-80 blur-2xl transition-all duration-300 pointer-events-none scale-90" />
-                  <img 
-                    src="/ir instancia C.png" 
-                    alt="Ir a Instancia C"
-                    className="w-full h-auto object-contain relative z-10 transition-all duration-300 drop-shadow-[0_0_10px_rgba(249,115,22,0.5)] group-hover:drop-shadow-[0_0_30px_rgba(249,115,22,1)] scale-[1.15]"
-                    style={{ mixBlendMode: 'screen', filter: 'brightness(1.2) contrast(1.2)' }}
-                  />
-                </button>
-              </motion.div>
-
-              {/* Botones de Selección A, B, C */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="mt-12 flex flex-col items-center w-full max-w-4xl"
-              >
-                <h4 className="text-[#33E8FF] font-black text-base md:text-lg tracking-widest uppercase mb-8 text-center drop-shadow-[0_0_8px_rgba(51,232,255,0.5)]">
-                  Seleccionar la INSTANCIA que desea ingresar:
-                </h4>
-                
-                <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 w-full">
-                  {/* Instancia A */}
-                  <button 
-                    onClick={() => setMostrarInstanciaA(true)}
-                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
-                  >
-                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
-                      A
-                    </span>
-                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
-                      PROYECTO
-                    </span>
-                  </button>
-
-                  {/* Instancia B */}
-                  <button 
-                    onClick={() => setMostrarInstanciaB(true)}
-                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
-                  >
-                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
-                      B
-                    </span>
-                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
-                      MAXIREST
-                    </span>
-                  </button>
-
-                  {/* Instancia C */}
-                  <button 
-                    onClick={() => {
-                      setShowInfo(false);
-                      setShowAuditoria(true);
-                      setAuditTab('que-es');
-                    }}
-                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
-                  >
-                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
-                      C
-                    </span>
-                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
-                      CRECIMIENTO
-                    </span>
-                  </button>
-                </div>
+                  className="absolute left-0 w-full z-[50] cursor-pointer outline-none transition-all duration-300 hover:bg-[#33E8FF]/10 rounded-2xl"
+                  style={{ top: '66.66%', height: '33.33%' }}
+                  title="Ingresar a Instancia C (Crecimiento)"
+                />
               </motion.div>
             </div>
           </motion.div>
