@@ -610,6 +610,63 @@ export default function ErpPage() {
                   />
                 </button>
               </motion.div>
+
+              {/* Botones de Selección A, B, C */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="mt-12 flex flex-col items-center w-full max-w-4xl"
+              >
+                <h4 className="text-[#33E8FF] font-black text-base md:text-lg tracking-widest uppercase mb-8 text-center drop-shadow-[0_0_8px_rgba(51,232,255,0.5)]">
+                  Seleccionar la INSTANCIA que desea ingresar:
+                </h4>
+                
+                <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 w-full">
+                  {/* Instancia A */}
+                  <button 
+                    onClick={() => setMostrarInstanciaA(true)}
+                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
+                  >
+                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
+                      A
+                    </span>
+                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
+                      PROYECTO
+                    </span>
+                  </button>
+
+                  {/* Instancia B */}
+                  <button 
+                    onClick={() => setMostrarInstanciaB(true)}
+                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
+                  >
+                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
+                      B
+                    </span>
+                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
+                      MAXIREST
+                    </span>
+                  </button>
+
+                  {/* Instancia C */}
+                  <button 
+                    onClick={() => {
+                      setShowInfo(false);
+                      setShowAuditoria(true);
+                      setAuditTab('que-es');
+                    }}
+                    className="group flex flex-col items-center justify-center p-8 rounded-2xl border border-white/10 bg-[#0f172a]/80 hover:bg-[#33E8FF]/10 hover:border-[#33E8FF]/50 transition-all duration-300 w-56 shadow-[0_0_15px_rgba(0,0,0,0.5)] hover:shadow-[0_0_25px_rgba(51,232,255,0.3)] hover:scale-105"
+                  >
+                    <span className="text-[#33E8FF] font-black text-6xl md:text-7xl mb-4 drop-shadow-[0_0_10px_rgba(51,232,255,0.6)] group-hover:drop-shadow-[0_0_20px_rgba(51,232,255,1)] transition-all">
+                      C
+                    </span>
+                    <span className="text-white font-bold tracking-[0.2em] text-sm md:text-base group-hover:text-[#33E8FF] transition-colors">
+                      CRECIMIENTO
+                    </span>
+                  </button>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         )}
