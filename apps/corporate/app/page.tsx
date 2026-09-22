@@ -68,7 +68,7 @@ function ClientCarousel() {
           100% { transform: translateX(-50%); }
         }
         .marquee-track {
-          animation: marquee-scroll 90s linear infinite;
+          animation: marquee-scroll 180s linear infinite;
         }
         .marquee-track.paused {
           animation-play-state: paused;
@@ -330,7 +330,7 @@ const SatelliteOrbit = ({ onClick }: { onClick: () => void }) => {
         scale: [0.4, 0.6, 0.3, 0.5, 0.4],
       }}
       transition={{
-        duration: 60,
+        duration: 120,
         ease: "linear",
         repeat: Infinity,
       }}
@@ -356,6 +356,171 @@ const SatelliteOrbit = ({ onClick }: { onClick: () => void }) => {
     </motion.div>
   );
 };
+
+/* ── ContactFormWhatsApp ─────────────────────────────────────────────────── */
+function ContactFormWhatsApp() {
+  const [form, setForm] = useState({ empresa: '', nombre: '', celular: '', mail: '', comentarios: '' });
+  const [sent, setSent] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const msg = [
+      `🏢 *EMPRESA:* ${form.empresa}`,
+      `👤 *Nombre:* ${form.nombre}`,
+      `📱 *Celular:* ${form.celular}`,
+      `📧 *Mail:* ${form.mail}`,
+      `💬 *Comentarios:* ${form.comentarios}`,
+    ].join('\n');
+    const url = `https://wa.me/5492616518318?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+    setSent(true);
+    setTimeout(() => setSent(false), 4000);
+  };
+
+  const inputClass = `w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-400 text-sm font-medium focus:outline-none focus:border-[#33E8FF]/60 focus:bg-white/10 focus:shadow-[0_0_20px_rgba(51,232,255,0.15)] transition-all duration-300`;
+
+  return (
+    <div className="flex-1 min-w-0 w-full lg:max-w-xl">
+      <div
+        className="relative rounded-3xl p-7 md:p-9 border border-white/10 backdrop-blur-xl overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, rgba(0,20,50,0.85) 0%, rgba(0,10,30,0.92) 100%)',
+          boxShadow: '0 0 60px rgba(51,232,255,0.08), 0 0 120px rgba(0,85,255,0.05)',
+        }}
+      >
+        {/* Glow corner */}
+        <div className="absolute top-0 right-0 w-48 h-48 bg-[#33E8FF]/5 blur-3xl rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-600/5 blur-2xl rounded-full pointer-events-none" />
+
+        {/* Header */}
+        <div className="mb-7 relative z-10">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-8 rounded-full bg-[#33E8FF]/15 border border-[#33E8FF]/30 flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-[#33E8FF]">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .113 5.383.111 11.936c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.938-5.383 11.94-11.937a11.812 11.812 0 00-3.526-8.452"/>
+              </svg>
+            </div>
+            <h5 className="text-lg font-black text-white tracking-wide">Envianos tu consulta</h5>
+          </div>
+          <p className="text-slate-400 text-xs font-medium tracking-wide">Te respondemos a la brevedad vía <span className="text-[#01c164] font-bold">WhatsApp</span></p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 relative z-10">
+          {/* Empresa */}
+          <div>
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 block">Empresa</label>
+            <input
+              id="cf-empresa"
+              name="empresa"
+              type="text"
+              value={form.empresa}
+              onChange={handleChange}
+              required
+              placeholder="Nombre de tu empresa"
+              className={inputClass}
+            />
+          </div>
+
+          {/* Nombre y Apellido */}
+          <div>
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 block">Nombre y Apellido</label>
+            <input
+              id="cf-nombre"
+              name="nombre"
+              type="text"
+              value={form.nombre}
+              onChange={handleChange}
+              required
+              placeholder="Tu nombre completo"
+              className={inputClass}
+            />
+          </div>
+
+          {/* Celular + Mail — row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 block">Celular</label>
+              <input
+                id="cf-celular"
+                name="celular"
+                type="tel"
+                value={form.celular}
+                onChange={handleChange}
+                required
+                placeholder="+549 261..."
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 block">Mail</label>
+              <input
+                id="cf-mail"
+                name="mail"
+                type="email"
+                value={form.mail}
+                onChange={handleChange}
+                required
+                placeholder="tu@empresa.com"
+                className={inputClass}
+              />
+            </div>
+          </div>
+
+          {/* Comentarios */}
+          <div>
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-widest mb-1.5 block">Comentarios</label>
+            <textarea
+              id="cf-comentarios"
+              name="comentarios"
+              value={form.comentarios}
+              onChange={handleChange}
+              rows={3}
+              placeholder="Contanos sobre tu proyecto o consulta..."
+              className={`${inputClass} resize-none`}
+            />
+          </div>
+
+          {/* Submit */}
+          <button
+            id="cf-submit"
+            type="submit"
+            className="relative mt-2 w-full py-4 rounded-2xl font-black text-base tracking-widest uppercase transition-all duration-300 overflow-hidden group/submit"
+            style={{
+              background: sent
+                ? 'linear-gradient(135deg, #01c164, #019c50)'
+                : 'linear-gradient(135deg, #01c164 0%, #019c50 50%, #006b38 100%)',
+              boxShadow: sent
+                ? '0 0 40px rgba(1,193,100,0.7), 0 0 80px rgba(1,193,100,0.35)'
+                : '0 0 25px rgba(1,193,100,0.4), 0 0 50px rgba(1,193,100,0.15)',
+              color: '#fff',
+            }}
+          >
+            <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/submit:translate-x-[120%]" />
+            <span className="relative z-10 flex items-center justify-center gap-3">
+              {sent ? (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  ¡Mensaje enviado!
+                </>
+              ) : (
+                <>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .113 5.383.111 11.936c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.938-5.383 11.94-11.937a11.812 11.812 0 00-3.526-8.452"/>
+                  </svg>
+                  ENVIAR a MR Tech
+                </>
+              )}
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 const ecosystemLogos = [
   { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png", color: "#33E8FF" },
@@ -503,14 +668,14 @@ export default function MarketingPage() {
       {mounted && theme !== "light" && (
         <>
           <motion.div
-            className="fixed top-[-16vw] right-[-16vw] z-[1] pointer-events-none"
+            className="fixed top-[-8vw] left-[-8vw] z-[1] pointer-events-none"
             initial={{ opacity: 0, rotate: 0 }}
             animate={{ opacity: 0.6, rotate: 360 }}
             transition={{
-              opacity: { duration: 90, ease: [0.04, 0, 0.16, 1] },
+              opacity: { duration: 45, ease: [0.04, 0, 0.16, 1] },
               rotate: { duration: 600, ease: "linear", repeat: Infinity },
             }}
-            style={{ width: '52vw', maxWidth: '660px' }}
+            style={{ width: '104vw', maxWidth: '1320px' }}
           >
             <img
               src="/tierra.png"
@@ -528,10 +693,10 @@ export default function MarketingPage() {
           <div
             className="fixed z-[10]"
             style={{
-              top: '-16vw',
-              right: '-16vw',
-              width: '52vw',
-              maxWidth: '660px',
+              top: '-8vw',
+              left: '-8vw',
+              width: '104vw',
+              maxWidth: '1320px',
               aspectRatio: '1',
               cursor: 'crosshair',
               borderRadius: '50%',
@@ -968,81 +1133,73 @@ export default function MarketingPage() {
           {/* ── CLIENTES QUE CONFIARON EN NOSOTROS ── */}
           <ClientCarousel />
 
-          {/* Contacto / Hablamos Section - Moved to Hero to keep Space Background */}
-          <div id="whatsapp-contact" className="flex flex-col items-center gap-6 -mt-2 md:-mt-6 mb-16 w-full relative z-20 scroll-mt-24">
-             <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest">HABLAMOS !!!</h4>
-             <div className="flex flex-col items-center gap-6">
-               {/* WhatsApp (Top) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="https://wa.me/5492616518318" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
+          {/* Contacto / Hablamos Section - Two-column layout: contacts left, form right */}
+          <div id="whatsapp-contact" className="w-full relative z-20 scroll-mt-24 mb-16 -mt-2 md:-mt-6">
+            <h4 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 drop-shadow-sm uppercase tracking-widest text-center mb-8">HABLAMOS !!!</h4>
+            
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start justify-center w-full max-w-6xl mx-auto px-4">
+              
+              {/* LEFT COLUMN — Existing contact links */}
+              <div className="flex flex-col items-center gap-6 flex-shrink-0 lg:w-auto w-full">
+                {/* WhatsApp */}
+                <div className="relative group shrink-0 flex items-center">
+                  <div className="absolute inset-0 rounded-full bg-[#01c164] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                  <a href="https://wa.me/5492616518318" target="_blank" rel="noreferrer"
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#01c164] bg-gradient-to-b from-[#02e779] to-[#019c50] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,193,100,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block">
                     <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#01c164] opacity-40 animate-pulse pointer-events-none" />
                     <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
                     <img src="/social_whatsapp_fixed_v1.png" alt="WhatsApp" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
                   </a>
                   <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white group-hover:text-[#01c164] group-hover:drop-shadow-[0_0_12px_rgba(1,193,100,0.9)] font-bold whitespace-nowrap text-xl pointer-events-none z-10 drop-shadow-md">+5492616518318</span>
-               </div>
-               
-               <div className="flex gap-40 justify-center w-full relative">
-                 {/* LinkedIn (Left) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">www.linkedin.com/in/mrtech2026</span>
-                   <a 
-                      href="https://www.linkedin.com/in/mrtech2026" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
+                </div>
+
+                <div className="flex gap-16 justify-center w-full relative">
+                  {/* LinkedIn */}
+                  <div className="relative group shrink-0 flex items-center">
+                    <div className="absolute inset-0 rounded-full bg-[#0189dd] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                    <span className="absolute right-full mr-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-sm pointer-events-none z-10 drop-shadow-md">linkedin.com/in/mrtech2026</span>
+                    <a href="https://www.linkedin.com/in/mrtech2026" target="_blank" rel="noreferrer"
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#0189dd] bg-gradient-to-b from-[#009bf2] to-[#006ca8] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(1,137,221,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block">
                       <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#0189dd] opacity-40 animate-pulse pointer-events-none" />
                       <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
                       <img src="/social_linkedin_v3.png" alt="LinkedIn" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
                     </a>
-                 </div>
-
-                 {/* Instagram (Right) */}
-                 <div className="relative group shrink-0 flex items-center">
-                   <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                   <a 
-                      href="https://www.instagram.com/mrtechnologymza/?hl=es" 
-                      target="_blank" 
-                      rel="noreferrer" 
-                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                    >
+                  </div>
+                  {/* Instagram */}
+                  <div className="relative group shrink-0 flex items-center">
+                    <div className="absolute inset-0 rounded-full bg-[#d631b9] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                    <a href="https://www.instagram.com/mrtechnologymza/?hl=es" target="_blank" rel="noreferrer"
+                      className="relative z-10 w-16 h-16 rounded-full border-2 border-[#d631b9] bg-gradient-to-b from-[#e53fa3] to-[#b6248d] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(214,49,185,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block">
                       <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#d631b9] opacity-40 animate-pulse pointer-events-none" />
                       <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
                       <img src="/social_instagram_fixed_v1.png" alt="Instagram" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110" />
                     </a>
-                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
-                 </div>
-               </div>
-               
-               {/* Email (Bottom) */}
-               <div className="relative group shrink-0 flex items-center">
-                 <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
-                 <a 
-                    href="mailto:mr@mrestudioinformatico.com" 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block"
-                  >
+                    <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-sm pointer-events-none z-10 drop-shadow-md">@mrtechnologymza</span>
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div className="relative group shrink-0 flex items-center">
+                  <div className="absolute inset-0 rounded-full bg-[#ef4444] blur-xl opacity-0 group-hover:opacity-80 transition-opacity duration-300 pointer-events-none scale-[1.35] z-0" />
+                  <a href="mailto:mr@mrestudioinformatico.com" target="_blank" rel="noreferrer"
+                    className="relative z-10 w-16 h-16 rounded-full border-2 border-[#ef4444] bg-gradient-to-b from-[#f87171] to-[#dc2626] flex items-center justify-center transition-all duration-300 hover:shadow-[0_0_30px_rgba(239,68,68,0.9)] hover:scale-110 active:scale-95 group/btn overflow-hidden block">
                     <span className="absolute inset-0 rounded-full shadow-[0_0_15px_#ef4444] opacity-40 animate-pulse pointer-events-none" />
                     <span className="absolute inset-0 w-[200%] h-full bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-20 -translate-x-[120%] transition-transform duration-700 ease-out group-hover/btn:translate-x-[120%]" />
                     <img src="/logo mail.png" alt="Email" className="w-full h-full object-cover transition-transform duration-500 group-hover/btn:scale-110 relative z-10" />
                   </a>
-                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-lg pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
-               </div>
-             </div>
-             
-             <div className="mt-8 flex flex-col items-center gap-2">
-                <p className="tracking-[0.3em] text-white font-black text-2xl drop-shadow-lg uppercase text-center">ZONA CUYO - Provincia de Mendoza</p>
-                <p className="tracking-[0.2em] font-black text-[18px] drop-shadow-lg uppercase mt-2 text-center" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
-             </div>
+                  <span className="absolute left-full ml-4 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white font-bold whitespace-nowrap text-sm pointer-events-none z-10 drop-shadow-md">mr@mrestudioinformatico.com</span>
+                </div>
+
+                <div className="mt-6 flex flex-col items-center gap-2">
+                  <p className="tracking-[0.2em] text-white font-black text-lg drop-shadow-lg uppercase text-center">ZONA CUYO - Mendoza</p>
+                  <p className="tracking-[0.15em] font-black text-base drop-shadow-lg uppercase mt-1 text-center" style={{ color: '#33E8FF' }}>TU EMPRESA NUESTRO DESAFÍO</p>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN — Contact Form */}
+              <ContactFormWhatsApp />
+
+            </div>
           </div>
 
 

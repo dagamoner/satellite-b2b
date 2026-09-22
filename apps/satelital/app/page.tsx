@@ -166,7 +166,7 @@ const SatelliteOrbit = ({ onClick }: { onClick: () => void }) => {
         scale: [0.4, 0.6, 0.3, 0.5, 0.4],
       }}
       transition={{
-        duration: 60,
+        duration: 120,
         ease: "linear",
         repeat: Infinity,
       }}
@@ -311,14 +311,14 @@ export default function MarketingPage() {
       {mounted && theme !== "light" && (
         <>
           <motion.div
-            className="fixed top-[-16vw] right-[-16vw] z-[1] pointer-events-none"
+            className="fixed top-[-8vw] left-[-8vw] z-[1] pointer-events-none"
             initial={{ opacity: 0, rotate: 0 }}
             animate={{ opacity: 0.6, rotate: 360 }}
             transition={{
-              opacity: { duration: 90, ease: [0.04, 0, 0.16, 1] },
+              opacity: { duration: 45, ease: [0.04, 0, 0.16, 1] },
               rotate: { duration: 600, ease: "linear", repeat: Infinity },
             }}
-            style={{ width: '52vw', maxWidth: '660px' }}
+            style={{ width: '104vw', maxWidth: '1320px' }}
           >
             <img
               src="/tierra.png"
@@ -336,10 +336,10 @@ export default function MarketingPage() {
           <div
             className="fixed z-[10]"
             style={{
-              top: '-16vw',
-              right: '-16vw',
-              width: '52vw',
-              maxWidth: '660px',
+              top: '-8vw',
+              left: '-8vw',
+              width: '104vw',
+              maxWidth: '1320px',
               aspectRatio: '1',
               cursor: 'crosshair',
               borderRadius: '50%',
