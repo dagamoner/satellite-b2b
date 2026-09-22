@@ -590,36 +590,14 @@ export default function MarketingPage() {
     }
   }, [clickedEcosistema]);
 
-  // Automatic effect: when satellite passes Earth zone (~42s into each 120s cycle)
+  // Destello solar automático cada 3 minutos (180 000 ms), independiente del satélite
   useEffect(() => {
     if (!mounted || theme === 'light') return;
-
-    const CYCLE_MS = 60_000;
-    // Satellite is near the Earth (upper-right) at ~21s into cycle, again at ~42.5s (return arc)
-    const TRIGGER_OFFSETS = [21_000, 42_500];
-
-    const scheduleAll = () => {
-      const elapsed = Date.now() - orbitStartRef.current;
-      const phase = elapsed % CYCLE_MS;
-      const timeouts: ReturnType<typeof setTimeout>[] = [];
-
-      TRIGGER_OFFSETS.forEach(offset => {
-        let delay = offset - phase;
-        if (delay <= 0) delay += CYCLE_MS;
-        timeouts.push(setTimeout(() => {
-          triggerConjunction();
-        }, delay));
-      });
-
-      // Re-schedule after one full cycle
-      const reschedule = setTimeout(scheduleAll, CYCLE_MS);
-      timeouts.push(reschedule);
-
-      return timeouts;
-    };
-
-    const timeouts = scheduleAll();
-    return () => timeouts.forEach(t => clearTimeout(t));
+    const INTERVAL_MS = 180_000; // 3 minutos exactos
+    const id = setInterval(() => {
+      triggerConjunction();
+    }, INTERVAL_MS);
+    return () => clearInterval(id);
   }, [mounted, theme, triggerConjunction]);
 
   useEffect(() => {
@@ -638,73 +616,9 @@ export default function MarketingPage() {
       {/* Nuestro interactivo fondo del espacio o cielo */}
       {mounted && theme === "light" ? <SunnySkyBackground /> : <SpaceBackground />}
 
-      {/* Satélite orbitando aleatoriamente */}
-      {mounted && theme !== "light" && <SatelliteOrbit onClick={handleSatelliteClick} />}
+      {/* Satélite eliminado — destello solar automático cada 3 minutos */}
 
-      {/* Flash destello verde petróleo al hacer clic en el satélite */}
-      <AnimatePresence>
-        {satelliteFlash && (
-          <motion.div
-            key="satellite-flash"
-            className="fixed inset-0 pointer-events-none z-[99]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.55 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              opacity: {
-                duration: satelliteFlash ? 0.2 : 0.9,
-                ease: satelliteFlash ? 'easeIn' : 'easeOut'
-              }
-            }}
-            style={{
-              background: 'radial-gradient(ellipse at center, rgba(0,140,100,0.95) 0%, rgba(0,110,80,0.7) 28%, rgba(0,70,50,0.4) 55%, transparent 85%)',
-              mixBlendMode: 'screen'
-            }}
-          />
-        )}
-      </AnimatePresence>
-
-      {/* Tierra - Vista desde el espacio, aparece lentamente con el tiempo */}
-      {mounted && theme !== "light" && (
-        <>
-          <motion.div
-            className="fixed top-[-8vw] left-[-8vw] z-[1] pointer-events-none"
-            initial={{ opacity: 0, rotate: 0 }}
-            animate={{ opacity: 0.6, rotate: 360 }}
-            transition={{
-              opacity: { duration: 45, ease: [0.04, 0, 0.16, 1] },
-              rotate: { duration: 600, ease: "linear", repeat: Infinity },
-            }}
-            style={{ width: '104vw', maxWidth: '1320px' }}
-          >
-            <img
-              src="/tierra.png"
-              alt=""
-              className="w-full h-full object-contain"
-              style={{
-                mixBlendMode: 'screen',
-                filter: 'brightness(0.7) saturate(1.3) contrast(1.0)',
-                WebkitMaskImage: 'radial-gradient(circle 48% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.2) 68%, transparent 82%)',
-                maskImage: 'radial-gradient(circle 48% at 50% 50%, black 30%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.2) 68%, transparent 82%)',
-              }}
-            />
-          </motion.div>
-          {/* Hit area independiente para el clic en la Tierra */}
-          <div
-            className="fixed z-[10]"
-            style={{
-              top: '-8vw',
-              left: '-8vw',
-              width: '104vw',
-              maxWidth: '1320px',
-              aspectRatio: '1',
-              cursor: 'crosshair',
-              borderRadius: '50%',
-            }}
-            onClick={handleEarthClick}
-          />
-        </>
-      )}
+      {/* Tierra eliminada — fondo del espacio queda limpio */}
 
       {/* Destello Solar — cuando el satélite cruza la Tierra */}
       <AnimatePresence>
