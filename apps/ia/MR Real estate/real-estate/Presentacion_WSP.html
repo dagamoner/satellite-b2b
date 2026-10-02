@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Presentación WhatsApp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    @page { 
+      size: A4 portrait; 
+      margin: 0; 
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      width: 210mm;
+      height: 297mm;
+      background: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), url('Imagen Floripa.png') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      color: #0a1e46;
+      position: relative;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 10px;
+      background: linear-gradient(90deg, #c9a84c, #e8c96a, #c9a84c);
+    }
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 10px;
+      background: #33e8ff;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .logo-top {
+      width: 400px;
+      margin-bottom: 80px;
+      /* Multiply makes the white background completely transparent */
+      mix-blend-mode: multiply;
+      /* Forcing the logo to be black as requested */
+      filter: grayscale(100%) brightness(0.2) contrast(150%) drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    }
+
+    .logo-bottom {
+      width: 300px;
+    }
+
+    .leyenda-container {
+      margin-top: 100px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .leyenda {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #0a1e46;
+      margin-bottom: 25px;
+    }
+    
+    .subtitle {
+      font-size: 24px;
+      font-weight: 600;
+      color: #0a1e46;
+      margin-bottom: 10px;
+    }
+
+    .link {
+      font-size: 26px;
+      font-weight: 600;
+      color: #2362a8;
+      text-decoration: underline;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-wrapper">
+    <img src="Logo MR Real Estate.png" alt="Logo Principal" class="logo-top" />
+    <img src="Logo_CENI_Constructora_original_trans.png" alt="CENI Constructora" class="logo-bottom" />
+
+    <div class="leyenda-container">
+      <div class="leyenda">TU SUEÑO, NUESTRO DESAFIO !!!</div>
+      <div class="subtitle">Comenzamos 👇</div>
+      <a href="https://www.mrrealestate.com" class="link">hipervinculo</a>
+    </div>
+  </div>
+</body>
+</html>

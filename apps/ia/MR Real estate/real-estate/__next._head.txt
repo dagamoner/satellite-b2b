@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[97367,["/_next/static/chunks/16-~~wse509.l.js","/_next/static/chunks/0~b27bnf2au~~.js"],"ViewportBoundary"]
+3:I[97367,["/_next/static/chunks/16-~~wse509.l.js","/_next/static/chunks/0~b27bnf2au~~.js"],"MetadataBoundary"]
+4:"$Sreact.suspense"
+5:I[27201,["/_next/static/chunks/16-~~wse509.l.js","/_next/static/chunks/0~b27bnf2au~~.js"],"IconMark"]
+0:{"rsc":["$","$1","h",{"children":[null,["$","$L2",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L3",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"MR Real Estate · CENI Construcoes — Florianópolis"}],["$","meta","1",{"name":"description","content":"Portal comercial de MR Real Estate y CENI Construcoes. Proyectos inmobiliarios en Brasil: Mar do Norte Studios, BERIYTH Residence y Serene Beach Residence."}],["$","link","2",{"rel":"icon","href":"/icon.jpg?icon.13hwo.a2zvs6b.jpg","sizes":"1024x1024","type":"image/jpeg"}],["$","$L5","3",{}]]}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"0KntsjvkrBGLFDLoraFkY"}
