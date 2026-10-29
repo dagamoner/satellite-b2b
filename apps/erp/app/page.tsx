@@ -505,7 +505,7 @@ export default function ErpPage() {
 
       {/* ── Modal Maxirest ONE ── */}
       <AnimatePresence>
-        {showInfo && (
+        {showInfo && !mostrarInstanciaA && !mostrarInstanciaB && !mostrarInstanciaC && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
