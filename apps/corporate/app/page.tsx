@@ -512,7 +512,7 @@ function ContactFormWhatsApp() {
 const ecosystemLogos = [
   { src: "3. Logo Mini Conectividad Satelital.png", alt: "Conectividad Satelital", url: "https://satelital.mrtechnology.it.com", tip: "/Problemas de conectividad inicial.png", color: "#33E8FF" },
   { src: "1. Logo Mini Tecnologia Informatica (IT).png", alt: "Tecnología Informática (IT)", url: "https://informatica.mrtechnology.it.com", tip: "/Problemas con Tecnologia.png", color: "#60a5fa" },
-  { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png", color: "#f97316", hasMaxirest: true, legend: "SOFTWARE ERP/SAAS EMPRESARIALES & GASTRONÓMICOS" },
+  { src: "2. Logo Mini Alianzas Software ERP.png", alt: "Software ERP / SAAS Empresarial", url: "https://erp.mrtechnology.it.com", tip: "/Problemas Soft.png", color: "#f97316", hasMaxirest: true },
   { src: "4. Logo Mini Inteligencia Artificial.png", alt: "Inteligencia Artificial", url: "https://ia.mrtechnology.it.com", tip: "/Problemas IA.png", color: "#a78bfa" },
   { src: "5. Logo Mini CIberseguridad.png", alt: "Ciberseguridad", url: "https://cyber.mrtechnology.it.com", tip: "/Problemas seguros.png", color: "#22c55e" }
 ];
@@ -942,20 +942,6 @@ export default function MarketingPage() {
                       onMouseEnter={(e) => e.currentTarget.style.filter = 'drop-shadow(0 0 20px rgba(51,232,255,0.3)) brightness(1.1)'}
                       onMouseLeave={(e) => e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(0,0,0,0.6))'}
                     />
-                    {(logo as any).legend && (
-                      <span
-                        className="block text-center font-black uppercase text-[#33E8FF] mt-2 mx-auto"
-                        style={{
-                          fontSize: 'clamp(9px, 0.8vw, 12px)',
-                          letterSpacing: '0.15em',
-                          lineHeight: 1.4,
-                          maxWidth: 'clamp(140px, 16vw, 224px)',
-                          textShadow: '0 0 10px rgba(51,232,255,0.7)',
-                        }}
-                      >
-                        {(logo as any).legend}
-                      </span>
-                    )}
                   </a>
 
                   {/* Tooltip / Cartel a la derecha o izquierda */}
